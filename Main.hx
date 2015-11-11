@@ -5,15 +5,15 @@ using thx.Arrays;
 @:build(ClassicFor.build())
 class Styles {
 
-  static function raf(fn) js.Browser.window.requestAnimationFrame(fn);
+  inline static function raf(fn) js.Browser.window.requestAnimationFrame(fn);
 
-  static function nextFrame(fn) raf(function(i) { raf(fn); });
+  inline static function nextFrame(fn) raf(function(i) { raf(fn); });
 
-  static function setNextFrame(obj:haxe.DynamicAccess<Dynamic>, prop:String, val:Dynamic) {
+  inline static function setNextFrame(obj:haxe.DynamicAccess<Dynamic>, prop:String, val:Dynamic) {
     nextFrame(function(i) { obj[prop] = val; });
   }
 
-  static function updateStyle(oldVnode:VirtualNode, vnode:VirtualNode) {
+  inline static function updateStyle(oldVnode:VirtualNode, vnode:VirtualNode) {
     var cur, name, elm:Dynamic = vnode.elm;
 
     var oldStyle:haxe.DynamicAccess<Dynamic> = oldVnode.data.style == null ? {} : oldVnode.data.style;
@@ -36,7 +36,7 @@ class Styles {
     }
   }
 
-  static function applyDestroyStyle(vnode) {
+  inline static function applyDestroyStyle(vnode) {
     var style:haxe.DynamicAccess<Dynamic> = null, name, elm = vnode.elm, s:Dynamic = vnode.data.style;
     if (s == null) return;
     style = untyped s.destroy;
@@ -46,7 +46,7 @@ class Styles {
     }
   }
 
-  static function applyRemoveStyle(vnode, rm) {
+  inline static function applyRemoveStyle(vnode, rm) {
     var s:Dynamic = vnode.data.style;
     if (!s || !s.remove) {
       rm();
@@ -81,7 +81,7 @@ inline public static function remove(vnode,rm) applyRemoveStyle(vnode,rm);
 
 class CssClasses {
 
-  static function updateClass(oldVnode:VirtualNode, vnode:VirtualNode) {
+  inline static function updateClass(oldVnode:VirtualNode, vnode:VirtualNode) {
     var cur, name, elm:js.html.Element = vnode.elm,
         oldClass:haxe.DynamicAccess<Dynamic> = oldVnode.data.classes == null ? {} : oldVnode.data.classes,
         klass:haxe.DynamicAccess<Dynamic> = vnode.data.classes == null ? {} : vnode.data.classes;
@@ -380,7 +380,7 @@ class Main {
     return vnode.elm;
   }
 
-   static function addVnodes(parentElm, before, vnodes, startIdx, endIdx, insertedVnodeQueue) {
+   inline static function addVnodes(parentElm, before, vnodes, startIdx, endIdx, insertedVnodeQueue) {
     var i;
     @for( i=0 , startIdx <= endIdx, ++startIdx) {
       parentElm.insertBefore(createElm(vnodes[startIdx], insertedVnodeQueue), before);
