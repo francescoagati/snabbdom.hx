@@ -58,21 +58,27 @@ Main.h = function(sel,b,c) {
 	}
 	if(Main["is"].array(children)) {
 		i = 0;
-		if(i < children.length) do if(Main["is"].primitive(children[i])) children[i] = Main.vnode(null,null,null,children[i]); while((function($this) {
+		if(i < children.length) do if(Main["is"].primitive(children[i])) children[i] = (function($this) {
+			var $r;
+			var text1 = children[i];
+			var elm = null;
+			var key = null;
+			$r = { sel : null, data : null, children : null, text : text1, elm : elm, key : key};
+			return $r;
+		}(this)); while((function($this) {
 			var $r;
 			++i;
 			$r = i < children.length;
 			return $r;
 		}(this)));
 	}
-	return Main.vnode(sel,data,children,text,undefined);
-};
-Main.vnode = function(sel,data,children,text,elm) {
-	var key = data == null?null:data.key;
-	return { sel : sel, data : data, children : children, text : text, elm : elm, key : key};
-};
-Main.emptyNodeAt = function(elm) {
-	return Main.vnode(elm.tagName,{ },[],null,elm);
+	return (function($this) {
+		var $r;
+		var elm1 = undefined;
+		var key1 = data == null?null:data.key;
+		$r = { sel : sel, data : data, children : children, text : text, elm : elm1, key : key1};
+		return $r;
+	}(this));
 };
 Main.createElm = function(vnode,insertedVnodeQueue) {
 	var i;
@@ -1575,7 +1581,13 @@ Main.patch = function(oldVnode,vnode) {
 			vnode1.elm;
 			oldVnode.parentElement.replaceChild(vnode.elm,oldVnode);
 		} else {
-			oldVnode = Main.emptyNodeAt(oldVnode);
+			oldVnode = (function($this) {
+				var $r;
+				var data1 = { };
+				var key5 = data1 == null?null:data1.key;
+				$r = { sel : oldVnode.tagName, data : data1, children : [], text : null, elm : oldVnode, key : key5};
+				return $r;
+			}(this));
 			var oldVnode2 = oldVnode;
 			var vnode2 = vnode;
 			var i4;
@@ -1628,7 +1640,7 @@ Main.patch = function(oldVnode,vnode) {
 					$r = s15 != undefined;
 					return $r;
 				}(this))) {
-					var key5;
+					var key6;
 					var cur4;
 					var old2;
 					var elm6 = vnode2.elm;
@@ -1637,22 +1649,22 @@ Main.patch = function(oldVnode,vnode) {
 					var _g6 = 0;
 					var _g15 = Reflect.fields(attrs1);
 					while(_g6 < _g15.length) {
-						var key6 = _g15[_g6];
+						var key7 = _g15[_g6];
 						++_g6;
-						cur4 = attrs1[key6];
-						old2 = oldAttrs1[key6];
+						cur4 = attrs1[key7];
+						old2 = oldAttrs1[key7];
 						if(old2 != cur4) {
-							if(!cur4 && Attributes.booleanAttrsDict[key6]) elm6.removeAttribute(key6); else elm6.setAttribute(key6,cur4);
+							if(!cur4 && Attributes.booleanAttrsDict[key7]) elm6.removeAttribute(key7); else elm6.setAttribute(key7,cur4);
 						}
 					}
 					var _g7 = 0;
 					var _g16 = Reflect.fields(oldAttrs1);
 					while(_g7 < _g16.length) {
-						var key7 = _g16[_g7];
+						var key8 = _g16[_g7];
 						++_g7;
-						if(!Object.prototype.hasOwnProperty.call(attrs1,key7)) elm6.removeAttribute(key7);
+						if(!Object.prototype.hasOwnProperty.call(attrs1,key8)) elm6.removeAttribute(key8);
 					}
-					var key8;
+					var key9;
 					var cur5;
 					var old3;
 					var elm7 = vnode2.elm;
@@ -1661,13 +1673,13 @@ Main.patch = function(oldVnode,vnode) {
 					var _g8 = 0;
 					var _g17 = Reflect.fields(props1);
 					while(_g8 < _g17.length) {
-						var key9 = _g17[_g8];
+						var key10 = _g17[_g8];
 						++_g8;
-						cur5 = props1[key9];
-						old3 = oldProps1[key9];
+						cur5 = props1[key10];
+						old3 = oldProps1[key10];
 						if(old3 != cur5) {
 							var value2 = cur5;
-							elm7[key9] = value2;
+							elm7[key10] = value2;
 						}
 					}
 					var cur6;
@@ -1787,12 +1799,12 @@ Main.patch = function(oldVnode,vnode) {
 									var children1 = oldCh;
 									var i7;
 									var map = { };
-									var key10;
+									var key11;
 									{
 										i7 = oldStartIdx;
 										if(i7 <= oldEndIdx) do {
-											key10 = children1[i7].key;
-											if(key10 != undefined) map[key10] = i7;
+											key11 = children1[i7].key;
+											if(key11 != undefined) map[key11] = i7;
 										} while((function($this) {
 											var $r;
 											++i7;
@@ -1809,16 +1821,16 @@ Main.patch = function(oldVnode,vnode) {
 										var $r;
 										var vnode3 = newStartVnode;
 										var i8;
-										var data1 = vnode3.data;
+										var data2 = vnode3.data;
 										if((function($this) {
 											var $r;
-											var s20 = data1;
+											var s20 = data2;
 											$r = s20 != undefined;
 											return $r;
 										}($this))) {
 											if((function($this) {
 												var $r;
-												var s21 = i8 = data1.hook;
+												var s21 = i8 = data2.hook;
 												$r = s21 != undefined;
 												return $r;
 											}($this)) && (function($this) {
@@ -1829,7 +1841,7 @@ Main.patch = function(oldVnode,vnode) {
 											}($this))) i8(vnode3);
 											if((function($this) {
 												var $r;
-												var s23 = i8 = data1.vnode;
+												var s23 = i8 = data2.vnode;
 												$r = s23 != undefined;
 												return $r;
 											}($this))) vnode3 = i8;
@@ -1845,12 +1857,12 @@ Main.patch = function(oldVnode,vnode) {
 											var tag1 = hashIdx1 != -1 || dotIdx1 != -1?sel1.slice(0,Math.min(hash1,dot1)):sel1;
 											elm10 = vnode3.elm = (function($this) {
 												var $r;
-												var s25 = data1;
+												var s25 = data2;
 												$r = s25 != undefined;
 												return $r;
 											}($this)) && (function($this) {
 												var $r;
-												var s26 = i8 = data1.ns;
+												var s26 = i8 = data2.ns;
 												$r = s26 != undefined;
 												return $r;
 											}($this))?document.createElementNS(i8,tag1):document.createElement(tag1);
@@ -1870,7 +1882,7 @@ Main.patch = function(oldVnode,vnode) {
 												}($this)));
 											} else if(Main["is"].primitive(vnode3.text)) elm10.appendChild(document.createTextNode(vnode3.text));
 											var oldVnode3 = Main.emptyNode;
-											var key11;
+											var key12;
 											var cur8;
 											var old4;
 											var elm11 = vnode3.elm;
@@ -1879,22 +1891,22 @@ Main.patch = function(oldVnode,vnode) {
 											var _g20 = 0;
 											var _g110 = Reflect.fields(attrs2);
 											while(_g20 < _g110.length) {
-												var key12 = _g110[_g20];
+												var key13 = _g110[_g20];
 												++_g20;
-												cur8 = attrs2[key12];
-												old4 = oldAttrs2[key12];
+												cur8 = attrs2[key13];
+												old4 = oldAttrs2[key13];
 												if(old4 != cur8) {
-													if(!cur8 && Attributes.booleanAttrsDict[key12]) elm11.removeAttribute(key12); else elm11.setAttribute(key12,cur8);
+													if(!cur8 && Attributes.booleanAttrsDict[key13]) elm11.removeAttribute(key13); else elm11.setAttribute(key13,cur8);
 												}
 											}
 											var _g23 = 0;
 											var _g111 = Reflect.fields(oldAttrs2);
 											while(_g23 < _g111.length) {
-												var key13 = _g111[_g23];
+												var key14 = _g111[_g23];
 												++_g23;
-												if(!Object.prototype.hasOwnProperty.call(attrs2,key13)) elm11.removeAttribute(key13);
+												if(!Object.prototype.hasOwnProperty.call(attrs2,key14)) elm11.removeAttribute(key14);
 											}
-											var key14;
+											var key15;
 											var cur9;
 											var old5;
 											var elm12 = vnode3.elm;
@@ -1903,13 +1915,13 @@ Main.patch = function(oldVnode,vnode) {
 											var _g24 = 0;
 											var _g112 = Reflect.fields(props2);
 											while(_g24 < _g112.length) {
-												var key15 = _g112[_g24];
+												var key16 = _g112[_g24];
 												++_g24;
-												cur9 = props2[key15];
-												old5 = oldProps2[key15];
+												cur9 = props2[key16];
+												old5 = oldProps2[key16];
 												if(old5 != cur9) {
 													var value4 = cur9;
-													elm12[key15] = value4;
+													elm12[key16] = value4;
 												}
 											}
 											var cur10;
@@ -2002,16 +2014,16 @@ Main.patch = function(oldVnode,vnode) {
 									var $r;
 									var vnode4 = vnodes[startIdx];
 									var i12;
-									var data2 = vnode4.data;
+									var data3 = vnode4.data;
 									if((function($this) {
 										var $r;
-										var s28 = data2;
+										var s28 = data3;
 										$r = s28 != undefined;
 										return $r;
 									}($this))) {
 										if((function($this) {
 											var $r;
-											var s29 = i12 = data2.hook;
+											var s29 = i12 = data3.hook;
 											$r = s29 != undefined;
 											return $r;
 										}($this)) && (function($this) {
@@ -2022,7 +2034,7 @@ Main.patch = function(oldVnode,vnode) {
 										}($this))) i12(vnode4);
 										if((function($this) {
 											var $r;
-											var s31 = i12 = data2.vnode;
+											var s31 = i12 = data3.vnode;
 											$r = s31 != undefined;
 											return $r;
 										}($this))) vnode4 = i12;
@@ -2038,12 +2050,12 @@ Main.patch = function(oldVnode,vnode) {
 										var tag2 = hashIdx2 != -1 || dotIdx2 != -1?sel2.slice(0,Math.min(hash2,dot2)):sel2;
 										elm15 = vnode4.elm = (function($this) {
 											var $r;
-											var s33 = data2;
+											var s33 = data3;
 											$r = s33 != undefined;
 											return $r;
 										}($this)) && (function($this) {
 											var $r;
-											var s34 = i12 = data2.ns;
+											var s34 = i12 = data3.ns;
 											$r = s34 != undefined;
 											return $r;
 										}($this))?document.createElementNS(i12,tag2):document.createElement(tag2);
@@ -2063,7 +2075,7 @@ Main.patch = function(oldVnode,vnode) {
 											}($this)));
 										} else if(Main["is"].primitive(vnode4.text)) elm15.appendChild(document.createTextNode(vnode4.text));
 										var oldVnode4 = Main.emptyNode;
-										var key16;
+										var key17;
 										var cur12;
 										var old6;
 										var elm16 = vnode4.elm;
@@ -2072,22 +2084,22 @@ Main.patch = function(oldVnode,vnode) {
 										var _g28 = 0;
 										var _g115 = Reflect.fields(attrs3);
 										while(_g28 < _g115.length) {
-											var key17 = _g115[_g28];
+											var key18 = _g115[_g28];
 											++_g28;
-											cur12 = attrs3[key17];
-											old6 = oldAttrs3[key17];
+											cur12 = attrs3[key18];
+											old6 = oldAttrs3[key18];
 											if(old6 != cur12) {
-												if(!cur12 && Attributes.booleanAttrsDict[key17]) elm16.removeAttribute(key17); else elm16.setAttribute(key17,cur12);
+												if(!cur12 && Attributes.booleanAttrsDict[key18]) elm16.removeAttribute(key18); else elm16.setAttribute(key18,cur12);
 											}
 										}
 										var _g29 = 0;
 										var _g116 = Reflect.fields(oldAttrs3);
 										while(_g29 < _g116.length) {
-											var key18 = _g116[_g29];
+											var key19 = _g116[_g29];
 											++_g29;
-											if(!Object.prototype.hasOwnProperty.call(attrs3,key18)) elm16.removeAttribute(key18);
+											if(!Object.prototype.hasOwnProperty.call(attrs3,key19)) elm16.removeAttribute(key19);
 										}
-										var key19;
+										var key20;
 										var cur13;
 										var old7;
 										var elm17 = vnode4.elm;
@@ -2096,13 +2108,13 @@ Main.patch = function(oldVnode,vnode) {
 										var _g30 = 0;
 										var _g117 = Reflect.fields(props3);
 										while(_g30 < _g117.length) {
-											var key20 = _g117[_g30];
+											var key21 = _g117[_g30];
 											++_g30;
-											cur13 = props3[key20];
-											old7 = oldProps3[key20];
+											cur13 = props3[key21];
+											old7 = oldProps3[key21];
 											if(old7 != cur13) {
 												var value6 = cur13;
-												elm17[key20] = value6;
+												elm17[key21] = value6;
 											}
 										}
 										var cur14;
@@ -2337,16 +2349,16 @@ Main.patch = function(oldVnode,vnode) {
 							var $r;
 							var vnode7 = vnodes2[startIdx2];
 							var i20;
-							var data3 = vnode7.data;
+							var data4 = vnode7.data;
 							if((function($this) {
 								var $r;
-								var s48 = data3;
+								var s48 = data4;
 								$r = s48 != undefined;
 								return $r;
 							}($this))) {
 								if((function($this) {
 									var $r;
-									var s49 = i20 = data3.hook;
+									var s49 = i20 = data4.hook;
 									$r = s49 != undefined;
 									return $r;
 								}($this)) && (function($this) {
@@ -2357,7 +2369,7 @@ Main.patch = function(oldVnode,vnode) {
 								}($this))) i20(vnode7);
 								if((function($this) {
 									var $r;
-									var s51 = i20 = data3.vnode;
+									var s51 = i20 = data4.vnode;
 									$r = s51 != undefined;
 									return $r;
 								}($this))) vnode7 = i20;
@@ -2373,12 +2385,12 @@ Main.patch = function(oldVnode,vnode) {
 								var tag3 = hashIdx3 != -1 || dotIdx3 != -1?sel3.slice(0,Math.min(hash3,dot3)):sel3;
 								elm22 = vnode7.elm = (function($this) {
 									var $r;
-									var s53 = data3;
+									var s53 = data4;
 									$r = s53 != undefined;
 									return $r;
 								}($this)) && (function($this) {
 									var $r;
-									var s54 = i20 = data3.ns;
+									var s54 = i20 = data4.ns;
 									$r = s54 != undefined;
 									return $r;
 								}($this))?document.createElementNS(i20,tag3):document.createElement(tag3);
@@ -2398,7 +2410,7 @@ Main.patch = function(oldVnode,vnode) {
 									}($this)));
 								} else if(Main["is"].primitive(vnode7.text)) elm22.appendChild(document.createTextNode(vnode7.text));
 								var oldVnode5 = Main.emptyNode;
-								var key21;
+								var key22;
 								var cur16;
 								var old8;
 								var elm23 = vnode7.elm;
@@ -2407,22 +2419,22 @@ Main.patch = function(oldVnode,vnode) {
 								var _g39 = 0;
 								var _g122 = Reflect.fields(attrs4);
 								while(_g39 < _g122.length) {
-									var key22 = _g122[_g39];
+									var key23 = _g122[_g39];
 									++_g39;
-									cur16 = attrs4[key22];
-									old8 = oldAttrs4[key22];
+									cur16 = attrs4[key23];
+									old8 = oldAttrs4[key23];
 									if(old8 != cur16) {
-										if(!cur16 && Attributes.booleanAttrsDict[key22]) elm23.removeAttribute(key22); else elm23.setAttribute(key22,cur16);
+										if(!cur16 && Attributes.booleanAttrsDict[key23]) elm23.removeAttribute(key23); else elm23.setAttribute(key23,cur16);
 									}
 								}
 								var _g40 = 0;
 								var _g123 = Reflect.fields(oldAttrs4);
 								while(_g40 < _g123.length) {
-									var key23 = _g123[_g40];
+									var key24 = _g123[_g40];
 									++_g40;
-									if(!Object.prototype.hasOwnProperty.call(attrs4,key23)) elm23.removeAttribute(key23);
+									if(!Object.prototype.hasOwnProperty.call(attrs4,key24)) elm23.removeAttribute(key24);
 								}
-								var key24;
+								var key25;
 								var cur17;
 								var old9;
 								var elm24 = vnode7.elm;
@@ -2431,13 +2443,13 @@ Main.patch = function(oldVnode,vnode) {
 								var _g41 = 0;
 								var _g124 = Reflect.fields(props5);
 								while(_g41 < _g124.length) {
-									var key25 = _g124[_g41];
+									var key26 = _g124[_g41];
 									++_g41;
-									cur17 = props5[key25];
-									old9 = oldProps4[key25];
+									cur17 = props5[key26];
+									old9 = oldProps4[key26];
 									if(old9 != cur17) {
 										var value8 = cur17;
-										elm24[key25] = value8;
+										elm24[key26] = value8;
 									}
 								}
 								var cur18;
@@ -2724,7 +2736,7 @@ Main.patch = function(oldVnode,vnode) {
 				$r = s76 != undefined;
 				return $r;
 			}(this))) {
-				var key26;
+				var key27;
 				var cur20;
 				var old10;
 				var elm30 = vnode10.elm;
@@ -2733,22 +2745,22 @@ Main.patch = function(oldVnode,vnode) {
 				var _g46 = 0;
 				var _g129 = Reflect.fields(attrs5);
 				while(_g46 < _g129.length) {
-					var key27 = _g129[_g46];
+					var key28 = _g129[_g46];
 					++_g46;
-					cur20 = attrs5[key27];
-					old10 = oldAttrs5[key27];
+					cur20 = attrs5[key28];
+					old10 = oldAttrs5[key28];
 					if(old10 != cur20) {
-						if(!cur20 && Attributes.booleanAttrsDict[key27]) elm30.removeAttribute(key27); else elm30.setAttribute(key27,cur20);
+						if(!cur20 && Attributes.booleanAttrsDict[key28]) elm30.removeAttribute(key28); else elm30.setAttribute(key28,cur20);
 					}
 				}
 				var _g47 = 0;
 				var _g130 = Reflect.fields(oldAttrs5);
 				while(_g47 < _g130.length) {
-					var key28 = _g130[_g47];
+					var key29 = _g130[_g47];
 					++_g47;
-					if(!Object.prototype.hasOwnProperty.call(attrs5,key28)) elm30.removeAttribute(key28);
+					if(!Object.prototype.hasOwnProperty.call(attrs5,key29)) elm30.removeAttribute(key29);
 				}
-				var key29;
+				var key30;
 				var cur21;
 				var old11;
 				var elm31 = vnode10.elm;
@@ -2757,13 +2769,13 @@ Main.patch = function(oldVnode,vnode) {
 				var _g48 = 0;
 				var _g131 = Reflect.fields(props7);
 				while(_g48 < _g131.length) {
-					var key30 = _g131[_g48];
+					var key31 = _g131[_g48];
 					++_g48;
-					cur21 = props7[key30];
-					old11 = oldProps5[key30];
+					cur21 = props7[key31];
+					old11 = oldProps5[key31];
 					if(old11 != cur21) {
 						var value10 = cur21;
-						elm31[key30] = value10;
+						elm31[key31] = value10;
 					}
 				}
 				var cur22;
@@ -2883,12 +2895,12 @@ Main.patch = function(oldVnode,vnode) {
 								var children5 = oldCh1;
 								var i30;
 								var map1 = { };
-								var key31;
+								var key32;
 								{
 									i30 = oldStartIdx1;
 									if(i30 <= oldEndIdx1) do {
-										key31 = children5[i30].key;
-										if(key31 != undefined) map1[key31] = i30;
+										key32 = children5[i30].key;
+										if(key32 != undefined) map1[key32] = i30;
 									} while((function($this) {
 										var $r;
 										++i30;
@@ -2905,16 +2917,16 @@ Main.patch = function(oldVnode,vnode) {
 									var $r;
 									var vnode11 = newStartVnode1;
 									var i31;
-									var data4 = vnode11.data;
+									var data5 = vnode11.data;
 									if((function($this) {
 										var $r;
-										var s81 = data4;
+										var s81 = data5;
 										$r = s81 != undefined;
 										return $r;
 									}($this))) {
 										if((function($this) {
 											var $r;
-											var s82 = i31 = data4.hook;
+											var s82 = i31 = data5.hook;
 											$r = s82 != undefined;
 											return $r;
 										}($this)) && (function($this) {
@@ -2925,7 +2937,7 @@ Main.patch = function(oldVnode,vnode) {
 										}($this))) i31(vnode11);
 										if((function($this) {
 											var $r;
-											var s84 = i31 = data4.vnode;
+											var s84 = i31 = data5.vnode;
 											$r = s84 != undefined;
 											return $r;
 										}($this))) vnode11 = i31;
@@ -2941,12 +2953,12 @@ Main.patch = function(oldVnode,vnode) {
 										var tag4 = hashIdx4 != -1 || dotIdx4 != -1?sel4.slice(0,Math.min(hash4,dot4)):sel4;
 										elm34 = vnode11.elm = (function($this) {
 											var $r;
-											var s86 = data4;
+											var s86 = data5;
 											$r = s86 != undefined;
 											return $r;
 										}($this)) && (function($this) {
 											var $r;
-											var s87 = i31 = data4.ns;
+											var s87 = i31 = data5.ns;
 											$r = s87 != undefined;
 											return $r;
 										}($this))?document.createElementNS(i31,tag4):document.createElement(tag4);
@@ -2966,7 +2978,7 @@ Main.patch = function(oldVnode,vnode) {
 											}($this)));
 										} else if(Main["is"].primitive(vnode11.text)) elm34.appendChild(document.createTextNode(vnode11.text));
 										var oldVnode7 = Main.emptyNode;
-										var key32;
+										var key33;
 										var cur24;
 										var old12;
 										var elm35 = vnode11.elm;
@@ -2975,22 +2987,22 @@ Main.patch = function(oldVnode,vnode) {
 										var _g51 = 0;
 										var _g134 = Reflect.fields(attrs6);
 										while(_g51 < _g134.length) {
-											var key33 = _g134[_g51];
+											var key34 = _g134[_g51];
 											++_g51;
-											cur24 = attrs6[key33];
-											old12 = oldAttrs6[key33];
+											cur24 = attrs6[key34];
+											old12 = oldAttrs6[key34];
 											if(old12 != cur24) {
-												if(!cur24 && Attributes.booleanAttrsDict[key33]) elm35.removeAttribute(key33); else elm35.setAttribute(key33,cur24);
+												if(!cur24 && Attributes.booleanAttrsDict[key34]) elm35.removeAttribute(key34); else elm35.setAttribute(key34,cur24);
 											}
 										}
 										var _g52 = 0;
 										var _g135 = Reflect.fields(oldAttrs6);
 										while(_g52 < _g135.length) {
-											var key34 = _g135[_g52];
+											var key35 = _g135[_g52];
 											++_g52;
-											if(!Object.prototype.hasOwnProperty.call(attrs6,key34)) elm35.removeAttribute(key34);
+											if(!Object.prototype.hasOwnProperty.call(attrs6,key35)) elm35.removeAttribute(key35);
 										}
-										var key35;
+										var key36;
 										var cur25;
 										var old13;
 										var elm36 = vnode11.elm;
@@ -2999,13 +3011,13 @@ Main.patch = function(oldVnode,vnode) {
 										var _g53 = 0;
 										var _g136 = Reflect.fields(props8);
 										while(_g53 < _g136.length) {
-											var key36 = _g136[_g53];
+											var key37 = _g136[_g53];
 											++_g53;
-											cur25 = props8[key36];
-											old13 = oldProps6[key36];
+											cur25 = props8[key37];
+											old13 = oldProps6[key37];
 											if(old13 != cur25) {
 												var value12 = cur25;
-												elm36[key36] = value12;
+												elm36[key37] = value12;
 											}
 										}
 										var cur26;
@@ -3098,16 +3110,16 @@ Main.patch = function(oldVnode,vnode) {
 								var $r;
 								var vnode12 = vnodes4[startIdx4];
 								var i35;
-								var data5 = vnode12.data;
+								var data6 = vnode12.data;
 								if((function($this) {
 									var $r;
-									var s89 = data5;
+									var s89 = data6;
 									$r = s89 != undefined;
 									return $r;
 								}($this))) {
 									if((function($this) {
 										var $r;
-										var s90 = i35 = data5.hook;
+										var s90 = i35 = data6.hook;
 										$r = s90 != undefined;
 										return $r;
 									}($this)) && (function($this) {
@@ -3118,7 +3130,7 @@ Main.patch = function(oldVnode,vnode) {
 									}($this))) i35(vnode12);
 									if((function($this) {
 										var $r;
-										var s92 = i35 = data5.vnode;
+										var s92 = i35 = data6.vnode;
 										$r = s92 != undefined;
 										return $r;
 									}($this))) vnode12 = i35;
@@ -3134,12 +3146,12 @@ Main.patch = function(oldVnode,vnode) {
 									var tag5 = hashIdx5 != -1 || dotIdx5 != -1?sel5.slice(0,Math.min(hash5,dot5)):sel5;
 									elm39 = vnode12.elm = (function($this) {
 										var $r;
-										var s94 = data5;
+										var s94 = data6;
 										$r = s94 != undefined;
 										return $r;
 									}($this)) && (function($this) {
 										var $r;
-										var s95 = i35 = data5.ns;
+										var s95 = i35 = data6.ns;
 										$r = s95 != undefined;
 										return $r;
 									}($this))?document.createElementNS(i35,tag5):document.createElement(tag5);
@@ -3159,7 +3171,7 @@ Main.patch = function(oldVnode,vnode) {
 										}($this)));
 									} else if(Main["is"].primitive(vnode12.text)) elm39.appendChild(document.createTextNode(vnode12.text));
 									var oldVnode8 = Main.emptyNode;
-									var key37;
+									var key38;
 									var cur28;
 									var old14;
 									var elm40 = vnode12.elm;
@@ -3168,22 +3180,22 @@ Main.patch = function(oldVnode,vnode) {
 									var _g56 = 0;
 									var _g139 = Reflect.fields(attrs7);
 									while(_g56 < _g139.length) {
-										var key38 = _g139[_g56];
+										var key39 = _g139[_g56];
 										++_g56;
-										cur28 = attrs7[key38];
-										old14 = oldAttrs7[key38];
+										cur28 = attrs7[key39];
+										old14 = oldAttrs7[key39];
 										if(old14 != cur28) {
-											if(!cur28 && Attributes.booleanAttrsDict[key38]) elm40.removeAttribute(key38); else elm40.setAttribute(key38,cur28);
+											if(!cur28 && Attributes.booleanAttrsDict[key39]) elm40.removeAttribute(key39); else elm40.setAttribute(key39,cur28);
 										}
 									}
 									var _g57 = 0;
 									var _g140 = Reflect.fields(oldAttrs7);
 									while(_g57 < _g140.length) {
-										var key39 = _g140[_g57];
+										var key40 = _g140[_g57];
 										++_g57;
-										if(!Object.prototype.hasOwnProperty.call(attrs7,key39)) elm40.removeAttribute(key39);
+										if(!Object.prototype.hasOwnProperty.call(attrs7,key40)) elm40.removeAttribute(key40);
 									}
-									var key40;
+									var key41;
 									var cur29;
 									var old15;
 									var elm41 = vnode12.elm;
@@ -3192,13 +3204,13 @@ Main.patch = function(oldVnode,vnode) {
 									var _g58 = 0;
 									var _g141 = Reflect.fields(props9);
 									while(_g58 < _g141.length) {
-										var key41 = _g141[_g58];
+										var key42 = _g141[_g58];
 										++_g58;
-										cur29 = props9[key41];
-										old15 = oldProps7[key41];
+										cur29 = props9[key42];
+										old15 = oldProps7[key42];
 										if(old15 != cur29) {
 											var value14 = cur29;
-											elm41[key41] = value14;
+											elm41[key42] = value14;
 										}
 									}
 									var cur30;
@@ -3433,16 +3445,16 @@ Main.patch = function(oldVnode,vnode) {
 						var $r;
 						var vnode15 = vnodes6[startIdx6];
 						var i43;
-						var data6 = vnode15.data;
+						var data7 = vnode15.data;
 						if((function($this) {
 							var $r;
-							var s109 = data6;
+							var s109 = data7;
 							$r = s109 != undefined;
 							return $r;
 						}($this))) {
 							if((function($this) {
 								var $r;
-								var s110 = i43 = data6.hook;
+								var s110 = i43 = data7.hook;
 								$r = s110 != undefined;
 								return $r;
 							}($this)) && (function($this) {
@@ -3453,7 +3465,7 @@ Main.patch = function(oldVnode,vnode) {
 							}($this))) i43(vnode15);
 							if((function($this) {
 								var $r;
-								var s112 = i43 = data6.vnode;
+								var s112 = i43 = data7.vnode;
 								$r = s112 != undefined;
 								return $r;
 							}($this))) vnode15 = i43;
@@ -3469,12 +3481,12 @@ Main.patch = function(oldVnode,vnode) {
 							var tag6 = hashIdx6 != -1 || dotIdx6 != -1?sel6.slice(0,Math.min(hash6,dot6)):sel6;
 							elm46 = vnode15.elm = (function($this) {
 								var $r;
-								var s114 = data6;
+								var s114 = data7;
 								$r = s114 != undefined;
 								return $r;
 							}($this)) && (function($this) {
 								var $r;
-								var s115 = i43 = data6.ns;
+								var s115 = i43 = data7.ns;
 								$r = s115 != undefined;
 								return $r;
 							}($this))?document.createElementNS(i43,tag6):document.createElement(tag6);
@@ -3494,7 +3506,7 @@ Main.patch = function(oldVnode,vnode) {
 								}($this)));
 							} else if(Main["is"].primitive(vnode15.text)) elm46.appendChild(document.createTextNode(vnode15.text));
 							var oldVnode9 = Main.emptyNode;
-							var key42;
+							var key43;
 							var cur32;
 							var old16;
 							var elm47 = vnode15.elm;
@@ -3503,22 +3515,22 @@ Main.patch = function(oldVnode,vnode) {
 							var _g63 = 0;
 							var _g146 = Reflect.fields(attrs8);
 							while(_g63 < _g146.length) {
-								var key43 = _g146[_g63];
+								var key44 = _g146[_g63];
 								++_g63;
-								cur32 = attrs8[key43];
-								old16 = oldAttrs8[key43];
+								cur32 = attrs8[key44];
+								old16 = oldAttrs8[key44];
 								if(old16 != cur32) {
-									if(!cur32 && Attributes.booleanAttrsDict[key43]) elm47.removeAttribute(key43); else elm47.setAttribute(key43,cur32);
+									if(!cur32 && Attributes.booleanAttrsDict[key44]) elm47.removeAttribute(key44); else elm47.setAttribute(key44,cur32);
 								}
 							}
 							var _g64 = 0;
 							var _g147 = Reflect.fields(oldAttrs8);
 							while(_g64 < _g147.length) {
-								var key44 = _g147[_g64];
+								var key45 = _g147[_g64];
 								++_g64;
-								if(!Object.prototype.hasOwnProperty.call(attrs8,key44)) elm47.removeAttribute(key44);
+								if(!Object.prototype.hasOwnProperty.call(attrs8,key45)) elm47.removeAttribute(key45);
 							}
-							var key45;
+							var key46;
 							var cur33;
 							var old17;
 							var elm48 = vnode15.elm;
@@ -3527,13 +3539,13 @@ Main.patch = function(oldVnode,vnode) {
 							var _g65 = 0;
 							var _g148 = Reflect.fields(props11);
 							while(_g65 < _g148.length) {
-								var key46 = _g148[_g65];
+								var key47 = _g148[_g65];
 								++_g65;
-								cur33 = props11[key46];
-								old17 = oldProps8[key46];
+								cur33 = props11[key47];
+								old17 = oldProps8[key47];
 								if(old17 != cur33) {
 									var value16 = cur33;
-									elm48[key46] = value16;
+									elm48[key47] = value16;
 								}
 							}
 							var cur34;
@@ -3893,6 +3905,13 @@ Attributes.booleanAttrsDict = (function($this) {
 Main["is"] = { array : Array.isArray, primitive : function(s) {
 	return typeof s == "string" || typeof s == "number";
 }};
-Main.emptyNode = Main.vnode("",{ },[],null,null);
+Main.emptyNode = (function($this) {
+	var $r;
+	var data = { };
+	var elm = null;
+	var key = data == null?null:data.key;
+	$r = { sel : "", data : data, children : [], text : null, elm : elm, key : key};
+	return $r;
+}(this));
 Main.main();
 })(typeof console != "undefined" ? console : {log:function(){}});

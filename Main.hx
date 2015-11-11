@@ -295,7 +295,8 @@ class Main {
       return untyped __js__('typeof {0} == "string" || typeof {0} == "number"',s);
   }
   };
-   static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):VirtualNode {
+
+  inline static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):VirtualNode {
   var key = data == null ? null : data.key;
   return {sel: sel, data: data, children: children,
           text: text, elm: elm, key: key};
@@ -305,7 +306,7 @@ class Main {
    inline static function isUndef(s) { return untyped s == undefined; }
    inline static function isDef(s) { return untyped s != undefined; }
 
-   static function emptyNodeAt(elm) {
+  inline static function emptyNodeAt(elm) {
     return vnode(elm.tagName, {}, [], null, elm);
   }
 
