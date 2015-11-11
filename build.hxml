@@ -1,0 +1,5 @@
+-main Main
+-js main.js
+-lib classic-for tink_macro thx.core
+-dce full
+-D analyzer
