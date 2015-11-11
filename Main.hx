@@ -1,6 +1,22 @@
 import Main.*;
 
 using thx.Arrays;
+import Main.Is.*;
+
+class Is {
+
+    public inline static function is_array(obj) {
+      #if js
+      return untyped Array.isArray(obj);
+      #end
+    }
+    public inline static function is_primitive(s) {
+      #if js
+        return untyped __js__('typeof {0} == "string" || typeof {0} == "number"',s);
+      #end
+    }
+
+}
 
 @:build(ClassicFor.build())
 class Styles {
@@ -274,27 +290,22 @@ class Main {
     var arguments:Array<Dynamic> = untyped __js__('arguments');
     if (arguments.length == 3) {
       data = b;
-      if (is.array(c)) { children = c; }
-      else if (is.primitive(c)) { text = c; }
+      if (is_array(c)) { children = c; }
+      else if (is_primitive(c)) { text = c; }
     } else if (arguments.length == 2) {
-      if (is.array(b)) { children = b; }
-      else if (is.primitive(b)) { text = b; }
+      if (is_array(b)) { children = b; }
+      else if (is_primitive(b)) { text = b; }
       else { data = b; }
     }
-    if (is.array(children)) {
+    if (is_array(children)) {
       @for(i = 0, i < children.length, ++i) {
-        if (is.primitive(children[i])) children[i] = untyped vnode(null, null, null, children[i]);
+        if (is_primitive(children[i])) children[i] = untyped vnode(null, null, null, children[i]);
       }
     }
     return untyped vnode(sel, data, untyped children, text, undefined);
   }
 
-  static var is = {
-    array: untyped Array.isArray,
-    primitive: function(s) {
-      return untyped __js__('typeof {0} == "string" || typeof {0} == "number"',s);
-  }
-  };
+
 
   inline static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):VirtualNode {
   var key = data == null ? null : data.key;
@@ -355,11 +366,11 @@ class Main {
       var rg = untyped  __js__('new RegExp({0},"g")',s);
 
       if (dotIdx > 0)  untyped __js__('elm.className = sel.slice(dot+1).replace(rg, " ");');
-      if (is.array(children)) {
+      if (is_array(children)) {
         @for(i = 0,i < children.length, ++i) {
           elm.appendChild(createElm(children[i], insertedVnodeQueue));
         }
-      } else if (is.primitive(untyped vnode.text)) {
+      } else if (is_primitive(untyped vnode.text)) {
 
         elm.appendChild(untyped document.createTextNode(vnode.text));
       }

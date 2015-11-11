@@ -52,13 +52,38 @@ Main.h = function(sel,b,c) {
 	var $arguments = arguments;
 	if($arguments.length == 3) {
 		data = b;
-		if(Main["is"].array(c)) children = c; else if(Main["is"].primitive(c)) text = c;
+		if((function($this) {
+			var $r;
+			var obj = c;
+			$r = Array.isArray(obj);
+			return $r;
+		}(this))) children = c; else if((function($this) {
+			var $r;
+			var s = c;
+			$r = typeof s == "string" || typeof s == "number";
+			return $r;
+		}(this))) text = c;
 	} else if($arguments.length == 2) {
-		if(Main["is"].array(b)) children = b; else if(Main["is"].primitive(b)) text = b; else data = b;
+		if((function($this) {
+			var $r;
+			var obj1 = b;
+			$r = Array.isArray(obj1);
+			return $r;
+		}(this))) children = b; else if((function($this) {
+			var $r;
+			var s1 = b;
+			$r = typeof s1 == "string" || typeof s1 == "number";
+			return $r;
+		}(this))) text = b; else data = b;
 	}
-	if(Main["is"].array(children)) {
+	if(Array.isArray(children)) {
 		i = 0;
-		if(i < children.length) do if(Main["is"].primitive(children[i])) children[i] = (function($this) {
+		if(i < children.length) do if((function($this) {
+			var $r;
+			var s2 = children[i];
+			$r = typeof s2 == "string" || typeof s2 == "number";
+			return $r;
+		}(this))) children[i] = (function($this) {
 			var $r;
 			var text1 = children[i];
 			var elm = null;
@@ -133,7 +158,7 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 		if(dotIdx > 0) {
 			elm.className = sel.slice(dot+1).replace(rg, " ");;
 		}
-		if(Main["is"].array(children)) {
+		if(Array.isArray(children)) {
 			i = 0;
 			if(i < children.length) do elm.appendChild(Main.createElm(children[i],insertedVnodeQueue)); while((function($this) {
 				var $r;
@@ -141,7 +166,7 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 				$r = i < children.length;
 				return $r;
 			}(this)));
-		} else if(Main["is"].primitive(vnode.text)) elm.appendChild(document.createTextNode(vnode.text));
+		} else if(typeof vnode.text == "string" || typeof vnode.text == "number") elm.appendChild(document.createTextNode(vnode.text));
 		var oldVnode = Main.emptyNode;
 		var key;
 		var cur;
@@ -590,7 +615,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								if(dotIdx > 0) {
 									elm.className = sel.slice(dot+1).replace(rg, " ");;
 								}
-								if(Main["is"].array(children1)) {
+								if(Array.isArray(children1)) {
 									i4 = 0;
 									if(i4 < children1.length) do elm5.appendChild(Main.createElm(children1[i4],insertedVnodeQueue)); while((function($this) {
 										var $r;
@@ -598,7 +623,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 										$r = i4 < children1.length;
 										return $r;
 									}($this)));
-								} else if(Main["is"].primitive(vnode1.text)) elm5.appendChild(document.createTextNode(vnode1.text));
+								} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") elm5.appendChild(document.createTextNode(vnode1.text));
 								var oldVnode1 = Main.emptyNode;
 								var key6;
 								var cur4;
@@ -783,7 +808,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							if(dotIdx1 > 0) {
 								elm.className = sel.slice(dot+1).replace(rg, " ");;
 							}
-							if(Main["is"].array(children2)) {
+							if(Array.isArray(children2)) {
 								i8 = 0;
 								if(i8 < children2.length) do elm10.appendChild(Main.createElm(children2[i8],insertedVnodeQueue)); while((function($this) {
 									var $r;
@@ -791,7 +816,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 									$r = i8 < children2.length;
 									return $r;
 								}($this)));
-							} else if(Main["is"].primitive(vnode2.text)) elm10.appendChild(document.createTextNode(vnode2.text));
+							} else if(typeof vnode2.text == "string" || typeof vnode2.text == "number") elm10.appendChild(document.createTextNode(vnode2.text));
 							var oldVnode2 = Main.emptyNode;
 							var key11;
 							var cur8;
@@ -1118,7 +1143,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 					if(dotIdx2 > 0) {
 						elm.className = sel.slice(dot+1).replace(rg, " ");;
 					}
-					if(Main["is"].array(children3)) {
+					if(Array.isArray(children3)) {
 						i16 = 0;
 						if(i16 < children3.length) do elm17.appendChild(Main.createElm(children3[i16],insertedVnodeQueue)); while((function($this) {
 							var $r;
@@ -1126,7 +1151,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							$r = i16 < children3.length;
 							return $r;
 						}($this)));
-					} else if(Main["is"].primitive(vnode5.text)) elm17.appendChild(document.createTextNode(vnode5.text));
+					} else if(typeof vnode5.text == "string" || typeof vnode5.text == "number") elm17.appendChild(document.createTextNode(vnode5.text));
 					var oldVnode3 = Main.emptyNode;
 					var key16;
 					var cur12;
@@ -1458,7 +1483,7 @@ Main.patch = function(oldVnode,vnode) {
 				if(dotIdx > 0) {
 					elm.className = sel.slice(dot+1).replace(rg, " ");;
 				}
-				if(Main["is"].array(children)) {
+				if(Array.isArray(children)) {
 					i1 = 0;
 					if(i1 < children.length) do elm.appendChild(Main.createElm(children[i1],insertedVnodeQueue)); while((function($this) {
 						var $r;
@@ -1466,7 +1491,7 @@ Main.patch = function(oldVnode,vnode) {
 						$r = i1 < children.length;
 						return $r;
 					}(this)));
-				} else if(Main["is"].primitive(vnode1.text)) elm.appendChild(document.createTextNode(vnode1.text));
+				} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") elm.appendChild(document.createTextNode(vnode1.text));
 				var oldVnode1 = Main.emptyNode;
 				var key;
 				var cur;
@@ -1872,7 +1897,7 @@ Main.patch = function(oldVnode,vnode) {
 											if(dotIdx1 > 0) {
 												elm.className = sel.slice(dot+1).replace(rg, " ");;
 											}
-											if(Main["is"].array(children2)) {
+											if(Array.isArray(children2)) {
 												i8 = 0;
 												if(i8 < children2.length) do elm10.appendChild(Main.createElm(children2[i8],insertedVnodeQueue)); while((function($this) {
 													var $r;
@@ -1880,7 +1905,7 @@ Main.patch = function(oldVnode,vnode) {
 													$r = i8 < children2.length;
 													return $r;
 												}($this)));
-											} else if(Main["is"].primitive(vnode3.text)) elm10.appendChild(document.createTextNode(vnode3.text));
+											} else if(typeof vnode3.text == "string" || typeof vnode3.text == "number") elm10.appendChild(document.createTextNode(vnode3.text));
 											var oldVnode3 = Main.emptyNode;
 											var key12;
 											var cur8;
@@ -2065,7 +2090,7 @@ Main.patch = function(oldVnode,vnode) {
 										if(dotIdx2 > 0) {
 											elm.className = sel.slice(dot+1).replace(rg, " ");;
 										}
-										if(Main["is"].array(children3)) {
+										if(Array.isArray(children3)) {
 											i12 = 0;
 											if(i12 < children3.length) do elm15.appendChild(Main.createElm(children3[i12],insertedVnodeQueue)); while((function($this) {
 												var $r;
@@ -2073,7 +2098,7 @@ Main.patch = function(oldVnode,vnode) {
 												$r = i12 < children3.length;
 												return $r;
 											}($this)));
-										} else if(Main["is"].primitive(vnode4.text)) elm15.appendChild(document.createTextNode(vnode4.text));
+										} else if(typeof vnode4.text == "string" || typeof vnode4.text == "number") elm15.appendChild(document.createTextNode(vnode4.text));
 										var oldVnode4 = Main.emptyNode;
 										var key17;
 										var cur12;
@@ -2400,7 +2425,7 @@ Main.patch = function(oldVnode,vnode) {
 								if(dotIdx3 > 0) {
 									elm.className = sel.slice(dot+1).replace(rg, " ");;
 								}
-								if(Main["is"].array(children4)) {
+								if(Array.isArray(children4)) {
 									i20 = 0;
 									if(i20 < children4.length) do elm22.appendChild(Main.createElm(children4[i20],insertedVnodeQueue)); while((function($this) {
 										var $r;
@@ -2408,7 +2433,7 @@ Main.patch = function(oldVnode,vnode) {
 										$r = i20 < children4.length;
 										return $r;
 									}($this)));
-								} else if(Main["is"].primitive(vnode7.text)) elm22.appendChild(document.createTextNode(vnode7.text));
+								} else if(typeof vnode7.text == "string" || typeof vnode7.text == "number") elm22.appendChild(document.createTextNode(vnode7.text));
 								var oldVnode5 = Main.emptyNode;
 								var key22;
 								var cur16;
@@ -2968,7 +2993,7 @@ Main.patch = function(oldVnode,vnode) {
 										if(dotIdx4 > 0) {
 											elm.className = sel.slice(dot+1).replace(rg, " ");;
 										}
-										if(Main["is"].array(children6)) {
+										if(Array.isArray(children6)) {
 											i31 = 0;
 											if(i31 < children6.length) do elm34.appendChild(Main.createElm(children6[i31],insertedVnodeQueue)); while((function($this) {
 												var $r;
@@ -2976,7 +3001,7 @@ Main.patch = function(oldVnode,vnode) {
 												$r = i31 < children6.length;
 												return $r;
 											}($this)));
-										} else if(Main["is"].primitive(vnode11.text)) elm34.appendChild(document.createTextNode(vnode11.text));
+										} else if(typeof vnode11.text == "string" || typeof vnode11.text == "number") elm34.appendChild(document.createTextNode(vnode11.text));
 										var oldVnode7 = Main.emptyNode;
 										var key33;
 										var cur24;
@@ -3161,7 +3186,7 @@ Main.patch = function(oldVnode,vnode) {
 									if(dotIdx5 > 0) {
 										elm.className = sel.slice(dot+1).replace(rg, " ");;
 									}
-									if(Main["is"].array(children7)) {
+									if(Array.isArray(children7)) {
 										i35 = 0;
 										if(i35 < children7.length) do elm39.appendChild(Main.createElm(children7[i35],insertedVnodeQueue)); while((function($this) {
 											var $r;
@@ -3169,7 +3194,7 @@ Main.patch = function(oldVnode,vnode) {
 											$r = i35 < children7.length;
 											return $r;
 										}($this)));
-									} else if(Main["is"].primitive(vnode12.text)) elm39.appendChild(document.createTextNode(vnode12.text));
+									} else if(typeof vnode12.text == "string" || typeof vnode12.text == "number") elm39.appendChild(document.createTextNode(vnode12.text));
 									var oldVnode8 = Main.emptyNode;
 									var key38;
 									var cur28;
@@ -3496,7 +3521,7 @@ Main.patch = function(oldVnode,vnode) {
 							if(dotIdx6 > 0) {
 								elm.className = sel.slice(dot+1).replace(rg, " ");;
 							}
-							if(Main["is"].array(children8)) {
+							if(Array.isArray(children8)) {
 								i43 = 0;
 								if(i43 < children8.length) do elm46.appendChild(Main.createElm(children8[i43],insertedVnodeQueue)); while((function($this) {
 									var $r;
@@ -3504,7 +3529,7 @@ Main.patch = function(oldVnode,vnode) {
 									$r = i43 < children8.length;
 									return $r;
 								}($this)));
-							} else if(Main["is"].primitive(vnode15.text)) elm46.appendChild(document.createTextNode(vnode15.text));
+							} else if(typeof vnode15.text == "string" || typeof vnode15.text == "number") elm46.appendChild(document.createTextNode(vnode15.text));
 							var oldVnode9 = Main.emptyNode;
 							var key43;
 							var cur32;
@@ -3902,9 +3927,6 @@ Attributes.booleanAttrsDict = (function($this) {
 	$r = hash;
 	return $r;
 }(this));
-Main["is"] = { array : Array.isArray, primitive : function(s) {
-	return typeof s == "string" || typeof s == "number";
-}};
 Main.emptyNode = (function($this) {
 	var $r;
 	var data = { };
