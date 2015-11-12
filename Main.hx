@@ -283,6 +283,10 @@ typedef VirtualNodes = Array<VirtualNode>;
 
 @:build(ClassicFor.build())
 class Main {
+
+  static var rg = untyped  __js__('new RegExp({0},"g")',"\\.");
+
+
   public static function main() {
 
     var vnode = untyped h('div#conta.two.classes', {on: {click: function() {}}}, [
@@ -399,10 +403,10 @@ class Main {
                                                           : untyped document.createElement(tag);
       if (hash < dot) elm.id = untyped sel.slice(hash + 1, dot);
       //if (dotIdx > 0) elm.className = untyped sel.slice(dot+1,0).replace('.', ' ');
-      var s = "\\.";
-      var rg = untyped  __js__('new RegExp({0},"g")',s);
+      //var s = "\\.";
+      //var rg = untyped  __js__('new RegExp({0},"g")',s);
 
-      if (dotIdx > 0)  untyped __js__('elm.className = sel.slice(dot+1).replace(rg, " ");');
+      if (dotIdx > 0)  untyped __js__('elm.className = sel.slice(dot+1).replace({0}, " ");',rg);
       if (is_array(children)) {
         @for(i = 0,i < children.length, ++i) {
           elm.appendChild(createElm(children[i], insertedVnodeQueue));
