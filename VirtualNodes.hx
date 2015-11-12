@@ -1,0 +1,1 @@
+typedef VirtualNodes = Array<VirtualNode>;
