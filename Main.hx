@@ -1,6 +1,7 @@
 import Main.*;
 
 using thx.Arrays;
+using Main.VirtualNodeDataTools;
 import Main.Is.*;
 
 abstract DynamicObject<T>(Dynamic<T>) from Dynamic<T> {
@@ -69,8 +70,8 @@ class Styles {
   inline static function updateStyle(oldVnode:VirtualNode, vnode:VirtualNode) {
     var cur, name, elm:Dynamic = vnode.elm;
 
-    var oldStyle = oldVnode.data.style == null ? {} : oldVnode.data.style;
-    var style = vnode.data.style == null ? {} : vnode.data.style;
+    var oldStyle = oldVnode.data.get_style_or_empty();
+    var style = vnode.data.get_style_or_empty();
     var oldHasDel = oldStyle.exists('delayed' );
     for (name in style.keys()) {
       cur = style[name];
@@ -136,8 +137,8 @@ class CssClasses {
 
   inline static function updateClass(oldVnode:VirtualNode, vnode:VirtualNode) {
     var cur, name, elm:js.html.Element = vnode.elm,
-        oldClass = oldVnode.data.classes == null ? {} : oldVnode.data.classes,
-        klass = vnode.data.classes == null ? {} : vnode.data.classes;
+        oldClass = oldVnode.data.get_classes_or_empty(),
+        klass = vnode.data.get_classes_or_empty();
 
 
     for (name in klass.keys()) {
@@ -160,8 +161,8 @@ class Props {
 
    inline static function updateProps(oldVnode:VirtualNode, vnode:VirtualNode) {
     var key, cur, old, elm:DynamicObject<Dynamic> = untyped vnode.elm,
-        oldProps = oldVnode.data.props == null ? {} : oldVnode.data.props,
-        props = vnode.data.props == null ? {} : vnode.data.props;
+        oldProps = oldVnode.data.get_props_or_empty(),
+        props = vnode.data.get_props_or_empty();
     for (key in props.keys()) {
       cur = props[key];
       old = oldProps[key];
@@ -200,8 +201,8 @@ class Attributes {
 
    inline static function updateAttrs(oldVnode:VirtualNode, vnode:VirtualNode) {
     var key, cur, old, elm = vnode.elm,
-        oldAttrs = oldVnode.data.attrs == null ? {} : oldVnode.data.attrs,
-        attrs = vnode.data.attrs == null ? {} : vnode.data.attrs;
+        oldAttrs = oldVnode.data.get_attrs_or_empty(),
+        attrs = vnode.data.get_attrs_or_empty();
 
 
 
@@ -265,17 +266,33 @@ class Hooks {
 
 }
 
+class VirtualNodeDataTools {
+  public inline static function get_style_or_empty(vdata:VirtualNodeData):DynamicObject<Dynamic>
+    return vdata.style == null ? {} : vdata.style;
 
+  public inline static function get_attrs_or_empty(vdata:VirtualNodeData):DynamicObject<Dynamic>
+    return vdata.attrs == null ? {} : vdata.attrs;
+
+  public inline static function get_props_or_empty(vdata:VirtualNodeData):DynamicObject<Dynamic>
+    return vdata.props == null ? {} : vdata.props;
+
+  public inline static function get_classes_or_empty(vdata:VirtualNodeData):DynamicObject<Dynamic>
+    return vdata.classes == null ? {} : vdata.classes;
+
+
+}
+
+typedef VirtualNodeData = {
+  ?attrs:DynamicObject<Dynamic>,
+  ?props:DynamicObject<Dynamic>,
+  ?classes:DynamicObject<Dynamic>,
+  ?style:DynamicObject<Dynamic>,
+  ?hook:Dynamic
+}
 
 typedef VirtualNode =  {
-  sel: Dynamic,
-  data: {
-    ?attrs:DynamicObject<Dynamic>,
-    ?props:DynamicObject<Dynamic>,
-    ?classes:DynamicObject<Dynamic>,
-    ?style:DynamicObject<Dynamic>,
-    ?hook:Dynamic
-  },
+  sel: String,
+  data: VirtualNodeData,
   children: VirtualNodes,
   text: String,
   elm: Element,
