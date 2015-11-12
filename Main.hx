@@ -1,45 +1,8 @@
 import Main.*;
 
 using thx.Arrays;
-using Main.VirtualNodeDataTools;
+using VirtualNodeDataTools;
 import Main.Is.*;
-
-abstract DynamicObject<T>(Dynamic<T>) from Dynamic<T> {
-
-    public inline function new() {
-        this = {};
-    }
-
-    @:arrayAccess
-    public inline function set(key:String, value:T):Void {
-        Reflect.setField(this, key, value);
-    }
-
-    @:arrayAccess
-    public inline function get(key:String):Null<T> {
-        #if js
-        return untyped this[key];
-        #else
-        return Reflect.field(this, key);
-        #end
-    }
-
-    public inline function exists(key:String):Bool {
-        return Reflect.hasField(this, key);
-    }
-
-    public inline function remove(key:String):Bool {
-        return Reflect.deleteField(this, key);
-    }
-
-    public inline function keys():Array<String> {
-        #if js
-          return untyped Object.keys(this);
-        #else
-          return Reflect.fields(this);
-        #end
-    }
-}
 
 class Is {
 
@@ -266,43 +229,12 @@ class Hooks {
 
 }
 
-class VirtualNodeDataTools {
-  public inline static function get_style_or_empty(vdata:VirtualNodeData):DynamicObject<Dynamic>
-    return vdata.style == null ? {} : vdata.style;
-
-  public inline static function get_attrs_or_empty(vdata:VirtualNodeData):DynamicObject<Dynamic>
-    return vdata.attrs == null ? {} : vdata.attrs;
-
-  public inline static function get_props_or_empty(vdata:VirtualNodeData):DynamicObject<Dynamic>
-    return vdata.props == null ? {} : vdata.props;
-
-  public inline static function get_classes_or_empty(vdata:VirtualNodeData):DynamicObject<Dynamic>
-    return vdata.classes == null ? {} : vdata.classes;
 
 
-}
-
-typedef VirtualNodeData = {
-  ?attrs:DynamicObject<Dynamic>,
-  ?props:DynamicObject<Dynamic>,
-  ?classes:DynamicObject<Dynamic>,
-  ?style:DynamicObject<Dynamic>,
-  ?hook:Dynamic
-}
-
-typedef VirtualNode =  {
-  sel: String,
-  data: VirtualNodeData,
-  children: VirtualNodes,
-  text: String,
-  elm: Element,
-  key: String
-}
-
-typedef Element = js.html.Element;
 
 
-typedef VirtualNodes = Array<VirtualNode>;
+
+
 
 @:build(ClassicFor.build())
 class Main {
