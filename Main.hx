@@ -3,6 +3,43 @@ import Main.*;
 using thx.Arrays;
 import Main.Is.*;
 
+abstract DynamicObject<T>(Dynamic<T>) from Dynamic<T> {
+
+    public inline function new() {
+        this = {};
+    }
+
+    @:arrayAccess
+    public inline function set(key:String, value:T):Void {
+        Reflect.setField(this, key, value);
+    }
+
+    @:arrayAccess
+    public inline function get(key:String):Null<T> {
+        #if js
+        return untyped this[key];
+        #else
+        return Reflect.field(this, key);
+        #end
+    }
+
+    public inline function exists(key:String):Bool {
+        return Reflect.hasField(this, key);
+    }
+
+    public inline function remove(key:String):Bool {
+        return Reflect.deleteField(this, key);
+    }
+
+    public inline function keys():Array<String> {
+        #if js
+          return untyped Object.keys(this);
+        #else
+          return Reflect.fields(this);
+        #end
+    }
+}
+
 class Is {
 
     public inline static function is_array(obj) {
@@ -25,21 +62,21 @@ class Styles {
 
   inline static function nextFrame(fn) raf(function(i) { raf(fn); });
 
-  inline static function setNextFrame(obj:haxe.DynamicAccess<Dynamic>, prop:String, val:Dynamic) {
+  inline static function setNextFrame(obj:DynamicObject<Dynamic>, prop:String, val:Dynamic) {
     nextFrame(function(i) { obj[prop] = val; });
   }
 
   inline static function updateStyle(oldVnode:VirtualNode, vnode:VirtualNode) {
     var cur, name, elm:Dynamic = vnode.elm;
 
-    var oldStyle:haxe.DynamicAccess<Dynamic> = oldVnode.data.style == null ? {} : oldVnode.data.style;
-    var style:haxe.DynamicAccess<Dynamic> = vnode.data.style == null ? {} : vnode.data.style;
+    var oldStyle:DynamicObject<Dynamic> = oldVnode.data.style == null ? {} : oldVnode.data.style;
+    var style:DynamicObject<Dynamic> = vnode.data.style == null ? {} : vnode.data.style;
     var oldHasDel = oldStyle.exists('delayed' );
     for (name in style.keys()) {
       cur = style[name];
       if (name == 'delayed') {
-        var delayed:haxe.DynamicAccess<Dynamic> = untyped style.delayed;
-        var oldDelayed:haxe.DynamicAccess<Dynamic> = untyped oldStyle.delayed;
+        var delayed:DynamicObject<Dynamic> = untyped style.delayed;
+        var oldDelayed:DynamicObject<Dynamic> = untyped oldStyle.delayed;
         for (name in delayed.keys()) {
           cur = delayed[name];
           if (!oldHasDel || cur != oldDelayed[name]) {
@@ -53,7 +90,7 @@ class Styles {
   }
 
   inline static function applyDestroyStyle(vnode) {
-    var style:haxe.DynamicAccess<Dynamic> = null, name, elm = vnode.elm, s:Dynamic = vnode.data.style;
+    var style:DynamicObject<Dynamic> = null, name, elm = vnode.elm, s:Dynamic = vnode.data.style;
     if (s == null) return;
     style = untyped s.destroy;
     if ( style == null ) return;
@@ -69,7 +106,7 @@ class Styles {
       return;
     }
     var name, elm = vnode.elm, idx, i = 0, maxDur = 0,
-        compStyle:haxe.DynamicAccess<String>, style:haxe.DynamicAccess<Dynamic> = s.remove, amount = 0, applied = [];
+        compStyle:DynamicObject<String>, style:DynamicObject<Dynamic> = s.remove, amount = 0, applied = [];
     for (name in style.keys()) {
       applied.push(name);
       untyped elm.style[name] = style[name];
@@ -99,8 +136,8 @@ class CssClasses {
 
   inline static function updateClass(oldVnode:VirtualNode, vnode:VirtualNode) {
     var cur, name, elm:js.html.Element = vnode.elm,
-        oldClass:haxe.DynamicAccess<Dynamic> = oldVnode.data.classes == null ? {} : oldVnode.data.classes,
-        klass:haxe.DynamicAccess<Dynamic> = vnode.data.classes == null ? {} : vnode.data.classes;
+        oldClass:DynamicObject<Dynamic> = oldVnode.data.classes == null ? {} : oldVnode.data.classes,
+        klass:DynamicObject<Dynamic> = vnode.data.classes == null ? {} : vnode.data.classes;
 
 
     for (name in klass.keys()) {
@@ -122,9 +159,9 @@ class CssClasses {
 class Props {
 
    inline static function updateProps(oldVnode:VirtualNode, vnode:VirtualNode) {
-    var key, cur, old, elm:haxe.DynamicAccess<Dynamic> = untyped vnode.elm,
-        oldProps:haxe.DynamicAccess<Dynamic> = oldVnode.data.props == null ? {} : oldVnode.data.props,
-        props:haxe.DynamicAccess<Dynamic> = vnode.data.props == null ? {} : vnode.data.props;
+    var key, cur, old, elm:DynamicObject<Dynamic> = untyped vnode.elm,
+        oldProps:DynamicObject<Dynamic> = oldVnode.data.props == null ? {} : oldVnode.data.props,
+        props:DynamicObject<Dynamic> = vnode.data.props == null ? {} : vnode.data.props;
     for (key in props.keys()) {
       cur = props[key];
       old = oldProps[key];
@@ -152,7 +189,7 @@ class Attributes {
                   "truespeed", "typemustmatch", "visible"];
 
   static var booleanAttrsDict = (function() {
-    var hash:haxe.DynamicAccess<Dynamic> = {};
+    var hash:DynamicObject<Dynamic> = {};
     var len = booleanAttrs.length;
     var i = 0;
     @for(i=0,  i < len, i++) {
@@ -163,8 +200,8 @@ class Attributes {
 
    inline static function updateAttrs(oldVnode:VirtualNode, vnode:VirtualNode) {
     var key, cur, old, elm = vnode.elm,
-        oldAttrs:haxe.DynamicAccess<Dynamic> = oldVnode.data.attrs == null ? {} : oldVnode.data.attrs,
-        attrs:haxe.DynamicAccess<Dynamic> = vnode.data.attrs == null ? {} : vnode.data.attrs;
+        oldAttrs:DynamicObject<Dynamic> = oldVnode.data.attrs == null ? {} : oldVnode.data.attrs,
+        attrs:DynamicObject<Dynamic> = vnode.data.attrs == null ? {} : vnode.data.attrs;
 
 
 

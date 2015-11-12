@@ -175,7 +175,7 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 		var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
 		var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
 		var _g = 0;
-		var _g1 = Reflect.fields(attrs);
+		var _g1 = Object.keys(attrs);
 		while(_g < _g1.length) {
 			var key1 = _g1[_g];
 			++_g;
@@ -186,7 +186,7 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 			}
 		}
 		var _g2 = 0;
-		var _g11 = Reflect.fields(oldAttrs);
+		var _g11 = Object.keys(oldAttrs);
 		while(_g2 < _g11.length) {
 			var key2 = _g11[_g2];
 			++_g2;
@@ -199,7 +199,7 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 		var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
 		var props = vnode.data.props == null?{ }:vnode.data.props;
 		var _g3 = 0;
-		var _g12 = Reflect.fields(props);
+		var _g12 = Object.keys(props);
 		while(_g3 < _g12.length) {
 			var key4 = _g12[_g3];
 			++_g3;
@@ -216,7 +216,7 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 		var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
 		var klass = vnode.data.classes == null?{ }:vnode.data.classes;
 		var _g4 = 0;
-		var _g13 = Reflect.fields(klass);
+		var _g13 = Object.keys(klass);
 		while(_g4 < _g13.length) {
 			var name1 = _g13[_g4];
 			++_g4;
@@ -232,7 +232,7 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 		var style = vnode.data.style == null?{ }:vnode.data.style;
 		var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
 		var _g5 = 0;
-		var _g14 = Reflect.fields(style);
+		var _g14 = Object.keys(style);
 		while(_g5 < _g14.length) {
 			var name3 = _g14[_g5];
 			++_g5;
@@ -241,7 +241,7 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 				var delayed = style.delayed;
 				var oldDelayed = oldStyle.delayed;
 				var _g21 = 0;
-				var _g31 = Reflect.fields(delayed);
+				var _g31 = Object.keys(delayed);
 				while(_g21 < _g31.length) {
 					var name4 = _g31[_g21];
 					++_g21;
@@ -308,7 +308,7 @@ Main.invokeDestroyHook = function(vnode) {
 			style = s3.destroy;
 			if(style == null) null; else {
 				var _g = 0;
-				var _g1 = Reflect.fields(style);
+				var _g1 = Object.keys(style);
 				while(_g < _g1.length) {
 					var name1 = _g1[_g];
 					++_g;
@@ -390,7 +390,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 		var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
 		var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
 		var _g = 0;
-		var _g1 = Reflect.fields(attrs);
+		var _g1 = Object.keys(attrs);
 		while(_g < _g1.length) {
 			var key1 = _g1[_g];
 			++_g;
@@ -401,7 +401,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 			}
 		}
 		var _g2 = 0;
-		var _g11 = Reflect.fields(oldAttrs);
+		var _g11 = Object.keys(oldAttrs);
 		while(_g2 < _g11.length) {
 			var key2 = _g11[_g2];
 			++_g2;
@@ -414,7 +414,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 		var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
 		var props = vnode.data.props == null?{ }:vnode.data.props;
 		var _g3 = 0;
-		var _g12 = Reflect.fields(props);
+		var _g12 = Object.keys(props);
 		while(_g3 < _g12.length) {
 			var key4 = _g12[_g3];
 			++_g3;
@@ -431,7 +431,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 		var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
 		var klass = vnode.data.classes == null?{ }:vnode.data.classes;
 		var _g4 = 0;
-		var _g13 = Reflect.fields(klass);
+		var _g13 = Object.keys(klass);
 		while(_g4 < _g13.length) {
 			var name1 = _g13[_g4];
 			++_g4;
@@ -447,7 +447,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 		var style = vnode.data.style == null?{ }:vnode.data.style;
 		var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
 		var _g5 = 0;
-		var _g14 = Reflect.fields(style);
+		var _g14 = Object.keys(style);
 		while(_g5 < _g14.length) {
 			var name3 = _g14[_g5];
 			++_g5;
@@ -456,7 +456,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 				var delayed = style.delayed;
 				var oldDelayed = oldStyle.delayed;
 				var _g21 = 0;
-				var _g31 = Reflect.fields(delayed);
+				var _g31 = Object.keys(delayed);
 				while(_g21 < _g31.length) {
 					var name4 = _g31[_g21];
 					++_g21;
@@ -632,7 +632,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								var oldAttrs1 = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
 								var attrs1 = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
 								var _g6 = 0;
-								var _g15 = Reflect.fields(attrs1);
+								var _g15 = Object.keys(attrs1);
 								while(_g6 < _g15.length) {
 									var key7 = _g15[_g6];
 									++_g6;
@@ -643,7 +643,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 									}
 								}
 								var _g7 = 0;
-								var _g16 = Reflect.fields(oldAttrs1);
+								var _g16 = Object.keys(oldAttrs1);
 								while(_g7 < _g16.length) {
 									var key8 = _g16[_g7];
 									++_g7;
@@ -656,7 +656,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								var oldProps1 = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
 								var props1 = vnode1.data.props == null?{ }:vnode1.data.props;
 								var _g8 = 0;
-								var _g17 = Reflect.fields(props1);
+								var _g17 = Object.keys(props1);
 								while(_g8 < _g17.length) {
 									var key10 = _g17[_g8];
 									++_g8;
@@ -673,7 +673,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								var oldClass1 = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
 								var klass1 = vnode1.data.classes == null?{ }:vnode1.data.classes;
 								var _g9 = 0;
-								var _g18 = Reflect.fields(klass1);
+								var _g18 = Object.keys(klass1);
 								while(_g9 < _g18.length) {
 									var name6 = _g18[_g9];
 									++_g9;
@@ -689,7 +689,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								var style1 = vnode1.data.style == null?{ }:vnode1.data.style;
 								var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
 								var _g10 = 0;
-								var _g19 = Reflect.fields(style1);
+								var _g19 = Object.keys(style1);
 								while(_g10 < _g19.length) {
 									var name8 = _g19[_g10];
 									++_g10;
@@ -698,7 +698,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 										var delayed1 = style1.delayed;
 										var oldDelayed1 = oldStyle1.delayed;
 										var _g22 = 0;
-										var _g32 = Reflect.fields(delayed1);
+										var _g32 = Object.keys(delayed1);
 										while(_g22 < _g32.length) {
 											var name9 = _g32[_g22];
 											++_g22;
@@ -825,7 +825,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							var oldAttrs2 = oldVnode2.data.attrs == null?{ }:oldVnode2.data.attrs;
 							var attrs2 = vnode2.data.attrs == null?{ }:vnode2.data.attrs;
 							var _g20 = 0;
-							var _g110 = Reflect.fields(attrs2);
+							var _g110 = Object.keys(attrs2);
 							while(_g20 < _g110.length) {
 								var key12 = _g110[_g20];
 								++_g20;
@@ -836,7 +836,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								}
 							}
 							var _g23 = 0;
-							var _g111 = Reflect.fields(oldAttrs2);
+							var _g111 = Object.keys(oldAttrs2);
 							while(_g23 < _g111.length) {
 								var key13 = _g111[_g23];
 								++_g23;
@@ -849,7 +849,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							var oldProps2 = oldVnode2.data.props == null?{ }:oldVnode2.data.props;
 							var props2 = vnode2.data.props == null?{ }:vnode2.data.props;
 							var _g24 = 0;
-							var _g112 = Reflect.fields(props2);
+							var _g112 = Object.keys(props2);
 							while(_g24 < _g112.length) {
 								var key15 = _g112[_g24];
 								++_g24;
@@ -866,7 +866,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							var oldClass2 = oldVnode2.data.classes == null?{ }:oldVnode2.data.classes;
 							var klass2 = vnode2.data.classes == null?{ }:vnode2.data.classes;
 							var _g25 = 0;
-							var _g113 = Reflect.fields(klass2);
+							var _g113 = Object.keys(klass2);
 							while(_g25 < _g113.length) {
 								var name11 = _g113[_g25];
 								++_g25;
@@ -882,7 +882,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							var style2 = vnode2.data.style == null?{ }:vnode2.data.style;
 							var oldHasDel2 = Object.prototype.hasOwnProperty.call(oldStyle2,"delayed");
 							var _g26 = 0;
-							var _g114 = Reflect.fields(style2);
+							var _g114 = Object.keys(style2);
 							while(_g26 < _g114.length) {
 								var name13 = _g114[_g26];
 								++_g26;
@@ -891,7 +891,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 									var delayed2 = style2.delayed;
 									var oldDelayed2 = oldStyle2.delayed;
 									var _g27 = 0;
-									var _g33 = Reflect.fields(delayed2);
+									var _g33 = Object.keys(delayed2);
 									while(_g27 < _g33.length) {
 										var name14 = _g33[_g27];
 										++_g27;
@@ -986,7 +986,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 										style3 = s33.destroy;
 										if(style3 == null) null; else {
 											var _g28 = 0;
-											var _g115 = Reflect.fields(style3);
+											var _g115 = Object.keys(style3);
 											while(_g28 < _g115.length) {
 												var name16 = _g115[_g28];
 												++_g28;
@@ -1027,7 +1027,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 									var amount = [0];
 									var applied = [];
 									var _g29 = 0;
-									var _g116 = Reflect.fields(style4);
+									var _g116 = Object.keys(style4);
 									while(_g29 < _g116.length) {
 										var name18 = _g116[_g29];
 										++_g29;
@@ -1160,7 +1160,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 					var oldAttrs3 = oldVnode3.data.attrs == null?{ }:oldVnode3.data.attrs;
 					var attrs3 = vnode5.data.attrs == null?{ }:vnode5.data.attrs;
 					var _g30 = 0;
-					var _g117 = Reflect.fields(attrs3);
+					var _g117 = Object.keys(attrs3);
 					while(_g30 < _g117.length) {
 						var key17 = _g117[_g30];
 						++_g30;
@@ -1171,7 +1171,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 						}
 					}
 					var _g34 = 0;
-					var _g118 = Reflect.fields(oldAttrs3);
+					var _g118 = Object.keys(oldAttrs3);
 					while(_g34 < _g118.length) {
 						var key18 = _g118[_g34];
 						++_g34;
@@ -1184,7 +1184,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 					var oldProps3 = oldVnode3.data.props == null?{ }:oldVnode3.data.props;
 					var props4 = vnode5.data.props == null?{ }:vnode5.data.props;
 					var _g35 = 0;
-					var _g119 = Reflect.fields(props4);
+					var _g119 = Object.keys(props4);
 					while(_g35 < _g119.length) {
 						var key20 = _g119[_g35];
 						++_g35;
@@ -1201,7 +1201,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 					var oldClass3 = oldVnode3.data.classes == null?{ }:oldVnode3.data.classes;
 					var klass3 = vnode5.data.classes == null?{ }:vnode5.data.classes;
 					var _g36 = 0;
-					var _g120 = Reflect.fields(klass3);
+					var _g120 = Object.keys(klass3);
 					while(_g36 < _g120.length) {
 						var name20 = _g120[_g36];
 						++_g36;
@@ -1217,7 +1217,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 					var style5 = vnode5.data.style == null?{ }:vnode5.data.style;
 					var oldHasDel3 = Object.prototype.hasOwnProperty.call(oldStyle3,"delayed");
 					var _g37 = 0;
-					var _g121 = Reflect.fields(style5);
+					var _g121 = Object.keys(style5);
 					while(_g37 < _g121.length) {
 						var name22 = _g121[_g37];
 						++_g37;
@@ -1226,7 +1226,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							var delayed3 = style5.delayed;
 							var oldDelayed3 = oldStyle3.delayed;
 							var _g210 = 0;
-							var _g38 = Reflect.fields(delayed3);
+							var _g38 = Object.keys(delayed3);
 							while(_g210 < _g38.length) {
 								var name23 = _g38[_g210];
 								++_g210;
@@ -1327,7 +1327,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								style6 = s54.destroy;
 								if(style6 == null) null; else {
 									var _g39 = 0;
-									var _g122 = Reflect.fields(style6);
+									var _g122 = Object.keys(style6);
 									while(_g39 < _g122.length) {
 										var name25 = _g122[_g39];
 										++_g39;
@@ -1368,7 +1368,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							var amount1 = [0];
 							var applied1 = [];
 							var _g40 = 0;
-							var _g123 = Reflect.fields(style7);
+							var _g123 = Object.keys(style7);
 							while(_g40 < _g123.length) {
 								var name27 = _g123[_g40];
 								++_g40;
@@ -1500,7 +1500,7 @@ Main.patch = function(oldVnode,vnode) {
 				var oldAttrs = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
 				var attrs = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
 				var _g = 0;
-				var _g1 = Reflect.fields(attrs);
+				var _g1 = Object.keys(attrs);
 				while(_g < _g1.length) {
 					var key1 = _g1[_g];
 					++_g;
@@ -1511,7 +1511,7 @@ Main.patch = function(oldVnode,vnode) {
 					}
 				}
 				var _g2 = 0;
-				var _g11 = Reflect.fields(oldAttrs);
+				var _g11 = Object.keys(oldAttrs);
 				while(_g2 < _g11.length) {
 					var key2 = _g11[_g2];
 					++_g2;
@@ -1524,7 +1524,7 @@ Main.patch = function(oldVnode,vnode) {
 				var oldProps = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
 				var props = vnode1.data.props == null?{ }:vnode1.data.props;
 				var _g3 = 0;
-				var _g12 = Reflect.fields(props);
+				var _g12 = Object.keys(props);
 				while(_g3 < _g12.length) {
 					var key4 = _g12[_g3];
 					++_g3;
@@ -1541,7 +1541,7 @@ Main.patch = function(oldVnode,vnode) {
 				var oldClass = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
 				var klass = vnode1.data.classes == null?{ }:vnode1.data.classes;
 				var _g4 = 0;
-				var _g13 = Reflect.fields(klass);
+				var _g13 = Object.keys(klass);
 				while(_g4 < _g13.length) {
 					var name1 = _g13[_g4];
 					++_g4;
@@ -1557,7 +1557,7 @@ Main.patch = function(oldVnode,vnode) {
 				var style = vnode1.data.style == null?{ }:vnode1.data.style;
 				var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
 				var _g5 = 0;
-				var _g14 = Reflect.fields(style);
+				var _g14 = Object.keys(style);
 				while(_g5 < _g14.length) {
 					var name3 = _g14[_g5];
 					++_g5;
@@ -1566,7 +1566,7 @@ Main.patch = function(oldVnode,vnode) {
 						var delayed = style.delayed;
 						var oldDelayed = oldStyle.delayed;
 						var _g21 = 0;
-						var _g31 = Reflect.fields(delayed);
+						var _g31 = Object.keys(delayed);
 						while(_g21 < _g31.length) {
 							var name4 = _g31[_g21];
 							++_g21;
@@ -1672,7 +1672,7 @@ Main.patch = function(oldVnode,vnode) {
 					var oldAttrs1 = oldVnode2.data.attrs == null?{ }:oldVnode2.data.attrs;
 					var attrs1 = vnode2.data.attrs == null?{ }:vnode2.data.attrs;
 					var _g6 = 0;
-					var _g15 = Reflect.fields(attrs1);
+					var _g15 = Object.keys(attrs1);
 					while(_g6 < _g15.length) {
 						var key7 = _g15[_g6];
 						++_g6;
@@ -1683,7 +1683,7 @@ Main.patch = function(oldVnode,vnode) {
 						}
 					}
 					var _g7 = 0;
-					var _g16 = Reflect.fields(oldAttrs1);
+					var _g16 = Object.keys(oldAttrs1);
 					while(_g7 < _g16.length) {
 						var key8 = _g16[_g7];
 						++_g7;
@@ -1696,7 +1696,7 @@ Main.patch = function(oldVnode,vnode) {
 					var oldProps1 = oldVnode2.data.props == null?{ }:oldVnode2.data.props;
 					var props1 = vnode2.data.props == null?{ }:vnode2.data.props;
 					var _g8 = 0;
-					var _g17 = Reflect.fields(props1);
+					var _g17 = Object.keys(props1);
 					while(_g8 < _g17.length) {
 						var key10 = _g17[_g8];
 						++_g8;
@@ -1713,7 +1713,7 @@ Main.patch = function(oldVnode,vnode) {
 					var oldClass1 = oldVnode2.data.classes == null?{ }:oldVnode2.data.classes;
 					var klass1 = vnode2.data.classes == null?{ }:vnode2.data.classes;
 					var _g9 = 0;
-					var _g18 = Reflect.fields(klass1);
+					var _g18 = Object.keys(klass1);
 					while(_g9 < _g18.length) {
 						var name6 = _g18[_g9];
 						++_g9;
@@ -1729,7 +1729,7 @@ Main.patch = function(oldVnode,vnode) {
 					var style1 = vnode2.data.style == null?{ }:vnode2.data.style;
 					var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
 					var _g10 = 0;
-					var _g19 = Reflect.fields(style1);
+					var _g19 = Object.keys(style1);
 					while(_g10 < _g19.length) {
 						var name8 = _g19[_g10];
 						++_g10;
@@ -1738,7 +1738,7 @@ Main.patch = function(oldVnode,vnode) {
 							var delayed1 = style1.delayed;
 							var oldDelayed1 = oldStyle1.delayed;
 							var _g22 = 0;
-							var _g32 = Reflect.fields(delayed1);
+							var _g32 = Object.keys(delayed1);
 							while(_g22 < _g32.length) {
 								var name9 = _g32[_g22];
 								++_g22;
@@ -1914,7 +1914,7 @@ Main.patch = function(oldVnode,vnode) {
 											var oldAttrs2 = oldVnode3.data.attrs == null?{ }:oldVnode3.data.attrs;
 											var attrs2 = vnode3.data.attrs == null?{ }:vnode3.data.attrs;
 											var _g20 = 0;
-											var _g110 = Reflect.fields(attrs2);
+											var _g110 = Object.keys(attrs2);
 											while(_g20 < _g110.length) {
 												var key13 = _g110[_g20];
 												++_g20;
@@ -1925,7 +1925,7 @@ Main.patch = function(oldVnode,vnode) {
 												}
 											}
 											var _g23 = 0;
-											var _g111 = Reflect.fields(oldAttrs2);
+											var _g111 = Object.keys(oldAttrs2);
 											while(_g23 < _g111.length) {
 												var key14 = _g111[_g23];
 												++_g23;
@@ -1938,7 +1938,7 @@ Main.patch = function(oldVnode,vnode) {
 											var oldProps2 = oldVnode3.data.props == null?{ }:oldVnode3.data.props;
 											var props2 = vnode3.data.props == null?{ }:vnode3.data.props;
 											var _g24 = 0;
-											var _g112 = Reflect.fields(props2);
+											var _g112 = Object.keys(props2);
 											while(_g24 < _g112.length) {
 												var key16 = _g112[_g24];
 												++_g24;
@@ -1955,7 +1955,7 @@ Main.patch = function(oldVnode,vnode) {
 											var oldClass2 = oldVnode3.data.classes == null?{ }:oldVnode3.data.classes;
 											var klass2 = vnode3.data.classes == null?{ }:vnode3.data.classes;
 											var _g25 = 0;
-											var _g113 = Reflect.fields(klass2);
+											var _g113 = Object.keys(klass2);
 											while(_g25 < _g113.length) {
 												var name11 = _g113[_g25];
 												++_g25;
@@ -1971,7 +1971,7 @@ Main.patch = function(oldVnode,vnode) {
 											var style2 = vnode3.data.style == null?{ }:vnode3.data.style;
 											var oldHasDel2 = Object.prototype.hasOwnProperty.call(oldStyle2,"delayed");
 											var _g26 = 0;
-											var _g114 = Reflect.fields(style2);
+											var _g114 = Object.keys(style2);
 											while(_g26 < _g114.length) {
 												var name13 = _g114[_g26];
 												++_g26;
@@ -1980,7 +1980,7 @@ Main.patch = function(oldVnode,vnode) {
 													var delayed2 = style2.delayed;
 													var oldDelayed2 = oldStyle2.delayed;
 													var _g27 = 0;
-													var _g33 = Reflect.fields(delayed2);
+													var _g33 = Object.keys(delayed2);
 													while(_g27 < _g33.length) {
 														var name14 = _g33[_g27];
 														++_g27;
@@ -2107,7 +2107,7 @@ Main.patch = function(oldVnode,vnode) {
 										var oldAttrs3 = oldVnode4.data.attrs == null?{ }:oldVnode4.data.attrs;
 										var attrs3 = vnode4.data.attrs == null?{ }:vnode4.data.attrs;
 										var _g28 = 0;
-										var _g115 = Reflect.fields(attrs3);
+										var _g115 = Object.keys(attrs3);
 										while(_g28 < _g115.length) {
 											var key18 = _g115[_g28];
 											++_g28;
@@ -2118,7 +2118,7 @@ Main.patch = function(oldVnode,vnode) {
 											}
 										}
 										var _g29 = 0;
-										var _g116 = Reflect.fields(oldAttrs3);
+										var _g116 = Object.keys(oldAttrs3);
 										while(_g29 < _g116.length) {
 											var key19 = _g116[_g29];
 											++_g29;
@@ -2131,7 +2131,7 @@ Main.patch = function(oldVnode,vnode) {
 										var oldProps3 = oldVnode4.data.props == null?{ }:oldVnode4.data.props;
 										var props3 = vnode4.data.props == null?{ }:vnode4.data.props;
 										var _g30 = 0;
-										var _g117 = Reflect.fields(props3);
+										var _g117 = Object.keys(props3);
 										while(_g30 < _g117.length) {
 											var key21 = _g117[_g30];
 											++_g30;
@@ -2148,7 +2148,7 @@ Main.patch = function(oldVnode,vnode) {
 										var oldClass3 = oldVnode4.data.classes == null?{ }:oldVnode4.data.classes;
 										var klass3 = vnode4.data.classes == null?{ }:vnode4.data.classes;
 										var _g34 = 0;
-										var _g118 = Reflect.fields(klass3);
+										var _g118 = Object.keys(klass3);
 										while(_g34 < _g118.length) {
 											var name16 = _g118[_g34];
 											++_g34;
@@ -2164,7 +2164,7 @@ Main.patch = function(oldVnode,vnode) {
 										var style3 = vnode4.data.style == null?{ }:vnode4.data.style;
 										var oldHasDel3 = Object.prototype.hasOwnProperty.call(oldStyle3,"delayed");
 										var _g35 = 0;
-										var _g119 = Reflect.fields(style3);
+										var _g119 = Object.keys(style3);
 										while(_g35 < _g119.length) {
 											var name18 = _g119[_g35];
 											++_g35;
@@ -2173,7 +2173,7 @@ Main.patch = function(oldVnode,vnode) {
 												var delayed3 = style3.delayed;
 												var oldDelayed3 = oldStyle3.delayed;
 												var _g210 = 0;
-												var _g36 = Reflect.fields(delayed3);
+												var _g36 = Object.keys(delayed3);
 												while(_g210 < _g36.length) {
 													var name19 = _g36[_g210];
 													++_g210;
@@ -2268,7 +2268,7 @@ Main.patch = function(oldVnode,vnode) {
 													style4 = s41.destroy;
 													if(style4 == null) null; else {
 														var _g37 = 0;
-														var _g120 = Reflect.fields(style4);
+														var _g120 = Object.keys(style4);
 														while(_g37 < _g120.length) {
 															var name21 = _g120[_g37];
 															++_g37;
@@ -2309,7 +2309,7 @@ Main.patch = function(oldVnode,vnode) {
 												var amount = [0];
 												var applied = [];
 												var _g38 = 0;
-												var _g121 = Reflect.fields(style5);
+												var _g121 = Object.keys(style5);
 												while(_g38 < _g121.length) {
 													var name23 = _g121[_g38];
 													++_g38;
@@ -2442,7 +2442,7 @@ Main.patch = function(oldVnode,vnode) {
 								var oldAttrs4 = oldVnode5.data.attrs == null?{ }:oldVnode5.data.attrs;
 								var attrs4 = vnode7.data.attrs == null?{ }:vnode7.data.attrs;
 								var _g39 = 0;
-								var _g122 = Reflect.fields(attrs4);
+								var _g122 = Object.keys(attrs4);
 								while(_g39 < _g122.length) {
 									var key23 = _g122[_g39];
 									++_g39;
@@ -2453,7 +2453,7 @@ Main.patch = function(oldVnode,vnode) {
 									}
 								}
 								var _g40 = 0;
-								var _g123 = Reflect.fields(oldAttrs4);
+								var _g123 = Object.keys(oldAttrs4);
 								while(_g40 < _g123.length) {
 									var key24 = _g123[_g40];
 									++_g40;
@@ -2466,7 +2466,7 @@ Main.patch = function(oldVnode,vnode) {
 								var oldProps4 = oldVnode5.data.props == null?{ }:oldVnode5.data.props;
 								var props5 = vnode7.data.props == null?{ }:vnode7.data.props;
 								var _g41 = 0;
-								var _g124 = Reflect.fields(props5);
+								var _g124 = Object.keys(props5);
 								while(_g41 < _g124.length) {
 									var key26 = _g124[_g41];
 									++_g41;
@@ -2483,7 +2483,7 @@ Main.patch = function(oldVnode,vnode) {
 								var oldClass4 = oldVnode5.data.classes == null?{ }:oldVnode5.data.classes;
 								var klass4 = vnode7.data.classes == null?{ }:vnode7.data.classes;
 								var _g42 = 0;
-								var _g125 = Reflect.fields(klass4);
+								var _g125 = Object.keys(klass4);
 								while(_g42 < _g125.length) {
 									var name25 = _g125[_g42];
 									++_g42;
@@ -2499,7 +2499,7 @@ Main.patch = function(oldVnode,vnode) {
 								var style6 = vnode7.data.style == null?{ }:vnode7.data.style;
 								var oldHasDel4 = Object.prototype.hasOwnProperty.call(oldStyle4,"delayed");
 								var _g43 = 0;
-								var _g126 = Reflect.fields(style6);
+								var _g126 = Object.keys(style6);
 								while(_g43 < _g126.length) {
 									var name27 = _g126[_g43];
 									++_g43;
@@ -2508,7 +2508,7 @@ Main.patch = function(oldVnode,vnode) {
 										var delayed4 = style6.delayed;
 										var oldDelayed4 = oldStyle4.delayed;
 										var _g211 = 0;
-										var _g310 = Reflect.fields(delayed4);
+										var _g310 = Object.keys(delayed4);
 										while(_g211 < _g310.length) {
 											var name28 = _g310[_g211];
 											++_g211;
@@ -2609,7 +2609,7 @@ Main.patch = function(oldVnode,vnode) {
 											style7 = s62.destroy;
 											if(style7 == null) null; else {
 												var _g44 = 0;
-												var _g127 = Reflect.fields(style7);
+												var _g127 = Object.keys(style7);
 												while(_g44 < _g127.length) {
 													var name30 = _g127[_g44];
 													++_g44;
@@ -2650,7 +2650,7 @@ Main.patch = function(oldVnode,vnode) {
 										var amount1 = [0];
 										var applied1 = [];
 										var _g45 = 0;
-										var _g128 = Reflect.fields(style8);
+										var _g128 = Object.keys(style8);
 										while(_g45 < _g128.length) {
 											var name32 = _g128[_g45];
 											++_g45;
@@ -2768,7 +2768,7 @@ Main.patch = function(oldVnode,vnode) {
 				var oldAttrs5 = oldVnode6.data.attrs == null?{ }:oldVnode6.data.attrs;
 				var attrs5 = vnode10.data.attrs == null?{ }:vnode10.data.attrs;
 				var _g46 = 0;
-				var _g129 = Reflect.fields(attrs5);
+				var _g129 = Object.keys(attrs5);
 				while(_g46 < _g129.length) {
 					var key28 = _g129[_g46];
 					++_g46;
@@ -2779,7 +2779,7 @@ Main.patch = function(oldVnode,vnode) {
 					}
 				}
 				var _g47 = 0;
-				var _g130 = Reflect.fields(oldAttrs5);
+				var _g130 = Object.keys(oldAttrs5);
 				while(_g47 < _g130.length) {
 					var key29 = _g130[_g47];
 					++_g47;
@@ -2792,7 +2792,7 @@ Main.patch = function(oldVnode,vnode) {
 				var oldProps5 = oldVnode6.data.props == null?{ }:oldVnode6.data.props;
 				var props7 = vnode10.data.props == null?{ }:vnode10.data.props;
 				var _g48 = 0;
-				var _g131 = Reflect.fields(props7);
+				var _g131 = Object.keys(props7);
 				while(_g48 < _g131.length) {
 					var key31 = _g131[_g48];
 					++_g48;
@@ -2809,7 +2809,7 @@ Main.patch = function(oldVnode,vnode) {
 				var oldClass5 = oldVnode6.data.classes == null?{ }:oldVnode6.data.classes;
 				var klass5 = vnode10.data.classes == null?{ }:vnode10.data.classes;
 				var _g49 = 0;
-				var _g132 = Reflect.fields(klass5);
+				var _g132 = Object.keys(klass5);
 				while(_g49 < _g132.length) {
 					var name34 = _g132[_g49];
 					++_g49;
@@ -2825,7 +2825,7 @@ Main.patch = function(oldVnode,vnode) {
 				var style9 = vnode10.data.style == null?{ }:vnode10.data.style;
 				var oldHasDel5 = Object.prototype.hasOwnProperty.call(oldStyle5,"delayed");
 				var _g50 = 0;
-				var _g133 = Reflect.fields(style9);
+				var _g133 = Object.keys(style9);
 				while(_g50 < _g133.length) {
 					var name36 = _g133[_g50];
 					++_g50;
@@ -2834,7 +2834,7 @@ Main.patch = function(oldVnode,vnode) {
 						var delayed5 = style9.delayed;
 						var oldDelayed5 = oldStyle5.delayed;
 						var _g212 = 0;
-						var _g311 = Reflect.fields(delayed5);
+						var _g311 = Object.keys(delayed5);
 						while(_g212 < _g311.length) {
 							var name37 = _g311[_g212];
 							++_g212;
@@ -3010,7 +3010,7 @@ Main.patch = function(oldVnode,vnode) {
 										var oldAttrs6 = oldVnode7.data.attrs == null?{ }:oldVnode7.data.attrs;
 										var attrs6 = vnode11.data.attrs == null?{ }:vnode11.data.attrs;
 										var _g51 = 0;
-										var _g134 = Reflect.fields(attrs6);
+										var _g134 = Object.keys(attrs6);
 										while(_g51 < _g134.length) {
 											var key34 = _g134[_g51];
 											++_g51;
@@ -3021,7 +3021,7 @@ Main.patch = function(oldVnode,vnode) {
 											}
 										}
 										var _g52 = 0;
-										var _g135 = Reflect.fields(oldAttrs6);
+										var _g135 = Object.keys(oldAttrs6);
 										while(_g52 < _g135.length) {
 											var key35 = _g135[_g52];
 											++_g52;
@@ -3034,7 +3034,7 @@ Main.patch = function(oldVnode,vnode) {
 										var oldProps6 = oldVnode7.data.props == null?{ }:oldVnode7.data.props;
 										var props8 = vnode11.data.props == null?{ }:vnode11.data.props;
 										var _g53 = 0;
-										var _g136 = Reflect.fields(props8);
+										var _g136 = Object.keys(props8);
 										while(_g53 < _g136.length) {
 											var key37 = _g136[_g53];
 											++_g53;
@@ -3051,7 +3051,7 @@ Main.patch = function(oldVnode,vnode) {
 										var oldClass6 = oldVnode7.data.classes == null?{ }:oldVnode7.data.classes;
 										var klass6 = vnode11.data.classes == null?{ }:vnode11.data.classes;
 										var _g54 = 0;
-										var _g137 = Reflect.fields(klass6);
+										var _g137 = Object.keys(klass6);
 										while(_g54 < _g137.length) {
 											var name39 = _g137[_g54];
 											++_g54;
@@ -3067,7 +3067,7 @@ Main.patch = function(oldVnode,vnode) {
 										var style10 = vnode11.data.style == null?{ }:vnode11.data.style;
 										var oldHasDel6 = Object.prototype.hasOwnProperty.call(oldStyle6,"delayed");
 										var _g55 = 0;
-										var _g138 = Reflect.fields(style10);
+										var _g138 = Object.keys(style10);
 										while(_g55 < _g138.length) {
 											var name41 = _g138[_g55];
 											++_g55;
@@ -3076,7 +3076,7 @@ Main.patch = function(oldVnode,vnode) {
 												var delayed6 = style10.delayed;
 												var oldDelayed6 = oldStyle6.delayed;
 												var _g213 = 0;
-												var _g312 = Reflect.fields(delayed6);
+												var _g312 = Object.keys(delayed6);
 												while(_g213 < _g312.length) {
 													var name42 = _g312[_g213];
 													++_g213;
@@ -3203,7 +3203,7 @@ Main.patch = function(oldVnode,vnode) {
 									var oldAttrs7 = oldVnode8.data.attrs == null?{ }:oldVnode8.data.attrs;
 									var attrs7 = vnode12.data.attrs == null?{ }:vnode12.data.attrs;
 									var _g56 = 0;
-									var _g139 = Reflect.fields(attrs7);
+									var _g139 = Object.keys(attrs7);
 									while(_g56 < _g139.length) {
 										var key39 = _g139[_g56];
 										++_g56;
@@ -3214,7 +3214,7 @@ Main.patch = function(oldVnode,vnode) {
 										}
 									}
 									var _g57 = 0;
-									var _g140 = Reflect.fields(oldAttrs7);
+									var _g140 = Object.keys(oldAttrs7);
 									while(_g57 < _g140.length) {
 										var key40 = _g140[_g57];
 										++_g57;
@@ -3227,7 +3227,7 @@ Main.patch = function(oldVnode,vnode) {
 									var oldProps7 = oldVnode8.data.props == null?{ }:oldVnode8.data.props;
 									var props9 = vnode12.data.props == null?{ }:vnode12.data.props;
 									var _g58 = 0;
-									var _g141 = Reflect.fields(props9);
+									var _g141 = Object.keys(props9);
 									while(_g58 < _g141.length) {
 										var key42 = _g141[_g58];
 										++_g58;
@@ -3244,7 +3244,7 @@ Main.patch = function(oldVnode,vnode) {
 									var oldClass7 = oldVnode8.data.classes == null?{ }:oldVnode8.data.classes;
 									var klass7 = vnode12.data.classes == null?{ }:vnode12.data.classes;
 									var _g59 = 0;
-									var _g142 = Reflect.fields(klass7);
+									var _g142 = Object.keys(klass7);
 									while(_g59 < _g142.length) {
 										var name44 = _g142[_g59];
 										++_g59;
@@ -3260,7 +3260,7 @@ Main.patch = function(oldVnode,vnode) {
 									var style11 = vnode12.data.style == null?{ }:vnode12.data.style;
 									var oldHasDel7 = Object.prototype.hasOwnProperty.call(oldStyle7,"delayed");
 									var _g60 = 0;
-									var _g143 = Reflect.fields(style11);
+									var _g143 = Object.keys(style11);
 									while(_g60 < _g143.length) {
 										var name46 = _g143[_g60];
 										++_g60;
@@ -3269,7 +3269,7 @@ Main.patch = function(oldVnode,vnode) {
 											var delayed7 = style11.delayed;
 											var oldDelayed7 = oldStyle7.delayed;
 											var _g214 = 0;
-											var _g313 = Reflect.fields(delayed7);
+											var _g313 = Object.keys(delayed7);
 											while(_g214 < _g313.length) {
 												var name47 = _g313[_g214];
 												++_g214;
@@ -3364,7 +3364,7 @@ Main.patch = function(oldVnode,vnode) {
 												style12 = s102.destroy;
 												if(style12 == null) null; else {
 													var _g61 = 0;
-													var _g144 = Reflect.fields(style12);
+													var _g144 = Object.keys(style12);
 													while(_g61 < _g144.length) {
 														var name49 = _g144[_g61];
 														++_g61;
@@ -3405,7 +3405,7 @@ Main.patch = function(oldVnode,vnode) {
 											var amount2 = [0];
 											var applied2 = [];
 											var _g62 = 0;
-											var _g145 = Reflect.fields(style13);
+											var _g145 = Object.keys(style13);
 											while(_g62 < _g145.length) {
 												var name51 = _g145[_g62];
 												++_g62;
@@ -3538,7 +3538,7 @@ Main.patch = function(oldVnode,vnode) {
 							var oldAttrs8 = oldVnode9.data.attrs == null?{ }:oldVnode9.data.attrs;
 							var attrs8 = vnode15.data.attrs == null?{ }:vnode15.data.attrs;
 							var _g63 = 0;
-							var _g146 = Reflect.fields(attrs8);
+							var _g146 = Object.keys(attrs8);
 							while(_g63 < _g146.length) {
 								var key44 = _g146[_g63];
 								++_g63;
@@ -3549,7 +3549,7 @@ Main.patch = function(oldVnode,vnode) {
 								}
 							}
 							var _g64 = 0;
-							var _g147 = Reflect.fields(oldAttrs8);
+							var _g147 = Object.keys(oldAttrs8);
 							while(_g64 < _g147.length) {
 								var key45 = _g147[_g64];
 								++_g64;
@@ -3562,7 +3562,7 @@ Main.patch = function(oldVnode,vnode) {
 							var oldProps8 = oldVnode9.data.props == null?{ }:oldVnode9.data.props;
 							var props11 = vnode15.data.props == null?{ }:vnode15.data.props;
 							var _g65 = 0;
-							var _g148 = Reflect.fields(props11);
+							var _g148 = Object.keys(props11);
 							while(_g65 < _g148.length) {
 								var key47 = _g148[_g65];
 								++_g65;
@@ -3579,7 +3579,7 @@ Main.patch = function(oldVnode,vnode) {
 							var oldClass8 = oldVnode9.data.classes == null?{ }:oldVnode9.data.classes;
 							var klass8 = vnode15.data.classes == null?{ }:vnode15.data.classes;
 							var _g66 = 0;
-							var _g149 = Reflect.fields(klass8);
+							var _g149 = Object.keys(klass8);
 							while(_g66 < _g149.length) {
 								var name53 = _g149[_g66];
 								++_g66;
@@ -3595,7 +3595,7 @@ Main.patch = function(oldVnode,vnode) {
 							var style14 = vnode15.data.style == null?{ }:vnode15.data.style;
 							var oldHasDel8 = Object.prototype.hasOwnProperty.call(oldStyle8,"delayed");
 							var _g67 = 0;
-							var _g150 = Reflect.fields(style14);
+							var _g150 = Object.keys(style14);
 							while(_g67 < _g150.length) {
 								var name55 = _g150[_g67];
 								++_g67;
@@ -3604,7 +3604,7 @@ Main.patch = function(oldVnode,vnode) {
 									var delayed8 = style14.delayed;
 									var oldDelayed8 = oldStyle8.delayed;
 									var _g215 = 0;
-									var _g314 = Reflect.fields(delayed8);
+									var _g314 = Object.keys(delayed8);
 									while(_g215 < _g314.length) {
 										var name56 = _g314[_g215];
 										++_g215;
@@ -3705,7 +3705,7 @@ Main.patch = function(oldVnode,vnode) {
 										style15 = s123.destroy;
 										if(style15 == null) null; else {
 											var _g68 = 0;
-											var _g151 = Reflect.fields(style15);
+											var _g151 = Object.keys(style15);
 											while(_g68 < _g151.length) {
 												var name58 = _g151[_g68];
 												++_g68;
@@ -3746,7 +3746,7 @@ Main.patch = function(oldVnode,vnode) {
 									var amount3 = [0];
 									var applied3 = [];
 									var _g69 = 0;
-									var _g152 = Reflect.fields(style16);
+									var _g152 = Object.keys(style16);
 									while(_g69 < _g152.length) {
 										var name60 = _g152[_g69];
 										++_g69;
@@ -3812,17 +3812,6 @@ Main.patch = function(oldVnode,vnode) {
 		return $r;
 	}(this)));
 	return vnode;
-};
-var Reflect = function() { };
-Reflect.fields = function(o) {
-	var a = [];
-	if(o != null) {
-		var hasOwnProperty = Object.prototype.hasOwnProperty;
-		for( var f in o ) {
-		if(f != "__id__" && f != "hx__closures__" && hasOwnProperty.call(o,f)) a.push(f);
-		}
-	}
-	return a;
 };
 var Std = function() { };
 Std.random = function(x) {
