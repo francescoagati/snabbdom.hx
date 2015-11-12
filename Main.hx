@@ -2,22 +2,9 @@ import Main.*;
 
 using thx.Arrays;
 using VirtualNodeDataTools;
-import Main.Is.*;
+import Is.*;
 
-class Is {
 
-    public inline static function is_array(obj) {
-      #if js
-      return untyped Array.isArray(obj);
-      #end
-    }
-    public inline static function is_primitive(s) {
-      #if js
-        return untyped __js__('typeof {0} == "string" || typeof {0} == "number"',s);
-      #end
-    }
-
-}
 
 @:build(ClassicFor.build())
 class Styles {
@@ -191,7 +178,8 @@ class Attributes {
     }
   }
 
-   inline public static function create(oldVnode:VirtualNode, vnode:VirtualNode) updateAttrs(oldVnode, vnode);
+
+  inline public static function create(oldVnode:VirtualNode, vnode:VirtualNode) updateAttrs(oldVnode, vnode);
   inline  public static function update(oldVnode:VirtualNode, vnode:VirtualNode) updateAttrs(oldVnode, vnode);
 
   //module.exports = {create: updateAttrs, update: updateAttrs};
@@ -282,7 +270,7 @@ class Main {
 
 
    static function h(sel, b:Dynamic, c:Dynamic) {
-    var data = {}, children:Array<Dynamic> = null, text = null, i;
+    var data = {}, children:VirtualNodes= null, text = null, i;
     var arguments:Array<Dynamic> = untyped __js__('arguments');
     if (arguments.length == 3) {
       data = b;
@@ -310,9 +298,7 @@ class Main {
   }
 
 
-   inline static function isUndef(s:Dynamic) { return untyped s == undefined; }
-   inline static function isDef(s:Dynamic) { return untyped s != undefined; }
-
+   
   inline static function emptyNodeAt(elm) {
     return vnode(elm.tagName, {}, [], null, elm);
   }

@@ -52,43 +52,16 @@ Main.h = function(sel,b,c) {
 	var $arguments = arguments;
 	if($arguments.length == 3) {
 		data = b;
-		if((function($this) {
-			var $r;
-			var obj = c;
-			$r = Array.isArray(obj);
-			return $r;
-		}(this))) children = c; else if((function($this) {
-			var $r;
-			var s = c;
-			$r = typeof s == "string" || typeof s == "number";
-			return $r;
-		}(this))) text = c;
+		if(Array.isArray(c)) children = c; else if(typeof c == "string" || typeof c == "number") text = c;
 	} else if($arguments.length == 2) {
-		if((function($this) {
-			var $r;
-			var obj1 = b;
-			$r = Array.isArray(obj1);
-			return $r;
-		}(this))) children = b; else if((function($this) {
-			var $r;
-			var s1 = b;
-			$r = typeof s1 == "string" || typeof s1 == "number";
-			return $r;
-		}(this))) text = b; else data = b;
+		if(Array.isArray(b)) children = b; else if(typeof b == "string" || typeof b == "number") text = b; else data = b;
 	}
 	if(Array.isArray(children)) {
 		i = 0;
-		if(i < children.length) do if((function($this) {
+		if(i < children.length) do if(typeof children[i] == "string" || typeof children[i] == "number") children[i] = (function($this) {
 			var $r;
-			var s2 = children[i];
-			$r = typeof s2 == "string" || typeof s2 == "number";
-			return $r;
-		}(this))) children[i] = (function($this) {
-			var $r;
-			var text1 = children[i];
-			var elm = null;
 			var key = null;
-			$r = { sel : null, data : null, children : null, text : text1, elm : elm, key : key};
+			$r = { sel : null, data : null, children : null, text : null, elm : children[i], key : key};
 			return $r;
 		}(this)); while((function($this) {
 			var $r;
@@ -99,9 +72,9 @@ Main.h = function(sel,b,c) {
 	}
 	return (function($this) {
 		var $r;
-		var elm1 = undefined;
+		var elm = undefined;
 		var key1 = data == null?null:data.key;
-		$r = { sel : sel, data : data, children : children, text : text, elm : elm1, key : key1};
+		$r = { sel : sel, data : data, children : children, text : text, elm : elm, key : key1};
 		return $r;
 	}(this));
 };
@@ -109,23 +82,8 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 	var i;
 	var data = vnode.data;
 	if(data != undefined) {
-		if((function($this) {
-			var $r;
-			var s = i = data.hook;
-			$r = s != undefined;
-			return $r;
-		}(this)) && (function($this) {
-			var $r;
-			var s1 = i = i.init;
-			$r = s1 != undefined;
-			return $r;
-		}(this))) i(vnode);
-		if((function($this) {
-			var $r;
-			var s2 = i = data.vnode;
-			$r = s2 != undefined;
-			return $r;
-		}(this))) vnode = i;
+		if((i = data.hook) != undefined && (i = i.init) != undefined) i(vnode);
+		if((i = data.vnode) != undefined) vnode = i;
 	}
 	var elm;
 	var children = vnode.children;
@@ -136,12 +94,7 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 		var hash = hashIdx > 0?hashIdx:sel.length;
 		var dot = dotIdx > 0?dotIdx:sel.length;
 		var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-		elm = vnode.elm = data != undefined && (function($this) {
-			var $r;
-			var s3 = i = data.ns;
-			$r = s3 != undefined;
-			return $r;
-		}(this))?document.createElementNS(i,tag):document.createElement(tag);
+		elm = vnode.elm = data != undefined && (i = data.ns) != undefined?document.createElementNS(i,tag):document.createElement(tag);
 		if(hash < dot) elm.id = sel.slice(hash + 1,dot);
 		if(dotIdx > 0) {
 			elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -267,23 +220,13 @@ Main.invokeDestroyHook = function(vnode) {
 	var i = vnode.data;
 	var j;
 	if(i != undefined) {
-		if((function($this) {
-			var $r;
-			var s = i = i.hook;
-			$r = s != undefined;
-			return $r;
-		}(this)) && (function($this) {
-			var $r;
-			var s1 = i = i.destroy;
-			$r = s1 != undefined;
-			return $r;
-		}(this))) i(vnode);
+		if((i = i.hook) != undefined && (i = i.destroy) != undefined) i(vnode);
 		var style = null;
 		var name;
 		var elm = vnode.elm;
-		var s2 = vnode.data.style;
-		if(s2 == null) null; else {
-			style = s2.destroy;
+		var s = vnode.data.style;
+		if(s == null) null; else {
+			style = s.destroy;
 			if(style == null) null; else {
 				var _g = 0;
 				var _g1 = Object.keys(style);
@@ -294,12 +237,7 @@ Main.invokeDestroyHook = function(vnode) {
 				}
 			}
 		}
-		if((function($this) {
-			var $r;
-			var s3 = i = vnode.children;
-			$r = s3 != undefined;
-			return $r;
-		}(this))) {
+		if((i = vnode.children) != undefined) {
 			j = 0;
 			if(j < vnode.children.length) do Main.invokeDestroyHook(vnode.children[j]); while((function($this) {
 				var $r;
@@ -313,44 +251,9 @@ Main.invokeDestroyHook = function(vnode) {
 Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 	var i;
 	var hook;
-	if((function($this) {
-		var $r;
-		var s = i = vnode.data;
-		$r = s != undefined;
-		return $r;
-	}(this)) && (function($this) {
-		var $r;
-		var s1 = hook = i.hook;
-		$r = s1 != undefined;
-		return $r;
-	}(this)) && (function($this) {
-		var $r;
-		var s2 = i = hook.prepatch;
-		$r = s2 != undefined;
-		return $r;
-	}(this))) i(oldVnode,vnode);
-	if((function($this) {
-		var $r;
-		var s3 = i = oldVnode.data;
-		$r = s3 != undefined;
-		return $r;
-	}(this)) && (function($this) {
-		var $r;
-		var s4 = i = i.vnode;
-		$r = s4 != undefined;
-		return $r;
-	}(this))) oldVnode = i;
-	if((function($this) {
-		var $r;
-		var s5 = i = vnode.data;
-		$r = s5 != undefined;
-		return $r;
-	}(this)) && (function($this) {
-		var $r;
-		var s6 = i = i.vnode;
-		$r = s6 != undefined;
-		return $r;
-	}(this))) vnode = i;
+	if((i = vnode.data) != undefined && (hook = i.hook) != undefined && (i = hook.prepatch) != undefined) i(oldVnode,vnode);
+	if((i = oldVnode.data) != undefined && (i = i.vnode) != undefined) oldVnode = i;
+	if((i = vnode.data) != undefined && (i = i.vnode) != undefined) vnode = i;
 	var elm = vnode.elm = oldVnode.elm;
 	var oldCh = oldVnode.children;
 	var ch = vnode.children;
@@ -454,12 +357,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 			} else if(name3 != "remove" && cur3 != oldStyle[name3]) elm4.style[name3] = cur3;
 		}
 		i = vnode.data.hook;
-		if(i != undefined && (function($this) {
-			var $r;
-			var s7 = i = i.update;
-			$r = s7 != undefined;
-			return $r;
-		}(this))) i(oldVnode,vnode);
+		if(i != undefined && (i = i.update) != undefined) i(oldVnode,vnode);
 	}
 	if(vnode.text == undefined) {
 		if(oldCh != undefined && ch != undefined) {
@@ -524,23 +422,8 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							var i4;
 							var data = vnode1.data;
 							if(data != undefined) {
-								if((function($this) {
-									var $r;
-									var s8 = i4 = data.hook;
-									$r = s8 != undefined;
-									return $r;
-								}($this)) && (function($this) {
-									var $r;
-									var s9 = i4 = i4.init;
-									$r = s9 != undefined;
-									return $r;
-								}($this))) i4(vnode1);
-								if((function($this) {
-									var $r;
-									var s10 = i4 = data.vnode;
-									$r = s10 != undefined;
-									return $r;
-								}($this))) vnode1 = i4;
+								if((i4 = data.hook) != undefined && (i4 = i4.init) != undefined) i4(vnode1);
+								if((i4 = data.vnode) != undefined) vnode1 = i4;
 							}
 							var elm5;
 							var children1 = vnode1.children;
@@ -551,12 +434,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								var hash = hashIdx > 0?hashIdx:sel.length;
 								var dot = dotIdx > 0?dotIdx:sel.length;
 								var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-								elm5 = vnode1.elm = data != undefined && (function($this) {
-									var $r;
-									var s11 = i4 = data.ns;
-									$r = s11 != undefined;
-									return $r;
-								}($this))?document.createElementNS(i4,tag):document.createElement(tag);
+								elm5 = vnode1.elm = data != undefined && (i4 = data.ns) != undefined?document.createElementNS(i4,tag):document.createElement(tag);
 								if(hash < dot) elm5.id = sel.slice(hash + 1,dot);
 								if(dotIdx > 0) {
 									elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -700,23 +578,8 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 						var i8;
 						var data1 = vnode2.data;
 						if(data1 != undefined) {
-							if((function($this) {
-								var $r;
-								var s12 = i8 = data1.hook;
-								$r = s12 != undefined;
-								return $r;
-							}($this)) && (function($this) {
-								var $r;
-								var s13 = i8 = i8.init;
-								$r = s13 != undefined;
-								return $r;
-							}($this))) i8(vnode2);
-							if((function($this) {
-								var $r;
-								var s14 = i8 = data1.vnode;
-								$r = s14 != undefined;
-								return $r;
-							}($this))) vnode2 = i8;
+							if((i8 = data1.hook) != undefined && (i8 = i8.init) != undefined) i8(vnode2);
+							if((i8 = data1.vnode) != undefined) vnode2 = i8;
 						}
 						var elm10;
 						var children2 = vnode2.children;
@@ -727,12 +590,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							var hash1 = hashIdx1 > 0?hashIdx1:sel1.length;
 							var dot1 = dotIdx1 > 0?dotIdx1:sel1.length;
 							var tag1 = hashIdx1 != -1 || dotIdx1 != -1?sel1.slice(0,Math.min(hash1,dot1)):sel1;
-							elm10 = vnode2.elm = data1 != undefined && (function($this) {
-								var $r;
-								var s15 = i8 = data1.ns;
-								$r = s15 != undefined;
-								return $r;
-							}($this))?document.createElementNS(i8,tag1):document.createElement(tag1);
+							elm10 = vnode2.elm = data1 != undefined && (i8 = data1.ns) != undefined?document.createElementNS(i8,tag1):document.createElement(tag1);
 							if(hash1 < dot1) elm10.id = sel1.slice(hash1 + 1,dot1);
 							if(dotIdx1 > 0) {
 								elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -876,23 +734,13 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								var i12 = vnode3.data;
 								var j;
 								if(i12 != undefined) {
-									if((function($this) {
-										var $r;
-										var s16 = i12 = i12.hook;
-										$r = s16 != undefined;
-										return $r;
-									}(this)) && (function($this) {
-										var $r;
-										var s17 = i12 = i12.destroy;
-										$r = s17 != undefined;
-										return $r;
-									}(this))) i12(vnode3);
+									if((i12 = i12.hook) != undefined && (i12 = i12.destroy) != undefined) i12(vnode3);
 									var style3 = null;
 									var name15;
 									var elm15 = vnode3.elm;
-									var s18 = vnode3.data.style;
-									if(s18 == null) null; else {
-										style3 = s18.destroy;
+									var s = vnode3.data.style;
+									if(s == null) null; else {
+										style3 = s.destroy;
 										if(style3 == null) null; else {
 											var _g28 = 0;
 											var _g115 = Object.keys(style3);
@@ -903,12 +751,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 											}
 										}
 									}
-									if((function($this) {
-										var $r;
-										var s19 = i12 = vnode3.children;
-										$r = s19 != undefined;
-										return $r;
-									}(this))) {
+									if((i12 = vnode3.children) != undefined) {
 										j = 0;
 										if(j < vnode3.children.length) do Main.invokeDestroyHook(vnode3.children[j]); while((function($this) {
 											var $r;
@@ -921,8 +764,8 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								var vnode4 = ch1;
 								var rm1 = rm;
 								var rm2 = [rm1];
-								var s20 = vnode4.data.style;
-								if(!s20 || !s20.remove) {
+								var s1 = vnode4.data.style;
+								if(!s1 || !s1.remove) {
 									rm2[0]();
 									null;
 								} else {
@@ -932,7 +775,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 									var i13 = 0;
 									var maxDur = 0;
 									var compStyle;
-									var style4 = s20.remove;
+									var style4 = s1.remove;
 									var amount = [0];
 									var applied = [];
 									var _g29 = 0;
@@ -960,22 +803,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 										};
 									})(amount,elm16,rm2));
 								}
-								if((function($this) {
-									var $r;
-									var s21 = i11 = ch1.data;
-									$r = s21 != undefined;
-									return $r;
-								}(this)) && (function($this) {
-									var $r;
-									var s22 = i11 = i11.hook;
-									$r = s22 != undefined;
-									return $r;
-								}(this)) && (function($this) {
-									var $r;
-									var s23 = i11 = i11.remove;
-									$r = s23 != undefined;
-									return $r;
-								}(this))) i11(ch1,rm); else rm();
+								if((i11 = ch1.data) != undefined && (i11 = i11.hook) != undefined && (i11 = i11.remove) != undefined) i11(ch1,rm); else rm();
 							} else elm.removeChild(ch1.elm);
 						}
 					} while((function($this) {
@@ -998,23 +826,8 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 				var i16;
 				var data2 = vnode5.data;
 				if(data2 != undefined) {
-					if((function($this) {
-						var $r;
-						var s24 = i16 = data2.hook;
-						$r = s24 != undefined;
-						return $r;
-					}($this)) && (function($this) {
-						var $r;
-						var s25 = i16 = i16.init;
-						$r = s25 != undefined;
-						return $r;
-					}($this))) i16(vnode5);
-					if((function($this) {
-						var $r;
-						var s26 = i16 = data2.vnode;
-						$r = s26 != undefined;
-						return $r;
-					}($this))) vnode5 = i16;
+					if((i16 = data2.hook) != undefined && (i16 = i16.init) != undefined) i16(vnode5);
+					if((i16 = data2.vnode) != undefined) vnode5 = i16;
 				}
 				var elm17;
 				var children3 = vnode5.children;
@@ -1025,12 +838,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 					var hash2 = hashIdx2 > 0?hashIdx2:sel2.length;
 					var dot2 = dotIdx2 > 0?dotIdx2:sel2.length;
 					var tag2 = hashIdx2 != -1 || dotIdx2 != -1?sel2.slice(0,Math.min(hash2,dot2)):sel2;
-					elm17 = vnode5.elm = data2 != undefined && (function($this) {
-						var $r;
-						var s27 = i16 = data2.ns;
-						$r = s27 != undefined;
-						return $r;
-					}($this))?document.createElementNS(i16,tag2):document.createElement(tag2);
+					elm17 = vnode5.elm = data2 != undefined && (i16 = data2.ns) != undefined?document.createElementNS(i16,tag2):document.createElement(tag2);
 					if(hash2 < dot2) elm17.id = sel2.slice(hash2 + 1,dot2);
 					if(dotIdx2 > 0) {
 						elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -1175,23 +983,13 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 						var i20 = vnode6.data;
 						var j1;
 						if(i20 != undefined) {
-							if((function($this) {
-								var $r;
-								var s28 = i20 = i20.hook;
-								$r = s28 != undefined;
-								return $r;
-							}(this)) && (function($this) {
-								var $r;
-								var s29 = i20 = i20.destroy;
-								$r = s29 != undefined;
-								return $r;
-							}(this))) i20(vnode6);
+							if((i20 = i20.hook) != undefined && (i20 = i20.destroy) != undefined) i20(vnode6);
 							var style6 = null;
 							var name24;
 							var elm22 = vnode6.elm;
-							var s30 = vnode6.data.style;
-							if(s30 == null) null; else {
-								style6 = s30.destroy;
+							var s2 = vnode6.data.style;
+							if(s2 == null) null; else {
+								style6 = s2.destroy;
 								if(style6 == null) null; else {
 									var _g39 = 0;
 									var _g122 = Object.keys(style6);
@@ -1202,12 +1000,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 									}
 								}
 							}
-							if((function($this) {
-								var $r;
-								var s31 = i20 = vnode6.children;
-								$r = s31 != undefined;
-								return $r;
-							}(this))) {
+							if((i20 = vnode6.children) != undefined) {
 								j1 = 0;
 								if(j1 < vnode6.children.length) do Main.invokeDestroyHook(vnode6.children[j1]); while((function($this) {
 									var $r;
@@ -1220,8 +1013,8 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 						var vnode7 = ch2;
 						var rm4 = rm3;
 						var rm5 = [rm4];
-						var s32 = vnode7.data.style;
-						if(!s32 || !s32.remove) {
+						var s3 = vnode7.data.style;
+						if(!s3 || !s3.remove) {
 							rm5[0]();
 							null;
 						} else {
@@ -1231,7 +1024,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							var i21 = 0;
 							var maxDur1 = 0;
 							var compStyle1;
-							var style7 = s32.remove;
+							var style7 = s3.remove;
 							var amount1 = [0];
 							var applied1 = [];
 							var _g40 = 0;
@@ -1259,22 +1052,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								};
 							})(amount1,elm23,rm5));
 						}
-						if((function($this) {
-							var $r;
-							var s33 = i19 = ch2.data;
-							$r = s33 != undefined;
-							return $r;
-						}(this)) && (function($this) {
-							var $r;
-							var s34 = i19 = i19.hook;
-							$r = s34 != undefined;
-							return $r;
-						}(this)) && (function($this) {
-							var $r;
-							var s35 = i19 = i19.remove;
-							$r = s35 != undefined;
-							return $r;
-						}(this))) i19(ch2,rm3); else rm3();
+						if((i19 = ch2.data) != undefined && (i19 = i19.hook) != undefined && (i19 = i19.remove) != undefined) i19(ch2,rm3); else rm3();
 					} else elm.removeChild(ch2.elm);
 				}
 			} while((function($this) {
@@ -1285,12 +1063,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 			}(this)));
 		}
 	} else if(oldVnode.text != vnode.text) elm.textContent = vnode.text;
-	if(hook != undefined && (function($this) {
-		var $r;
-		var s36 = i = hook.postpatch;
-		$r = s36 != undefined;
-		return $r;
-	}(this))) i(oldVnode,vnode);
+	if(hook != undefined && (i = hook.postpatch) != undefined) i(oldVnode,vnode);
 };
 Main.patch = function(oldVnode,vnode) {
 	var i;
@@ -1301,23 +1074,8 @@ Main.patch = function(oldVnode,vnode) {
 			var i1;
 			var data = vnode1.data;
 			if(data != undefined) {
-				if((function($this) {
-					var $r;
-					var s = i1 = data.hook;
-					$r = s != undefined;
-					return $r;
-				}(this)) && (function($this) {
-					var $r;
-					var s1 = i1 = i1.init;
-					$r = s1 != undefined;
-					return $r;
-				}(this))) i1(vnode1);
-				if((function($this) {
-					var $r;
-					var s2 = i1 = data.vnode;
-					$r = s2 != undefined;
-					return $r;
-				}(this))) vnode1 = i1;
+				if((i1 = data.hook) != undefined && (i1 = i1.init) != undefined) i1(vnode1);
+				if((i1 = data.vnode) != undefined) vnode1 = i1;
 			}
 			var elm;
 			var children = vnode1.children;
@@ -1328,12 +1086,7 @@ Main.patch = function(oldVnode,vnode) {
 				var hash = hashIdx > 0?hashIdx:sel.length;
 				var dot = dotIdx > 0?dotIdx:sel.length;
 				var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-				elm = vnode1.elm = data != undefined && (function($this) {
-					var $r;
-					var s3 = i1 = data.ns;
-					$r = s3 != undefined;
-					return $r;
-				}(this))?document.createElementNS(i1,tag):document.createElement(tag);
+				elm = vnode1.elm = data != undefined && (i1 = data.ns) != undefined?document.createElementNS(i1,tag):document.createElement(tag);
 				if(hash < dot) elm.id = sel.slice(hash + 1,dot);
 				if(dotIdx > 0) {
 					elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -1467,44 +1220,9 @@ Main.patch = function(oldVnode,vnode) {
 			var vnode2 = vnode;
 			var i4;
 			var hook;
-			if((function($this) {
-				var $r;
-				var s4 = i4 = vnode2.data;
-				$r = s4 != undefined;
-				return $r;
-			}(this)) && (function($this) {
-				var $r;
-				var s5 = hook = i4.hook;
-				$r = s5 != undefined;
-				return $r;
-			}(this)) && (function($this) {
-				var $r;
-				var s6 = i4 = hook.prepatch;
-				$r = s6 != undefined;
-				return $r;
-			}(this))) i4(oldVnode2,vnode2);
-			if((function($this) {
-				var $r;
-				var s7 = i4 = oldVnode2.data;
-				$r = s7 != undefined;
-				return $r;
-			}(this)) && (function($this) {
-				var $r;
-				var s8 = i4 = i4.vnode;
-				$r = s8 != undefined;
-				return $r;
-			}(this))) oldVnode2 = i4;
-			if((function($this) {
-				var $r;
-				var s9 = i4 = vnode2.data;
-				$r = s9 != undefined;
-				return $r;
-			}(this)) && (function($this) {
-				var $r;
-				var s10 = i4 = i4.vnode;
-				$r = s10 != undefined;
-				return $r;
-			}(this))) vnode2 = i4;
+			if((i4 = vnode2.data) != undefined && (hook = i4.hook) != undefined && (i4 = hook.prepatch) != undefined) i4(oldVnode2,vnode2);
+			if((i4 = oldVnode2.data) != undefined && (i4 = i4.vnode) != undefined) oldVnode2 = i4;
+			if((i4 = vnode2.data) != undefined && (i4 = i4.vnode) != undefined) vnode2 = i4;
 			var elm5 = vnode2.elm = oldVnode2.elm;
 			var oldCh = oldVnode2.children;
 			var ch = vnode2.children;
@@ -1608,12 +1326,7 @@ Main.patch = function(oldVnode,vnode) {
 						} else if(name8 != "remove" && cur7 != oldStyle1[name8]) elm9.style[name8] = cur7;
 					}
 					i4 = vnode2.data.hook;
-					if(i4 != undefined && (function($this) {
-						var $r;
-						var s11 = i4 = i4.update;
-						$r = s11 != undefined;
-						return $r;
-					}(this))) i4(oldVnode2,vnode2);
+					if(i4 != undefined && (i4 = i4.update) != undefined) i4(oldVnode2,vnode2);
 				}
 				if(vnode2.text == undefined) {
 					if(oldCh != undefined && ch != undefined) {
@@ -1678,23 +1391,8 @@ Main.patch = function(oldVnode,vnode) {
 										var i8;
 										var data2 = vnode3.data;
 										if(data2 != undefined) {
-											if((function($this) {
-												var $r;
-												var s12 = i8 = data2.hook;
-												$r = s12 != undefined;
-												return $r;
-											}($this)) && (function($this) {
-												var $r;
-												var s13 = i8 = i8.init;
-												$r = s13 != undefined;
-												return $r;
-											}($this))) i8(vnode3);
-											if((function($this) {
-												var $r;
-												var s14 = i8 = data2.vnode;
-												$r = s14 != undefined;
-												return $r;
-											}($this))) vnode3 = i8;
+											if((i8 = data2.hook) != undefined && (i8 = i8.init) != undefined) i8(vnode3);
+											if((i8 = data2.vnode) != undefined) vnode3 = i8;
 										}
 										var elm10;
 										var children2 = vnode3.children;
@@ -1705,12 +1403,7 @@ Main.patch = function(oldVnode,vnode) {
 											var hash1 = hashIdx1 > 0?hashIdx1:sel1.length;
 											var dot1 = dotIdx1 > 0?dotIdx1:sel1.length;
 											var tag1 = hashIdx1 != -1 || dotIdx1 != -1?sel1.slice(0,Math.min(hash1,dot1)):sel1;
-											elm10 = vnode3.elm = data2 != undefined && (function($this) {
-												var $r;
-												var s15 = i8 = data2.ns;
-												$r = s15 != undefined;
-												return $r;
-											}($this))?document.createElementNS(i8,tag1):document.createElement(tag1);
+											elm10 = vnode3.elm = data2 != undefined && (i8 = data2.ns) != undefined?document.createElementNS(i8,tag1):document.createElement(tag1);
 											if(hash1 < dot1) elm10.id = sel1.slice(hash1 + 1,dot1);
 											if(dotIdx1 > 0) {
 												elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -1854,23 +1547,8 @@ Main.patch = function(oldVnode,vnode) {
 									var i12;
 									var data3 = vnode4.data;
 									if(data3 != undefined) {
-										if((function($this) {
-											var $r;
-											var s16 = i12 = data3.hook;
-											$r = s16 != undefined;
-											return $r;
-										}($this)) && (function($this) {
-											var $r;
-											var s17 = i12 = i12.init;
-											$r = s17 != undefined;
-											return $r;
-										}($this))) i12(vnode4);
-										if((function($this) {
-											var $r;
-											var s18 = i12 = data3.vnode;
-											$r = s18 != undefined;
-											return $r;
-										}($this))) vnode4 = i12;
+										if((i12 = data3.hook) != undefined && (i12 = i12.init) != undefined) i12(vnode4);
+										if((i12 = data3.vnode) != undefined) vnode4 = i12;
 									}
 									var elm15;
 									var children3 = vnode4.children;
@@ -1881,12 +1559,7 @@ Main.patch = function(oldVnode,vnode) {
 										var hash2 = hashIdx2 > 0?hashIdx2:sel2.length;
 										var dot2 = dotIdx2 > 0?dotIdx2:sel2.length;
 										var tag2 = hashIdx2 != -1 || dotIdx2 != -1?sel2.slice(0,Math.min(hash2,dot2)):sel2;
-										elm15 = vnode4.elm = data3 != undefined && (function($this) {
-											var $r;
-											var s19 = i12 = data3.ns;
-											$r = s19 != undefined;
-											return $r;
-										}($this))?document.createElementNS(i12,tag2):document.createElement(tag2);
+										elm15 = vnode4.elm = data3 != undefined && (i12 = data3.ns) != undefined?document.createElementNS(i12,tag2):document.createElement(tag2);
 										if(hash2 < dot2) elm15.id = sel2.slice(hash2 + 1,dot2);
 										if(dotIdx2 > 0) {
 											elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -2030,23 +1703,13 @@ Main.patch = function(oldVnode,vnode) {
 											var i16 = vnode5.data;
 											var j;
 											if(i16 != undefined) {
-												if((function($this) {
-													var $r;
-													var s20 = i16 = i16.hook;
-													$r = s20 != undefined;
-													return $r;
-												}(this)) && (function($this) {
-													var $r;
-													var s21 = i16 = i16.destroy;
-													$r = s21 != undefined;
-													return $r;
-												}(this))) i16(vnode5);
+												if((i16 = i16.hook) != undefined && (i16 = i16.destroy) != undefined) i16(vnode5);
 												var style4 = null;
 												var name20;
 												var elm20 = vnode5.elm;
-												var s22 = vnode5.data.style;
-												if(s22 == null) null; else {
-													style4 = s22.destroy;
+												var s = vnode5.data.style;
+												if(s == null) null; else {
+													style4 = s.destroy;
 													if(style4 == null) null; else {
 														var _g37 = 0;
 														var _g120 = Object.keys(style4);
@@ -2057,12 +1720,7 @@ Main.patch = function(oldVnode,vnode) {
 														}
 													}
 												}
-												if((function($this) {
-													var $r;
-													var s23 = i16 = vnode5.children;
-													$r = s23 != undefined;
-													return $r;
-												}(this))) {
+												if((i16 = vnode5.children) != undefined) {
 													j = 0;
 													if(j < vnode5.children.length) do Main.invokeDestroyHook(vnode5.children[j]); while((function($this) {
 														var $r;
@@ -2075,8 +1733,8 @@ Main.patch = function(oldVnode,vnode) {
 											var vnode6 = ch1;
 											var rm1 = rm;
 											var rm2 = [rm1];
-											var s24 = vnode6.data.style;
-											if(!s24 || !s24.remove) {
+											var s1 = vnode6.data.style;
+											if(!s1 || !s1.remove) {
 												rm2[0]();
 												null;
 											} else {
@@ -2086,7 +1744,7 @@ Main.patch = function(oldVnode,vnode) {
 												var i17 = 0;
 												var maxDur = 0;
 												var compStyle;
-												var style5 = s24.remove;
+												var style5 = s1.remove;
 												var amount = [0];
 												var applied = [];
 												var _g38 = 0;
@@ -2114,22 +1772,7 @@ Main.patch = function(oldVnode,vnode) {
 													};
 												})(amount,elm21,rm2));
 											}
-											if((function($this) {
-												var $r;
-												var s25 = i15 = ch1.data;
-												$r = s25 != undefined;
-												return $r;
-											}(this)) && (function($this) {
-												var $r;
-												var s26 = i15 = i15.hook;
-												$r = s26 != undefined;
-												return $r;
-											}(this)) && (function($this) {
-												var $r;
-												var s27 = i15 = i15.remove;
-												$r = s27 != undefined;
-												return $r;
-											}(this))) i15(ch1,rm); else rm();
+											if((i15 = ch1.data) != undefined && (i15 = i15.hook) != undefined && (i15 = i15.remove) != undefined) i15(ch1,rm); else rm();
 										} else elm5.removeChild(ch1.elm);
 									}
 								} while((function($this) {
@@ -2152,23 +1795,8 @@ Main.patch = function(oldVnode,vnode) {
 							var i20;
 							var data4 = vnode7.data;
 							if(data4 != undefined) {
-								if((function($this) {
-									var $r;
-									var s28 = i20 = data4.hook;
-									$r = s28 != undefined;
-									return $r;
-								}($this)) && (function($this) {
-									var $r;
-									var s29 = i20 = i20.init;
-									$r = s29 != undefined;
-									return $r;
-								}($this))) i20(vnode7);
-								if((function($this) {
-									var $r;
-									var s30 = i20 = data4.vnode;
-									$r = s30 != undefined;
-									return $r;
-								}($this))) vnode7 = i20;
+								if((i20 = data4.hook) != undefined && (i20 = i20.init) != undefined) i20(vnode7);
+								if((i20 = data4.vnode) != undefined) vnode7 = i20;
 							}
 							var elm22;
 							var children4 = vnode7.children;
@@ -2179,12 +1807,7 @@ Main.patch = function(oldVnode,vnode) {
 								var hash3 = hashIdx3 > 0?hashIdx3:sel3.length;
 								var dot3 = dotIdx3 > 0?dotIdx3:sel3.length;
 								var tag3 = hashIdx3 != -1 || dotIdx3 != -1?sel3.slice(0,Math.min(hash3,dot3)):sel3;
-								elm22 = vnode7.elm = data4 != undefined && (function($this) {
-									var $r;
-									var s31 = i20 = data4.ns;
-									$r = s31 != undefined;
-									return $r;
-								}($this))?document.createElementNS(i20,tag3):document.createElement(tag3);
+								elm22 = vnode7.elm = data4 != undefined && (i20 = data4.ns) != undefined?document.createElementNS(i20,tag3):document.createElement(tag3);
 								if(hash3 < dot3) elm22.id = sel3.slice(hash3 + 1,dot3);
 								if(dotIdx3 > 0) {
 									elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -2329,23 +1952,13 @@ Main.patch = function(oldVnode,vnode) {
 									var i24 = vnode8.data;
 									var j1;
 									if(i24 != undefined) {
-										if((function($this) {
-											var $r;
-											var s32 = i24 = i24.hook;
-											$r = s32 != undefined;
-											return $r;
-										}(this)) && (function($this) {
-											var $r;
-											var s33 = i24 = i24.destroy;
-											$r = s33 != undefined;
-											return $r;
-										}(this))) i24(vnode8);
+										if((i24 = i24.hook) != undefined && (i24 = i24.destroy) != undefined) i24(vnode8);
 										var style7 = null;
 										var name29;
 										var elm27 = vnode8.elm;
-										var s34 = vnode8.data.style;
-										if(s34 == null) null; else {
-											style7 = s34.destroy;
+										var s2 = vnode8.data.style;
+										if(s2 == null) null; else {
+											style7 = s2.destroy;
 											if(style7 == null) null; else {
 												var _g44 = 0;
 												var _g127 = Object.keys(style7);
@@ -2356,12 +1969,7 @@ Main.patch = function(oldVnode,vnode) {
 												}
 											}
 										}
-										if((function($this) {
-											var $r;
-											var s35 = i24 = vnode8.children;
-											$r = s35 != undefined;
-											return $r;
-										}(this))) {
+										if((i24 = vnode8.children) != undefined) {
 											j1 = 0;
 											if(j1 < vnode8.children.length) do Main.invokeDestroyHook(vnode8.children[j1]); while((function($this) {
 												var $r;
@@ -2374,8 +1982,8 @@ Main.patch = function(oldVnode,vnode) {
 									var vnode9 = ch2;
 									var rm4 = rm3;
 									var rm5 = [rm4];
-									var s36 = vnode9.data.style;
-									if(!s36 || !s36.remove) {
+									var s3 = vnode9.data.style;
+									if(!s3 || !s3.remove) {
 										rm5[0]();
 										null;
 									} else {
@@ -2385,7 +1993,7 @@ Main.patch = function(oldVnode,vnode) {
 										var i25 = 0;
 										var maxDur1 = 0;
 										var compStyle1;
-										var style8 = s36.remove;
+										var style8 = s3.remove;
 										var amount1 = [0];
 										var applied1 = [];
 										var _g45 = 0;
@@ -2413,22 +2021,7 @@ Main.patch = function(oldVnode,vnode) {
 											};
 										})(amount1,elm28,rm5));
 									}
-									if((function($this) {
-										var $r;
-										var s37 = i23 = ch2.data;
-										$r = s37 != undefined;
-										return $r;
-									}(this)) && (function($this) {
-										var $r;
-										var s38 = i23 = i23.hook;
-										$r = s38 != undefined;
-										return $r;
-									}(this)) && (function($this) {
-										var $r;
-										var s39 = i23 = i23.remove;
-										$r = s39 != undefined;
-										return $r;
-									}(this))) i23(ch2,rm3); else rm3();
+									if((i23 = ch2.data) != undefined && (i23 = i23.hook) != undefined && (i23 = i23.remove) != undefined) i23(ch2,rm3); else rm3();
 								} else elm5.removeChild(ch2.elm);
 							}
 						} while((function($this) {
@@ -2439,12 +2032,7 @@ Main.patch = function(oldVnode,vnode) {
 						}(this)));
 					}
 				} else if(oldVnode2.text != vnode2.text) elm5.textContent = vnode2.text;
-				if(hook != undefined && (function($this) {
-					var $r;
-					var s40 = i4 = hook.postpatch;
-					$r = s40 != undefined;
-					return $r;
-				}(this))) i4(oldVnode2,vnode2);
+				if(hook != undefined && (i4 = hook.postpatch) != undefined) i4(oldVnode2,vnode2);
 			}
 		}
 	} else {
@@ -2452,44 +2040,9 @@ Main.patch = function(oldVnode,vnode) {
 		var vnode10 = vnode;
 		var i27;
 		var hook1;
-		if((function($this) {
-			var $r;
-			var s41 = i27 = vnode10.data;
-			$r = s41 != undefined;
-			return $r;
-		}(this)) && (function($this) {
-			var $r;
-			var s42 = hook1 = i27.hook;
-			$r = s42 != undefined;
-			return $r;
-		}(this)) && (function($this) {
-			var $r;
-			var s43 = i27 = hook1.prepatch;
-			$r = s43 != undefined;
-			return $r;
-		}(this))) i27(oldVnode6,vnode10);
-		if((function($this) {
-			var $r;
-			var s44 = i27 = oldVnode6.data;
-			$r = s44 != undefined;
-			return $r;
-		}(this)) && (function($this) {
-			var $r;
-			var s45 = i27 = i27.vnode;
-			$r = s45 != undefined;
-			return $r;
-		}(this))) oldVnode6 = i27;
-		if((function($this) {
-			var $r;
-			var s46 = i27 = vnode10.data;
-			$r = s46 != undefined;
-			return $r;
-		}(this)) && (function($this) {
-			var $r;
-			var s47 = i27 = i27.vnode;
-			$r = s47 != undefined;
-			return $r;
-		}(this))) vnode10 = i27;
+		if((i27 = vnode10.data) != undefined && (hook1 = i27.hook) != undefined && (i27 = hook1.prepatch) != undefined) i27(oldVnode6,vnode10);
+		if((i27 = oldVnode6.data) != undefined && (i27 = i27.vnode) != undefined) oldVnode6 = i27;
+		if((i27 = vnode10.data) != undefined && (i27 = i27.vnode) != undefined) vnode10 = i27;
 		var elm29 = vnode10.elm = oldVnode6.elm;
 		var oldCh1 = oldVnode6.children;
 		var ch3 = vnode10.children;
@@ -2593,12 +2146,7 @@ Main.patch = function(oldVnode,vnode) {
 					} else if(name36 != "remove" && cur23 != oldStyle5[name36]) elm33.style[name36] = cur23;
 				}
 				i27 = vnode10.data.hook;
-				if(i27 != undefined && (function($this) {
-					var $r;
-					var s48 = i27 = i27.update;
-					$r = s48 != undefined;
-					return $r;
-				}(this))) i27(oldVnode6,vnode10);
+				if(i27 != undefined && (i27 = i27.update) != undefined) i27(oldVnode6,vnode10);
 			}
 			if(vnode10.text == undefined) {
 				if(oldCh1 != undefined && ch3 != undefined) {
@@ -2663,23 +2211,8 @@ Main.patch = function(oldVnode,vnode) {
 									var i31;
 									var data5 = vnode11.data;
 									if(data5 != undefined) {
-										if((function($this) {
-											var $r;
-											var s49 = i31 = data5.hook;
-											$r = s49 != undefined;
-											return $r;
-										}($this)) && (function($this) {
-											var $r;
-											var s50 = i31 = i31.init;
-											$r = s50 != undefined;
-											return $r;
-										}($this))) i31(vnode11);
-										if((function($this) {
-											var $r;
-											var s51 = i31 = data5.vnode;
-											$r = s51 != undefined;
-											return $r;
-										}($this))) vnode11 = i31;
+										if((i31 = data5.hook) != undefined && (i31 = i31.init) != undefined) i31(vnode11);
+										if((i31 = data5.vnode) != undefined) vnode11 = i31;
 									}
 									var elm34;
 									var children6 = vnode11.children;
@@ -2690,12 +2223,7 @@ Main.patch = function(oldVnode,vnode) {
 										var hash4 = hashIdx4 > 0?hashIdx4:sel4.length;
 										var dot4 = dotIdx4 > 0?dotIdx4:sel4.length;
 										var tag4 = hashIdx4 != -1 || dotIdx4 != -1?sel4.slice(0,Math.min(hash4,dot4)):sel4;
-										elm34 = vnode11.elm = data5 != undefined && (function($this) {
-											var $r;
-											var s52 = i31 = data5.ns;
-											$r = s52 != undefined;
-											return $r;
-										}($this))?document.createElementNS(i31,tag4):document.createElement(tag4);
+										elm34 = vnode11.elm = data5 != undefined && (i31 = data5.ns) != undefined?document.createElementNS(i31,tag4):document.createElement(tag4);
 										if(hash4 < dot4) elm34.id = sel4.slice(hash4 + 1,dot4);
 										if(dotIdx4 > 0) {
 											elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -2839,23 +2367,8 @@ Main.patch = function(oldVnode,vnode) {
 								var i35;
 								var data6 = vnode12.data;
 								if(data6 != undefined) {
-									if((function($this) {
-										var $r;
-										var s53 = i35 = data6.hook;
-										$r = s53 != undefined;
-										return $r;
-									}($this)) && (function($this) {
-										var $r;
-										var s54 = i35 = i35.init;
-										$r = s54 != undefined;
-										return $r;
-									}($this))) i35(vnode12);
-									if((function($this) {
-										var $r;
-										var s55 = i35 = data6.vnode;
-										$r = s55 != undefined;
-										return $r;
-									}($this))) vnode12 = i35;
+									if((i35 = data6.hook) != undefined && (i35 = i35.init) != undefined) i35(vnode12);
+									if((i35 = data6.vnode) != undefined) vnode12 = i35;
 								}
 								var elm39;
 								var children7 = vnode12.children;
@@ -2866,12 +2379,7 @@ Main.patch = function(oldVnode,vnode) {
 									var hash5 = hashIdx5 > 0?hashIdx5:sel5.length;
 									var dot5 = dotIdx5 > 0?dotIdx5:sel5.length;
 									var tag5 = hashIdx5 != -1 || dotIdx5 != -1?sel5.slice(0,Math.min(hash5,dot5)):sel5;
-									elm39 = vnode12.elm = data6 != undefined && (function($this) {
-										var $r;
-										var s56 = i35 = data6.ns;
-										$r = s56 != undefined;
-										return $r;
-									}($this))?document.createElementNS(i35,tag5):document.createElement(tag5);
+									elm39 = vnode12.elm = data6 != undefined && (i35 = data6.ns) != undefined?document.createElementNS(i35,tag5):document.createElement(tag5);
 									if(hash5 < dot5) elm39.id = sel5.slice(hash5 + 1,dot5);
 									if(dotIdx5 > 0) {
 										elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -3015,23 +2523,13 @@ Main.patch = function(oldVnode,vnode) {
 										var i39 = vnode13.data;
 										var j2;
 										if(i39 != undefined) {
-											if((function($this) {
-												var $r;
-												var s57 = i39 = i39.hook;
-												$r = s57 != undefined;
-												return $r;
-											}(this)) && (function($this) {
-												var $r;
-												var s58 = i39 = i39.destroy;
-												$r = s58 != undefined;
-												return $r;
-											}(this))) i39(vnode13);
+											if((i39 = i39.hook) != undefined && (i39 = i39.destroy) != undefined) i39(vnode13);
 											var style12 = null;
 											var name48;
 											var elm44 = vnode13.elm;
-											var s59 = vnode13.data.style;
-											if(s59 == null) null; else {
-												style12 = s59.destroy;
+											var s4 = vnode13.data.style;
+											if(s4 == null) null; else {
+												style12 = s4.destroy;
 												if(style12 == null) null; else {
 													var _g61 = 0;
 													var _g144 = Object.keys(style12);
@@ -3042,12 +2540,7 @@ Main.patch = function(oldVnode,vnode) {
 													}
 												}
 											}
-											if((function($this) {
-												var $r;
-												var s60 = i39 = vnode13.children;
-												$r = s60 != undefined;
-												return $r;
-											}(this))) {
+											if((i39 = vnode13.children) != undefined) {
 												j2 = 0;
 												if(j2 < vnode13.children.length) do Main.invokeDestroyHook(vnode13.children[j2]); while((function($this) {
 													var $r;
@@ -3060,8 +2553,8 @@ Main.patch = function(oldVnode,vnode) {
 										var vnode14 = ch4;
 										var rm7 = rm6;
 										var rm8 = [rm7];
-										var s61 = vnode14.data.style;
-										if(!s61 || !s61.remove) {
+										var s5 = vnode14.data.style;
+										if(!s5 || !s5.remove) {
 											rm8[0]();
 											null;
 										} else {
@@ -3071,7 +2564,7 @@ Main.patch = function(oldVnode,vnode) {
 											var i40 = 0;
 											var maxDur2 = 0;
 											var compStyle2;
-											var style13 = s61.remove;
+											var style13 = s5.remove;
 											var amount2 = [0];
 											var applied2 = [];
 											var _g62 = 0;
@@ -3099,22 +2592,7 @@ Main.patch = function(oldVnode,vnode) {
 												};
 											})(amount2,elm45,rm8));
 										}
-										if((function($this) {
-											var $r;
-											var s62 = i38 = ch4.data;
-											$r = s62 != undefined;
-											return $r;
-										}(this)) && (function($this) {
-											var $r;
-											var s63 = i38 = i38.hook;
-											$r = s63 != undefined;
-											return $r;
-										}(this)) && (function($this) {
-											var $r;
-											var s64 = i38 = i38.remove;
-											$r = s64 != undefined;
-											return $r;
-										}(this))) i38(ch4,rm6); else rm6();
+										if((i38 = ch4.data) != undefined && (i38 = i38.hook) != undefined && (i38 = i38.remove) != undefined) i38(ch4,rm6); else rm6();
 									} else elm29.removeChild(ch4.elm);
 								}
 							} while((function($this) {
@@ -3137,23 +2615,8 @@ Main.patch = function(oldVnode,vnode) {
 						var i43;
 						var data7 = vnode15.data;
 						if(data7 != undefined) {
-							if((function($this) {
-								var $r;
-								var s65 = i43 = data7.hook;
-								$r = s65 != undefined;
-								return $r;
-							}($this)) && (function($this) {
-								var $r;
-								var s66 = i43 = i43.init;
-								$r = s66 != undefined;
-								return $r;
-							}($this))) i43(vnode15);
-							if((function($this) {
-								var $r;
-								var s67 = i43 = data7.vnode;
-								$r = s67 != undefined;
-								return $r;
-							}($this))) vnode15 = i43;
+							if((i43 = data7.hook) != undefined && (i43 = i43.init) != undefined) i43(vnode15);
+							if((i43 = data7.vnode) != undefined) vnode15 = i43;
 						}
 						var elm46;
 						var children8 = vnode15.children;
@@ -3164,12 +2627,7 @@ Main.patch = function(oldVnode,vnode) {
 							var hash6 = hashIdx6 > 0?hashIdx6:sel6.length;
 							var dot6 = dotIdx6 > 0?dotIdx6:sel6.length;
 							var tag6 = hashIdx6 != -1 || dotIdx6 != -1?sel6.slice(0,Math.min(hash6,dot6)):sel6;
-							elm46 = vnode15.elm = data7 != undefined && (function($this) {
-								var $r;
-								var s68 = i43 = data7.ns;
-								$r = s68 != undefined;
-								return $r;
-							}($this))?document.createElementNS(i43,tag6):document.createElement(tag6);
+							elm46 = vnode15.elm = data7 != undefined && (i43 = data7.ns) != undefined?document.createElementNS(i43,tag6):document.createElement(tag6);
 							if(hash6 < dot6) elm46.id = sel6.slice(hash6 + 1,dot6);
 							if(dotIdx6 > 0) {
 								elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
@@ -3314,23 +2772,13 @@ Main.patch = function(oldVnode,vnode) {
 								var i47 = vnode16.data;
 								var j3;
 								if(i47 != undefined) {
-									if((function($this) {
-										var $r;
-										var s69 = i47 = i47.hook;
-										$r = s69 != undefined;
-										return $r;
-									}(this)) && (function($this) {
-										var $r;
-										var s70 = i47 = i47.destroy;
-										$r = s70 != undefined;
-										return $r;
-									}(this))) i47(vnode16);
+									if((i47 = i47.hook) != undefined && (i47 = i47.destroy) != undefined) i47(vnode16);
 									var style15 = null;
 									var name57;
 									var elm51 = vnode16.elm;
-									var s71 = vnode16.data.style;
-									if(s71 == null) null; else {
-										style15 = s71.destroy;
+									var s6 = vnode16.data.style;
+									if(s6 == null) null; else {
+										style15 = s6.destroy;
 										if(style15 == null) null; else {
 											var _g68 = 0;
 											var _g151 = Object.keys(style15);
@@ -3341,12 +2789,7 @@ Main.patch = function(oldVnode,vnode) {
 											}
 										}
 									}
-									if((function($this) {
-										var $r;
-										var s72 = i47 = vnode16.children;
-										$r = s72 != undefined;
-										return $r;
-									}(this))) {
+									if((i47 = vnode16.children) != undefined) {
 										j3 = 0;
 										if(j3 < vnode16.children.length) do Main.invokeDestroyHook(vnode16.children[j3]); while((function($this) {
 											var $r;
@@ -3359,8 +2802,8 @@ Main.patch = function(oldVnode,vnode) {
 								var vnode17 = ch5;
 								var rm10 = rm9;
 								var rm11 = [rm10];
-								var s73 = vnode17.data.style;
-								if(!s73 || !s73.remove) {
+								var s7 = vnode17.data.style;
+								if(!s7 || !s7.remove) {
 									rm11[0]();
 									null;
 								} else {
@@ -3370,7 +2813,7 @@ Main.patch = function(oldVnode,vnode) {
 									var i48 = 0;
 									var maxDur3 = 0;
 									var compStyle3;
-									var style16 = s73.remove;
+									var style16 = s7.remove;
 									var amount3 = [0];
 									var applied3 = [];
 									var _g69 = 0;
@@ -3398,22 +2841,7 @@ Main.patch = function(oldVnode,vnode) {
 										};
 									})(amount3,elm52,rm11));
 								}
-								if((function($this) {
-									var $r;
-									var s74 = i46 = ch5.data;
-									$r = s74 != undefined;
-									return $r;
-								}(this)) && (function($this) {
-									var $r;
-									var s75 = i46 = i46.hook;
-									$r = s75 != undefined;
-									return $r;
-								}(this)) && (function($this) {
-									var $r;
-									var s76 = i46 = i46.remove;
-									$r = s76 != undefined;
-									return $r;
-								}(this))) i46(ch5,rm9); else rm9();
+								if((i46 = ch5.data) != undefined && (i46 = i46.hook) != undefined && (i46 = i46.remove) != undefined) i46(ch5,rm9); else rm9();
 							} else elm29.removeChild(ch5.elm);
 						}
 					} while((function($this) {
@@ -3424,12 +2852,7 @@ Main.patch = function(oldVnode,vnode) {
 					}(this)));
 				}
 			} else if(oldVnode6.text != vnode10.text) elm29.textContent = vnode10.text;
-			if(hook1 != undefined && (function($this) {
-				var $r;
-				var s77 = i27 = hook1.postpatch;
-				$r = s77 != undefined;
-				return $r;
-			}(this))) i27(oldVnode6,vnode10);
+			if(hook1 != undefined && (i27 = hook1.postpatch) != undefined) i27(oldVnode6,vnode10);
 		}
 	}
 	i = 0;
