@@ -1,3 +1,4 @@
+package snabbdom;
 
 abstract DynamicObject<T>(Dynamic<T>) from Dynamic<T> {
 

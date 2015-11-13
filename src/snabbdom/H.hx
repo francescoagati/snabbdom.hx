@@ -1,3 +1,5 @@
+package snabbdom;
+
 import haxe.macro.Expr;
 import haxe.macro.Context;
 using haxe.macro.ComplexTypeTools;

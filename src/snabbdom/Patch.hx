@@ -1,9 +1,9 @@
-import Main.*;
+package snabbdom;
 
-using thx.Arrays;
-using VirtualNodeDataTools;
-import Is.*;
-import Jsx.jsx;
+import snabbdom.Patch.*;
+import snabbdom.Is.*;
+
+using snabbdom.VirtualNodeDataTools;
 
 
 @:build(ClassicFor.build())
@@ -225,87 +225,9 @@ class Hooks {
 
 
 @:build(ClassicFor.build())
-class Main {
+class Patch {
 
   static var rg = untyped  __js__('new RegExp({0},"g")',"\\.");
-
-
-  public static function main() {
-
-/*
-    var  x = H.h('ul',{},
-        H.h('li',{}),
-        H.h('li',{}),
-        H.h('li',{}),
-        H.h('li',{}),
-        H.h('li',{}),
-        H.h('li',{},H.h('span',{}))
-      );
-      untyped ddd(x);
-*/
-
-
-      var txt = 'testo';
-
-      var vnode = jsx('
-        <div id="pippa">
-          <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>
-              <span>${txt}</span>
-            </li>
-          </ul>
-        </div>
-      ');
-
-/*
-    var vnode = untyped h('div#conta.two.classes', {on: {click: function() {}}}, [
-      h('span', {style: {fontWeight: 'bold'}}, 'This is bold'),
-      ' and this is just normal text',
-      h('a', {props: {href: '/foo'}}, 'I\'ll take you places!')
-    ]);
-*/
-
-  var container = untyped js.Browser.document.getElementById('container');
-
-  patch(untyped container,vnode);
-
-    var last_node = vnode;
-
-
-
-    var timer = new haxe.Timer(16);
-    timer.run = function() {
-
-
-
-        var rnd = Math.random();
-        var color = ['red','yellow','green','black','white','grey'].shuffle().first();
-        var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
-        var vnode2 = jsx('
-          <div id="pippa">
-            <ul style="font-size:30px;color:$color;background-color:$bg">
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>2</li>
-              <li>5</li>
-              <li>
-                <span>${rnd}</span>
-              </li>
-            </ul>
-          </div>
-      ');
-
-      patch(last_node,untyped vnode2);
-      last_node = vnode2;
-    };
-
-  }
 
 
    static function h(sel, b:Dynamic, c:Dynamic) {
@@ -555,7 +477,7 @@ class Main {
     }
 
 
-    static function patch(oldVnode:VirtualNode, vnode:VirtualNode) {
+    public static function patch(oldVnode:VirtualNode, vnode:VirtualNode) {
       var i;
       var insertedVnodeQueue = [];
       //@for(i = 0; i < cbs.pre.length; ++i) cbs.pre[i]();

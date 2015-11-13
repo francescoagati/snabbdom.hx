@@ -1,3 +1,6 @@
+package snabbdom;
+
+
 typedef VirtualNode =  {
   ?sel: String,
   ?data: VirtualNodeData,

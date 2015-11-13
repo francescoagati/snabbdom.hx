@@ -1,3 +1,5 @@
+package snabbdom;
+
 typedef VirtualNodeData = {
   ?attrs:DynamicObject<Dynamic>,
   ?props:DynamicObject<Dynamic>,

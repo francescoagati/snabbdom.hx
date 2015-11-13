@@ -1,5 +1,6 @@
--main Main
--js main.js
+-main snabbdom.Main
+-js build/main.js
 -lib classic-for tink_macro thx.core
 -dce full
 -D analyzer
+-cp src

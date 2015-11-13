@@ -1,3 +1,5 @@
+package snabbdom;
+
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.ExprTools;

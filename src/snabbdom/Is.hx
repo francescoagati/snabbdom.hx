@@ -1,3 +1,5 @@
+package snabbdom;
+
 #if macro
   import haxe.macro.Expr;
 #end
