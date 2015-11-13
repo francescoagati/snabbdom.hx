@@ -3,6 +3,9 @@ import haxe.macro.Expr;
 import haxe.macro.ExprTools;
 
 
+//original code from
+//https://github.com/massiveinteractive/haxe-react/blob/master/src/lib/api/react/ReactMacro.hx
+
 class Jsx {
 	#if macro
 	static var reInterpolationClass = ~/(<|<\/)\$/g;
