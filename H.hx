@@ -4,17 +4,52 @@ using haxe.macro.ComplexTypeTools;
 using haxe.macro.MacroStringTools;
 using haxe.macro.ExprTools;
 using Lambda;
+using StringTools;
+using thx.Strings;
 
 class H {
 
 
-  static function get_key_value(expr,?key,?value) {
+  inline static function get_key_value(expr,?key,?value) {
 
     return switch(expr.expr) {
       case EObjectDecl(fields):[for (field in fields) [field.field,field.expr.toString()] ];
       case _:[];
     }
 
+  }
+
+  inline static function style_to_property(style:String) {
+    var els = style.split("-");
+    return els[0] + els.slice(1).map(function(s) { return s.capitalize(); }).join("");
+  }
+
+
+  inline static function parse_style_string(s:String,context) {
+
+    var styles = s.replace('\"',"").split(";");
+
+    var json = [for (style in styles) {
+      var pair = style.split(":");
+
+      pair[0] = style_to_property(pair[0]);
+      [pair[0],pair[1]];
+
+    }];
+
+    var props = [];
+    for (el in json) {
+      var key = el[0];
+      var value = if (el[1].indexOf("{") == 0) el[1].replace("{","").replace("}","");
+      else '"${el[1]}"';
+      props.push('$key:$value');
+    }
+
+    var style = '{' + props.join(",") + '}';
+
+
+    //var expr = context.parse(style,context.currentPos());
+    return style;
 
   }
 
@@ -34,7 +69,12 @@ class H {
 
 
     for (field in fields) {
-      if (field[0] == 'style')  structure = structure + ',style:untyped ${field[1]}';
+      if (field[0] == 'style')  {
+
+        var style = parse_style_string(field[1],Context);
+
+        structure = structure + ',style:untyped ${style}';
+      }
     }
 
 
