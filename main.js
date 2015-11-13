@@ -58,7 +58,10 @@ Main.createElm = function(vnode,insertedVnodeQueue) {
 		}
 		if(Array.isArray(children)) {
 			i = 0;
-			if(i < children.length) do elm.appendChild(Main.createElm(children[i],insertedVnodeQueue)); while((function($this) {
+			if(i < children.length) do {
+				var new_node = Main.createElm(children[i],insertedVnodeQueue);
+				elm.appendChild(new_node);
+			} while((function($this) {
 				var $r;
 				++i;
 				$r = i < children.length;
@@ -373,7 +376,7 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 					}(this));
 					idxInOld = oldKeyToIdx[newStartVnode.key];
 					if(idxInOld == undefined) {
-						elm.insertBefore((function($this) {
+						var new_node1 = (function($this) {
 							var $r;
 							var vnode1 = newStartVnode;
 							var i4;
@@ -398,7 +401,10 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 								}
 								if(Array.isArray(children1)) {
 									i4 = 0;
-									if(i4 < children1.length) do elm5.appendChild(Main.createElm(children1[i4],insertedVnodeQueue)); while((function($this) {
+									if(i4 < children1.length) do {
+										var new_node = Main.createElm(children1[i4],insertedVnodeQueue);
+										elm5.appendChild(new_node);
+									} while((function($this) {
 										var $r;
 										++i4;
 										$r = i4 < children1.length;
@@ -513,7 +519,8 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 							} else elm5 = vnode1.elm = document.createTextNode(vnode1.text);
 							$r = vnode1.elm;
 							return $r;
-						}(this)),oldStartVnode.elm);
+						}(this));
+						elm.insertBefore(new_node1,oldStartVnode.elm);
 						newStartVnode = ch[++newStartIdx];
 					} else {
 						elmToMove = oldCh[idxInOld];
@@ -528,148 +535,155 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 					var vnodes = ch;
 					var startIdx = newStartIdx;
 					var i7;
+					var new_node2;
 					i7 = 0;
-					if(startIdx <= newEndIdx) do elm.insertBefore((function($this) {
-						var $r;
-						var vnode2 = vnodes[startIdx];
-						var i8;
-						var data1 = vnode2.data;
-						if(data1 != undefined) {
-							if((i8 = data1.hook) != undefined && (i8 = i8.init) != undefined) i8(vnode2);
-							if((i8 = data1.vnode) != undefined) vnode2 = i8;
-						}
-						var elm10;
-						var children2 = vnode2.children;
-						var sel1 = vnode2.sel;
-						if(sel1 != undefined) {
-							var hashIdx1 = sel1.indexOf("#",0);
-							var dotIdx1 = sel1.indexOf(".",hashIdx1);
-							var hash1 = hashIdx1 > 0?hashIdx1:sel1.length;
-							var dot1 = dotIdx1 > 0?dotIdx1:sel1.length;
-							var tag1 = hashIdx1 != -1 || dotIdx1 != -1?sel1.slice(0,Math.min(hash1,dot1)):sel1;
-							elm10 = vnode2.elm = data1 != undefined && (i8 = data1.ns) != undefined?document.createElementNS(i8,tag1):document.createElement(tag1);
-							if(hash1 < dot1) elm10.id = sel1.slice(hash1 + 1,dot1);
-							if(dotIdx1 > 0) {
-								elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
+					if(startIdx <= newEndIdx) do {
+						new_node2 = (function($this) {
+							var $r;
+							var vnode2 = vnodes[startIdx];
+							var i8;
+							var data1 = vnode2.data;
+							if(data1 != undefined) {
+								if((i8 = data1.hook) != undefined && (i8 = i8.init) != undefined) i8(vnode2);
+								if((i8 = data1.vnode) != undefined) vnode2 = i8;
 							}
-							if(Array.isArray(children2)) {
-								i8 = 0;
-								if(i8 < children2.length) do elm10.appendChild(Main.createElm(children2[i8],insertedVnodeQueue)); while((function($this) {
-									var $r;
-									++i8;
-									$r = i8 < children2.length;
-									return $r;
-								}($this)));
-							} else if(typeof vnode2.text == "string" || typeof vnode2.text == "number") elm10.appendChild(document.createTextNode(vnode2.text));
-							var oldVnode2 = Main.emptyNode;
-							var key11;
-							var cur8;
-							var old4;
-							var elm11 = vnode2.elm;
-							var oldAttrs2 = oldVnode2.data.attrs == null?{ }:oldVnode2.data.attrs;
-							var attrs2 = vnode2.data.attrs == null?{ }:vnode2.data.attrs;
-							var _g20 = 0;
-							var _g110 = Object.keys(attrs2);
-							while(_g20 < _g110.length) {
-								var key12 = _g110[_g20];
-								++_g20;
-								cur8 = attrs2[key12];
-								old4 = oldAttrs2[key12];
-								if(old4 != cur8) {
-									if(!cur8 && Attributes.booleanAttrsDict[key12]) elm11.removeAttribute(key12); else elm11.setAttribute(key12,cur8);
+							var elm10;
+							var children2 = vnode2.children;
+							var sel1 = vnode2.sel;
+							if(sel1 != undefined) {
+								var hashIdx1 = sel1.indexOf("#",0);
+								var dotIdx1 = sel1.indexOf(".",hashIdx1);
+								var hash1 = hashIdx1 > 0?hashIdx1:sel1.length;
+								var dot1 = dotIdx1 > 0?dotIdx1:sel1.length;
+								var tag1 = hashIdx1 != -1 || dotIdx1 != -1?sel1.slice(0,Math.min(hash1,dot1)):sel1;
+								elm10 = vnode2.elm = data1 != undefined && (i8 = data1.ns) != undefined?document.createElementNS(i8,tag1):document.createElement(tag1);
+								if(hash1 < dot1) elm10.id = sel1.slice(hash1 + 1,dot1);
+								if(dotIdx1 > 0) {
+									elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
 								}
-							}
-							var _g23 = 0;
-							var _g111 = Object.keys(oldAttrs2);
-							while(_g23 < _g111.length) {
-								var key13 = _g111[_g23];
-								++_g23;
-								if(!Object.prototype.hasOwnProperty.call(attrs2,key13)) elm11.removeAttribute(key13);
-							}
-							var key14;
-							var cur9;
-							var old5;
-							var elm12 = vnode2.elm;
-							var oldProps2 = oldVnode2.data.props == null?{ }:oldVnode2.data.props;
-							var props2 = vnode2.data.props == null?{ }:vnode2.data.props;
-							var _g24 = 0;
-							var _g112 = Object.keys(props2);
-							while(_g24 < _g112.length) {
-								var key15 = _g112[_g24];
-								++_g24;
-								cur9 = props2[key15];
-								old5 = oldProps2[key15];
-								if(old5 != cur9) {
-									var value4 = cur9;
-									elm12[key15] = value4;
-								}
-							}
-							var cur10;
-							var name10;
-							var elm13 = vnode2.elm;
-							var oldClass2 = oldVnode2.data.classes == null?{ }:oldVnode2.data.classes;
-							var klass2 = vnode2.data.classes == null?{ }:vnode2.data.classes;
-							var _g25 = 0;
-							var _g113 = Object.keys(klass2);
-							while(_g25 < _g113.length) {
-								var name11 = _g113[_g25];
-								++_g25;
-								cur10 = klass2[name11];
-								if(cur10 != oldClass2[name11]) {
-									if(cur10 == "add") elm13.classList.add(name11); else if(cur10 == "remove") elm13.classList.remove(name11);
-								}
-							}
-							var cur11;
-							var name12;
-							var elm14 = vnode2.elm;
-							var oldStyle2 = oldVnode2.data.style == null?{ }:oldVnode2.data.style;
-							var style2 = vnode2.data.style == null?{ }:vnode2.data.style;
-							var oldHasDel2 = Object.prototype.hasOwnProperty.call(oldStyle2,"delayed");
-							var _g26 = 0;
-							var _g114 = Object.keys(style2);
-							while(_g26 < _g114.length) {
-								var name13 = _g114[_g26];
-								++_g26;
-								cur11 = style2[name13];
-								if(name13 == "delayed") {
-									var delayed2 = style2.delayed;
-									var oldDelayed2 = oldStyle2.delayed;
-									var _g27 = 0;
-									var _g33 = Object.keys(delayed2);
-									while(_g27 < _g33.length) {
-										var name14 = _g33[_g27];
-										++_g27;
-										cur11 = delayed2[name14];
-										if(!oldHasDel2 || cur11 != oldDelayed2[name14]) {
-											var obj2 = [elm14.style];
-											var prop2 = [name14];
-											var val2 = [cur11];
-											var fn2 = [(function(val2,prop2,obj2) {
-												return function(i9) {
-													var value5 = val2[0];
-													obj2[0][prop2[0]] = value5;
-												};
-											})(val2,prop2,obj2)];
-											window.requestAnimationFrame((function(fn2) {
-												return function(i10) {
-													window.requestAnimationFrame(fn2[0]);
-												};
-											})(fn2));
-										}
+								if(Array.isArray(children2)) {
+									i8 = 0;
+									if(i8 < children2.length) do {
+										var new_node3 = Main.createElm(children2[i8],insertedVnodeQueue);
+										elm10.appendChild(new_node3);
+									} while((function($this) {
+										var $r;
+										++i8;
+										$r = i8 < children2.length;
+										return $r;
+									}($this)));
+								} else if(typeof vnode2.text == "string" || typeof vnode2.text == "number") elm10.appendChild(document.createTextNode(vnode2.text));
+								var oldVnode2 = Main.emptyNode;
+								var key11;
+								var cur8;
+								var old4;
+								var elm11 = vnode2.elm;
+								var oldAttrs2 = oldVnode2.data.attrs == null?{ }:oldVnode2.data.attrs;
+								var attrs2 = vnode2.data.attrs == null?{ }:vnode2.data.attrs;
+								var _g20 = 0;
+								var _g110 = Object.keys(attrs2);
+								while(_g20 < _g110.length) {
+									var key12 = _g110[_g20];
+									++_g20;
+									cur8 = attrs2[key12];
+									old4 = oldAttrs2[key12];
+									if(old4 != cur8) {
+										if(!cur8 && Attributes.booleanAttrsDict[key12]) elm11.removeAttribute(key12); else elm11.setAttribute(key12,cur8);
 									}
-								} else if(name13 != "remove" && cur11 != oldStyle2[name13]) elm14.style[name13] = cur11;
-							}
-							if(vnode2.data != null) {
-								i8 = vnode2.data.hook;
-								if(i8 != undefined) {
-									if(i8.create) i8.create(Main.emptyNode,vnode2);
-									if(i8.insert) insertedVnodeQueue.push(vnode2);
 								}
-							}
-						} else elm10 = vnode2.elm = document.createTextNode(vnode2.text);
-						$r = vnode2.elm;
-						return $r;
-					}(this)),before); while((function($this) {
+								var _g23 = 0;
+								var _g111 = Object.keys(oldAttrs2);
+								while(_g23 < _g111.length) {
+									var key13 = _g111[_g23];
+									++_g23;
+									if(!Object.prototype.hasOwnProperty.call(attrs2,key13)) elm11.removeAttribute(key13);
+								}
+								var key14;
+								var cur9;
+								var old5;
+								var elm12 = vnode2.elm;
+								var oldProps2 = oldVnode2.data.props == null?{ }:oldVnode2.data.props;
+								var props2 = vnode2.data.props == null?{ }:vnode2.data.props;
+								var _g24 = 0;
+								var _g112 = Object.keys(props2);
+								while(_g24 < _g112.length) {
+									var key15 = _g112[_g24];
+									++_g24;
+									cur9 = props2[key15];
+									old5 = oldProps2[key15];
+									if(old5 != cur9) {
+										var value4 = cur9;
+										elm12[key15] = value4;
+									}
+								}
+								var cur10;
+								var name10;
+								var elm13 = vnode2.elm;
+								var oldClass2 = oldVnode2.data.classes == null?{ }:oldVnode2.data.classes;
+								var klass2 = vnode2.data.classes == null?{ }:vnode2.data.classes;
+								var _g25 = 0;
+								var _g113 = Object.keys(klass2);
+								while(_g25 < _g113.length) {
+									var name11 = _g113[_g25];
+									++_g25;
+									cur10 = klass2[name11];
+									if(cur10 != oldClass2[name11]) {
+										if(cur10 == "add") elm13.classList.add(name11); else if(cur10 == "remove") elm13.classList.remove(name11);
+									}
+								}
+								var cur11;
+								var name12;
+								var elm14 = vnode2.elm;
+								var oldStyle2 = oldVnode2.data.style == null?{ }:oldVnode2.data.style;
+								var style2 = vnode2.data.style == null?{ }:vnode2.data.style;
+								var oldHasDel2 = Object.prototype.hasOwnProperty.call(oldStyle2,"delayed");
+								var _g26 = 0;
+								var _g114 = Object.keys(style2);
+								while(_g26 < _g114.length) {
+									var name13 = _g114[_g26];
+									++_g26;
+									cur11 = style2[name13];
+									if(name13 == "delayed") {
+										var delayed2 = style2.delayed;
+										var oldDelayed2 = oldStyle2.delayed;
+										var _g27 = 0;
+										var _g33 = Object.keys(delayed2);
+										while(_g27 < _g33.length) {
+											var name14 = _g33[_g27];
+											++_g27;
+											cur11 = delayed2[name14];
+											if(!oldHasDel2 || cur11 != oldDelayed2[name14]) {
+												var obj2 = [elm14.style];
+												var prop2 = [name14];
+												var val2 = [cur11];
+												var fn2 = [(function(val2,prop2,obj2) {
+													return function(i9) {
+														var value5 = val2[0];
+														obj2[0][prop2[0]] = value5;
+													};
+												})(val2,prop2,obj2)];
+												window.requestAnimationFrame((function(fn2) {
+													return function(i10) {
+														window.requestAnimationFrame(fn2[0]);
+													};
+												})(fn2));
+											}
+										}
+									} else if(name13 != "remove" && cur11 != oldStyle2[name13]) elm14.style[name13] = cur11;
+								}
+								if(vnode2.data != null) {
+									i8 = vnode2.data.hook;
+									if(i8 != undefined) {
+										if(i8.create) i8.create(Main.emptyNode,vnode2);
+										if(i8.insert) insertedVnodeQueue.push(vnode2);
+									}
+								}
+							} else elm10 = vnode2.elm = document.createTextNode(vnode2.text);
+							$r = vnode2.elm;
+							return $r;
+						}(this));
+						elm.insertBefore(new_node2,before);
+					} while((function($this) {
 						var $r;
 						++startIdx;
 						$r = startIdx <= newEndIdx;
@@ -776,148 +790,155 @@ Main.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
 			var startIdx2 = 0;
 			var endIdx = ch.length - 1;
 			var i15;
+			var new_node4;
 			i15 = 0;
-			if(startIdx2 <= endIdx) do elm.insertBefore((function($this) {
-				var $r;
-				var vnode5 = vnodes2[startIdx2];
-				var i16;
-				var data2 = vnode5.data;
-				if(data2 != undefined) {
-					if((i16 = data2.hook) != undefined && (i16 = i16.init) != undefined) i16(vnode5);
-					if((i16 = data2.vnode) != undefined) vnode5 = i16;
-				}
-				var elm17;
-				var children3 = vnode5.children;
-				var sel2 = vnode5.sel;
-				if(sel2 != undefined) {
-					var hashIdx2 = sel2.indexOf("#",0);
-					var dotIdx2 = sel2.indexOf(".",hashIdx2);
-					var hash2 = hashIdx2 > 0?hashIdx2:sel2.length;
-					var dot2 = dotIdx2 > 0?dotIdx2:sel2.length;
-					var tag2 = hashIdx2 != -1 || dotIdx2 != -1?sel2.slice(0,Math.min(hash2,dot2)):sel2;
-					elm17 = vnode5.elm = data2 != undefined && (i16 = data2.ns) != undefined?document.createElementNS(i16,tag2):document.createElement(tag2);
-					if(hash2 < dot2) elm17.id = sel2.slice(hash2 + 1,dot2);
-					if(dotIdx2 > 0) {
-						elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
+			if(startIdx2 <= endIdx) do {
+				new_node4 = (function($this) {
+					var $r;
+					var vnode5 = vnodes2[startIdx2];
+					var i16;
+					var data2 = vnode5.data;
+					if(data2 != undefined) {
+						if((i16 = data2.hook) != undefined && (i16 = i16.init) != undefined) i16(vnode5);
+						if((i16 = data2.vnode) != undefined) vnode5 = i16;
 					}
-					if(Array.isArray(children3)) {
-						i16 = 0;
-						if(i16 < children3.length) do elm17.appendChild(Main.createElm(children3[i16],insertedVnodeQueue)); while((function($this) {
-							var $r;
-							++i16;
-							$r = i16 < children3.length;
-							return $r;
-						}($this)));
-					} else if(typeof vnode5.text == "string" || typeof vnode5.text == "number") elm17.appendChild(document.createTextNode(vnode5.text));
-					var oldVnode3 = Main.emptyNode;
-					var key16;
-					var cur12;
-					var old6;
-					var elm18 = vnode5.elm;
-					var oldAttrs3 = oldVnode3.data.attrs == null?{ }:oldVnode3.data.attrs;
-					var attrs3 = vnode5.data.attrs == null?{ }:vnode5.data.attrs;
-					var _g30 = 0;
-					var _g117 = Object.keys(attrs3);
-					while(_g30 < _g117.length) {
-						var key17 = _g117[_g30];
-						++_g30;
-						cur12 = attrs3[key17];
-						old6 = oldAttrs3[key17];
-						if(old6 != cur12) {
-							if(!cur12 && Attributes.booleanAttrsDict[key17]) elm18.removeAttribute(key17); else elm18.setAttribute(key17,cur12);
+					var elm17;
+					var children3 = vnode5.children;
+					var sel2 = vnode5.sel;
+					if(sel2 != undefined) {
+						var hashIdx2 = sel2.indexOf("#",0);
+						var dotIdx2 = sel2.indexOf(".",hashIdx2);
+						var hash2 = hashIdx2 > 0?hashIdx2:sel2.length;
+						var dot2 = dotIdx2 > 0?dotIdx2:sel2.length;
+						var tag2 = hashIdx2 != -1 || dotIdx2 != -1?sel2.slice(0,Math.min(hash2,dot2)):sel2;
+						elm17 = vnode5.elm = data2 != undefined && (i16 = data2.ns) != undefined?document.createElementNS(i16,tag2):document.createElement(tag2);
+						if(hash2 < dot2) elm17.id = sel2.slice(hash2 + 1,dot2);
+						if(dotIdx2 > 0) {
+							elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
 						}
-					}
-					var _g34 = 0;
-					var _g118 = Object.keys(oldAttrs3);
-					while(_g34 < _g118.length) {
-						var key18 = _g118[_g34];
-						++_g34;
-						if(!Object.prototype.hasOwnProperty.call(attrs3,key18)) elm18.removeAttribute(key18);
-					}
-					var key19;
-					var cur13;
-					var old7;
-					var elm19 = vnode5.elm;
-					var oldProps3 = oldVnode3.data.props == null?{ }:oldVnode3.data.props;
-					var props4 = vnode5.data.props == null?{ }:vnode5.data.props;
-					var _g35 = 0;
-					var _g119 = Object.keys(props4);
-					while(_g35 < _g119.length) {
-						var key20 = _g119[_g35];
-						++_g35;
-						cur13 = props4[key20];
-						old7 = oldProps3[key20];
-						if(old7 != cur13) {
-							var value6 = cur13;
-							elm19[key20] = value6;
-						}
-					}
-					var cur14;
-					var name19;
-					var elm20 = vnode5.elm;
-					var oldClass3 = oldVnode3.data.classes == null?{ }:oldVnode3.data.classes;
-					var klass3 = vnode5.data.classes == null?{ }:vnode5.data.classes;
-					var _g36 = 0;
-					var _g120 = Object.keys(klass3);
-					while(_g36 < _g120.length) {
-						var name20 = _g120[_g36];
-						++_g36;
-						cur14 = klass3[name20];
-						if(cur14 != oldClass3[name20]) {
-							if(cur14 == "add") elm20.classList.add(name20); else if(cur14 == "remove") elm20.classList.remove(name20);
-						}
-					}
-					var cur15;
-					var name21;
-					var elm21 = vnode5.elm;
-					var oldStyle3 = oldVnode3.data.style == null?{ }:oldVnode3.data.style;
-					var style5 = vnode5.data.style == null?{ }:vnode5.data.style;
-					var oldHasDel3 = Object.prototype.hasOwnProperty.call(oldStyle3,"delayed");
-					var _g37 = 0;
-					var _g121 = Object.keys(style5);
-					while(_g37 < _g121.length) {
-						var name22 = _g121[_g37];
-						++_g37;
-						cur15 = style5[name22];
-						if(name22 == "delayed") {
-							var delayed3 = style5.delayed;
-							var oldDelayed3 = oldStyle3.delayed;
-							var _g210 = 0;
-							var _g38 = Object.keys(delayed3);
-							while(_g210 < _g38.length) {
-								var name23 = _g38[_g210];
-								++_g210;
-								cur15 = delayed3[name23];
-								if(!oldHasDel3 || cur15 != oldDelayed3[name23]) {
-									var obj3 = [elm21.style];
-									var prop3 = [name23];
-									var val3 = [cur15];
-									var fn3 = [(function(val3,prop3,obj3) {
-										return function(i17) {
-											var value7 = val3[0];
-											obj3[0][prop3[0]] = value7;
-										};
-									})(val3,prop3,obj3)];
-									window.requestAnimationFrame((function(fn3) {
-										return function(i18) {
-											window.requestAnimationFrame(fn3[0]);
-										};
-									})(fn3));
-								}
+						if(Array.isArray(children3)) {
+							i16 = 0;
+							if(i16 < children3.length) do {
+								var new_node5 = Main.createElm(children3[i16],insertedVnodeQueue);
+								elm17.appendChild(new_node5);
+							} while((function($this) {
+								var $r;
+								++i16;
+								$r = i16 < children3.length;
+								return $r;
+							}($this)));
+						} else if(typeof vnode5.text == "string" || typeof vnode5.text == "number") elm17.appendChild(document.createTextNode(vnode5.text));
+						var oldVnode3 = Main.emptyNode;
+						var key16;
+						var cur12;
+						var old6;
+						var elm18 = vnode5.elm;
+						var oldAttrs3 = oldVnode3.data.attrs == null?{ }:oldVnode3.data.attrs;
+						var attrs3 = vnode5.data.attrs == null?{ }:vnode5.data.attrs;
+						var _g30 = 0;
+						var _g117 = Object.keys(attrs3);
+						while(_g30 < _g117.length) {
+							var key17 = _g117[_g30];
+							++_g30;
+							cur12 = attrs3[key17];
+							old6 = oldAttrs3[key17];
+							if(old6 != cur12) {
+								if(!cur12 && Attributes.booleanAttrsDict[key17]) elm18.removeAttribute(key17); else elm18.setAttribute(key17,cur12);
 							}
-						} else if(name22 != "remove" && cur15 != oldStyle3[name22]) elm21.style[name22] = cur15;
-					}
-					if(vnode5.data != null) {
-						i16 = vnode5.data.hook;
-						if(i16 != undefined) {
-							if(i16.create) i16.create(Main.emptyNode,vnode5);
-							if(i16.insert) insertedVnodeQueue.push(vnode5);
 						}
-					}
-				} else elm17 = vnode5.elm = document.createTextNode(vnode5.text);
-				$r = vnode5.elm;
-				return $r;
-			}(this)),null); while((function($this) {
+						var _g34 = 0;
+						var _g118 = Object.keys(oldAttrs3);
+						while(_g34 < _g118.length) {
+							var key18 = _g118[_g34];
+							++_g34;
+							if(!Object.prototype.hasOwnProperty.call(attrs3,key18)) elm18.removeAttribute(key18);
+						}
+						var key19;
+						var cur13;
+						var old7;
+						var elm19 = vnode5.elm;
+						var oldProps3 = oldVnode3.data.props == null?{ }:oldVnode3.data.props;
+						var props4 = vnode5.data.props == null?{ }:vnode5.data.props;
+						var _g35 = 0;
+						var _g119 = Object.keys(props4);
+						while(_g35 < _g119.length) {
+							var key20 = _g119[_g35];
+							++_g35;
+							cur13 = props4[key20];
+							old7 = oldProps3[key20];
+							if(old7 != cur13) {
+								var value6 = cur13;
+								elm19[key20] = value6;
+							}
+						}
+						var cur14;
+						var name19;
+						var elm20 = vnode5.elm;
+						var oldClass3 = oldVnode3.data.classes == null?{ }:oldVnode3.data.classes;
+						var klass3 = vnode5.data.classes == null?{ }:vnode5.data.classes;
+						var _g36 = 0;
+						var _g120 = Object.keys(klass3);
+						while(_g36 < _g120.length) {
+							var name20 = _g120[_g36];
+							++_g36;
+							cur14 = klass3[name20];
+							if(cur14 != oldClass3[name20]) {
+								if(cur14 == "add") elm20.classList.add(name20); else if(cur14 == "remove") elm20.classList.remove(name20);
+							}
+						}
+						var cur15;
+						var name21;
+						var elm21 = vnode5.elm;
+						var oldStyle3 = oldVnode3.data.style == null?{ }:oldVnode3.data.style;
+						var style5 = vnode5.data.style == null?{ }:vnode5.data.style;
+						var oldHasDel3 = Object.prototype.hasOwnProperty.call(oldStyle3,"delayed");
+						var _g37 = 0;
+						var _g121 = Object.keys(style5);
+						while(_g37 < _g121.length) {
+							var name22 = _g121[_g37];
+							++_g37;
+							cur15 = style5[name22];
+							if(name22 == "delayed") {
+								var delayed3 = style5.delayed;
+								var oldDelayed3 = oldStyle3.delayed;
+								var _g210 = 0;
+								var _g38 = Object.keys(delayed3);
+								while(_g210 < _g38.length) {
+									var name23 = _g38[_g210];
+									++_g210;
+									cur15 = delayed3[name23];
+									if(!oldHasDel3 || cur15 != oldDelayed3[name23]) {
+										var obj3 = [elm21.style];
+										var prop3 = [name23];
+										var val3 = [cur15];
+										var fn3 = [(function(val3,prop3,obj3) {
+											return function(i17) {
+												var value7 = val3[0];
+												obj3[0][prop3[0]] = value7;
+											};
+										})(val3,prop3,obj3)];
+										window.requestAnimationFrame((function(fn3) {
+											return function(i18) {
+												window.requestAnimationFrame(fn3[0]);
+											};
+										})(fn3));
+									}
+								}
+							} else if(name22 != "remove" && cur15 != oldStyle3[name22]) elm21.style[name22] = cur15;
+						}
+						if(vnode5.data != null) {
+							i16 = vnode5.data.hook;
+							if(i16 != undefined) {
+								if(i16.create) i16.create(Main.emptyNode,vnode5);
+								if(i16.insert) insertedVnodeQueue.push(vnode5);
+							}
+						}
+					} else elm17 = vnode5.elm = document.createTextNode(vnode5.text);
+					$r = vnode5.elm;
+					return $r;
+				}(this));
+				elm.insertBefore(new_node4,null);
+			} while((function($this) {
 				var $r;
 				++startIdx2;
 				$r = startIdx2 <= endIdx;
@@ -1050,7 +1071,10 @@ Main.patch = function(oldVnode,vnode) {
 				}
 				if(Array.isArray(children)) {
 					i1 = 0;
-					if(i1 < children.length) do elm.appendChild(Main.createElm(children[i1],insertedVnodeQueue)); while((function($this) {
+					if(i1 < children.length) do {
+						var new_node = Main.createElm(children[i1],insertedVnodeQueue);
+						elm.appendChild(new_node);
+					} while((function($this) {
 						var $r;
 						++i1;
 						$r = i1 < children.length;
@@ -1342,7 +1366,7 @@ Main.patch = function(oldVnode,vnode) {
 								}(this));
 								idxInOld = oldKeyToIdx[newStartVnode.key];
 								if(idxInOld == undefined) {
-									elm5.insertBefore((function($this) {
+									var new_node2 = (function($this) {
 										var $r;
 										var vnode3 = newStartVnode;
 										var i8;
@@ -1367,7 +1391,10 @@ Main.patch = function(oldVnode,vnode) {
 											}
 											if(Array.isArray(children2)) {
 												i8 = 0;
-												if(i8 < children2.length) do elm10.appendChild(Main.createElm(children2[i8],insertedVnodeQueue)); while((function($this) {
+												if(i8 < children2.length) do {
+													var new_node1 = Main.createElm(children2[i8],insertedVnodeQueue);
+													elm10.appendChild(new_node1);
+												} while((function($this) {
 													var $r;
 													++i8;
 													$r = i8 < children2.length;
@@ -1482,7 +1509,8 @@ Main.patch = function(oldVnode,vnode) {
 										} else elm10 = vnode3.elm = document.createTextNode(vnode3.text);
 										$r = vnode3.elm;
 										return $r;
-									}(this)),oldStartVnode.elm);
+									}(this));
+									elm5.insertBefore(new_node2,oldStartVnode.elm);
 									newStartVnode = ch[++newStartIdx];
 								} else {
 									elmToMove = oldCh[idxInOld];
@@ -1497,148 +1525,155 @@ Main.patch = function(oldVnode,vnode) {
 								var vnodes = ch;
 								var startIdx = newStartIdx;
 								var i11;
+								var new_node3;
 								i11 = 0;
-								if(startIdx <= newEndIdx) do elm5.insertBefore((function($this) {
-									var $r;
-									var vnode4 = vnodes[startIdx];
-									var i12;
-									var data3 = vnode4.data;
-									if(data3 != undefined) {
-										if((i12 = data3.hook) != undefined && (i12 = i12.init) != undefined) i12(vnode4);
-										if((i12 = data3.vnode) != undefined) vnode4 = i12;
-									}
-									var elm15;
-									var children3 = vnode4.children;
-									var sel2 = vnode4.sel;
-									if(sel2 != undefined) {
-										var hashIdx2 = sel2.indexOf("#",0);
-										var dotIdx2 = sel2.indexOf(".",hashIdx2);
-										var hash2 = hashIdx2 > 0?hashIdx2:sel2.length;
-										var dot2 = dotIdx2 > 0?dotIdx2:sel2.length;
-										var tag2 = hashIdx2 != -1 || dotIdx2 != -1?sel2.slice(0,Math.min(hash2,dot2)):sel2;
-										elm15 = vnode4.elm = data3 != undefined && (i12 = data3.ns) != undefined?document.createElementNS(i12,tag2):document.createElement(tag2);
-										if(hash2 < dot2) elm15.id = sel2.slice(hash2 + 1,dot2);
-										if(dotIdx2 > 0) {
-											elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
+								if(startIdx <= newEndIdx) do {
+									new_node3 = (function($this) {
+										var $r;
+										var vnode4 = vnodes[startIdx];
+										var i12;
+										var data3 = vnode4.data;
+										if(data3 != undefined) {
+											if((i12 = data3.hook) != undefined && (i12 = i12.init) != undefined) i12(vnode4);
+											if((i12 = data3.vnode) != undefined) vnode4 = i12;
 										}
-										if(Array.isArray(children3)) {
-											i12 = 0;
-											if(i12 < children3.length) do elm15.appendChild(Main.createElm(children3[i12],insertedVnodeQueue)); while((function($this) {
-												var $r;
-												++i12;
-												$r = i12 < children3.length;
-												return $r;
-											}($this)));
-										} else if(typeof vnode4.text == "string" || typeof vnode4.text == "number") elm15.appendChild(document.createTextNode(vnode4.text));
-										var oldVnode4 = Main.emptyNode;
-										var key17;
-										var cur12;
-										var old6;
-										var elm16 = vnode4.elm;
-										var oldAttrs3 = oldVnode4.data.attrs == null?{ }:oldVnode4.data.attrs;
-										var attrs3 = vnode4.data.attrs == null?{ }:vnode4.data.attrs;
-										var _g28 = 0;
-										var _g115 = Object.keys(attrs3);
-										while(_g28 < _g115.length) {
-											var key18 = _g115[_g28];
-											++_g28;
-											cur12 = attrs3[key18];
-											old6 = oldAttrs3[key18];
-											if(old6 != cur12) {
-												if(!cur12 && Attributes.booleanAttrsDict[key18]) elm16.removeAttribute(key18); else elm16.setAttribute(key18,cur12);
+										var elm15;
+										var children3 = vnode4.children;
+										var sel2 = vnode4.sel;
+										if(sel2 != undefined) {
+											var hashIdx2 = sel2.indexOf("#",0);
+											var dotIdx2 = sel2.indexOf(".",hashIdx2);
+											var hash2 = hashIdx2 > 0?hashIdx2:sel2.length;
+											var dot2 = dotIdx2 > 0?dotIdx2:sel2.length;
+											var tag2 = hashIdx2 != -1 || dotIdx2 != -1?sel2.slice(0,Math.min(hash2,dot2)):sel2;
+											elm15 = vnode4.elm = data3 != undefined && (i12 = data3.ns) != undefined?document.createElementNS(i12,tag2):document.createElement(tag2);
+											if(hash2 < dot2) elm15.id = sel2.slice(hash2 + 1,dot2);
+											if(dotIdx2 > 0) {
+												elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
 											}
-										}
-										var _g29 = 0;
-										var _g116 = Object.keys(oldAttrs3);
-										while(_g29 < _g116.length) {
-											var key19 = _g116[_g29];
-											++_g29;
-											if(!Object.prototype.hasOwnProperty.call(attrs3,key19)) elm16.removeAttribute(key19);
-										}
-										var key20;
-										var cur13;
-										var old7;
-										var elm17 = vnode4.elm;
-										var oldProps3 = oldVnode4.data.props == null?{ }:oldVnode4.data.props;
-										var props3 = vnode4.data.props == null?{ }:vnode4.data.props;
-										var _g30 = 0;
-										var _g117 = Object.keys(props3);
-										while(_g30 < _g117.length) {
-											var key21 = _g117[_g30];
-											++_g30;
-											cur13 = props3[key21];
-											old7 = oldProps3[key21];
-											if(old7 != cur13) {
-												var value6 = cur13;
-												elm17[key21] = value6;
-											}
-										}
-										var cur14;
-										var name15;
-										var elm18 = vnode4.elm;
-										var oldClass3 = oldVnode4.data.classes == null?{ }:oldVnode4.data.classes;
-										var klass3 = vnode4.data.classes == null?{ }:vnode4.data.classes;
-										var _g34 = 0;
-										var _g118 = Object.keys(klass3);
-										while(_g34 < _g118.length) {
-											var name16 = _g118[_g34];
-											++_g34;
-											cur14 = klass3[name16];
-											if(cur14 != oldClass3[name16]) {
-												if(cur14 == "add") elm18.classList.add(name16); else if(cur14 == "remove") elm18.classList.remove(name16);
-											}
-										}
-										var cur15;
-										var name17;
-										var elm19 = vnode4.elm;
-										var oldStyle3 = oldVnode4.data.style == null?{ }:oldVnode4.data.style;
-										var style3 = vnode4.data.style == null?{ }:vnode4.data.style;
-										var oldHasDel3 = Object.prototype.hasOwnProperty.call(oldStyle3,"delayed");
-										var _g35 = 0;
-										var _g119 = Object.keys(style3);
-										while(_g35 < _g119.length) {
-											var name18 = _g119[_g35];
-											++_g35;
-											cur15 = style3[name18];
-											if(name18 == "delayed") {
-												var delayed3 = style3.delayed;
-												var oldDelayed3 = oldStyle3.delayed;
-												var _g210 = 0;
-												var _g36 = Object.keys(delayed3);
-												while(_g210 < _g36.length) {
-													var name19 = _g36[_g210];
-													++_g210;
-													cur15 = delayed3[name19];
-													if(!oldHasDel3 || cur15 != oldDelayed3[name19]) {
-														var obj3 = [elm19.style];
-														var prop3 = [name19];
-														var val3 = [cur15];
-														var fn3 = [(function(val3,prop3,obj3) {
-															return function(i13) {
-																var value7 = val3[0];
-																obj3[0][prop3[0]] = value7;
-															};
-														})(val3,prop3,obj3)];
-														window.requestAnimationFrame((function(fn3) {
-															return function(i14) {
-																window.requestAnimationFrame(fn3[0]);
-															};
-														})(fn3));
-													}
+											if(Array.isArray(children3)) {
+												i12 = 0;
+												if(i12 < children3.length) do {
+													var new_node4 = Main.createElm(children3[i12],insertedVnodeQueue);
+													elm15.appendChild(new_node4);
+												} while((function($this) {
+													var $r;
+													++i12;
+													$r = i12 < children3.length;
+													return $r;
+												}($this)));
+											} else if(typeof vnode4.text == "string" || typeof vnode4.text == "number") elm15.appendChild(document.createTextNode(vnode4.text));
+											var oldVnode4 = Main.emptyNode;
+											var key17;
+											var cur12;
+											var old6;
+											var elm16 = vnode4.elm;
+											var oldAttrs3 = oldVnode4.data.attrs == null?{ }:oldVnode4.data.attrs;
+											var attrs3 = vnode4.data.attrs == null?{ }:vnode4.data.attrs;
+											var _g28 = 0;
+											var _g115 = Object.keys(attrs3);
+											while(_g28 < _g115.length) {
+												var key18 = _g115[_g28];
+												++_g28;
+												cur12 = attrs3[key18];
+												old6 = oldAttrs3[key18];
+												if(old6 != cur12) {
+													if(!cur12 && Attributes.booleanAttrsDict[key18]) elm16.removeAttribute(key18); else elm16.setAttribute(key18,cur12);
 												}
-											} else if(name18 != "remove" && cur15 != oldStyle3[name18]) elm19.style[name18] = cur15;
-										}
-										if(vnode4.data != null) {
-											i12 = vnode4.data.hook;
-											if(i12 != undefined) {
-												if(i12.create) i12.create(Main.emptyNode,vnode4);
-												if(i12.insert) insertedVnodeQueue.push(vnode4);
 											}
-										}
-									} else elm15 = vnode4.elm = document.createTextNode(vnode4.text);
-									$r = vnode4.elm;
-									return $r;
-								}(this)),before); while((function($this) {
+											var _g29 = 0;
+											var _g116 = Object.keys(oldAttrs3);
+											while(_g29 < _g116.length) {
+												var key19 = _g116[_g29];
+												++_g29;
+												if(!Object.prototype.hasOwnProperty.call(attrs3,key19)) elm16.removeAttribute(key19);
+											}
+											var key20;
+											var cur13;
+											var old7;
+											var elm17 = vnode4.elm;
+											var oldProps3 = oldVnode4.data.props == null?{ }:oldVnode4.data.props;
+											var props3 = vnode4.data.props == null?{ }:vnode4.data.props;
+											var _g30 = 0;
+											var _g117 = Object.keys(props3);
+											while(_g30 < _g117.length) {
+												var key21 = _g117[_g30];
+												++_g30;
+												cur13 = props3[key21];
+												old7 = oldProps3[key21];
+												if(old7 != cur13) {
+													var value6 = cur13;
+													elm17[key21] = value6;
+												}
+											}
+											var cur14;
+											var name15;
+											var elm18 = vnode4.elm;
+											var oldClass3 = oldVnode4.data.classes == null?{ }:oldVnode4.data.classes;
+											var klass3 = vnode4.data.classes == null?{ }:vnode4.data.classes;
+											var _g34 = 0;
+											var _g118 = Object.keys(klass3);
+											while(_g34 < _g118.length) {
+												var name16 = _g118[_g34];
+												++_g34;
+												cur14 = klass3[name16];
+												if(cur14 != oldClass3[name16]) {
+													if(cur14 == "add") elm18.classList.add(name16); else if(cur14 == "remove") elm18.classList.remove(name16);
+												}
+											}
+											var cur15;
+											var name17;
+											var elm19 = vnode4.elm;
+											var oldStyle3 = oldVnode4.data.style == null?{ }:oldVnode4.data.style;
+											var style3 = vnode4.data.style == null?{ }:vnode4.data.style;
+											var oldHasDel3 = Object.prototype.hasOwnProperty.call(oldStyle3,"delayed");
+											var _g35 = 0;
+											var _g119 = Object.keys(style3);
+											while(_g35 < _g119.length) {
+												var name18 = _g119[_g35];
+												++_g35;
+												cur15 = style3[name18];
+												if(name18 == "delayed") {
+													var delayed3 = style3.delayed;
+													var oldDelayed3 = oldStyle3.delayed;
+													var _g210 = 0;
+													var _g36 = Object.keys(delayed3);
+													while(_g210 < _g36.length) {
+														var name19 = _g36[_g210];
+														++_g210;
+														cur15 = delayed3[name19];
+														if(!oldHasDel3 || cur15 != oldDelayed3[name19]) {
+															var obj3 = [elm19.style];
+															var prop3 = [name19];
+															var val3 = [cur15];
+															var fn3 = [(function(val3,prop3,obj3) {
+																return function(i13) {
+																	var value7 = val3[0];
+																	obj3[0][prop3[0]] = value7;
+																};
+															})(val3,prop3,obj3)];
+															window.requestAnimationFrame((function(fn3) {
+																return function(i14) {
+																	window.requestAnimationFrame(fn3[0]);
+																};
+															})(fn3));
+														}
+													}
+												} else if(name18 != "remove" && cur15 != oldStyle3[name18]) elm19.style[name18] = cur15;
+											}
+											if(vnode4.data != null) {
+												i12 = vnode4.data.hook;
+												if(i12 != undefined) {
+													if(i12.create) i12.create(Main.emptyNode,vnode4);
+													if(i12.insert) insertedVnodeQueue.push(vnode4);
+												}
+											}
+										} else elm15 = vnode4.elm = document.createTextNode(vnode4.text);
+										$r = vnode4.elm;
+										return $r;
+									}(this));
+									elm5.insertBefore(new_node3,before);
+								} while((function($this) {
 									var $r;
 									++startIdx;
 									$r = startIdx <= newEndIdx;
@@ -1745,148 +1780,155 @@ Main.patch = function(oldVnode,vnode) {
 						var startIdx2 = 0;
 						var endIdx = ch.length - 1;
 						var i19;
+						var new_node5;
 						i19 = 0;
-						if(startIdx2 <= endIdx) do elm5.insertBefore((function($this) {
-							var $r;
-							var vnode7 = vnodes2[startIdx2];
-							var i20;
-							var data4 = vnode7.data;
-							if(data4 != undefined) {
-								if((i20 = data4.hook) != undefined && (i20 = i20.init) != undefined) i20(vnode7);
-								if((i20 = data4.vnode) != undefined) vnode7 = i20;
-							}
-							var elm22;
-							var children4 = vnode7.children;
-							var sel3 = vnode7.sel;
-							if(sel3 != undefined) {
-								var hashIdx3 = sel3.indexOf("#",0);
-								var dotIdx3 = sel3.indexOf(".",hashIdx3);
-								var hash3 = hashIdx3 > 0?hashIdx3:sel3.length;
-								var dot3 = dotIdx3 > 0?dotIdx3:sel3.length;
-								var tag3 = hashIdx3 != -1 || dotIdx3 != -1?sel3.slice(0,Math.min(hash3,dot3)):sel3;
-								elm22 = vnode7.elm = data4 != undefined && (i20 = data4.ns) != undefined?document.createElementNS(i20,tag3):document.createElement(tag3);
-								if(hash3 < dot3) elm22.id = sel3.slice(hash3 + 1,dot3);
-								if(dotIdx3 > 0) {
-									elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
+						if(startIdx2 <= endIdx) do {
+							new_node5 = (function($this) {
+								var $r;
+								var vnode7 = vnodes2[startIdx2];
+								var i20;
+								var data4 = vnode7.data;
+								if(data4 != undefined) {
+									if((i20 = data4.hook) != undefined && (i20 = i20.init) != undefined) i20(vnode7);
+									if((i20 = data4.vnode) != undefined) vnode7 = i20;
 								}
-								if(Array.isArray(children4)) {
-									i20 = 0;
-									if(i20 < children4.length) do elm22.appendChild(Main.createElm(children4[i20],insertedVnodeQueue)); while((function($this) {
-										var $r;
-										++i20;
-										$r = i20 < children4.length;
-										return $r;
-									}($this)));
-								} else if(typeof vnode7.text == "string" || typeof vnode7.text == "number") elm22.appendChild(document.createTextNode(vnode7.text));
-								var oldVnode5 = Main.emptyNode;
-								var key22;
-								var cur16;
-								var old8;
-								var elm23 = vnode7.elm;
-								var oldAttrs4 = oldVnode5.data.attrs == null?{ }:oldVnode5.data.attrs;
-								var attrs4 = vnode7.data.attrs == null?{ }:vnode7.data.attrs;
-								var _g39 = 0;
-								var _g122 = Object.keys(attrs4);
-								while(_g39 < _g122.length) {
-									var key23 = _g122[_g39];
-									++_g39;
-									cur16 = attrs4[key23];
-									old8 = oldAttrs4[key23];
-									if(old8 != cur16) {
-										if(!cur16 && Attributes.booleanAttrsDict[key23]) elm23.removeAttribute(key23); else elm23.setAttribute(key23,cur16);
+								var elm22;
+								var children4 = vnode7.children;
+								var sel3 = vnode7.sel;
+								if(sel3 != undefined) {
+									var hashIdx3 = sel3.indexOf("#",0);
+									var dotIdx3 = sel3.indexOf(".",hashIdx3);
+									var hash3 = hashIdx3 > 0?hashIdx3:sel3.length;
+									var dot3 = dotIdx3 > 0?dotIdx3:sel3.length;
+									var tag3 = hashIdx3 != -1 || dotIdx3 != -1?sel3.slice(0,Math.min(hash3,dot3)):sel3;
+									elm22 = vnode7.elm = data4 != undefined && (i20 = data4.ns) != undefined?document.createElementNS(i20,tag3):document.createElement(tag3);
+									if(hash3 < dot3) elm22.id = sel3.slice(hash3 + 1,dot3);
+									if(dotIdx3 > 0) {
+										elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
 									}
-								}
-								var _g40 = 0;
-								var _g123 = Object.keys(oldAttrs4);
-								while(_g40 < _g123.length) {
-									var key24 = _g123[_g40];
-									++_g40;
-									if(!Object.prototype.hasOwnProperty.call(attrs4,key24)) elm23.removeAttribute(key24);
-								}
-								var key25;
-								var cur17;
-								var old9;
-								var elm24 = vnode7.elm;
-								var oldProps4 = oldVnode5.data.props == null?{ }:oldVnode5.data.props;
-								var props5 = vnode7.data.props == null?{ }:vnode7.data.props;
-								var _g41 = 0;
-								var _g124 = Object.keys(props5);
-								while(_g41 < _g124.length) {
-									var key26 = _g124[_g41];
-									++_g41;
-									cur17 = props5[key26];
-									old9 = oldProps4[key26];
-									if(old9 != cur17) {
-										var value8 = cur17;
-										elm24[key26] = value8;
-									}
-								}
-								var cur18;
-								var name24;
-								var elm25 = vnode7.elm;
-								var oldClass4 = oldVnode5.data.classes == null?{ }:oldVnode5.data.classes;
-								var klass4 = vnode7.data.classes == null?{ }:vnode7.data.classes;
-								var _g42 = 0;
-								var _g125 = Object.keys(klass4);
-								while(_g42 < _g125.length) {
-									var name25 = _g125[_g42];
-									++_g42;
-									cur18 = klass4[name25];
-									if(cur18 != oldClass4[name25]) {
-										if(cur18 == "add") elm25.classList.add(name25); else if(cur18 == "remove") elm25.classList.remove(name25);
-									}
-								}
-								var cur19;
-								var name26;
-								var elm26 = vnode7.elm;
-								var oldStyle4 = oldVnode5.data.style == null?{ }:oldVnode5.data.style;
-								var style6 = vnode7.data.style == null?{ }:vnode7.data.style;
-								var oldHasDel4 = Object.prototype.hasOwnProperty.call(oldStyle4,"delayed");
-								var _g43 = 0;
-								var _g126 = Object.keys(style6);
-								while(_g43 < _g126.length) {
-									var name27 = _g126[_g43];
-									++_g43;
-									cur19 = style6[name27];
-									if(name27 == "delayed") {
-										var delayed4 = style6.delayed;
-										var oldDelayed4 = oldStyle4.delayed;
-										var _g211 = 0;
-										var _g310 = Object.keys(delayed4);
-										while(_g211 < _g310.length) {
-											var name28 = _g310[_g211];
-											++_g211;
-											cur19 = delayed4[name28];
-											if(!oldHasDel4 || cur19 != oldDelayed4[name28]) {
-												var obj4 = [elm26.style];
-												var prop4 = [name28];
-												var val4 = [cur19];
-												var fn4 = [(function(val4,prop4,obj4) {
-													return function(i21) {
-														var value9 = val4[0];
-														obj4[0][prop4[0]] = value9;
-													};
-												})(val4,prop4,obj4)];
-												window.requestAnimationFrame((function(fn4) {
-													return function(i22) {
-														window.requestAnimationFrame(fn4[0]);
-													};
-												})(fn4));
-											}
+									if(Array.isArray(children4)) {
+										i20 = 0;
+										if(i20 < children4.length) do {
+											var new_node6 = Main.createElm(children4[i20],insertedVnodeQueue);
+											elm22.appendChild(new_node6);
+										} while((function($this) {
+											var $r;
+											++i20;
+											$r = i20 < children4.length;
+											return $r;
+										}($this)));
+									} else if(typeof vnode7.text == "string" || typeof vnode7.text == "number") elm22.appendChild(document.createTextNode(vnode7.text));
+									var oldVnode5 = Main.emptyNode;
+									var key22;
+									var cur16;
+									var old8;
+									var elm23 = vnode7.elm;
+									var oldAttrs4 = oldVnode5.data.attrs == null?{ }:oldVnode5.data.attrs;
+									var attrs4 = vnode7.data.attrs == null?{ }:vnode7.data.attrs;
+									var _g39 = 0;
+									var _g122 = Object.keys(attrs4);
+									while(_g39 < _g122.length) {
+										var key23 = _g122[_g39];
+										++_g39;
+										cur16 = attrs4[key23];
+										old8 = oldAttrs4[key23];
+										if(old8 != cur16) {
+											if(!cur16 && Attributes.booleanAttrsDict[key23]) elm23.removeAttribute(key23); else elm23.setAttribute(key23,cur16);
 										}
-									} else if(name27 != "remove" && cur19 != oldStyle4[name27]) elm26.style[name27] = cur19;
-								}
-								if(vnode7.data != null) {
-									i20 = vnode7.data.hook;
-									if(i20 != undefined) {
-										if(i20.create) i20.create(Main.emptyNode,vnode7);
-										if(i20.insert) insertedVnodeQueue.push(vnode7);
 									}
-								}
-							} else elm22 = vnode7.elm = document.createTextNode(vnode7.text);
-							$r = vnode7.elm;
-							return $r;
-						}(this)),null); while((function($this) {
+									var _g40 = 0;
+									var _g123 = Object.keys(oldAttrs4);
+									while(_g40 < _g123.length) {
+										var key24 = _g123[_g40];
+										++_g40;
+										if(!Object.prototype.hasOwnProperty.call(attrs4,key24)) elm23.removeAttribute(key24);
+									}
+									var key25;
+									var cur17;
+									var old9;
+									var elm24 = vnode7.elm;
+									var oldProps4 = oldVnode5.data.props == null?{ }:oldVnode5.data.props;
+									var props5 = vnode7.data.props == null?{ }:vnode7.data.props;
+									var _g41 = 0;
+									var _g124 = Object.keys(props5);
+									while(_g41 < _g124.length) {
+										var key26 = _g124[_g41];
+										++_g41;
+										cur17 = props5[key26];
+										old9 = oldProps4[key26];
+										if(old9 != cur17) {
+											var value8 = cur17;
+											elm24[key26] = value8;
+										}
+									}
+									var cur18;
+									var name24;
+									var elm25 = vnode7.elm;
+									var oldClass4 = oldVnode5.data.classes == null?{ }:oldVnode5.data.classes;
+									var klass4 = vnode7.data.classes == null?{ }:vnode7.data.classes;
+									var _g42 = 0;
+									var _g125 = Object.keys(klass4);
+									while(_g42 < _g125.length) {
+										var name25 = _g125[_g42];
+										++_g42;
+										cur18 = klass4[name25];
+										if(cur18 != oldClass4[name25]) {
+											if(cur18 == "add") elm25.classList.add(name25); else if(cur18 == "remove") elm25.classList.remove(name25);
+										}
+									}
+									var cur19;
+									var name26;
+									var elm26 = vnode7.elm;
+									var oldStyle4 = oldVnode5.data.style == null?{ }:oldVnode5.data.style;
+									var style6 = vnode7.data.style == null?{ }:vnode7.data.style;
+									var oldHasDel4 = Object.prototype.hasOwnProperty.call(oldStyle4,"delayed");
+									var _g43 = 0;
+									var _g126 = Object.keys(style6);
+									while(_g43 < _g126.length) {
+										var name27 = _g126[_g43];
+										++_g43;
+										cur19 = style6[name27];
+										if(name27 == "delayed") {
+											var delayed4 = style6.delayed;
+											var oldDelayed4 = oldStyle4.delayed;
+											var _g211 = 0;
+											var _g310 = Object.keys(delayed4);
+											while(_g211 < _g310.length) {
+												var name28 = _g310[_g211];
+												++_g211;
+												cur19 = delayed4[name28];
+												if(!oldHasDel4 || cur19 != oldDelayed4[name28]) {
+													var obj4 = [elm26.style];
+													var prop4 = [name28];
+													var val4 = [cur19];
+													var fn4 = [(function(val4,prop4,obj4) {
+														return function(i21) {
+															var value9 = val4[0];
+															obj4[0][prop4[0]] = value9;
+														};
+													})(val4,prop4,obj4)];
+													window.requestAnimationFrame((function(fn4) {
+														return function(i22) {
+															window.requestAnimationFrame(fn4[0]);
+														};
+													})(fn4));
+												}
+											}
+										} else if(name27 != "remove" && cur19 != oldStyle4[name27]) elm26.style[name27] = cur19;
+									}
+									if(vnode7.data != null) {
+										i20 = vnode7.data.hook;
+										if(i20 != undefined) {
+											if(i20.create) i20.create(Main.emptyNode,vnode7);
+											if(i20.insert) insertedVnodeQueue.push(vnode7);
+										}
+									}
+								} else elm22 = vnode7.elm = document.createTextNode(vnode7.text);
+								$r = vnode7.elm;
+								return $r;
+							}(this));
+							elm5.insertBefore(new_node5,null);
+						} while((function($this) {
 							var $r;
 							++startIdx2;
 							$r = startIdx2 <= endIdx;
@@ -2162,7 +2204,7 @@ Main.patch = function(oldVnode,vnode) {
 							}(this));
 							idxInOld1 = oldKeyToIdx1[newStartVnode1.key];
 							if(idxInOld1 == undefined) {
-								elm29.insertBefore((function($this) {
+								var new_node8 = (function($this) {
 									var $r;
 									var vnode11 = newStartVnode1;
 									var i31;
@@ -2187,7 +2229,10 @@ Main.patch = function(oldVnode,vnode) {
 										}
 										if(Array.isArray(children6)) {
 											i31 = 0;
-											if(i31 < children6.length) do elm34.appendChild(Main.createElm(children6[i31],insertedVnodeQueue)); while((function($this) {
+											if(i31 < children6.length) do {
+												var new_node7 = Main.createElm(children6[i31],insertedVnodeQueue);
+												elm34.appendChild(new_node7);
+											} while((function($this) {
 												var $r;
 												++i31;
 												$r = i31 < children6.length;
@@ -2302,7 +2347,8 @@ Main.patch = function(oldVnode,vnode) {
 									} else elm34 = vnode11.elm = document.createTextNode(vnode11.text);
 									$r = vnode11.elm;
 									return $r;
-								}(this)),oldStartVnode1.elm);
+								}(this));
+								elm29.insertBefore(new_node8,oldStartVnode1.elm);
 								newStartVnode1 = ch3[++newStartIdx1];
 							} else {
 								elmToMove1 = oldCh1[idxInOld1];
@@ -2317,148 +2363,155 @@ Main.patch = function(oldVnode,vnode) {
 							var vnodes4 = ch3;
 							var startIdx4 = newStartIdx1;
 							var i34;
+							var new_node9;
 							i34 = 0;
-							if(startIdx4 <= newEndIdx1) do elm29.insertBefore((function($this) {
-								var $r;
-								var vnode12 = vnodes4[startIdx4];
-								var i35;
-								var data6 = vnode12.data;
-								if(data6 != undefined) {
-									if((i35 = data6.hook) != undefined && (i35 = i35.init) != undefined) i35(vnode12);
-									if((i35 = data6.vnode) != undefined) vnode12 = i35;
-								}
-								var elm39;
-								var children7 = vnode12.children;
-								var sel5 = vnode12.sel;
-								if(sel5 != undefined) {
-									var hashIdx5 = sel5.indexOf("#",0);
-									var dotIdx5 = sel5.indexOf(".",hashIdx5);
-									var hash5 = hashIdx5 > 0?hashIdx5:sel5.length;
-									var dot5 = dotIdx5 > 0?dotIdx5:sel5.length;
-									var tag5 = hashIdx5 != -1 || dotIdx5 != -1?sel5.slice(0,Math.min(hash5,dot5)):sel5;
-									elm39 = vnode12.elm = data6 != undefined && (i35 = data6.ns) != undefined?document.createElementNS(i35,tag5):document.createElement(tag5);
-									if(hash5 < dot5) elm39.id = sel5.slice(hash5 + 1,dot5);
-									if(dotIdx5 > 0) {
-										elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
+							if(startIdx4 <= newEndIdx1) do {
+								new_node9 = (function($this) {
+									var $r;
+									var vnode12 = vnodes4[startIdx4];
+									var i35;
+									var data6 = vnode12.data;
+									if(data6 != undefined) {
+										if((i35 = data6.hook) != undefined && (i35 = i35.init) != undefined) i35(vnode12);
+										if((i35 = data6.vnode) != undefined) vnode12 = i35;
 									}
-									if(Array.isArray(children7)) {
-										i35 = 0;
-										if(i35 < children7.length) do elm39.appendChild(Main.createElm(children7[i35],insertedVnodeQueue)); while((function($this) {
-											var $r;
-											++i35;
-											$r = i35 < children7.length;
-											return $r;
-										}($this)));
-									} else if(typeof vnode12.text == "string" || typeof vnode12.text == "number") elm39.appendChild(document.createTextNode(vnode12.text));
-									var oldVnode8 = Main.emptyNode;
-									var key38;
-									var cur28;
-									var old14;
-									var elm40 = vnode12.elm;
-									var oldAttrs7 = oldVnode8.data.attrs == null?{ }:oldVnode8.data.attrs;
-									var attrs7 = vnode12.data.attrs == null?{ }:vnode12.data.attrs;
-									var _g56 = 0;
-									var _g139 = Object.keys(attrs7);
-									while(_g56 < _g139.length) {
-										var key39 = _g139[_g56];
-										++_g56;
-										cur28 = attrs7[key39];
-										old14 = oldAttrs7[key39];
-										if(old14 != cur28) {
-											if(!cur28 && Attributes.booleanAttrsDict[key39]) elm40.removeAttribute(key39); else elm40.setAttribute(key39,cur28);
+									var elm39;
+									var children7 = vnode12.children;
+									var sel5 = vnode12.sel;
+									if(sel5 != undefined) {
+										var hashIdx5 = sel5.indexOf("#",0);
+										var dotIdx5 = sel5.indexOf(".",hashIdx5);
+										var hash5 = hashIdx5 > 0?hashIdx5:sel5.length;
+										var dot5 = dotIdx5 > 0?dotIdx5:sel5.length;
+										var tag5 = hashIdx5 != -1 || dotIdx5 != -1?sel5.slice(0,Math.min(hash5,dot5)):sel5;
+										elm39 = vnode12.elm = data6 != undefined && (i35 = data6.ns) != undefined?document.createElementNS(i35,tag5):document.createElement(tag5);
+										if(hash5 < dot5) elm39.id = sel5.slice(hash5 + 1,dot5);
+										if(dotIdx5 > 0) {
+											elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
 										}
-									}
-									var _g57 = 0;
-									var _g140 = Object.keys(oldAttrs7);
-									while(_g57 < _g140.length) {
-										var key40 = _g140[_g57];
-										++_g57;
-										if(!Object.prototype.hasOwnProperty.call(attrs7,key40)) elm40.removeAttribute(key40);
-									}
-									var key41;
-									var cur29;
-									var old15;
-									var elm41 = vnode12.elm;
-									var oldProps7 = oldVnode8.data.props == null?{ }:oldVnode8.data.props;
-									var props9 = vnode12.data.props == null?{ }:vnode12.data.props;
-									var _g58 = 0;
-									var _g141 = Object.keys(props9);
-									while(_g58 < _g141.length) {
-										var key42 = _g141[_g58];
-										++_g58;
-										cur29 = props9[key42];
-										old15 = oldProps7[key42];
-										if(old15 != cur29) {
-											var value14 = cur29;
-											elm41[key42] = value14;
-										}
-									}
-									var cur30;
-									var name43;
-									var elm42 = vnode12.elm;
-									var oldClass7 = oldVnode8.data.classes == null?{ }:oldVnode8.data.classes;
-									var klass7 = vnode12.data.classes == null?{ }:vnode12.data.classes;
-									var _g59 = 0;
-									var _g142 = Object.keys(klass7);
-									while(_g59 < _g142.length) {
-										var name44 = _g142[_g59];
-										++_g59;
-										cur30 = klass7[name44];
-										if(cur30 != oldClass7[name44]) {
-											if(cur30 == "add") elm42.classList.add(name44); else if(cur30 == "remove") elm42.classList.remove(name44);
-										}
-									}
-									var cur31;
-									var name45;
-									var elm43 = vnode12.elm;
-									var oldStyle7 = oldVnode8.data.style == null?{ }:oldVnode8.data.style;
-									var style11 = vnode12.data.style == null?{ }:vnode12.data.style;
-									var oldHasDel7 = Object.prototype.hasOwnProperty.call(oldStyle7,"delayed");
-									var _g60 = 0;
-									var _g143 = Object.keys(style11);
-									while(_g60 < _g143.length) {
-										var name46 = _g143[_g60];
-										++_g60;
-										cur31 = style11[name46];
-										if(name46 == "delayed") {
-											var delayed7 = style11.delayed;
-											var oldDelayed7 = oldStyle7.delayed;
-											var _g214 = 0;
-											var _g313 = Object.keys(delayed7);
-											while(_g214 < _g313.length) {
-												var name47 = _g313[_g214];
-												++_g214;
-												cur31 = delayed7[name47];
-												if(!oldHasDel7 || cur31 != oldDelayed7[name47]) {
-													var obj7 = [elm43.style];
-													var prop7 = [name47];
-													var val7 = [cur31];
-													var fn7 = [(function(val7,prop7,obj7) {
-														return function(i36) {
-															var value15 = val7[0];
-															obj7[0][prop7[0]] = value15;
-														};
-													})(val7,prop7,obj7)];
-													window.requestAnimationFrame((function(fn7) {
-														return function(i37) {
-															window.requestAnimationFrame(fn7[0]);
-														};
-													})(fn7));
-												}
+										if(Array.isArray(children7)) {
+											i35 = 0;
+											if(i35 < children7.length) do {
+												var new_node10 = Main.createElm(children7[i35],insertedVnodeQueue);
+												elm39.appendChild(new_node10);
+											} while((function($this) {
+												var $r;
+												++i35;
+												$r = i35 < children7.length;
+												return $r;
+											}($this)));
+										} else if(typeof vnode12.text == "string" || typeof vnode12.text == "number") elm39.appendChild(document.createTextNode(vnode12.text));
+										var oldVnode8 = Main.emptyNode;
+										var key38;
+										var cur28;
+										var old14;
+										var elm40 = vnode12.elm;
+										var oldAttrs7 = oldVnode8.data.attrs == null?{ }:oldVnode8.data.attrs;
+										var attrs7 = vnode12.data.attrs == null?{ }:vnode12.data.attrs;
+										var _g56 = 0;
+										var _g139 = Object.keys(attrs7);
+										while(_g56 < _g139.length) {
+											var key39 = _g139[_g56];
+											++_g56;
+											cur28 = attrs7[key39];
+											old14 = oldAttrs7[key39];
+											if(old14 != cur28) {
+												if(!cur28 && Attributes.booleanAttrsDict[key39]) elm40.removeAttribute(key39); else elm40.setAttribute(key39,cur28);
 											}
-										} else if(name46 != "remove" && cur31 != oldStyle7[name46]) elm43.style[name46] = cur31;
-									}
-									if(vnode12.data != null) {
-										i35 = vnode12.data.hook;
-										if(i35 != undefined) {
-											if(i35.create) i35.create(Main.emptyNode,vnode12);
-											if(i35.insert) insertedVnodeQueue.push(vnode12);
 										}
-									}
-								} else elm39 = vnode12.elm = document.createTextNode(vnode12.text);
-								$r = vnode12.elm;
-								return $r;
-							}(this)),before1); while((function($this) {
+										var _g57 = 0;
+										var _g140 = Object.keys(oldAttrs7);
+										while(_g57 < _g140.length) {
+											var key40 = _g140[_g57];
+											++_g57;
+											if(!Object.prototype.hasOwnProperty.call(attrs7,key40)) elm40.removeAttribute(key40);
+										}
+										var key41;
+										var cur29;
+										var old15;
+										var elm41 = vnode12.elm;
+										var oldProps7 = oldVnode8.data.props == null?{ }:oldVnode8.data.props;
+										var props9 = vnode12.data.props == null?{ }:vnode12.data.props;
+										var _g58 = 0;
+										var _g141 = Object.keys(props9);
+										while(_g58 < _g141.length) {
+											var key42 = _g141[_g58];
+											++_g58;
+											cur29 = props9[key42];
+											old15 = oldProps7[key42];
+											if(old15 != cur29) {
+												var value14 = cur29;
+												elm41[key42] = value14;
+											}
+										}
+										var cur30;
+										var name43;
+										var elm42 = vnode12.elm;
+										var oldClass7 = oldVnode8.data.classes == null?{ }:oldVnode8.data.classes;
+										var klass7 = vnode12.data.classes == null?{ }:vnode12.data.classes;
+										var _g59 = 0;
+										var _g142 = Object.keys(klass7);
+										while(_g59 < _g142.length) {
+											var name44 = _g142[_g59];
+											++_g59;
+											cur30 = klass7[name44];
+											if(cur30 != oldClass7[name44]) {
+												if(cur30 == "add") elm42.classList.add(name44); else if(cur30 == "remove") elm42.classList.remove(name44);
+											}
+										}
+										var cur31;
+										var name45;
+										var elm43 = vnode12.elm;
+										var oldStyle7 = oldVnode8.data.style == null?{ }:oldVnode8.data.style;
+										var style11 = vnode12.data.style == null?{ }:vnode12.data.style;
+										var oldHasDel7 = Object.prototype.hasOwnProperty.call(oldStyle7,"delayed");
+										var _g60 = 0;
+										var _g143 = Object.keys(style11);
+										while(_g60 < _g143.length) {
+											var name46 = _g143[_g60];
+											++_g60;
+											cur31 = style11[name46];
+											if(name46 == "delayed") {
+												var delayed7 = style11.delayed;
+												var oldDelayed7 = oldStyle7.delayed;
+												var _g214 = 0;
+												var _g313 = Object.keys(delayed7);
+												while(_g214 < _g313.length) {
+													var name47 = _g313[_g214];
+													++_g214;
+													cur31 = delayed7[name47];
+													if(!oldHasDel7 || cur31 != oldDelayed7[name47]) {
+														var obj7 = [elm43.style];
+														var prop7 = [name47];
+														var val7 = [cur31];
+														var fn7 = [(function(val7,prop7,obj7) {
+															return function(i36) {
+																var value15 = val7[0];
+																obj7[0][prop7[0]] = value15;
+															};
+														})(val7,prop7,obj7)];
+														window.requestAnimationFrame((function(fn7) {
+															return function(i37) {
+																window.requestAnimationFrame(fn7[0]);
+															};
+														})(fn7));
+													}
+												}
+											} else if(name46 != "remove" && cur31 != oldStyle7[name46]) elm43.style[name46] = cur31;
+										}
+										if(vnode12.data != null) {
+											i35 = vnode12.data.hook;
+											if(i35 != undefined) {
+												if(i35.create) i35.create(Main.emptyNode,vnode12);
+												if(i35.insert) insertedVnodeQueue.push(vnode12);
+											}
+										}
+									} else elm39 = vnode12.elm = document.createTextNode(vnode12.text);
+									$r = vnode12.elm;
+									return $r;
+								}(this));
+								elm29.insertBefore(new_node9,before1);
+							} while((function($this) {
 								var $r;
 								++startIdx4;
 								$r = startIdx4 <= newEndIdx1;
@@ -2565,148 +2618,155 @@ Main.patch = function(oldVnode,vnode) {
 					var startIdx6 = 0;
 					var endIdx2 = ch3.length - 1;
 					var i42;
+					var new_node11;
 					i42 = 0;
-					if(startIdx6 <= endIdx2) do elm29.insertBefore((function($this) {
-						var $r;
-						var vnode15 = vnodes6[startIdx6];
-						var i43;
-						var data7 = vnode15.data;
-						if(data7 != undefined) {
-							if((i43 = data7.hook) != undefined && (i43 = i43.init) != undefined) i43(vnode15);
-							if((i43 = data7.vnode) != undefined) vnode15 = i43;
-						}
-						var elm46;
-						var children8 = vnode15.children;
-						var sel6 = vnode15.sel;
-						if(sel6 != undefined) {
-							var hashIdx6 = sel6.indexOf("#",0);
-							var dotIdx6 = sel6.indexOf(".",hashIdx6);
-							var hash6 = hashIdx6 > 0?hashIdx6:sel6.length;
-							var dot6 = dotIdx6 > 0?dotIdx6:sel6.length;
-							var tag6 = hashIdx6 != -1 || dotIdx6 != -1?sel6.slice(0,Math.min(hash6,dot6)):sel6;
-							elm46 = vnode15.elm = data7 != undefined && (i43 = data7.ns) != undefined?document.createElementNS(i43,tag6):document.createElement(tag6);
-							if(hash6 < dot6) elm46.id = sel6.slice(hash6 + 1,dot6);
-							if(dotIdx6 > 0) {
-								elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
+					if(startIdx6 <= endIdx2) do {
+						new_node11 = (function($this) {
+							var $r;
+							var vnode15 = vnodes6[startIdx6];
+							var i43;
+							var data7 = vnode15.data;
+							if(data7 != undefined) {
+								if((i43 = data7.hook) != undefined && (i43 = i43.init) != undefined) i43(vnode15);
+								if((i43 = data7.vnode) != undefined) vnode15 = i43;
 							}
-							if(Array.isArray(children8)) {
-								i43 = 0;
-								if(i43 < children8.length) do elm46.appendChild(Main.createElm(children8[i43],insertedVnodeQueue)); while((function($this) {
-									var $r;
-									++i43;
-									$r = i43 < children8.length;
-									return $r;
-								}($this)));
-							} else if(typeof vnode15.text == "string" || typeof vnode15.text == "number") elm46.appendChild(document.createTextNode(vnode15.text));
-							var oldVnode9 = Main.emptyNode;
-							var key43;
-							var cur32;
-							var old16;
-							var elm47 = vnode15.elm;
-							var oldAttrs8 = oldVnode9.data.attrs == null?{ }:oldVnode9.data.attrs;
-							var attrs8 = vnode15.data.attrs == null?{ }:vnode15.data.attrs;
-							var _g63 = 0;
-							var _g146 = Object.keys(attrs8);
-							while(_g63 < _g146.length) {
-								var key44 = _g146[_g63];
-								++_g63;
-								cur32 = attrs8[key44];
-								old16 = oldAttrs8[key44];
-								if(old16 != cur32) {
-									if(!cur32 && Attributes.booleanAttrsDict[key44]) elm47.removeAttribute(key44); else elm47.setAttribute(key44,cur32);
+							var elm46;
+							var children8 = vnode15.children;
+							var sel6 = vnode15.sel;
+							if(sel6 != undefined) {
+								var hashIdx6 = sel6.indexOf("#",0);
+								var dotIdx6 = sel6.indexOf(".",hashIdx6);
+								var hash6 = hashIdx6 > 0?hashIdx6:sel6.length;
+								var dot6 = dotIdx6 > 0?dotIdx6:sel6.length;
+								var tag6 = hashIdx6 != -1 || dotIdx6 != -1?sel6.slice(0,Math.min(hash6,dot6)):sel6;
+								elm46 = vnode15.elm = data7 != undefined && (i43 = data7.ns) != undefined?document.createElementNS(i43,tag6):document.createElement(tag6);
+								if(hash6 < dot6) elm46.id = sel6.slice(hash6 + 1,dot6);
+								if(dotIdx6 > 0) {
+									elm.className = sel.slice(dot+1).replace(Main.rg, " ");;
 								}
-							}
-							var _g64 = 0;
-							var _g147 = Object.keys(oldAttrs8);
-							while(_g64 < _g147.length) {
-								var key45 = _g147[_g64];
-								++_g64;
-								if(!Object.prototype.hasOwnProperty.call(attrs8,key45)) elm47.removeAttribute(key45);
-							}
-							var key46;
-							var cur33;
-							var old17;
-							var elm48 = vnode15.elm;
-							var oldProps8 = oldVnode9.data.props == null?{ }:oldVnode9.data.props;
-							var props11 = vnode15.data.props == null?{ }:vnode15.data.props;
-							var _g65 = 0;
-							var _g148 = Object.keys(props11);
-							while(_g65 < _g148.length) {
-								var key47 = _g148[_g65];
-								++_g65;
-								cur33 = props11[key47];
-								old17 = oldProps8[key47];
-								if(old17 != cur33) {
-									var value16 = cur33;
-									elm48[key47] = value16;
-								}
-							}
-							var cur34;
-							var name52;
-							var elm49 = vnode15.elm;
-							var oldClass8 = oldVnode9.data.classes == null?{ }:oldVnode9.data.classes;
-							var klass8 = vnode15.data.classes == null?{ }:vnode15.data.classes;
-							var _g66 = 0;
-							var _g149 = Object.keys(klass8);
-							while(_g66 < _g149.length) {
-								var name53 = _g149[_g66];
-								++_g66;
-								cur34 = klass8[name53];
-								if(cur34 != oldClass8[name53]) {
-									if(cur34 == "add") elm49.classList.add(name53); else if(cur34 == "remove") elm49.classList.remove(name53);
-								}
-							}
-							var cur35;
-							var name54;
-							var elm50 = vnode15.elm;
-							var oldStyle8 = oldVnode9.data.style == null?{ }:oldVnode9.data.style;
-							var style14 = vnode15.data.style == null?{ }:vnode15.data.style;
-							var oldHasDel8 = Object.prototype.hasOwnProperty.call(oldStyle8,"delayed");
-							var _g67 = 0;
-							var _g150 = Object.keys(style14);
-							while(_g67 < _g150.length) {
-								var name55 = _g150[_g67];
-								++_g67;
-								cur35 = style14[name55];
-								if(name55 == "delayed") {
-									var delayed8 = style14.delayed;
-									var oldDelayed8 = oldStyle8.delayed;
-									var _g215 = 0;
-									var _g314 = Object.keys(delayed8);
-									while(_g215 < _g314.length) {
-										var name56 = _g314[_g215];
-										++_g215;
-										cur35 = delayed8[name56];
-										if(!oldHasDel8 || cur35 != oldDelayed8[name56]) {
-											var obj8 = [elm50.style];
-											var prop8 = [name56];
-											var val8 = [cur35];
-											var fn8 = [(function(val8,prop8,obj8) {
-												return function(i44) {
-													var value17 = val8[0];
-													obj8[0][prop8[0]] = value17;
-												};
-											})(val8,prop8,obj8)];
-											window.requestAnimationFrame((function(fn8) {
-												return function(i45) {
-													window.requestAnimationFrame(fn8[0]);
-												};
-											})(fn8));
-										}
+								if(Array.isArray(children8)) {
+									i43 = 0;
+									if(i43 < children8.length) do {
+										var new_node12 = Main.createElm(children8[i43],insertedVnodeQueue);
+										elm46.appendChild(new_node12);
+									} while((function($this) {
+										var $r;
+										++i43;
+										$r = i43 < children8.length;
+										return $r;
+									}($this)));
+								} else if(typeof vnode15.text == "string" || typeof vnode15.text == "number") elm46.appendChild(document.createTextNode(vnode15.text));
+								var oldVnode9 = Main.emptyNode;
+								var key43;
+								var cur32;
+								var old16;
+								var elm47 = vnode15.elm;
+								var oldAttrs8 = oldVnode9.data.attrs == null?{ }:oldVnode9.data.attrs;
+								var attrs8 = vnode15.data.attrs == null?{ }:vnode15.data.attrs;
+								var _g63 = 0;
+								var _g146 = Object.keys(attrs8);
+								while(_g63 < _g146.length) {
+									var key44 = _g146[_g63];
+									++_g63;
+									cur32 = attrs8[key44];
+									old16 = oldAttrs8[key44];
+									if(old16 != cur32) {
+										if(!cur32 && Attributes.booleanAttrsDict[key44]) elm47.removeAttribute(key44); else elm47.setAttribute(key44,cur32);
 									}
-								} else if(name55 != "remove" && cur35 != oldStyle8[name55]) elm50.style[name55] = cur35;
-							}
-							if(vnode15.data != null) {
-								i43 = vnode15.data.hook;
-								if(i43 != undefined) {
-									if(i43.create) i43.create(Main.emptyNode,vnode15);
-									if(i43.insert) insertedVnodeQueue.push(vnode15);
 								}
-							}
-						} else elm46 = vnode15.elm = document.createTextNode(vnode15.text);
-						$r = vnode15.elm;
-						return $r;
-					}(this)),null); while((function($this) {
+								var _g64 = 0;
+								var _g147 = Object.keys(oldAttrs8);
+								while(_g64 < _g147.length) {
+									var key45 = _g147[_g64];
+									++_g64;
+									if(!Object.prototype.hasOwnProperty.call(attrs8,key45)) elm47.removeAttribute(key45);
+								}
+								var key46;
+								var cur33;
+								var old17;
+								var elm48 = vnode15.elm;
+								var oldProps8 = oldVnode9.data.props == null?{ }:oldVnode9.data.props;
+								var props11 = vnode15.data.props == null?{ }:vnode15.data.props;
+								var _g65 = 0;
+								var _g148 = Object.keys(props11);
+								while(_g65 < _g148.length) {
+									var key47 = _g148[_g65];
+									++_g65;
+									cur33 = props11[key47];
+									old17 = oldProps8[key47];
+									if(old17 != cur33) {
+										var value16 = cur33;
+										elm48[key47] = value16;
+									}
+								}
+								var cur34;
+								var name52;
+								var elm49 = vnode15.elm;
+								var oldClass8 = oldVnode9.data.classes == null?{ }:oldVnode9.data.classes;
+								var klass8 = vnode15.data.classes == null?{ }:vnode15.data.classes;
+								var _g66 = 0;
+								var _g149 = Object.keys(klass8);
+								while(_g66 < _g149.length) {
+									var name53 = _g149[_g66];
+									++_g66;
+									cur34 = klass8[name53];
+									if(cur34 != oldClass8[name53]) {
+										if(cur34 == "add") elm49.classList.add(name53); else if(cur34 == "remove") elm49.classList.remove(name53);
+									}
+								}
+								var cur35;
+								var name54;
+								var elm50 = vnode15.elm;
+								var oldStyle8 = oldVnode9.data.style == null?{ }:oldVnode9.data.style;
+								var style14 = vnode15.data.style == null?{ }:vnode15.data.style;
+								var oldHasDel8 = Object.prototype.hasOwnProperty.call(oldStyle8,"delayed");
+								var _g67 = 0;
+								var _g150 = Object.keys(style14);
+								while(_g67 < _g150.length) {
+									var name55 = _g150[_g67];
+									++_g67;
+									cur35 = style14[name55];
+									if(name55 == "delayed") {
+										var delayed8 = style14.delayed;
+										var oldDelayed8 = oldStyle8.delayed;
+										var _g215 = 0;
+										var _g314 = Object.keys(delayed8);
+										while(_g215 < _g314.length) {
+											var name56 = _g314[_g215];
+											++_g215;
+											cur35 = delayed8[name56];
+											if(!oldHasDel8 || cur35 != oldDelayed8[name56]) {
+												var obj8 = [elm50.style];
+												var prop8 = [name56];
+												var val8 = [cur35];
+												var fn8 = [(function(val8,prop8,obj8) {
+													return function(i44) {
+														var value17 = val8[0];
+														obj8[0][prop8[0]] = value17;
+													};
+												})(val8,prop8,obj8)];
+												window.requestAnimationFrame((function(fn8) {
+													return function(i45) {
+														window.requestAnimationFrame(fn8[0]);
+													};
+												})(fn8));
+											}
+										}
+									} else if(name55 != "remove" && cur35 != oldStyle8[name55]) elm50.style[name55] = cur35;
+								}
+								if(vnode15.data != null) {
+									i43 = vnode15.data.hook;
+									if(i43 != undefined) {
+										if(i43.create) i43.create(Main.emptyNode,vnode15);
+										if(i43.insert) insertedVnodeQueue.push(vnode15);
+									}
+								}
+							} else elm46 = vnode15.elm = document.createTextNode(vnode15.text);
+							$r = vnode15.elm;
+							return $r;
+						}(this));
+						elm29.insertBefore(new_node11,null);
+					} while((function($this) {
 						var $r;
 						++startIdx6;
 						$r = startIdx6 <= endIdx2;

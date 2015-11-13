@@ -500,7 +500,7 @@ class Main {
               <li>3</li>
               <li>2</li>
               <li>5</li>
-  
+
               <li>1</li>
               <li>2</li>
               <li>3</li>
@@ -616,7 +616,8 @@ class Main {
       if (dotIdx > 0)  untyped __js__('elm.className = sel.slice(dot+1).replace({0}, " ");',rg);
       if (is_array(children)) {
         @for(i = 0,i < children.length, ++i) {
-          elm.appendChild(createElm(children[i], insertedVnodeQueue));
+          var new_node = createElm(children[i], insertedVnodeQueue);
+          elm.appendChild(new_node);
         }
       } else if (is_primitive(untyped vnode.text)) {
 
@@ -642,8 +643,10 @@ class Main {
 
    inline static function addVnodes(parentElm, before, vnodes, startIdx, endIdx, insertedVnodeQueue) {
     var i;
+    var new_node;
     @for( i=0 , startIdx <= endIdx, ++startIdx) {
-      parentElm.insertBefore(createElm(vnodes[startIdx], insertedVnodeQueue), before);
+      new_node = createElm(vnodes[startIdx], insertedVnodeQueue);
+      parentElm.insertBefore(new_node, before);
     }
   }
 
@@ -726,7 +729,8 @@ class Main {
           if (isUndef(oldKeyToIdx)) oldKeyToIdx =  createKeyToOldIdx(oldCh, oldStartIdx, untyped oldEndIdx);
           idxInOld =untyped  oldKeyToIdx[newStartVnode.key];
           if (isUndef(idxInOld)) { // New element
-            parentElm.insertBefore(untyped createElm(newStartVnode, insertedVnodeQueue), oldStartVnode.elm);
+            var new_node = createElm(newStartVnode, insertedVnodeQueue);
+            parentElm.insertBefore(untyped new_node, oldStartVnode.elm);
             newStartVnode = newCh[++newStartIdx];
           } else {
             elmToMove = untyped oldCh[idxInOld];
