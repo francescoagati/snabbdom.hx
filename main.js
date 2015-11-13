@@ -28,11 +28,14 @@ HxOverrides.iter = function(a) {
 var Attributes = function() { };
 var Main = function() { };
 Main.main = function() {
+	var x = { sel : "ul", data : { }, children : [{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : [{ sel : "span", data : { }, children : []}]}]};
+	ddd(x);
+	var y = { sel : "div", data : { id : "pippa"}, children : [{ sel : "ul", data : null, children : [{ sel : "li", data : null, children : ["1"]},{ sel : "li", data : null, children : ["2"]},{ sel : "li", data : null, children : [{ sel : "span", data : null, children : ["999999"]}]}]}]};
 	var vnode = Main.h("div#conta.two.classes",{ on : { click : function() {
 	}}},[Main.h("span",{ style : { fontWeight : "bold"}},"This is bold")," and this is just normal text",Main.h("a",{ props : { href : "/foo"}},"I'll take you places!")]);
 	var container = window.document.getElementById("container");
 	Main.patch(container,vnode);
-	var timer = new haxe_Timer(1000);
+	var timer = new haxe_Timer(320);
 	var last_node = vnode;
 	timer.run = function() {
 		var rnd = Math.random();

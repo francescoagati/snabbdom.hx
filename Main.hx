@@ -3,7 +3,7 @@ import Main.*;
 using thx.Arrays;
 using VirtualNodeDataTools;
 import Is.*;
-
+import Jsx.jsx;
 
 
 @:build(ClassicFor.build())
@@ -232,6 +232,30 @@ class Main {
 
   public static function main() {
 
+
+    var  x = H.h('ul',{},
+        H.h('li',{}),
+        H.h('li',{}),
+        H.h('li',{}),
+        H.h('li',{}),
+        H.h('li',{}),
+        H.h('li',{},H.h('span',{}))
+      );
+      untyped ddd(x);
+
+
+      var y = jsx('
+        <div id="pippa">
+          <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>
+              <span>999999</span>
+            </li>
+          </ul>
+        </div>
+      ');
+
     var vnode = untyped h('div#conta.two.classes', {on: {click: function() {}}}, [
       h('span', {style: {fontWeight: 'bold'}}, 'This is bold'),
       ' and this is just normal text',
@@ -244,7 +268,7 @@ class Main {
 
     patch(untyped container,untyped vnode);
 
-    var timer = new haxe.Timer(1000);
+    var timer = new haxe.Timer(320);
 
     var last_node = vnode;
     timer.run = function() {
@@ -298,7 +322,7 @@ class Main {
   }
 
 
-   
+
   inline static function emptyNodeAt(elm) {
     return vnode(elm.tagName, {}, [], null, elm);
   }
