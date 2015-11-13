@@ -75,7 +75,6 @@ snabbdom_Main.main = function() {
 		last_node = vnode2;
 	};
 };
-var snabbdom_Attributes = function() { };
 var snabbdom_Patch = function() { };
 snabbdom_Patch.createElm = function(vnode,insertedVnodeQueue) {
 	var i;
@@ -125,7 +124,7 @@ snabbdom_Patch.createElm = function(vnode,insertedVnodeQueue) {
 			cur = attrs[key1];
 			old = oldAttrs[key1];
 			if(old != cur) {
-				if(!cur && snabbdom_Attributes.booleanAttrsDict[key1]) elm1.removeAttribute(key1); else elm1.setAttribute(key1,cur);
+				if(!cur && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key1]) elm1.removeAttribute(key1); else elm1.setAttribute(key1,cur);
 			}
 		}
 		var _g2 = 0;
@@ -290,7 +289,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 					cur = attrs[key1];
 					old = oldAttrs[key1];
 					if(old != cur) {
-						if(!cur && snabbdom_Attributes.booleanAttrsDict[key1]) elm1.removeAttribute(key1); else elm1.setAttribute(key1,cur);
+						if(!cur && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key1]) elm1.removeAttribute(key1); else elm1.setAttribute(key1,cur);
 					}
 				}
 				var _g2 = 0;
@@ -437,7 +436,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 									cur4 = attrs1[key6];
 									old2 = oldAttrs1[key6];
 									if(old2 != cur4) {
-										if(!cur4 && snabbdom_Attributes.booleanAttrsDict[key6]) elm6.removeAttribute(key6); else elm6.setAttribute(key6,cur4);
+										if(!cur4 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key6]) elm6.removeAttribute(key6); else elm6.setAttribute(key6,cur4);
 									}
 								}
 								var _g7 = 0;
@@ -666,7 +665,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 					cur8 = attrs2[key11];
 					old4 = oldAttrs2[key11];
 					if(old4 != cur8) {
-						if(!cur8 && snabbdom_Attributes.booleanAttrsDict[key11]) elm13.removeAttribute(key11); else elm13.setAttribute(key11,cur8);
+						if(!cur8 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key11]) elm13.removeAttribute(key11); else elm13.setAttribute(key11,cur8);
 					}
 				}
 				var _g25 = 0;
@@ -813,7 +812,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 									cur12 = attrs3[key16];
 									old6 = oldAttrs3[key16];
 									if(old6 != cur12) {
-										if(!cur12 && snabbdom_Attributes.booleanAttrsDict[key16]) elm18.removeAttribute(key16); else elm18.setAttribute(key16,cur12);
+										if(!cur12 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key16]) elm18.removeAttribute(key16); else elm18.setAttribute(key16,cur12);
 									}
 								}
 								var _g34 = 0;
@@ -1042,7 +1041,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 					cur16 = attrs4[key21];
 					old8 = oldAttrs4[key21];
 					if(old8 != cur16) {
-						if(!cur16 && snabbdom_Attributes.booleanAttrsDict[key21]) elm25.removeAttribute(key21); else elm25.setAttribute(key21,cur16);
+						if(!cur16 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key21]) elm25.removeAttribute(key21); else elm25.setAttribute(key21,cur16);
 					}
 				}
 				var _g42 = 0;
@@ -1189,7 +1188,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 									cur20 = attrs5[key26];
 									old10 = oldAttrs5[key26];
 									if(old10 != cur20) {
-										if(!cur20 && snabbdom_Attributes.booleanAttrsDict[key26]) elm30.removeAttribute(key26); else elm30.setAttribute(key26,cur20);
+										if(!cur20 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key26]) elm30.removeAttribute(key26); else elm30.setAttribute(key26,cur20);
 									}
 								}
 								var _g47 = 0;
@@ -1419,7 +1418,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 					cur24 = attrs6[key31];
 					old12 = oldAttrs6[key31];
 					if(old12 != cur24) {
-						if(!cur24 && snabbdom_Attributes.booleanAttrsDict[key31]) elm37.removeAttribute(key31); else elm37.setAttribute(key31,cur24);
+						if(!cur24 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key31]) elm37.removeAttribute(key31); else elm37.setAttribute(key31,cur24);
 					}
 				}
 				var _g54 = 0;
@@ -1566,7 +1565,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 									cur28 = attrs7[key36];
 									old14 = oldAttrs7[key36];
 									if(old14 != cur28) {
-										if(!cur28 && snabbdom_Attributes.booleanAttrsDict[key36]) elm42.removeAttribute(key36); else elm42.setAttribute(key36,cur28);
+										if(!cur28 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key36]) elm42.removeAttribute(key36); else elm42.setAttribute(key36,cur28);
 									}
 								}
 								var _g59 = 0;
@@ -1843,7 +1842,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 						cur32 = attrs8[key42];
 						old16 = oldAttrs8[key42];
 						if(old16 != cur32) {
-							if(!cur32 && snabbdom_Attributes.booleanAttrsDict[key42]) elm49.removeAttribute(key42); else elm49.setAttribute(key42,cur32);
+							if(!cur32 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key42]) elm49.removeAttribute(key42); else elm49.setAttribute(key42,cur32);
 						}
 					}
 					var _g66 = 0;
@@ -1967,7 +1966,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 						cur36 = attrs9[key47];
 						old18 = oldAttrs9[key47];
 						if(old18 != cur36) {
-							if(!cur36 && snabbdom_Attributes.booleanAttrsDict[key47]) elm54.removeAttribute(key47); else elm54.setAttribute(key47,cur36);
+							if(!cur36 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key47]) elm54.removeAttribute(key47); else elm54.setAttribute(key47,cur36);
 						}
 					}
 					var _g71 = 0;
@@ -2114,7 +2113,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 										cur40 = attrs10[key52];
 										old20 = oldAttrs10[key52];
 										if(old20 != cur40) {
-											if(!cur40 && snabbdom_Attributes.booleanAttrsDict[key52]) elm59.removeAttribute(key52); else elm59.setAttribute(key52,cur40);
+											if(!cur40 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key52]) elm59.removeAttribute(key52); else elm59.setAttribute(key52,cur40);
 										}
 									}
 									var _g76 = 0;
@@ -2377,7 +2376,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 						cur44 = attrs11[key57];
 						old22 = oldAttrs11[key57];
 						if(old22 != cur44) {
-							if(!cur44 && snabbdom_Attributes.booleanAttrsDict[key57]) elm66.removeAttribute(key57); else elm66.setAttribute(key57,cur44);
+							if(!cur44 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key57]) elm66.removeAttribute(key57); else elm66.setAttribute(key57,cur44);
 						}
 					}
 					var _g83 = 0;
@@ -2627,7 +2626,7 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 					cur = attrs[key1];
 					old = oldAttrs[key1];
 					if(old != cur) {
-						if(!cur && snabbdom_Attributes.booleanAttrsDict[key1]) elm1.removeAttribute(key1); else elm1.setAttribute(key1,cur);
+						if(!cur && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key1]) elm1.removeAttribute(key1); else elm1.setAttribute(key1,cur);
 					}
 				}
 				var _g2 = 0;
@@ -2754,7 +2753,7 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 						cur4 = attrs1[key7];
 						old2 = oldAttrs1[key7];
 						if(old2 != cur4) {
-							if(!cur4 && snabbdom_Attributes.booleanAttrsDict[key7]) elm6.removeAttribute(key7); else elm6.setAttribute(key7,cur4);
+							if(!cur4 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key7]) elm6.removeAttribute(key7); else elm6.setAttribute(key7,cur4);
 						}
 					}
 					var _g7 = 0;
@@ -2901,7 +2900,7 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 										cur8 = attrs2[key12];
 										old4 = oldAttrs2[key12];
 										if(old4 != cur8) {
-											if(!cur8 && snabbdom_Attributes.booleanAttrsDict[key12]) elm11.removeAttribute(key12); else elm11.setAttribute(key12,cur8);
+											if(!cur8 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key12]) elm11.removeAttribute(key12); else elm11.setAttribute(key12,cur8);
 										}
 									}
 									var _g23 = 0;
@@ -3129,7 +3128,7 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 					cur12 = attrs3[key17];
 					old6 = oldAttrs3[key17];
 					if(old6 != cur12) {
-						if(!cur12 && snabbdom_Attributes.booleanAttrsDict[key17]) elm18.removeAttribute(key17); else elm18.setAttribute(key17,cur12);
+						if(!cur12 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key17]) elm18.removeAttribute(key17); else elm18.setAttribute(key17,cur12);
 					}
 				}
 				var _g34 = 0;
@@ -3276,7 +3275,7 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 									cur16 = attrs4[key22];
 									old8 = oldAttrs4[key22];
 									if(old8 != cur16) {
-										if(!cur16 && snabbdom_Attributes.booleanAttrsDict[key22]) elm23.removeAttribute(key22); else elm23.setAttribute(key22,cur16);
+										if(!cur16 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key22]) elm23.removeAttribute(key22); else elm23.setAttribute(key22,cur16);
 									}
 								}
 								var _g40 = 0;
@@ -3486,6 +3485,7 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 	}(this)));
 	return vnode;
 };
+var snabbdom_plugins_dom_Attributes = function() { };
 var thx_Arrays = function() { };
 thx_Arrays.shuffle = function(a) {
 	var t = thx_Ints.range(a.length);
@@ -3548,24 +3548,6 @@ if(Array.prototype.indexOf) HxOverrides.indexOf = function(a,o,i) {
         };
       }
     ;
-snabbdom_Attributes.booleanAttrs = ["allowfullscreen","async","autofocus","autoplay","checked","compact","controls","declare","default","defaultchecked","defaultmuted","defaultselected","defer","disabled","draggable","enabled","formnovalidate","hidden","indeterminate","inert","ismap","itemscope","loop","multiple","muted","nohref","noresize","noshade","novalidate","nowrap","open","pauseonexit","readonly","required","reversed","scoped","seamless","selected","sortable","spellcheck","translate","truespeed","typemustmatch","visible"];
-snabbdom_Attributes.booleanAttrsDict = (function($this) {
-	var $r;
-	var hash = { };
-	var len = snabbdom_Attributes.booleanAttrs.length;
-	var i = 0;
-	{
-		i = 0;
-		if(i < len) do hash[snabbdom_Attributes.booleanAttrs[i]] = true; while((function($this) {
-			var $r;
-			i++;
-			$r = i < len;
-			return $r;
-		}($this)));
-	}
-	$r = hash;
-	return $r;
-}(this));
 snabbdom_Patch.rg = new RegExp("\\.","g");
 snabbdom_Patch.emptyNode = (function($this) {
 	var $r;
@@ -3573,6 +3555,24 @@ snabbdom_Patch.emptyNode = (function($this) {
 	var elm = null;
 	var key = data == null?null:data.key;
 	$r = { sel : "", data : data, children : [], text : null, elm : elm, key : key};
+	return $r;
+}(this));
+snabbdom_plugins_dom_Attributes.booleanAttrs = ["allowfullscreen","async","autofocus","autoplay","checked","compact","controls","declare","default","defaultchecked","defaultmuted","defaultselected","defer","disabled","draggable","enabled","formnovalidate","hidden","indeterminate","inert","ismap","itemscope","loop","multiple","muted","nohref","noresize","noshade","novalidate","nowrap","open","pauseonexit","readonly","required","reversed","scoped","seamless","selected","sortable","spellcheck","translate","truespeed","typemustmatch","visible"];
+snabbdom_plugins_dom_Attributes.booleanAttrsDict = (function($this) {
+	var $r;
+	var hash = { };
+	var len = snabbdom_plugins_dom_Attributes.booleanAttrs.length;
+	var i = 0;
+	{
+		i = 0;
+		if(i < len) do hash[snabbdom_plugins_dom_Attributes.booleanAttrs[i]] = true; while((function($this) {
+			var $r;
+			i++;
+			$r = i < len;
+			return $r;
+		}($this)));
+	}
+	$r = hash;
 	return $r;
 }(this));
 snabbdom_Main.main();
