@@ -1,10 +1,4 @@
 (function (console) { "use strict";
-function $extend(from, fields) {
-	function Inherit() {} Inherit.prototype = from; var proto = new Inherit();
-	for (var name in fields) proto[name] = fields[name];
-	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
-	return proto;
-}
 var HxOverrides = function() { };
 HxOverrides.indexOf = function(a,obj,i) {
 	var len = a.length;
@@ -28,58 +22,18 @@ HxOverrides.iter = function(a) {
 var Attributes = function() { };
 var Main = function() { };
 Main.main = function() {
-	var x = { sel : "ul", data : { }, children : [{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : []},{ sel : "li", data : { }, children : [{ sel : "span", data : { }, children : []}]}]};
-	ddd(x);
-	var y = { sel : "div", data : { id : "pippa"}, children : [{ sel : "ul", data : null, children : [{ sel : "li", data : null, children : ["1"]},{ sel : "li", data : null, children : ["2"]},{ sel : "li", data : null, children : [{ sel : "span", data : null, children : ["999999"]}]}]}]};
-	var vnode = Main.h("div#conta.two.classes",{ on : { click : function() {
-	}}},[Main.h("span",{ style : { fontWeight : "bold"}},"This is bold")," and this is just normal text",Main.h("a",{ props : { href : "/foo"}},"I'll take you places!")]);
+	var txt = "testo";
+	var vnode = { sel : "div", data : { attrs : { id : "pippa"}}, children : [{ sel : "ul", data : { attrs : { }}, children : [{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "4"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : [{ sel : "span", data : { attrs : { }}, children : null, elm : null, key : null, text : txt}], elm : null, key : null, text : null}], elm : null, key : null, text : null}], elm : null, key : null, text : null};
 	var container = window.document.getElementById("container");
 	Main.patch(container,vnode);
-	var timer = new haxe_Timer(320);
 	var last_node = vnode;
+	var timer = new haxe_Timer(16);
 	timer.run = function() {
 		var rnd = Math.random();
-		var color = thx_Arrays.shuffle(["red","green","yellow","gray"])[0];
-		var bg = thx_Arrays.shuffle(["red","green","yellow","gray"])[0];
-		var vnode2 = Main.h("div#conta.two.classes",{ on : { click : function() {
-		}}},[Main.h("span",{ },"This is bold")," and this is just normal text 222",Main.h("a",{ },"I'll take you places1!"),Main.h("span",{ attrs : { pippa : 123}},"I'll take you places2!"),Main.h("a",{ style : { 'backgroundColor' : bg, 'color' : color}, classes : { 'random' : "add"}, attrs : { random : rnd}},"I'll take you places" + rnd + "!")]);
+		var vnode2 = { sel : "div", data : { attrs : { id : "pippa"}}, children : [{ sel : "ul", data : { attrs : { }}, children : [{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : [{ sel : "span", data : { attrs : { }}, children : null, elm : null, key : null, text : rnd}], elm : null, key : null, text : null}], elm : null, key : null, text : null}], elm : null, key : null, text : null};
 		Main.patch(last_node,vnode2);
 		last_node = vnode2;
 	};
-};
-Main.h = function(sel,b,c) {
-	var data = { };
-	var children = null;
-	var text = null;
-	var i;
-	var $arguments = arguments;
-	if($arguments.length == 3) {
-		data = b;
-		if(Array.isArray(c)) children = c; else if(typeof c == "string" || typeof c == "number") text = c;
-	} else if($arguments.length == 2) {
-		if(Array.isArray(b)) children = b; else if(typeof b == "string" || typeof b == "number") text = b; else data = b;
-	}
-	if(Array.isArray(children)) {
-		i = 0;
-		if(i < children.length) do if(typeof children[i] == "string" || typeof children[i] == "number") children[i] = (function($this) {
-			var $r;
-			var key = null;
-			$r = { sel : null, data : null, children : null, text : null, elm : children[i], key : key};
-			return $r;
-		}(this)); while((function($this) {
-			var $r;
-			++i;
-			$r = i < children.length;
-			return $r;
-		}(this)));
-	}
-	return (function($this) {
-		var $r;
-		var elm = undefined;
-		var key1 = data == null?null:data.key;
-		$r = { sel : sel, data : data, children : children, text : text, elm : elm, key : key1};
-		return $r;
-	}(this));
 };
 Main.createElm = function(vnode,insertedVnodeQueue) {
 	var i;
@@ -2867,10 +2821,6 @@ Main.patch = function(oldVnode,vnode) {
 	}(this)));
 	return vnode;
 };
-var Std = function() { };
-Std.random = function(x) {
-	return x <= 0?0:Math.floor(Math.random() * x);
-};
 var haxe_Timer = function(time_ms) {
 	var me = this;
 	this.id = setInterval(function() {
@@ -2881,77 +2831,9 @@ haxe_Timer.prototype = {
 	run: function() {
 	}
 };
-var js__$Boot_HaxeError = function(val) {
-	Error.call(this);
-	this.val = val;
-	this.message = String(val);
-	if(Error.captureStackTrace) Error.captureStackTrace(this,js__$Boot_HaxeError);
-};
-js__$Boot_HaxeError.__super__ = Error;
-js__$Boot_HaxeError.prototype = $extend(Error.prototype,{
-});
-var thx_Arrays = function() { };
-thx_Arrays.shuffle = function(a) {
-	var t = thx_Ints.range(a.length);
-	var array = [];
-	while(t.length > 0) {
-		var pos = Std.random(t.length);
-		var index = t[pos];
-		t.splice(pos,1);
-		array.push(a[index]);
-	}
-	return array;
-};
-var thx_Ints = function() { };
-thx_Ints.range = function(start,stop,step) {
-	if(step == null) step = 1;
-	if(null == stop) {
-		stop = start;
-		start = 0;
-	}
-	if((stop - start) / step == Infinity) throw new js__$Boot_HaxeError("infinite range");
-	var range = [];
-	var i = -1;
-	var j;
-	if(step < 0) while((j = start + step * ++i) > stop) range.push(j); else while((j = start + step * ++i) < stop) range.push(j);
-	return range;
-};
 if(Array.prototype.indexOf) HxOverrides.indexOf = function(a,o,i) {
 	return Array.prototype.indexOf.call(a,o,i);
 };
-
-      // Production steps of ECMA-262, Edition 5, 15.4.4.21
-      // Reference: http://es5.github.io/#x15.4.4.21
-      if (!Array.prototype.reduce) {
-        Array.prototype.reduce = function(callback /*, initialValue*/) {
-          'use strict';
-          if (this == null) {
-            throw new TypeError('Array.prototype.reduce called on null or undefined');
-          }
-          if (typeof callback !== 'function') {
-            throw new TypeError(callback + ' is not a function');
-          }
-          var t = Object(this), len = t.length >>> 0, k = 0, value;
-          if (arguments.length == 2) {
-            value = arguments[1];
-          } else {
-            while (k < len && ! k in t) {
-              k++;
-            }
-            if (k >= len) {
-              throw new TypeError('Reduce of empty array with no initial value');
-            }
-            value = t[k++];
-          }
-          for (; k < len; k++) {
-            if (k in t) {
-              value = callback(value, t[k], k, t);
-            }
-          }
-          return value;
-        };
-      }
-    ;
 Attributes.booleanAttrs = ["allowfullscreen","async","autofocus","autoplay","checked","compact","controls","declare","default","defaultchecked","defaultmuted","defaultselected","defer","disabled","draggable","enabled","formnovalidate","hidden","indeterminate","inert","ismap","itemscope","loop","multiple","muted","nohref","noresize","noshade","novalidate","nowrap","open","pauseonexit","readonly","required","reversed","scoped","seamless","selected","sortable","spellcheck","translate","truespeed","typemustmatch","visible"];
 Attributes.booleanAttrsDict = (function($this) {
 	var $r;

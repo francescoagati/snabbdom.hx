@@ -10,12 +10,12 @@ class Jsx {
 	static var reInterpolationExpr = ~/\${/g;
 	static var reAttributeBinding = ~/=({[^}]+})/g;
 
-	public static macro function jsx(expr:ExprOf<String>):Expr
+	public static macro function jsx(expr:ExprOf<String>)
 	{
 		return parseJsx(ExprTools.getValue(expr), expr.pos);
 	}
 
-	static function parseJsx(jsx:String, pos:Position):Expr
+	static function parseJsx(jsx:String, pos:Position)
 	{
 		jsx = escapeJsx(jsx);
 		try

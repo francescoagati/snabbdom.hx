@@ -232,7 +232,7 @@ class Main {
 
   public static function main() {
 
-
+/*
     var  x = H.h('ul',{},
         H.h('li',{}),
         H.h('li',{}),
@@ -242,54 +242,296 @@ class Main {
         H.h('li',{},H.h('span',{}))
       );
       untyped ddd(x);
+*/
 
 
-      var y = jsx('
+      var txt = 'testo';
+
+      var vnode = jsx('
         <div id="pippa">
           <ul>
             <li>1</li>
             <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
             <li>
-              <span>999999</span>
+              <span>${txt}</span>
             </li>
           </ul>
         </div>
       ');
 
+/*
     var vnode = untyped h('div#conta.two.classes', {on: {click: function() {}}}, [
       h('span', {style: {fontWeight: 'bold'}}, 'This is bold'),
       ' and this is just normal text',
       h('a', {props: {href: '/foo'}}, 'I\'ll take you places!')
     ]);
+*/
 
-    var container = untyped js.Browser.document.getElementById('container');
+  var container = untyped js.Browser.document.getElementById('container');
 
-
-
-    patch(untyped container,untyped vnode);
-
-    var timer = new haxe.Timer(320);
+  patch(untyped container,vnode);
 
     var last_node = vnode;
+
+
+
+    var timer = new haxe.Timer(16);
     timer.run = function() {
 
-      var rnd = Math.random();
+        var rnd = Math.random();
 
-      var color = ['red','green','yellow','gray'].shuffle()[0];
-      var bg = ['red','green','yellow','gray'].shuffle()[0];
+        var vnode2 = jsx('
+          <div id="pippa">
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
 
 
-      var vnode2 = untyped h('div#conta.two.classes', {on: {click: function() {}}}, [
-        h('span', {}, 'This is bold'),
-        ' and this is just normal text 222',
-        h('a', {}, 'I\'ll take you places1!'),
-        h('span', {attrs:{pippa:123}}, 'I\'ll take you places2!'),
-        h('a', {style:{'backgroundColor':bg,'color':color},classes:{'random':'add'},attrs:{random:rnd}}, 'I\'ll take you places$rnd!')
-      ]);
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+  
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>2</li>
+              <li>5</li>
+
+
+              <li>
+                <span>${rnd}</span>
+              </li>
+            </ul>
+          </div>
+      ');
 
       patch(last_node,untyped vnode2);
       last_node = vnode2;
     };
+
   }
 
 
