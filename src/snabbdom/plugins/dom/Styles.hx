@@ -51,7 +51,7 @@ class Styles {
   inline static function applyRemoveStyle(vnode, rm) {
     var s:Dynamic = vnode.data.style;
     if (!s || !s.remove) {
-      rm();
+      if (rm != null) rm() ;
       return;
     }
     var name, elm = vnode.elm, idx, i = 0, maxDur = 0,

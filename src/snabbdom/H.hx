@@ -83,15 +83,17 @@ class H {
     var data = Context.parse('{' + structure + '}',Context.currentPos());
     var rest = exprs.slice(2);
 
-    var text = if (rest[0].toString().indexOf('H.h') == 0) {
+
+
+    var text = null;
+    text = if (rest[0].toString().indexOf('H.h') == 0) {
       null;
     } else {
       rest[0];
     }
 
-
-
-    var rt_expr =  if (text == null) {
+    var rt_expr = null;
+    rt_expr =  if (text == null) {
       macro {
         {sel:$sel,data:$data,children:untyped $a{rest},elm:null,key:null,text:null};
       }
@@ -100,6 +102,15 @@ class H {
         {sel:$sel,data:$data,children:null,elm:null,key:null,text:$e{text}};
       }
     };
+
+    if (rest[0].toString().indexOf('"#') == 0) {
+      rest[0] = Context.parse(rest[0].toString().replace("#","").replace('\"',""),Context.currentPos());
+      var element = rest[0];
+      rt_expr =  macro {
+          {sel:$sel,data:$data,children:untyped $e{element},elm:null,key:null,text:null};
+        }
+    }
+
 
     return rt_expr;
 

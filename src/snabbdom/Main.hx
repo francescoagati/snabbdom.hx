@@ -47,36 +47,37 @@ class Main {
     ]);
 */
 
-  var container = untyped js.Browser.document.getElementById('container');
 
-  patch(untyped container,vnode);
-
-    var last_node = vnode;
+    var last_node = untyped js.Browser.document.getElementById('container');
 
 
 
-    var timer = new haxe.Timer(16);
+    var timer = new haxe.Timer(3000);
     timer.run = function() {
+
+
 
 
 
         var rnd = Math.random();
         var color = ['red','yellow','green','black','white','grey'].shuffle().first();
         var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
-        var vnode2 = jsx('
-          <div id="pippa">
-            <ul style="font-size:30px;color:$color;background-color:$bg">
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>2</li>
-              <li>5</li>
-              <li>
-                <span>${rnd}</span>
-              </li>
-            </ul>
-          </div>
+
+
+      var max = Std.int(Math.random() * 10);
+      var list = [for (x in (0...max)) jsx("<span>${x}</span>")  ];
+      var vnode2 = jsx('
+        <div id="pippa">
+          <ul style="font-size:30px;color:$color;background-color:$bg">
+            <li>#list</li>
+            <li>
+              <span>${max}</span>
+            </li>
+          </ul>
+        </div>
       ');
+
+      trace(vnode2);
 
       patch(last_node,untyped vnode2);
       last_node = vnode2;

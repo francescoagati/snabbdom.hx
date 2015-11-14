@@ -158,7 +158,9 @@ class Patch {
           if (isDef(i = ch.data) && isDef(i = i.hook) && isDef(i = i.remove)) {
             i(ch, rm);
           } else {
-            rm();
+            trace('remove');
+            if (rm != null) rm();
+            parentElm.removeChild(ch.elm);
           }
         } else { // Text node
           parentElm.removeChild(ch.elm);
@@ -234,7 +236,7 @@ class Patch {
       }
       if (isDef(i = oldVnode.data) && isDef(i = i.vnode)) oldVnode = i;
       if (isDef(i = vnode.data) && isDef(i = i.vnode)) vnode = i;
-      var elm = vnode.elm = oldVnode.elm, oldCh:Dynamic = oldVnode.children, ch:Dynamic = vnode.children;
+      var elm = vnode.elm = oldVnode.elm, oldCh = oldVnode.children, ch = vnode.children;
       if (oldVnode == vnode) return;
       if (isDef(vnode.data)) {
         Hooks.update(oldVnode,vnode);
