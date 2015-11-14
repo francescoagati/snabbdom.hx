@@ -4,4 +4,3 @@
 -dce full
 -D analyzer
 -cp src
---no-inline

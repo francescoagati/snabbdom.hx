@@ -52,16 +52,13 @@ class Main {
 
 
 
-    var timer = new haxe.Timer(3000);
+    var timer = new haxe.Timer(30);
     timer.run = function() {
 
 
-
-
-
-        var rnd = Math.random();
-        var color = ['red','yellow','green','black','white','grey'].shuffle().first();
-        var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
+      var rnd = Math.random();
+      var color = ['red','yellow','green','black','white','grey'].shuffle().first();
+      var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
 
 
       var max = Std.int(Math.random() * 10);
