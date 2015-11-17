@@ -3146,917 +3146,386 @@ snabbdom_Patch.patchDom = function(oldVnode,vnode) {
 snabbdom_Patch.patch = function(oldVnode,vnode) {
 	var i;
 	var insertedVnodeQueue = [];
-	if(oldVnode instanceof Element) {
-		if(oldVnode.parentElement != null) {
-			var vnode1 = vnode;
-			var i1;
-			var data = vnode1.data;
-			if(data != undefined) {
-				if((i1 = data.hook) != undefined && (i1 = i1.init) != undefined) i1(vnode1);
-				if((i1 = data.vnode) != undefined) vnode1 = i1;
+	var oldVnode1 = oldVnode;
+	var vnode1 = vnode;
+	var i1;
+	var hook;
+	if((i1 = vnode1.data) != undefined && (hook = i1.hook) != undefined && (i1 = hook.prepatch) != undefined) i1(oldVnode1,vnode1);
+	if((i1 = oldVnode1.data) != undefined && (i1 = i1.vnode) != undefined) oldVnode1 = i1;
+	if((i1 = vnode1.data) != undefined && (i1 = i1.vnode) != undefined) vnode1 = i1;
+	var elm = vnode1.elm = oldVnode1.elm;
+	var oldCh = oldVnode1.children;
+	var ch = vnode1.children;
+	if(oldVnode1 == vnode1) null; else {
+		if(vnode1.data != undefined) {
+			var key;
+			var cur;
+			var old;
+			var elm1 = vnode1.elm;
+			var oldAttrs = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
+			var attrs = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
+			var _g = 0;
+			var _g1 = Object.keys(attrs);
+			while(_g < _g1.length) {
+				var key1 = _g1[_g];
+				++_g;
+				cur = attrs[key1];
+				old = oldAttrs[key1];
+				if(old != cur) {
+					if(!cur && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key1]) elm1.removeAttribute(key1); else elm1.setAttribute(key1,cur);
+				}
 			}
-			var elm;
-			var children = vnode1.children;
-			var sel = vnode1.sel;
-			if(sel != undefined) {
-				var hashIdx = sel.indexOf("#",0);
-				var dotIdx = sel.indexOf(".",hashIdx);
-				var hash = hashIdx > 0?hashIdx:sel.length;
-				var dot = dotIdx > 0?dotIdx:sel.length;
-				var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-				elm = vnode1.elm = data != undefined && (i1 = data.ns) != undefined?document.createElementNS(i1,tag):document.createElement(tag);
-				if(hash < dot) elm.id = sel.slice(hash + 1,dot);
-				if(dotIdx > 0) {
-					elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
+			var _g2 = 0;
+			var _g11 = Object.keys(oldAttrs);
+			while(_g2 < _g11.length) {
+				var key2 = _g11[_g2];
+				++_g2;
+				if(!Object.prototype.hasOwnProperty.call(attrs,key2)) elm1.removeAttribute(key2);
+			}
+			var key3;
+			var cur1;
+			var old1;
+			var elm2 = vnode1.elm;
+			var oldProps = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
+			var props = vnode1.data.props == null?{ }:vnode1.data.props;
+			var _g3 = 0;
+			var _g12 = Object.keys(props);
+			while(_g3 < _g12.length) {
+				var key4 = _g12[_g3];
+				++_g3;
+				cur1 = props[key4];
+				old1 = oldProps[key4];
+				if(old1 != cur1) {
+					var value = cur1;
+					elm2[key4] = value;
 				}
-				if(Array.isArray(children)) {
-					i1 = 0;
-					if(i1 < children.length) do {
-						var new_node = snabbdom_Patch.createElm(children[i1],insertedVnodeQueue);
-						elm.appendChild(new_node);
-					} while((function($this) {
-						var $r;
-						++i1;
-						$r = i1 < children.length;
-						return $r;
-					}(this)));
-				} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") elm.appendChild(document.createTextNode(vnode1.text));
-				var oldVnode1 = snabbdom_Patch.emptyNode;
-				var key;
-				var cur;
-				var old;
-				var elm1 = vnode1.elm;
-				var oldAttrs = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
-				var attrs = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
-				var _g = 0;
-				var _g1 = Object.keys(attrs);
-				while(_g < _g1.length) {
-					var key1 = _g1[_g];
-					++_g;
-					cur = attrs[key1];
-					old = oldAttrs[key1];
-					if(old != cur) {
-						if(!cur && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key1]) elm1.removeAttribute(key1); else elm1.setAttribute(key1,cur);
+			}
+			var cur2;
+			var name;
+			var elm3 = vnode1.elm;
+			var oldClass = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
+			var klass = vnode1.data.classes == null?{ }:vnode1.data.classes;
+			var _g4 = 0;
+			var _g13 = Object.keys(klass);
+			while(_g4 < _g13.length) {
+				var name1 = _g13[_g4];
+				++_g4;
+				cur2 = klass[name1];
+				if(cur2 != oldClass[name1]) {
+					if(cur2 == "add") elm3.classList.add(name1); else if(cur2 == "remove") elm3.classList.remove(name1);
+				}
+			}
+			var cur3;
+			var name2;
+			var elm4 = vnode1.elm;
+			var oldStyle = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
+			var style = vnode1.data.style == null?{ }:vnode1.data.style;
+			var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
+			var _g5 = 0;
+			var _g14 = Object.keys(style);
+			while(_g5 < _g14.length) {
+				var name3 = _g14[_g5];
+				++_g5;
+				cur3 = style[name3];
+				if(name3 == "delayed") {
+					var delayed = style.delayed;
+					var oldDelayed = oldStyle.delayed;
+					var _g21 = 0;
+					var _g31 = Object.keys(delayed);
+					while(_g21 < _g31.length) {
+						var name4 = _g31[_g21];
+						++_g21;
+						cur3 = delayed[name4];
+						if(!oldHasDel || cur3 != oldDelayed[name4]) {
+							var obj = [elm4.style];
+							var prop = [name4];
+							var val = [cur3];
+							var fn = [(function(val,prop,obj) {
+								return function(i2) {
+									var value1 = val[0];
+									obj[0][prop[0]] = value1;
+								};
+							})(val,prop,obj)];
+							window.requestAnimationFrame((function(fn) {
+								return function(i3) {
+									window.requestAnimationFrame(fn[0]);
+								};
+							})(fn));
+						}
 					}
-				}
-				var _g2 = 0;
-				var _g11 = Object.keys(oldAttrs);
-				while(_g2 < _g11.length) {
-					var key2 = _g11[_g2];
-					++_g2;
-					if(!Object.prototype.hasOwnProperty.call(attrs,key2)) elm1.removeAttribute(key2);
-				}
-				var key3;
-				var cur1;
-				var old1;
-				var elm2 = vnode1.elm;
-				var oldProps = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
-				var props = vnode1.data.props == null?{ }:vnode1.data.props;
-				var _g3 = 0;
-				var _g12 = Object.keys(props);
-				while(_g3 < _g12.length) {
-					var key4 = _g12[_g3];
-					++_g3;
-					cur1 = props[key4];
-					old1 = oldProps[key4];
-					if(old1 != cur1) {
-						var value = cur1;
-						elm2[key4] = value;
+				} else if(name3 != "remove" && cur3 != oldStyle[name3]) elm4.style[name3] = cur3;
+			}
+			i1 = vnode1.data.hook;
+			if(i1 != undefined && (i1 = i1.update) != undefined) i1(oldVnode1,vnode1);
+		}
+		if(vnode1.text == undefined) {
+			if(oldCh != undefined && ch != undefined) {
+				if(oldCh != ch) snabbdom_Patch.updateChildren(elm,oldCh,ch,insertedVnodeQueue);
+			} else if(ch != undefined) {
+				var startIdx = 0;
+				var endIdx = ch.length - 1;
+				var i4;
+				var new_node;
+				i4 = 0;
+				if(startIdx <= endIdx) while(true) {
+					var tmp;
+					var vnode2 = ch[startIdx];
+					var i5;
+					var data = vnode2.data;
+					if(data != undefined) {
+						if((i5 = data.hook) != undefined && (i5 = i5.init) != undefined) i5(vnode2);
+						if((i5 = data.vnode) != undefined) vnode2 = i5;
 					}
-				}
-				var cur2;
-				var name;
-				var elm3 = vnode1.elm;
-				var oldClass = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
-				var klass = vnode1.data.classes == null?{ }:vnode1.data.classes;
-				var _g4 = 0;
-				var _g13 = Object.keys(klass);
-				while(_g4 < _g13.length) {
-					var name1 = _g13[_g4];
-					++_g4;
-					cur2 = klass[name1];
-					if(cur2 != oldClass[name1]) {
-						if(cur2 == "add") elm3.classList.add(name1); else if(cur2 == "remove") elm3.classList.remove(name1);
-					}
-				}
-				var cur3;
-				var name2;
-				var elm4 = vnode1.elm;
-				var oldStyle = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
-				var style = vnode1.data.style == null?{ }:vnode1.data.style;
-				var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-				var _g5 = 0;
-				var _g14 = Object.keys(style);
-				while(_g5 < _g14.length) {
-					var name3 = _g14[_g5];
-					++_g5;
-					cur3 = style[name3];
-					if(name3 == "delayed") {
-						var delayed = style.delayed;
-						var oldDelayed = oldStyle.delayed;
-						var _g21 = 0;
-						var _g31 = Object.keys(delayed);
-						while(_g21 < _g31.length) {
-							var name4 = _g31[_g21];
-							++_g21;
-							cur3 = delayed[name4];
-							if(!oldHasDel || cur3 != oldDelayed[name4]) {
-								var obj = [elm4.style];
-								var prop = [name4];
-								var val = [cur3];
-								var fn = [(function(val,prop,obj) {
-									return function(i2) {
-										var value1 = val[0];
-										obj[0][prop[0]] = value1;
-									};
-								})(val,prop,obj)];
-								window.requestAnimationFrame((function(fn) {
-									return function(i3) {
-										window.requestAnimationFrame(fn[0]);
-									};
-								})(fn));
+					var elm5;
+					var children = vnode2.children;
+					var sel = vnode2.sel;
+					if(sel != undefined) {
+						var hashIdx = sel.indexOf("#",0);
+						var dotIdx = sel.indexOf(".",hashIdx);
+						var hash = hashIdx > 0?hashIdx:sel.length;
+						var dot = dotIdx > 0?dotIdx:sel.length;
+						var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
+						elm5 = vnode2.elm = data != undefined && (i5 = data.ns) != undefined?document.createElementNS(i5,tag):document.createElement(tag);
+						if(hash < dot) elm5.id = sel.slice(hash + 1,dot);
+						if(dotIdx > 0) {
+							elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
+						}
+						if(Array.isArray(children)) {
+							i5 = 0;
+							if(i5 < children.length) while(true) {
+								var new_node1 = snabbdom_Patch.createElm(children[i5],insertedVnodeQueue);
+								elm5.appendChild(new_node1);
+								var tmp2;
+								++i5;
+								tmp2 = i5 < children.length;
+								if(!tmp2) break;
+							}
+						} else if(typeof vnode2.text == "string" || typeof vnode2.text == "number") elm5.appendChild(document.createTextNode(vnode2.text));
+						var oldVnode2 = snabbdom_Patch.emptyNode;
+						var key5;
+						var cur4;
+						var old2;
+						var elm6 = vnode2.elm;
+						var oldAttrs1 = oldVnode2.data.attrs == null?{ }:oldVnode2.data.attrs;
+						var attrs1 = vnode2.data.attrs == null?{ }:vnode2.data.attrs;
+						var _g6 = 0;
+						var _g15 = Object.keys(attrs1);
+						while(_g6 < _g15.length) {
+							var key6 = _g15[_g6];
+							++_g6;
+							cur4 = attrs1[key6];
+							old2 = oldAttrs1[key6];
+							if(old2 != cur4) {
+								if(!cur4 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key6]) elm6.removeAttribute(key6); else elm6.setAttribute(key6,cur4);
 							}
 						}
-					} else if(name3 != "remove" && cur3 != oldStyle[name3]) elm4.style[name3] = cur3;
-				}
-				if(vnode1.data != null) {
-					i1 = vnode1.data.hook;
-					if(i1 != undefined) {
-						if(i1.create) i1.create(snabbdom_Patch.emptyNode,vnode1);
-						if(i1.insert) insertedVnodeQueue.push(vnode1);
-					}
-				}
-			} else elm = vnode1.elm = document.createTextNode(vnode1.text);
-			vnode1.elm;
-			oldVnode.parentElement.replaceChild(vnode.elm,oldVnode);
-		} else {
-			oldVnode = (function($this) {
-				var $r;
-				var data1 = { };
-				var key5 = data1 == null?null:data1.key;
-				$r = { sel : oldVnode.tagName, data : data1, children : [], text : null, elm : oldVnode, key : key5};
-				return $r;
-			}(this));
-			var oldVnode2 = oldVnode;
-			var vnode2 = vnode;
-			var i4;
-			var hook;
-			if((i4 = vnode2.data) != undefined && (hook = i4.hook) != undefined && (i4 = hook.prepatch) != undefined) i4(oldVnode2,vnode2);
-			if((i4 = oldVnode2.data) != undefined && (i4 = i4.vnode) != undefined) oldVnode2 = i4;
-			if((i4 = vnode2.data) != undefined && (i4 = i4.vnode) != undefined) vnode2 = i4;
-			var elm5 = vnode2.elm = oldVnode2.elm;
-			var oldCh = oldVnode2.children;
-			var ch = vnode2.children;
-			if(oldVnode2 == vnode2) null; else {
-				if(vnode2.data != undefined) {
-					var key6;
-					var cur4;
-					var old2;
-					var elm6 = vnode2.elm;
-					var oldAttrs1 = oldVnode2.data.attrs == null?{ }:oldVnode2.data.attrs;
-					var attrs1 = vnode2.data.attrs == null?{ }:vnode2.data.attrs;
-					var _g6 = 0;
-					var _g15 = Object.keys(attrs1);
-					while(_g6 < _g15.length) {
-						var key7 = _g15[_g6];
-						++_g6;
-						cur4 = attrs1[key7];
-						old2 = oldAttrs1[key7];
-						if(old2 != cur4) {
-							if(!cur4 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key7]) elm6.removeAttribute(key7); else elm6.setAttribute(key7,cur4);
+						var _g7 = 0;
+						var _g16 = Object.keys(oldAttrs1);
+						while(_g7 < _g16.length) {
+							var key7 = _g16[_g7];
+							++_g7;
+							if(!Object.prototype.hasOwnProperty.call(attrs1,key7)) elm6.removeAttribute(key7);
 						}
-					}
-					var _g7 = 0;
-					var _g16 = Object.keys(oldAttrs1);
-					while(_g7 < _g16.length) {
-						var key8 = _g16[_g7];
-						++_g7;
-						if(!Object.prototype.hasOwnProperty.call(attrs1,key8)) elm6.removeAttribute(key8);
-					}
-					var key9;
-					var cur5;
-					var old3;
-					var elm7 = vnode2.elm;
-					var oldProps1 = oldVnode2.data.props == null?{ }:oldVnode2.data.props;
-					var props1 = vnode2.data.props == null?{ }:vnode2.data.props;
-					var _g8 = 0;
-					var _g17 = Object.keys(props1);
-					while(_g8 < _g17.length) {
-						var key10 = _g17[_g8];
-						++_g8;
-						cur5 = props1[key10];
-						old3 = oldProps1[key10];
-						if(old3 != cur5) {
-							var value2 = cur5;
-							elm7[key10] = value2;
-						}
-					}
-					var cur6;
-					var name5;
-					var elm8 = vnode2.elm;
-					var oldClass1 = oldVnode2.data.classes == null?{ }:oldVnode2.data.classes;
-					var klass1 = vnode2.data.classes == null?{ }:vnode2.data.classes;
-					var _g9 = 0;
-					var _g18 = Object.keys(klass1);
-					while(_g9 < _g18.length) {
-						var name6 = _g18[_g9];
-						++_g9;
-						cur6 = klass1[name6];
-						if(cur6 != oldClass1[name6]) {
-							if(cur6 == "add") elm8.classList.add(name6); else if(cur6 == "remove") elm8.classList.remove(name6);
-						}
-					}
-					var cur7;
-					var name7;
-					var elm9 = vnode2.elm;
-					var oldStyle1 = oldVnode2.data.style == null?{ }:oldVnode2.data.style;
-					var style1 = vnode2.data.style == null?{ }:vnode2.data.style;
-					var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
-					var _g10 = 0;
-					var _g19 = Object.keys(style1);
-					while(_g10 < _g19.length) {
-						var name8 = _g19[_g10];
-						++_g10;
-						cur7 = style1[name8];
-						if(name8 == "delayed") {
-							var delayed1 = style1.delayed;
-							var oldDelayed1 = oldStyle1.delayed;
-							var _g22 = 0;
-							var _g32 = Object.keys(delayed1);
-							while(_g22 < _g32.length) {
-								var name9 = _g32[_g22];
-								++_g22;
-								cur7 = delayed1[name9];
-								if(!oldHasDel1 || cur7 != oldDelayed1[name9]) {
-									var obj1 = [elm9.style];
-									var prop1 = [name9];
-									var val1 = [cur7];
-									var fn1 = [(function(val1,prop1,obj1) {
-										return function(i5) {
-											var value3 = val1[0];
-											obj1[0][prop1[0]] = value3;
-										};
-									})(val1,prop1,obj1)];
-									window.requestAnimationFrame((function(fn1) {
-										return function(i6) {
-											window.requestAnimationFrame(fn1[0]);
-										};
-									})(fn1));
-								}
+						var key8;
+						var cur5;
+						var old3;
+						var elm7 = vnode2.elm;
+						var oldProps1 = oldVnode2.data.props == null?{ }:oldVnode2.data.props;
+						var props1 = vnode2.data.props == null?{ }:vnode2.data.props;
+						var _g8 = 0;
+						var _g17 = Object.keys(props1);
+						while(_g8 < _g17.length) {
+							var key9 = _g17[_g8];
+							++_g8;
+							cur5 = props1[key9];
+							old3 = oldProps1[key9];
+							if(old3 != cur5) {
+								var value2 = cur5;
+								elm7[key9] = value2;
 							}
-						} else if(name8 != "remove" && cur7 != oldStyle1[name8]) elm9.style[name8] = cur7;
-					}
-					i4 = vnode2.data.hook;
-					if(i4 != undefined && (i4 = i4.update) != undefined) i4(oldVnode2,vnode2);
-				}
-				if(vnode2.text == undefined) {
-					if(oldCh != undefined && ch != undefined) {
-						if(oldCh != ch) snabbdom_Patch.updateChildren(elm5,oldCh,ch,insertedVnodeQueue);
-					} else if(ch != undefined) {
-						var startIdx = 0;
-						var endIdx = ch.length - 1;
-						var i7;
-						var new_node1;
-						i7 = 0;
-						if(startIdx <= endIdx) do {
-							new_node1 = (function($this) {
-								var $r;
-								var vnode3 = ch[startIdx];
-								var i8;
-								var data2 = vnode3.data;
-								if(data2 != undefined) {
-									if((i8 = data2.hook) != undefined && (i8 = i8.init) != undefined) i8(vnode3);
-									if((i8 = data2.vnode) != undefined) vnode3 = i8;
-								}
-								var elm10;
-								var children1 = vnode3.children;
-								var sel1 = vnode3.sel;
-								if(sel1 != undefined) {
-									var hashIdx1 = sel1.indexOf("#",0);
-									var dotIdx1 = sel1.indexOf(".",hashIdx1);
-									var hash1 = hashIdx1 > 0?hashIdx1:sel1.length;
-									var dot1 = dotIdx1 > 0?dotIdx1:sel1.length;
-									var tag1 = hashIdx1 != -1 || dotIdx1 != -1?sel1.slice(0,Math.min(hash1,dot1)):sel1;
-									elm10 = vnode3.elm = data2 != undefined && (i8 = data2.ns) != undefined?document.createElementNS(i8,tag1):document.createElement(tag1);
-									if(hash1 < dot1) elm10.id = sel1.slice(hash1 + 1,dot1);
-									if(dotIdx1 > 0) {
-										elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
-									}
-									if(Array.isArray(children1)) {
-										i8 = 0;
-										if(i8 < children1.length) do {
-											var new_node2 = snabbdom_Patch.createElm(children1[i8],insertedVnodeQueue);
-											elm10.appendChild(new_node2);
-										} while((function($this) {
-											var $r;
-											++i8;
-											$r = i8 < children1.length;
-											return $r;
-										}($this)));
-									} else if(typeof vnode3.text == "string" || typeof vnode3.text == "number") elm10.appendChild(document.createTextNode(vnode3.text));
-									var oldVnode3 = snabbdom_Patch.emptyNode;
-									var key11;
-									var cur8;
-									var old4;
-									var elm11 = vnode3.elm;
-									var oldAttrs2 = oldVnode3.data.attrs == null?{ }:oldVnode3.data.attrs;
-									var attrs2 = vnode3.data.attrs == null?{ }:vnode3.data.attrs;
-									var _g20 = 0;
-									var _g110 = Object.keys(attrs2);
-									while(_g20 < _g110.length) {
-										var key12 = _g110[_g20];
-										++_g20;
-										cur8 = attrs2[key12];
-										old4 = oldAttrs2[key12];
-										if(old4 != cur8) {
-											if(!cur8 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key12]) elm11.removeAttribute(key12); else elm11.setAttribute(key12,cur8);
-										}
-									}
-									var _g23 = 0;
-									var _g111 = Object.keys(oldAttrs2);
-									while(_g23 < _g111.length) {
-										var key13 = _g111[_g23];
-										++_g23;
-										if(!Object.prototype.hasOwnProperty.call(attrs2,key13)) elm11.removeAttribute(key13);
-									}
-									var key14;
-									var cur9;
-									var old5;
-									var elm12 = vnode3.elm;
-									var oldProps2 = oldVnode3.data.props == null?{ }:oldVnode3.data.props;
-									var props2 = vnode3.data.props == null?{ }:vnode3.data.props;
-									var _g24 = 0;
-									var _g112 = Object.keys(props2);
-									while(_g24 < _g112.length) {
-										var key15 = _g112[_g24];
-										++_g24;
-										cur9 = props2[key15];
-										old5 = oldProps2[key15];
-										if(old5 != cur9) {
-											var value4 = cur9;
-											elm12[key15] = value4;
-										}
-									}
-									var cur10;
-									var name10;
-									var elm13 = vnode3.elm;
-									var oldClass2 = oldVnode3.data.classes == null?{ }:oldVnode3.data.classes;
-									var klass2 = vnode3.data.classes == null?{ }:vnode3.data.classes;
-									var _g25 = 0;
-									var _g113 = Object.keys(klass2);
-									while(_g25 < _g113.length) {
-										var name11 = _g113[_g25];
-										++_g25;
-										cur10 = klass2[name11];
-										if(cur10 != oldClass2[name11]) {
-											if(cur10 == "add") elm13.classList.add(name11); else if(cur10 == "remove") elm13.classList.remove(name11);
-										}
-									}
-									var cur11;
-									var name12;
-									var elm14 = vnode3.elm;
-									var oldStyle2 = oldVnode3.data.style == null?{ }:oldVnode3.data.style;
-									var style2 = vnode3.data.style == null?{ }:vnode3.data.style;
-									var oldHasDel2 = Object.prototype.hasOwnProperty.call(oldStyle2,"delayed");
-									var _g26 = 0;
-									var _g114 = Object.keys(style2);
-									while(_g26 < _g114.length) {
-										var name13 = _g114[_g26];
-										++_g26;
-										cur11 = style2[name13];
-										if(name13 == "delayed") {
-											var delayed2 = style2.delayed;
-											var oldDelayed2 = oldStyle2.delayed;
-											var _g27 = 0;
-											var _g33 = Object.keys(delayed2);
-											while(_g27 < _g33.length) {
-												var name14 = _g33[_g27];
-												++_g27;
-												cur11 = delayed2[name14];
-												if(!oldHasDel2 || cur11 != oldDelayed2[name14]) {
-													var obj2 = [elm14.style];
-													var prop2 = [name14];
-													var val2 = [cur11];
-													var fn2 = [(function(val2,prop2,obj2) {
-														return function(i9) {
-															var value5 = val2[0];
-															obj2[0][prop2[0]] = value5;
-														};
-													})(val2,prop2,obj2)];
-													window.requestAnimationFrame((function(fn2) {
-														return function(i10) {
-															window.requestAnimationFrame(fn2[0]);
-														};
-													})(fn2));
-												}
-											}
-										} else if(name13 != "remove" && cur11 != oldStyle2[name13]) elm14.style[name13] = cur11;
-									}
-									if(vnode3.data != null) {
-										i8 = vnode3.data.hook;
-										if(i8 != undefined) {
-											if(i8.create) i8.create(snabbdom_Patch.emptyNode,vnode3);
-											if(i8.insert) insertedVnodeQueue.push(vnode3);
-										}
-									}
-								} else elm10 = vnode3.elm = document.createTextNode(vnode3.text);
-								$r = vnode3.elm;
-								return $r;
-							}(this));
-							elm5.insertBefore(new_node1,null);
-						} while((function($this) {
-							var $r;
-							++startIdx;
-							$r = startIdx <= endIdx;
-							return $r;
-						}(this)));
-					} else if(oldCh != undefined) {
-						var startIdx1 = 0;
-						var endIdx1 = oldCh.length - 1;
-						var y;
-						y = 0;
-						if(startIdx1 <= endIdx1) do {
-							var i11;
-							var listeners;
-							var rm = null;
-							var ch1 = oldCh[startIdx1];
-							if(ch1 != undefined) {
-								if(ch1.sel != undefined) {
-									var vnode4 = ch1;
-									var i12 = vnode4.data;
-									var j;
-									if(i12 != undefined) {
-										if((i12 = i12.hook) != undefined && (i12 = i12.destroy) != undefined) i12(vnode4);
-										var style3 = null;
-										var name15;
-										var elm15 = vnode4.elm;
-										var s = vnode4.data.style;
-										if(s == null) null; else {
-											style3 = s.destroy;
-											if(style3 == null) null; else {
-												var _g28 = 0;
-												var _g115 = Object.keys(style3);
-												while(_g28 < _g115.length) {
-													var name16 = _g115[_g28];
-													++_g28;
-													elm15.style[name16] = style3[name16];
-												}
-											}
-										}
-										if((i12 = vnode4.children) != undefined) {
-											j = 0;
-											if(j < vnode4.children.length) do snabbdom_Patch.invokeDestroyHook(vnode4.children[j]); while((function($this) {
-												var $r;
-												++j;
-												$r = j < vnode4.children.length;
-												return $r;
-											}(this)));
-										}
-									}
-									var vnode5 = ch1;
-									var rm1 = rm;
-									var rm2 = [rm1];
-									var s1 = vnode5.data.style;
-									if(!s1 || !s1.remove) {
-										if(rm2[0] != null) rm2[0]();
-										null;
-									} else {
-										var name17;
-										var elm16 = [vnode5.elm];
-										var idx;
-										var i13 = 0;
-										var maxDur = 0;
-										var compStyle;
-										var style4 = s1.remove;
-										var amount = [0];
-										var applied = [];
-										var _g29 = 0;
-										var _g116 = Object.keys(style4);
-										while(_g29 < _g116.length) {
-											var name18 = _g116[_g29];
-											++_g29;
-											applied.push(name18);
-											elm16[0].style[name18] = style4[name18];
-										}
-										compStyle = window.getComputedStyle(elm16[0]);
-										var props3 = compStyle["transition-property"].split(", ");
-										var i14;
-										i14 = 0;
-										if(i14 < props3.length) do if(HxOverrides.indexOf(applied,props3[i14],0) != -1) amount[0]++; while((function($this) {
-											var $r;
-											++i14;
-											$r = i14 < props3.length;
-											return $r;
-										}(this)));
-										elm16[0].addEventListener("transitionend",(function(amount,elm16,rm2) {
-											return function(ev) {
-												if(ev.target == elm16[0]) --amount[0];
-												if(amount[0] == 0) rm2[0]();
+						}
+						var cur6;
+						var name5;
+						var elm8 = vnode2.elm;
+						var oldClass1 = oldVnode2.data.classes == null?{ }:oldVnode2.data.classes;
+						var klass1 = vnode2.data.classes == null?{ }:vnode2.data.classes;
+						var _g9 = 0;
+						var _g18 = Object.keys(klass1);
+						while(_g9 < _g18.length) {
+							var name6 = _g18[_g9];
+							++_g9;
+							cur6 = klass1[name6];
+							if(cur6 != oldClass1[name6]) {
+								if(cur6 == "add") elm8.classList.add(name6); else if(cur6 == "remove") elm8.classList.remove(name6);
+							}
+						}
+						var cur7;
+						var name7;
+						var elm9 = vnode2.elm;
+						var oldStyle1 = oldVnode2.data.style == null?{ }:oldVnode2.data.style;
+						var style1 = vnode2.data.style == null?{ }:vnode2.data.style;
+						var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
+						var _g10 = 0;
+						var _g19 = Object.keys(style1);
+						while(_g10 < _g19.length) {
+							var name8 = _g19[_g10];
+							++_g10;
+							cur7 = style1[name8];
+							if(name8 == "delayed") {
+								var delayed1 = style1.delayed;
+								var oldDelayed1 = oldStyle1.delayed;
+								var _g22 = 0;
+								var _g32 = Object.keys(delayed1);
+								while(_g22 < _g32.length) {
+									var name9 = _g32[_g22];
+									++_g22;
+									cur7 = delayed1[name9];
+									if(!oldHasDel1 || cur7 != oldDelayed1[name9]) {
+										var obj1 = [elm9.style];
+										var prop1 = [name9];
+										var val1 = [cur7];
+										var fn1 = [(function(val1,prop1,obj1) {
+											return function(i6) {
+												var value3 = val1[0];
+												obj1[0][prop1[0]] = value3;
 											};
-										})(amount,elm16,rm2));
+										})(val1,prop1,obj1)];
+										window.requestAnimationFrame((function(fn1) {
+											return function(i7) {
+												window.requestAnimationFrame(fn1[0]);
+											};
+										})(fn1));
 									}
-									if((i11 = ch1.data) != undefined && (i11 = i11.hook) != undefined && (i11 = i11.remove) != undefined) i11(ch1,rm); else {
-										console.log("remove");
-										if(rm != null) rm();
-										elm5.removeChild(ch1.elm);
-									}
-								} else elm5.removeChild(ch1.elm);
-							}
-						} while((function($this) {
-							var $r;
-							++startIdx1;
-							$r = startIdx1 <= endIdx1;
-							return $r;
-						}(this)));
-					}
-				} else if(oldVnode2.text != vnode2.text) elm5.textContent = vnode2.text;
-				if(hook != undefined && (i4 = hook.postpatch) != undefined) i4(oldVnode2,vnode2);
-			}
-		}
-	} else {
-		var oldVnode4 = oldVnode;
-		var vnode6 = vnode;
-		var i15;
-		var hook1;
-		if((i15 = vnode6.data) != undefined && (hook1 = i15.hook) != undefined && (i15 = hook1.prepatch) != undefined) i15(oldVnode4,vnode6);
-		if((i15 = oldVnode4.data) != undefined && (i15 = i15.vnode) != undefined) oldVnode4 = i15;
-		if((i15 = vnode6.data) != undefined && (i15 = i15.vnode) != undefined) vnode6 = i15;
-		var elm17 = vnode6.elm = oldVnode4.elm;
-		var oldCh1 = oldVnode4.children;
-		var ch2 = vnode6.children;
-		if(oldVnode4 == vnode6) null; else {
-			if(vnode6.data != undefined) {
-				var key16;
-				var cur12;
-				var old6;
-				var elm18 = vnode6.elm;
-				var oldAttrs3 = oldVnode4.data.attrs == null?{ }:oldVnode4.data.attrs;
-				var attrs3 = vnode6.data.attrs == null?{ }:vnode6.data.attrs;
-				var _g30 = 0;
-				var _g117 = Object.keys(attrs3);
-				while(_g30 < _g117.length) {
-					var key17 = _g117[_g30];
-					++_g30;
-					cur12 = attrs3[key17];
-					old6 = oldAttrs3[key17];
-					if(old6 != cur12) {
-						if(!cur12 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key17]) elm18.removeAttribute(key17); else elm18.setAttribute(key17,cur12);
-					}
-				}
-				var _g34 = 0;
-				var _g118 = Object.keys(oldAttrs3);
-				while(_g34 < _g118.length) {
-					var key18 = _g118[_g34];
-					++_g34;
-					if(!Object.prototype.hasOwnProperty.call(attrs3,key18)) elm18.removeAttribute(key18);
-				}
-				var key19;
-				var cur13;
-				var old7;
-				var elm19 = vnode6.elm;
-				var oldProps3 = oldVnode4.data.props == null?{ }:oldVnode4.data.props;
-				var props4 = vnode6.data.props == null?{ }:vnode6.data.props;
-				var _g35 = 0;
-				var _g119 = Object.keys(props4);
-				while(_g35 < _g119.length) {
-					var key20 = _g119[_g35];
-					++_g35;
-					cur13 = props4[key20];
-					old7 = oldProps3[key20];
-					if(old7 != cur13) {
-						var value6 = cur13;
-						elm19[key20] = value6;
-					}
-				}
-				var cur14;
-				var name19;
-				var elm20 = vnode6.elm;
-				var oldClass3 = oldVnode4.data.classes == null?{ }:oldVnode4.data.classes;
-				var klass3 = vnode6.data.classes == null?{ }:vnode6.data.classes;
-				var _g36 = 0;
-				var _g120 = Object.keys(klass3);
-				while(_g36 < _g120.length) {
-					var name20 = _g120[_g36];
-					++_g36;
-					cur14 = klass3[name20];
-					if(cur14 != oldClass3[name20]) {
-						if(cur14 == "add") elm20.classList.add(name20); else if(cur14 == "remove") elm20.classList.remove(name20);
-					}
-				}
-				var cur15;
-				var name21;
-				var elm21 = vnode6.elm;
-				var oldStyle3 = oldVnode4.data.style == null?{ }:oldVnode4.data.style;
-				var style5 = vnode6.data.style == null?{ }:vnode6.data.style;
-				var oldHasDel3 = Object.prototype.hasOwnProperty.call(oldStyle3,"delayed");
-				var _g37 = 0;
-				var _g121 = Object.keys(style5);
-				while(_g37 < _g121.length) {
-					var name22 = _g121[_g37];
-					++_g37;
-					cur15 = style5[name22];
-					if(name22 == "delayed") {
-						var delayed3 = style5.delayed;
-						var oldDelayed3 = oldStyle3.delayed;
-						var _g210 = 0;
-						var _g38 = Object.keys(delayed3);
-						while(_g210 < _g38.length) {
-							var name23 = _g38[_g210];
-							++_g210;
-							cur15 = delayed3[name23];
-							if(!oldHasDel3 || cur15 != oldDelayed3[name23]) {
-								var obj3 = [elm21.style];
-								var prop3 = [name23];
-								var val3 = [cur15];
-								var fn3 = [(function(val3,prop3,obj3) {
-									return function(i16) {
-										var value7 = val3[0];
-										obj3[0][prop3[0]] = value7;
-									};
-								})(val3,prop3,obj3)];
-								window.requestAnimationFrame((function(fn3) {
-									return function(i17) {
-										window.requestAnimationFrame(fn3[0]);
-									};
-								})(fn3));
+								}
+							} else if(name8 != "remove" && cur7 != oldStyle1[name8]) elm9.style[name8] = cur7;
+						}
+						if(vnode2.data != null) {
+							i5 = vnode2.data.hook;
+							if(i5 != undefined) {
+								if(i5.create) i5.create(snabbdom_Patch.emptyNode,vnode2);
+								if(i5.insert) insertedVnodeQueue.push(vnode2);
 							}
 						}
-					} else if(name22 != "remove" && cur15 != oldStyle3[name22]) elm21.style[name22] = cur15;
+					} else elm5 = vnode2.elm = document.createTextNode(vnode2.text);
+					tmp = vnode2.elm;
+					new_node = tmp;
+					elm.insertBefore(new_node,null);
+					var tmp1;
+					++startIdx;
+					tmp1 = startIdx <= endIdx;
+					if(!tmp1) break;
 				}
-				i15 = vnode6.data.hook;
-				if(i15 != undefined && (i15 = i15.update) != undefined) i15(oldVnode4,vnode6);
-			}
-			if(vnode6.text == undefined) {
-				if(oldCh1 != undefined && ch2 != undefined) {
-					if(oldCh1 != ch2) snabbdom_Patch.updateChildren(elm17,oldCh1,ch2,insertedVnodeQueue);
-				} else if(ch2 != undefined) {
-					var startIdx2 = 0;
-					var endIdx2 = ch2.length - 1;
-					var i18;
-					var new_node3;
-					i18 = 0;
-					if(startIdx2 <= endIdx2) do {
-						new_node3 = (function($this) {
-							var $r;
-							var vnode7 = ch2[startIdx2];
-							var i19;
-							var data3 = vnode7.data;
-							if(data3 != undefined) {
-								if((i19 = data3.hook) != undefined && (i19 = i19.init) != undefined) i19(vnode7);
-								if((i19 = data3.vnode) != undefined) vnode7 = i19;
+			} else if(oldCh != undefined) {
+				var startIdx1 = 0;
+				var endIdx1 = oldCh.length - 1;
+				var y;
+				y = 0;
+				if(startIdx1 <= endIdx1) while(true) {
+					var i8;
+					var listeners;
+					var rm = null;
+					var ch1 = oldCh[startIdx1];
+					if(ch1 != undefined) {
+						if(ch1.sel != undefined) {
+							var vnode3 = ch1;
+							var i9 = vnode3.data;
+							var j;
+							if(i9 != undefined) {
+								if((i9 = i9.hook) != undefined && (i9 = i9.destroy) != undefined) i9(vnode3);
+								var style2 = null;
+								var name10;
+								var elm10 = vnode3.elm;
+								var s = vnode3.data.style;
+								if(s == null) null; else {
+									style2 = s.destroy;
+									if(style2 == null) null; else {
+										var _g20 = 0;
+										var _g110 = Object.keys(style2);
+										while(_g20 < _g110.length) {
+											var name11 = _g110[_g20];
+											++_g20;
+											elm10.style[name11] = style2[name11];
+										}
+									}
+								}
+								if((i9 = vnode3.children) != undefined) {
+									j = 0;
+									if(j < vnode3.children.length) while(true) {
+										snabbdom_Patch.invokeDestroyHook(vnode3.children[j]);
+										var tmp4;
+										++j;
+										tmp4 = j < vnode3.children.length;
+										if(!tmp4) break;
+									}
+								}
 							}
-							var elm22;
-							var children2 = vnode7.children;
-							var sel2 = vnode7.sel;
-							if(sel2 != undefined) {
-								var hashIdx2 = sel2.indexOf("#",0);
-								var dotIdx2 = sel2.indexOf(".",hashIdx2);
-								var hash2 = hashIdx2 > 0?hashIdx2:sel2.length;
-								var dot2 = dotIdx2 > 0?dotIdx2:sel2.length;
-								var tag2 = hashIdx2 != -1 || dotIdx2 != -1?sel2.slice(0,Math.min(hash2,dot2)):sel2;
-								elm22 = vnode7.elm = data3 != undefined && (i19 = data3.ns) != undefined?document.createElementNS(i19,tag2):document.createElement(tag2);
-								if(hash2 < dot2) elm22.id = sel2.slice(hash2 + 1,dot2);
-								if(dotIdx2 > 0) {
-									elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
+							var vnode4 = ch1;
+							var rm1 = rm;
+							var rm2 = [rm1];
+							var s1 = vnode4.data.style;
+							if(!s1 || !s1.remove) {
+								if(rm2[0] != null) rm2[0]();
+								null;
+							} else {
+								var name12;
+								var elm11 = [vnode4.elm];
+								var idx;
+								var i10 = 0;
+								var maxDur = 0;
+								var compStyle;
+								var style3 = s1.remove;
+								var amount = [0];
+								var applied = [];
+								var _g23 = 0;
+								var _g111 = Object.keys(style3);
+								while(_g23 < _g111.length) {
+									var name13 = _g111[_g23];
+									++_g23;
+									applied.push(name13);
+									elm11[0].style[name13] = style3[name13];
 								}
-								if(Array.isArray(children2)) {
-									i19 = 0;
-									if(i19 < children2.length) do {
-										var new_node4 = snabbdom_Patch.createElm(children2[i19],insertedVnodeQueue);
-										elm22.appendChild(new_node4);
-									} while((function($this) {
-										var $r;
-										++i19;
-										$r = i19 < children2.length;
-										return $r;
-									}($this)));
-								} else if(typeof vnode7.text == "string" || typeof vnode7.text == "number") elm22.appendChild(document.createTextNode(vnode7.text));
-								var oldVnode5 = snabbdom_Patch.emptyNode;
-								var key21;
-								var cur16;
-								var old8;
-								var elm23 = vnode7.elm;
-								var oldAttrs4 = oldVnode5.data.attrs == null?{ }:oldVnode5.data.attrs;
-								var attrs4 = vnode7.data.attrs == null?{ }:vnode7.data.attrs;
-								var _g39 = 0;
-								var _g122 = Object.keys(attrs4);
-								while(_g39 < _g122.length) {
-									var key22 = _g122[_g39];
-									++_g39;
-									cur16 = attrs4[key22];
-									old8 = oldAttrs4[key22];
-									if(old8 != cur16) {
-										if(!cur16 && snabbdom_plugins_dom_Attributes.booleanAttrsDict[key22]) elm23.removeAttribute(key22); else elm23.setAttribute(key22,cur16);
-									}
+								compStyle = window.getComputedStyle(elm11[0]);
+								var props2 = compStyle["transition-property"].split(", ");
+								var i11;
+								i11 = 0;
+								if(i11 < props2.length) while(true) {
+									if(HxOverrides.indexOf(applied,props2[i11],0) != -1) amount[0]++;
+									var tmp5;
+									++i11;
+									tmp5 = i11 < props2.length;
+									if(!tmp5) break;
 								}
-								var _g40 = 0;
-								var _g123 = Object.keys(oldAttrs4);
-								while(_g40 < _g123.length) {
-									var key23 = _g123[_g40];
-									++_g40;
-									if(!Object.prototype.hasOwnProperty.call(attrs4,key23)) elm23.removeAttribute(key23);
-								}
-								var key24;
-								var cur17;
-								var old9;
-								var elm24 = vnode7.elm;
-								var oldProps4 = oldVnode5.data.props == null?{ }:oldVnode5.data.props;
-								var props5 = vnode7.data.props == null?{ }:vnode7.data.props;
-								var _g41 = 0;
-								var _g124 = Object.keys(props5);
-								while(_g41 < _g124.length) {
-									var key25 = _g124[_g41];
-									++_g41;
-									cur17 = props5[key25];
-									old9 = oldProps4[key25];
-									if(old9 != cur17) {
-										var value8 = cur17;
-										elm24[key25] = value8;
-									}
-								}
-								var cur18;
-								var name24;
-								var elm25 = vnode7.elm;
-								var oldClass4 = oldVnode5.data.classes == null?{ }:oldVnode5.data.classes;
-								var klass4 = vnode7.data.classes == null?{ }:vnode7.data.classes;
-								var _g42 = 0;
-								var _g125 = Object.keys(klass4);
-								while(_g42 < _g125.length) {
-									var name25 = _g125[_g42];
-									++_g42;
-									cur18 = klass4[name25];
-									if(cur18 != oldClass4[name25]) {
-										if(cur18 == "add") elm25.classList.add(name25); else if(cur18 == "remove") elm25.classList.remove(name25);
-									}
-								}
-								var cur19;
-								var name26;
-								var elm26 = vnode7.elm;
-								var oldStyle4 = oldVnode5.data.style == null?{ }:oldVnode5.data.style;
-								var style6 = vnode7.data.style == null?{ }:vnode7.data.style;
-								var oldHasDel4 = Object.prototype.hasOwnProperty.call(oldStyle4,"delayed");
-								var _g43 = 0;
-								var _g126 = Object.keys(style6);
-								while(_g43 < _g126.length) {
-									var name27 = _g126[_g43];
-									++_g43;
-									cur19 = style6[name27];
-									if(name27 == "delayed") {
-										var delayed4 = style6.delayed;
-										var oldDelayed4 = oldStyle4.delayed;
-										var _g211 = 0;
-										var _g310 = Object.keys(delayed4);
-										while(_g211 < _g310.length) {
-											var name28 = _g310[_g211];
-											++_g211;
-											cur19 = delayed4[name28];
-											if(!oldHasDel4 || cur19 != oldDelayed4[name28]) {
-												var obj4 = [elm26.style];
-												var prop4 = [name28];
-												var val4 = [cur19];
-												var fn4 = [(function(val4,prop4,obj4) {
-													return function(i20) {
-														var value9 = val4[0];
-														obj4[0][prop4[0]] = value9;
-													};
-												})(val4,prop4,obj4)];
-												window.requestAnimationFrame((function(fn4) {
-													return function(i21) {
-														window.requestAnimationFrame(fn4[0]);
-													};
-												})(fn4));
-											}
-										}
-									} else if(name27 != "remove" && cur19 != oldStyle4[name27]) elm26.style[name27] = cur19;
-								}
-								if(vnode7.data != null) {
-									i19 = vnode7.data.hook;
-									if(i19 != undefined) {
-										if(i19.create) i19.create(snabbdom_Patch.emptyNode,vnode7);
-										if(i19.insert) insertedVnodeQueue.push(vnode7);
-									}
-								}
-							} else elm22 = vnode7.elm = document.createTextNode(vnode7.text);
-							$r = vnode7.elm;
-							return $r;
-						}(this));
-						elm17.insertBefore(new_node3,null);
-					} while((function($this) {
-						var $r;
-						++startIdx2;
-						$r = startIdx2 <= endIdx2;
-						return $r;
-					}(this)));
-				} else if(oldCh1 != undefined) {
-					var startIdx3 = 0;
-					var endIdx3 = oldCh1.length - 1;
-					var y1;
-					y1 = 0;
-					if(startIdx3 <= endIdx3) do {
-						var i22;
-						var listeners1;
-						var rm3 = null;
-						var ch3 = oldCh1[startIdx3];
-						if(ch3 != undefined) {
-							if(ch3.sel != undefined) {
-								var vnode8 = ch3;
-								var i23 = vnode8.data;
-								var j1;
-								if(i23 != undefined) {
-									if((i23 = i23.hook) != undefined && (i23 = i23.destroy) != undefined) i23(vnode8);
-									var style7 = null;
-									var name29;
-									var elm27 = vnode8.elm;
-									var s2 = vnode8.data.style;
-									if(s2 == null) null; else {
-										style7 = s2.destroy;
-										if(style7 == null) null; else {
-											var _g44 = 0;
-											var _g127 = Object.keys(style7);
-											while(_g44 < _g127.length) {
-												var name30 = _g127[_g44];
-												++_g44;
-												elm27.style[name30] = style7[name30];
-											}
-										}
-									}
-									if((i23 = vnode8.children) != undefined) {
-										j1 = 0;
-										if(j1 < vnode8.children.length) do snabbdom_Patch.invokeDestroyHook(vnode8.children[j1]); while((function($this) {
-											var $r;
-											++j1;
-											$r = j1 < vnode8.children.length;
-											return $r;
-										}(this)));
-									}
-								}
-								var vnode9 = ch3;
-								var rm4 = rm3;
-								var rm5 = [rm4];
-								var s3 = vnode9.data.style;
-								if(!s3 || !s3.remove) {
-									if(rm5[0] != null) rm5[0]();
-									null;
-								} else {
-									var name31;
-									var elm28 = [vnode9.elm];
-									var idx1;
-									var i24 = 0;
-									var maxDur1 = 0;
-									var compStyle1;
-									var style8 = s3.remove;
-									var amount1 = [0];
-									var applied1 = [];
-									var _g45 = 0;
-									var _g128 = Object.keys(style8);
-									while(_g45 < _g128.length) {
-										var name32 = _g128[_g45];
-										++_g45;
-										applied1.push(name32);
-										elm28[0].style[name32] = style8[name32];
-									}
-									compStyle1 = window.getComputedStyle(elm28[0]);
-									var props6 = compStyle1["transition-property"].split(", ");
-									var i25;
-									i25 = 0;
-									if(i25 < props6.length) do if(HxOverrides.indexOf(applied1,props6[i25],0) != -1) amount1[0]++; while((function($this) {
-										var $r;
-										++i25;
-										$r = i25 < props6.length;
-										return $r;
-									}(this)));
-									elm28[0].addEventListener("transitionend",(function(amount1,elm28,rm5) {
-										return function(ev1) {
-											if(ev1.target == elm28[0]) --amount1[0];
-											if(amount1[0] == 0) rm5[0]();
-										};
-									})(amount1,elm28,rm5));
-								}
-								if((i22 = ch3.data) != undefined && (i22 = i22.hook) != undefined && (i22 = i22.remove) != undefined) i22(ch3,rm3); else {
-									console.log("remove");
-									if(rm3 != null) rm3();
-									elm17.removeChild(ch3.elm);
-								}
-							} else elm17.removeChild(ch3.elm);
-						}
-					} while((function($this) {
-						var $r;
-						++startIdx3;
-						$r = startIdx3 <= endIdx3;
-						return $r;
-					}(this)));
+								elm11[0].addEventListener("transitionend",(function(amount,elm11,rm2) {
+									return function(ev) {
+										if(ev.target == elm11[0]) --amount[0];
+										if(amount[0] == 0) rm2[0]();
+									};
+								})(amount,elm11,rm2));
+							}
+							if((i8 = ch1.data) != undefined && (i8 = i8.hook) != undefined && (i8 = i8.remove) != undefined) i8(ch1,rm); else {
+								console.log("remove");
+								if(rm != null) rm();
+								elm.removeChild(ch1.elm);
+							}
+						} else elm.removeChild(ch1.elm);
+					}
+					var tmp3;
+					++startIdx1;
+					tmp3 = startIdx1 <= endIdx1;
+					if(!tmp3) break;
 				}
-			} else if(oldVnode4.text != vnode6.text) elm17.textContent = vnode6.text;
-			if(hook1 != undefined && (i15 = hook1.postpatch) != undefined) i15(oldVnode4,vnode6);
-		}
+			}
+		} else if(oldVnode1.text != vnode1.text) elm.textContent = vnode1.text;
+		if(hook != undefined && (i1 = hook.postpatch) != undefined) i1(oldVnode1,vnode1);
 	}
 	i = 0;
-	if(i < insertedVnodeQueue.length) do insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]); while((function($this) {
-		var $r;
+	if(i < insertedVnodeQueue.length) while(true) {
+		insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
+		var tmp6;
 		++i;
-		$r = i < insertedVnodeQueue.length;
-		return $r;
-	}(this)));
+		tmp6 = i < insertedVnodeQueue.length;
+		if(!tmp6) break;
+	}
 	return vnode;
 };
 var snabbdom_plugins_dom_Attributes = function() { };

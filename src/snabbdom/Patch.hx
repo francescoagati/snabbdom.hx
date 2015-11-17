@@ -284,17 +284,17 @@ class Patch {
       var i;
       var insertedVnodeQueue = [];
       //@for(i = 0; i < cbs.pre.length; ++i) cbs.pre[i]();
-      if (untyped __js__('oldVnode instanceof Element')) {
-        if (untyped oldVnode.parentElement != null) {
-          createElm(vnode, insertedVnodeQueue);
-          untyped oldVnode.parentElement.replaceChild(vnode.elm, oldVnode);
-        } else {
-          oldVnode = untyped  emptyNodeAt(untyped oldVnode);
-          patchVnode(oldVnode, vnode, insertedVnodeQueue);
-        }
-      } else {
+      //if (untyped __js__('oldVnode instanceof Element')) {
+      //  if (untyped oldVnode.parentElement != null) {
+      //    createElm(vnode, insertedVnodeQueue);
+      //    untyped oldVnode.parentElement.replaceChild(vnode.elm, oldVnode);
+      //  } else {
+      //    oldVnode = untyped  emptyNodeAt(untyped oldVnode);
+      //    patchVnode(oldVnode, vnode, insertedVnodeQueue);
+      //  }
+      //} else {
         patchVnode(oldVnode, vnode, insertedVnodeQueue);
-      }
+      //}
       @for(i = 0, i < insertedVnodeQueue.length,++i) {
         insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
       }
