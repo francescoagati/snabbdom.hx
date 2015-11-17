@@ -110,12 +110,7 @@ snabbdom_Patch.createElm = function(vnode,insertedVnodeQueue) {
 		var hash = hashIdx > 0?hashIdx:sel.length;
 		var dot = dotIdx > 0?dotIdx:sel.length;
 		var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-		elm = vnode.elm = data != undefined && (i = data.ns) != undefined?(function($this) {
-			var $r;
-			var ns = i;
-			$r = window.document.createElementNS(ns,tag);
-			return $r;
-		}(this)):window.document.createElement(tag);
+		elm = vnode.elm = data != undefined && (i = data.ns) != undefined?window.document.createElementNS(i,tag):window.document.createElement(tag);
 		if(hash < dot) elm.id = sel.slice(hash + 1,dot);
 		if(dotIdx > 0) {
 			elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -426,12 +421,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 								var hash = hashIdx > 0?hashIdx:sel.length;
 								var dot = dotIdx > 0?dotIdx:sel.length;
 								var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-								elm5 = vnode1.elm = data != undefined && (i4 = data.ns) != undefined?(function($this) {
-									var $r;
-									var ns = i4;
-									$r = window.document.createElementNS(ns,tag);
-									return $r;
-								}($this)):window.document.createElement(tag);
+								elm5 = vnode1.elm = data != undefined && (i4 = data.ns) != undefined?window.document.createElementNS(i4,tag):window.document.createElement(tag);
 								if(hash < dot) elm5.id = sel.slice(hash + 1,dot);
 								if(dotIdx > 0) {
 									elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -809,12 +799,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 								var hash1 = hashIdx1 > 0?hashIdx1:sel1.length;
 								var dot1 = dotIdx1 > 0?dotIdx1:sel1.length;
 								var tag1 = hashIdx1 != -1 || dotIdx1 != -1?sel1.slice(0,Math.min(hash1,dot1)):sel1;
-								elm17 = vnode5.elm = data1 != undefined && (i15 = data1.ns) != undefined?(function($this) {
-									var $r;
-									var ns1 = i15;
-									$r = window.document.createElementNS(ns1,tag1);
-									return $r;
-								}($this)):window.document.createElement(tag1);
+								elm17 = vnode5.elm = data1 != undefined && (i15 = data1.ns) != undefined?window.document.createElementNS(i15,tag1):window.document.createElement(tag1);
 								if(hash1 < dot1) elm17.id = sel1.slice(hash1 + 1,dot1);
 								if(dotIdx1 > 0) {
 									elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -1192,12 +1177,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 								var hash2 = hashIdx2 > 0?hashIdx2:sel2.length;
 								var dot2 = dotIdx2 > 0?dotIdx2:sel2.length;
 								var tag2 = hashIdx2 != -1 || dotIdx2 != -1?sel2.slice(0,Math.min(hash2,dot2)):sel2;
-								elm29 = vnode9.elm = data2 != undefined && (i26 = data2.ns) != undefined?(function($this) {
-									var $r;
-									var ns2 = i26;
-									$r = window.document.createElementNS(ns2,tag2);
-									return $r;
-								}($this)):window.document.createElement(tag2);
+								elm29 = vnode9.elm = data2 != undefined && (i26 = data2.ns) != undefined?window.document.createElementNS(i26,tag2):window.document.createElement(tag2);
 								if(hash2 < dot2) elm29.id = sel2.slice(hash2 + 1,dot2);
 								if(dotIdx2 > 0) {
 									elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -1576,12 +1556,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 								var hash3 = hashIdx3 > 0?hashIdx3:sel3.length;
 								var dot3 = dotIdx3 > 0?dotIdx3:sel3.length;
 								var tag3 = hashIdx3 != -1 || dotIdx3 != -1?sel3.slice(0,Math.min(hash3,dot3)):sel3;
-								elm41 = vnode13.elm = data3 != undefined && (i37 = data3.ns) != undefined?(function($this) {
-									var $r;
-									var ns3 = i37;
-									$r = window.document.createElementNS(ns3,tag3);
-									return $r;
-								}($this)):window.document.createElement(tag3);
+								elm41 = vnode13.elm = data3 != undefined && (i37 = data3.ns) != undefined?window.document.createElementNS(i37,tag3):window.document.createElement(tag3);
 								if(hash3 < dot3) elm41.id = sel3.slice(hash3 + 1,dot3);
 								if(dotIdx3 > 0) {
 									elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -1861,12 +1836,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 					var hash4 = hashIdx4 > 0?hashIdx4:sel4.length;
 					var dot4 = dotIdx4 > 0?dotIdx4:sel4.length;
 					var tag4 = hashIdx4 != -1 || dotIdx4 != -1?sel4.slice(0,Math.min(hash4,dot4)):sel4;
-					elm48 = vnode16.elm = data4 != undefined && (i45 = data4.ns) != undefined?(function($this) {
-						var $r;
-						var ns4 = i45;
-						$r = window.document.createElementNS(ns4,tag4);
-						return $r;
-					}($this)):window.document.createElement(tag4);
+					elm48 = vnode16.elm = data4 != undefined && (i45 = data4.ns) != undefined?window.document.createElementNS(i45,tag4):window.document.createElement(tag4);
 					if(hash4 < dot4) elm48.id = sel4.slice(hash4 + 1,dot4);
 					if(dotIdx4 > 0) {
 						elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -2136,12 +2106,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 									var hash5 = hashIdx5 > 0?hashIdx5:sel5.length;
 									var dot5 = dotIdx5 > 0?dotIdx5:sel5.length;
 									var tag5 = hashIdx5 != -1 || dotIdx5 != -1?sel5.slice(0,Math.min(hash5,dot5)):sel5;
-									elm58 = vnode18.elm = data5 != undefined && (i52 = data5.ns) != undefined?(function($this) {
-										var $r;
-										var ns5 = i52;
-										$r = window.document.createElementNS(ns5,tag5);
-										return $r;
-									}($this)):window.document.createElement(tag5);
+									elm58 = vnode18.elm = data5 != undefined && (i52 = data5.ns) != undefined?window.document.createElementNS(i52,tag5):window.document.createElement(tag5);
 									if(hash5 < dot5) elm58.id = sel5.slice(hash5 + 1,dot5);
 									if(dotIdx5 > 0) {
 										elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -2407,12 +2372,7 @@ snabbdom_Patch.updateChildren = function(parentElm,oldCh,newCh,insertedVnodeQueu
 					var hash6 = hashIdx6 > 0?hashIdx6:sel6.length;
 					var dot6 = dotIdx6 > 0?dotIdx6:sel6.length;
 					var tag6 = hashIdx6 != -1 || dotIdx6 != -1?sel6.slice(0,Math.min(hash6,dot6)):sel6;
-					elm65 = vnode21.elm = data6 != undefined && (i60 = data6.ns) != undefined?(function($this) {
-						var $r;
-						var ns6 = i60;
-						$r = window.document.createElementNS(ns6,tag6);
-						return $r;
-					}($this)):window.document.createElement(tag6);
+					elm65 = vnode21.elm = data6 != undefined && (i60 = data6.ns) != undefined?window.document.createElementNS(i60,tag6):window.document.createElement(tag6);
 					if(hash6 < dot6) elm65.id = sel6.slice(hash6 + 1,dot6);
 					if(dotIdx6 > 0) {
 						elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -2665,12 +2625,7 @@ snabbdom_Patch.patchDom = function(oldVnode,vnode) {
 			var hash = hashIdx > 0?hashIdx:sel.length;
 			var dot = dotIdx > 0?dotIdx:sel.length;
 			var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-			elm = vnode1.elm = data != undefined && (i1 = data.ns) != undefined?(function($this) {
-				var $r;
-				var ns = i1;
-				$r = window.document.createElementNS(ns,tag);
-				return $r;
-			}(this)):window.document.createElement(tag);
+			elm = vnode1.elm = data != undefined && (i1 = data.ns) != undefined?window.document.createElementNS(i1,tag):window.document.createElement(tag);
 			if(hash < dot) elm.id = sel.slice(hash + 1,dot);
 			if(dotIdx > 0) {
 				elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -2943,12 +2898,7 @@ snabbdom_Patch.patchDom = function(oldVnode,vnode) {
 								var hash1 = hashIdx1 > 0?hashIdx1:sel1.length;
 								var dot1 = dotIdx1 > 0?dotIdx1:sel1.length;
 								var tag1 = hashIdx1 != -1 || dotIdx1 != -1?sel1.slice(0,Math.min(hash1,dot1)):sel1;
-								elm10 = vnode3.elm = data2 != undefined && (i8 = data2.ns) != undefined?(function($this) {
-									var $r;
-									var ns1 = i8;
-									$r = window.document.createElementNS(ns1,tag1);
-									return $r;
-								}($this)):window.document.createElement(tag1);
+								elm10 = vnode3.elm = data2 != undefined && (i8 = data2.ns) != undefined?window.document.createElementNS(i8,tag1):window.document.createElement(tag1);
 								if(hash1 < dot1) elm10.id = sel1.slice(hash1 + 1,dot1);
 								if(dotIdx1 > 0) {
 									elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -3335,12 +3285,7 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 						var hash = hashIdx > 0?hashIdx:sel.length;
 						var dot = dotIdx > 0?dotIdx:sel.length;
 						var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-						var tmp2;
-						if(data != undefined && (i5 = data.ns) != undefined) {
-							var ns = i5;
-							tmp2 = window.document.createElementNS(ns,tag);
-						} else tmp2 = window.document.createElement(tag);
-						elm5 = vnode2.elm = tmp2;
+						elm5 = vnode2.elm = data != undefined && (i5 = data.ns) != undefined?window.document.createElementNS(i5,tag):window.document.createElement(tag);
 						if(hash < dot) elm5.id = sel.slice(hash + 1,dot);
 						if(dotIdx > 0) {
 							elm.className = sel.slice(dot+1).replace(snabbdom_Patch.rg, " ");;
@@ -3350,10 +3295,10 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 							if(i5 < children.length) while(true) {
 								var new_node1 = snabbdom_Patch.createElm(children[i5],insertedVnodeQueue);
 								elm5.appendChild(new_node1);
-								var tmp3;
+								var tmp2;
 								++i5;
-								tmp3 = i5 < children.length;
-								if(!tmp3) break;
+								tmp2 = i5 < children.length;
+								if(!tmp2) break;
 							}
 						} else if(typeof vnode2.text == "string" || typeof vnode2.text == "number") elm5.appendChild(window.document.createTextNode(vnode2.text));
 						var oldVnode2 = snabbdom_Patch.emptyNode;
@@ -3507,10 +3452,10 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 									j = 0;
 									if(j < vnode3.children.length) while(true) {
 										snabbdom_Patch.invokeDestroyHook(vnode3.children[j]);
-										var tmp5;
+										var tmp4;
 										++j;
-										tmp5 = j < vnode3.children.length;
-										if(!tmp5) break;
+										tmp4 = j < vnode3.children.length;
+										if(!tmp4) break;
 									}
 								}
 							}
@@ -3545,10 +3490,10 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 								i11 = 0;
 								if(i11 < props2.length) while(true) {
 									if(HxOverrides.indexOf(applied,props2[i11],0) != -1) amount[0]++;
-									var tmp6;
+									var tmp5;
 									++i11;
-									tmp6 = i11 < props2.length;
-									if(!tmp6) break;
+									tmp5 = i11 < props2.length;
+									if(!tmp5) break;
 								}
 								elm11[0].addEventListener("transitionend",(function(amount,elm11,rm2) {
 									return function(ev) {
@@ -3564,10 +3509,10 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 							}
 						} else elm.removeChild(ch1.elm);
 					}
-					var tmp4;
+					var tmp3;
 					++startIdx1;
-					tmp4 = startIdx1 <= endIdx1;
-					if(!tmp4) break;
+					tmp3 = startIdx1 <= endIdx1;
+					if(!tmp3) break;
 				}
 			}
 		} else if(oldVnode1.text != vnode1.text) elm.textContent = vnode1.text;
@@ -3576,10 +3521,10 @@ snabbdom_Patch.patch = function(oldVnode,vnode) {
 	i = 0;
 	if(i < insertedVnodeQueue.length) while(true) {
 		insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
-		var tmp7;
+		var tmp6;
 		++i;
-		tmp7 = i < insertedVnodeQueue.length;
-		if(!tmp7) break;
+		tmp6 = i < insertedVnodeQueue.length;
+		if(!tmp6) break;
 	}
 	return vnode;
 };

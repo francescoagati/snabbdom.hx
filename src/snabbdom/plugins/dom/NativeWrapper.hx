@@ -2,16 +2,16 @@ package snabbdom.plugins.dom;
 
 class NativeWrapper {
 
-  public static inline function createElement(tag) {
-    return js.Browser.document.createElement(tag);
+  public static macro function createElement(tag) {
+    return macro js.Browser.document.createElement($tag);
   }
 
-  public static inline function createTextElement(text) {
-    return js.Browser.document.createTextNode(text);
+  public static macro function createTextElement(text) {
+    return macro js.Browser.document.createTextNode($text);
   }
 
-  public static inline function createElementNS(ns,element) {
-    return js.Browser.document.createElementNS(ns,element);
+  public static macro function createElementNS(ns,element) {
+    return macro js.Browser.document.createElementNS($ns,$element);
   }
 
 }
