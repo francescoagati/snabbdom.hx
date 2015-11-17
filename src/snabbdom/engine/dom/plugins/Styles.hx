@@ -1,6 +1,6 @@
-package snabbdom.plugins.dom;
+package snabbdom.engine.dom.plugins;
 
-import snabbdom.Patch.*;
+import snabbdom.engine.dom.PatchDom.*;
 import snabbdom.Is.*;
 using snabbdom.VirtualNodeDataTools;
 

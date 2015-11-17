@@ -2,9 +2,9 @@ package snabbdom;
 
 using thx.Arrays;
 using snabbdom.Jsx;
-import snabbdom.Patch.*;
+import snabbdom.engine.dom.PatchDom.*;
 import snabbdom.Jsx.jsx;
-using snabbdom.Patch;
+using snabbdom.engine.dom.PatchDom;
 class Main {
 
 

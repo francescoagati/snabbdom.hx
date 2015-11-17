@@ -1,4 +1,4 @@
-package snabbdom.plugins.dom;
+package snabbdom.engine.dom.plugins;
 
 class NativeWrapper {
 
