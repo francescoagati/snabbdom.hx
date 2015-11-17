@@ -49,7 +49,7 @@ class Main {
 */
 
 
-    var last_node:VirtualNodeDom = null;
+    var last_node:snabbdom.engine.dom.VirtualNodeDom = null;
 
 
 

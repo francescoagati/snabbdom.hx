@@ -2,6 +2,9 @@ package snabbdom;
 
 import haxe.macro.Expr;
 import haxe.macro.Context;
+#if !macro
+  import snabbdom.engine.dom.VirtualNodeDom;
+#end
 using haxe.macro.ComplexTypeTools;
 using haxe.macro.MacroStringTools;
 using haxe.macro.ExprTools;
