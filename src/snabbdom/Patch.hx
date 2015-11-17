@@ -260,6 +260,25 @@ class Patch {
       }
     }
 
+    public static function patchDom(oldVnode:Element,vnode:VirtualNode) {
+      var i;
+      var insertedVnodeQueue = [];
+      if (untyped oldVnode.parentElement != null) {
+        createElm(vnode, insertedVnodeQueue);
+        untyped oldVnode.parentElement.replaceChild(vnode.elm, oldVnode);
+      } else {
+        oldVnode = untyped  emptyNodeAt(untyped oldVnode);
+        patchVnode(untyped oldVnode, vnode, insertedVnodeQueue);
+      }
+
+      @for(i = 0, i < insertedVnodeQueue.length,++i) {
+        insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
+      }
+      //for (i = 0; i < cbs.post.length; ++i) cbs.post[i]();
+      return vnode;
+
+    }
+
 
     public static function patch(oldVnode:VirtualNode, vnode:VirtualNode) {
       var i;

@@ -1,9 +1,10 @@
 package snabbdom;
 
 using thx.Arrays;
+using snabbdom.Jsx;
 import snabbdom.Patch.*;
 import snabbdom.Jsx.jsx;
-
+using snabbdom.Patch;
 class Main {
 
 
@@ -48,11 +49,11 @@ class Main {
 */
 
 
-    var last_node = untyped js.Browser.document.getElementById('container');
+    var last_node:VirtualNode = null;
 
 
 
-    var timer = new haxe.Timer(30);
+    var timer = new haxe.Timer(1000);
     timer.run = function() {
 
 
@@ -74,9 +75,7 @@ class Main {
         </div>
       ');
 
-      trace(vnode2);
-
-      patch(last_node,untyped vnode2);
+      if (last_node == null) js.Browser.document.getElementById('container').patchDom(vnode2);   else  last_node.patch(untyped vnode2);
       last_node = vnode2;
     };
 
