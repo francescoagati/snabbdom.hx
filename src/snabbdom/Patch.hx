@@ -10,7 +10,6 @@ using snabbdom.VirtualNodeDataTools;
 @:build(ClassicFor.build())
 class Patch {
 
-  static var native = native;
 
   static var rg = untyped  __js__('new RegExp({0},"g")',"\\.");
 
@@ -86,8 +85,8 @@ class Patch {
       var hash = hashIdx > 0 ? hashIdx : untyped sel.length;
       var dot = dotIdx > 0 ? dotIdx : untyped sel.length;
       var tag = hashIdx != -1 || dotIdx != -1 ? untyped sel.slice(0, Math.min(hash, dot)) : sel;
-      elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? native.createElementNS(i, tag)
-                                                          : native.createElement(tag);
+      elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? NativeWrapper.createElementNS(i, tag)
+                                                          : NativeWrapper.createElement(tag);
       if (hash < dot) elm.id = untyped sel.slice(hash + 1, dot);
       //if (dotIdx > 0) elm.className = untyped sel.slice(dot+1,0).replace('.', ' ');
       //var s = "\\.";
@@ -101,7 +100,7 @@ class Patch {
         }
       } else if (is_primitive(untyped vnode.text)) {
 
-        elm.appendChild(native.createTextElement(vnode.text));
+        elm.appendChild(NativeWrapper.createTextElement(vnode.text));
       }
 
       Hooks.create(emptyNode,vnode);
@@ -116,7 +115,7 @@ class Patch {
 
       }
     } else {
-      elm = vnode.elm = untyped native.createTextElement(vnode.text);
+      elm = vnode.elm = untyped NativeWrapper.createTextElement(vnode.text);
     }
     return vnode.elm;
   }
