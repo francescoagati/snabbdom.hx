@@ -15,7 +15,7 @@ class Styles {
     nextFrame(function(i) { obj[prop] = val; });
   }
 
-  inline static function updateStyle(oldVnode:VirtualNode, vnode:VirtualNode) {
+  inline static function updateStyle(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
     var cur, name, elm:Dynamic = vnode.elm;
 
     var oldStyle = oldVnode.data.get_style_or_empty();
@@ -72,7 +72,7 @@ class Styles {
     });
   }
 
-inline public static function create(oldVnode:VirtualNode,vnode:VirtualNode) updateStyle(oldVnode,vnode);
+inline public static function create(oldVnode:VirtualNodeDom,vnode:VirtualNodeDom) updateStyle(oldVnode,vnode);
 inline public static function update(oldVnode,vnode) updateStyle(oldVnode,vnode);
 inline public static function destroy(vnode) applyDestroyStyle(vnode);
 inline public static function remove(vnode,rm) applyRemoveStyle(vnode,rm);

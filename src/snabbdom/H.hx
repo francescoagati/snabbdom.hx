@@ -55,7 +55,7 @@ class H {
 
   }
 
-  public macro static function h(exprs:Array<Expr>):ExprOf<VirtualNode> {
+  public macro static function h(exprs:Array<Expr>):ExprOf<VirtualNodeDom> {
 
 
     var sel = exprs[0];

@@ -13,7 +13,7 @@ class Patch {
 
 
    static function h(sel, b:Dynamic, c:Dynamic) {
-    var data = {}, children:VirtualNodes= null, text = null, i;
+    var data = {}, children:VirtualNodesDom= null, text = null, i;
     var arguments:Array<Dynamic> = untyped __js__('arguments');
     if (arguments.length == 3) {
       data = b;
@@ -34,7 +34,7 @@ class Patch {
 
 
 
-  inline static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):VirtualNode {
+  inline static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):VirtualNodeDom {
   var key = data == null ? null : data.key;
   return {sel: sel, data: data, children: children,
           text: text, elm: elm, key: key};
@@ -49,7 +49,7 @@ class Patch {
   static var emptyNode = vnode('', {}, [], null, null);
 
 
-   inline static function sameVnode(vnode1:VirtualNode, vnode2:VirtualNode) {
+   inline static function sameVnode(vnode1:VirtualNodeDom, vnode2:VirtualNodeDom) {
     return vnode1.key == vnode2.key && vnode1.sel == vnode2.sel;
   }
 
@@ -69,7 +69,7 @@ class Patch {
   }
 
 
-   inline static function createElm(vnode:VirtualNode, insertedVnodeQueue:VirtualNodes) {
+   inline static function createElm(vnode:VirtualNodeDom, insertedVnodeQueue:VirtualNodesDom) {
     var i:Dynamic, data:Dynamic = vnode.data;
     if (isDef(data)) {
       if (isDef(i = data.hook) && isDef(i = i.init)) i(vnode);
@@ -128,7 +128,7 @@ class Patch {
   }
 
 
-   inline static function invokeDestroyHook(vnode:VirtualNode) {
+   inline static function invokeDestroyHook(vnode:VirtualNodeDom) {
     var i:Dynamic = vnode.data, j;
     if (isDef(i)) {
       if (isDef(i = i.hook) && isDef(i = i.destroy)) i(vnode);
@@ -143,7 +143,7 @@ class Patch {
   }
 
 
-   inline static function removeVnodes(parentElm, vnodes:VirtualNodes, startIdx, endIdx) {
+   inline static function removeVnodes(parentElm, vnodes:VirtualNodesDom, startIdx, endIdx) {
     var y;
     @for(y = 0,startIdx <= endIdx, ++startIdx) {
       var i:Dynamic, listeners, rm:Dynamic = null, ch:Dynamic = vnodes[startIdx];
@@ -171,7 +171,7 @@ class Patch {
 
 
 
-  inline  static  function updateChildren(parentElm, oldCh:Dynamic, newCh:Dynamic, insertedVnodeQueue:VirtualNodes) {
+  inline  static  function updateChildren(parentElm, oldCh:Dynamic, newCh:Dynamic, insertedVnodeQueue:VirtualNodesDom) {
       var oldStartIdx = 0, newStartIdx = 0;
       var oldEndIdx = oldCh.length - 1;
       var oldStartVnode = oldCh[0];
@@ -229,7 +229,7 @@ class Patch {
     }
 
 
-     inline static function patchVnode(oldVnode:VirtualNode, vnode:VirtualNode, insertedVnodeQueue:VirtualNodes) {
+     inline static function patchVnode(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom, insertedVnodeQueue:VirtualNodesDom) {
       var i:Dynamic, hook;
       if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = untyped hook.prepatch)) {
         i(oldVnode, vnode);
@@ -260,7 +260,7 @@ class Patch {
       }
     }
 
-    public static function patchDom(oldVnode:Element,vnode:VirtualNode) {
+    public static function patchDom(oldVnode:Element,vnode:VirtualNodeDom) {
       var i;
       var insertedVnodeQueue = [];
       if (untyped oldVnode.parentElement != null) {
@@ -280,7 +280,7 @@ class Patch {
     }
 
 
-    public static function patch(oldVnode:VirtualNode, vnode:VirtualNode) {
+    public static function patch(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
       var i;
       var insertedVnodeQueue = [];
       //@for(i = 0; i < cbs.pre.length; ++i) cbs.pre[i]();

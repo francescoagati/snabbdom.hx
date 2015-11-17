@@ -1,3 +1,3 @@
 package snabbdom;
 
-typedef VirtualNodes = Array<VirtualNode>;
+typedef VirtualNodes<T> = Array<VirtualNode<T>>;

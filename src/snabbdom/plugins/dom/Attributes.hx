@@ -25,7 +25,7 @@ class Attributes {
     return hash;
   })();
 
-   inline static function updateAttrs(oldVnode:VirtualNode, vnode:VirtualNode) {
+   inline static function updateAttrs(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
     var key, cur, old, elm = vnode.elm,
         oldAttrs = oldVnode.data.get_attrs_or_empty(),
         attrs = vnode.data.get_attrs_or_empty();
@@ -55,8 +55,8 @@ class Attributes {
   }
 
 
-  inline public static function create(oldVnode:VirtualNode, vnode:VirtualNode) updateAttrs(oldVnode, vnode);
-  inline  public static function update(oldVnode:VirtualNode, vnode:VirtualNode) updateAttrs(oldVnode, vnode);
+  inline public static function create(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) updateAttrs(oldVnode, vnode);
+  inline  public static function update(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) updateAttrs(oldVnode, vnode);
 
   //module.exports = {create: updateAttrs, update: updateAttrs};
 

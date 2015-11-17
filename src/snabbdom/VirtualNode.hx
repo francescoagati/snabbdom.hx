@@ -1,11 +1,11 @@
 package snabbdom;
 
 
-typedef VirtualNode =  {
+typedef VirtualNode<T> =  {
   ?sel: String,
   ?data: VirtualNodeData,
-  ?children: VirtualNodes,
+  ?children: VirtualNodes<T>,
   ?text: String,
-  ?elm: Element,
+  ?elm: T,
   ?key: String
 }

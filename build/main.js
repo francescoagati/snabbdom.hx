@@ -90,7 +90,6 @@ snabbdom_Main.main = function() {
 		}(this));
 		var vnode2 = { sel : "div", data : { attrs : { id : "pippa"}}, children : [{ sel : "ul", data : { attrs : { }, style : { fontSize : "30px", color : color, backgroundColor : bg}}, children : [{ sel : "li", data : { attrs : { }}, children : list, elm : null, key : null, text : null},{ sel : "li", data : { attrs : { }}, children : [{ sel : "span", data : { attrs : { }}, children : null, elm : null, key : null, text : max}], elm : null, key : null, text : null}], elm : null, key : null, text : null}], elm : null, key : null, text : null};
 		if(last_node == null) snabbdom_Patch.patchDom(window.document.getElementById("container"),vnode2); else snabbdom_Patch.patch(last_node,vnode2);
-		console.log(last_node);
 		last_node = vnode2;
 	};
 };

@@ -6,7 +6,7 @@ using snabbdom.VirtualNodeDataTools;
 
 class Props {
 
-   inline static function updateProps(oldVnode:VirtualNode, vnode:VirtualNode) {
+   inline static function updateProps(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
     var key, cur, old, elm:DynamicObject<Dynamic> = untyped vnode.elm,
         oldProps = oldVnode.data.get_props_or_empty(),
         props = vnode.data.get_props_or_empty();

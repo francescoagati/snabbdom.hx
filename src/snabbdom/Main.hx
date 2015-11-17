@@ -49,7 +49,7 @@ class Main {
 */
 
 
-    var last_node:VirtualNode = null;
+    var last_node:VirtualNodeDom = null;
 
 
 

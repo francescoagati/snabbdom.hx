@@ -5,14 +5,14 @@ import snabbdom.Is.*;
 using snabbdom.VirtualNodeDataTools;
 
 class Hooks {
-   inline public static function create(oldVnode:VirtualNode, vnode:VirtualNode) {
+   inline public static function create(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
     Attributes.create(oldVnode, vnode);
     Props.create(oldVnode,vnode);
     CssClasses.create(oldVnode,vnode);
     Styles.create(oldVnode,vnode);
   }
 
-   inline public static function update(oldVnode:VirtualNode, vnode:VirtualNode) {
+   inline public static function update(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
     Attributes.update(oldVnode, vnode);
     Props.update(oldVnode,vnode);
     CssClasses.update(oldVnode,vnode);

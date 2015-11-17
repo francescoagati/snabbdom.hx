@@ -6,7 +6,7 @@ using snabbdom.VirtualNodeDataTools;
 
 class CssClasses {
 
-  inline static function updateClass(oldVnode:VirtualNode, vnode:VirtualNode) {
+  inline static function updateClass(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
     var cur, name, elm:js.html.Element = vnode.elm,
         oldClass = oldVnode.data.get_classes_or_empty(),
         klass = vnode.data.get_classes_or_empty();
