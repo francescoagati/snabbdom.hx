@@ -3,6 +3,7 @@ package snabbdom;
 import snabbdom.Patch.*;
 import snabbdom.Is.*;
 import snabbdom.plugins.dom.Hooks;
+import snabbdom.plugins.dom.NativeWrapper;
 using snabbdom.VirtualNodeDataTools;
 
 
@@ -83,8 +84,8 @@ class Patch {
       var hash = hashIdx > 0 ? hashIdx : untyped sel.length;
       var dot = dotIdx > 0 ? dotIdx : untyped sel.length;
       var tag = hashIdx != -1 || dotIdx != -1 ? untyped sel.slice(0, Math.min(hash, dot)) : sel;
-      elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? untyped document.createElementNS(i, tag)
-                                                          : untyped document.createElement(tag);
+      elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? NativeWrapper.createElementNS(i, tag)
+                                                          : NativeWrapper.createElement(tag);
       if (hash < dot) elm.id = untyped sel.slice(hash + 1, dot);
       //if (dotIdx > 0) elm.className = untyped sel.slice(dot+1,0).replace('.', ' ');
       //var s = "\\.";
@@ -98,7 +99,7 @@ class Patch {
         }
       } else if (is_primitive(untyped vnode.text)) {
 
-        elm.appendChild(untyped document.createTextNode(vnode.text));
+        elm.appendChild(NativeWrapper.createTextElement(vnode.text));
       }
 
       Hooks.create(emptyNode,vnode);
@@ -113,7 +114,7 @@ class Patch {
 
       }
     } else {
-      elm = vnode.elm = untyped  document.createTextNode(vnode.text);
+      elm = vnode.elm = untyped NativeWrapper.createTextElement(vnode.text);
     }
     return vnode.elm;
   }
