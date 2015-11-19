@@ -1,3 +1,4 @@
 package snabbdom.engine.dom;
+import snabbdom.engine.dom.NativeNode;
 
-typedef VirtualNodesDom = VirtualNodes<js.html.Element>
+typedef VirtualNodesDom = VirtualNodes<NativeNode>
