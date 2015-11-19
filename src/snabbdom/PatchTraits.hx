@@ -8,7 +8,7 @@ class PatchTraits implements partials.Partial {
   static var rg = untyped  __js__('new RegExp({0},"g")',"\\.");
 
    static function h(sel, b:Dynamic, c:Dynamic) {
-    var data = {}, children:VirtualNodesDom= null, text = null, i;
+    var data = {}, children:Vnodes= null, text = null, i;
     var arguments:Array<Dynamic> = untyped __js__('arguments');
     if (arguments.length == 3) {
       data = b;
@@ -29,7 +29,7 @@ class PatchTraits implements partials.Partial {
 
 
 
-  inline static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):VirtualNodeDom {
+  inline static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):Vnode {
   var key = data == null ? null : data.key;
   return {sel: sel, data: data, children: children,
           text: text, elm: elm, key: key};
@@ -44,7 +44,7 @@ class PatchTraits implements partials.Partial {
   static var emptyNode = vnode('', {}, [], null, null);
 
 
-   inline static function sameVnode(vnode1:VirtualNodeDom, vnode2:VirtualNodeDom) {
+   inline static function sameVnode(vnode1:Vnode, vnode2:Vnode) {
     return vnode1.key == vnode2.key && vnode1.sel == vnode2.sel;
   }
 
@@ -64,7 +64,7 @@ class PatchTraits implements partials.Partial {
   }
 
 
-   inline static function createElm(vnode:VirtualNodeDom, insertedVnodeQueue:VirtualNodesDom) {
+   inline static function createElm(vnode:Vnode, insertedVnodeQueue:Vnodes) {
     var i:Dynamic, data:Dynamic = vnode.data;
     if (isDef(data)) {
       if (isDef(i = data.hook) && isDef(i = i.init)) i(vnode);
@@ -123,7 +123,7 @@ class PatchTraits implements partials.Partial {
   }
 
 
-   inline static function invokeDestroyHook(vnode:VirtualNodeDom) {
+   inline static function invokeDestroyHook(vnode:Vnode) {
     var i:Dynamic = vnode.data, j;
     if (isDef(i)) {
       if (isDef(i = i.hook) && isDef(i = i.destroy)) i(vnode);
@@ -138,7 +138,7 @@ class PatchTraits implements partials.Partial {
   }
 
 
-   inline static function removeVnodes(parentElm, vnodes:VirtualNodesDom, startIdx, endIdx) {
+   inline static function removeVnodes(parentElm, vnodes:Vnodes, startIdx, endIdx) {
     var y;
     @for(y = 0,startIdx <= endIdx, ++startIdx) {
       var i:Dynamic, listeners, rm:Dynamic = null, ch:Dynamic = vnodes[startIdx];
@@ -166,7 +166,7 @@ class PatchTraits implements partials.Partial {
 
 
 
-  inline  static  function updateChildren(parentElm, oldCh:Dynamic, newCh:Dynamic, insertedVnodeQueue:VirtualNodesDom) {
+  inline  static  function updateChildren(parentElm, oldCh:Dynamic, newCh:Dynamic, insertedVnodeQueue:Vnodes) {
       var oldStartIdx = 0, newStartIdx = 0;
       var oldEndIdx = oldCh.length - 1;
       var oldStartVnode = oldCh[0];
@@ -224,7 +224,7 @@ class PatchTraits implements partials.Partial {
     }
 
 
-     inline static function patchVnode(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom, insertedVnodeQueue:VirtualNodesDom) {
+     inline static function patchVnode(oldVnode:Vnode, vnode:Vnode, insertedVnodeQueue:Vnodes) {
       var i:Dynamic, hook;
       if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = untyped hook.prepatch)) {
         i(oldVnode, vnode);
@@ -255,7 +255,7 @@ class PatchTraits implements partials.Partial {
       }
     }
 
-    public static function patchDom(oldVnode:Element,vnode:VirtualNodeDom) {
+    public static function patchDom(oldVnode:Element,vnode:Vnode) {
       var i;
       var insertedVnodeQueue = [];
       if (untyped oldVnode.parentElement != null) {
@@ -275,7 +275,7 @@ class PatchTraits implements partials.Partial {
     }
 
 
-    public static function patch(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
+    public static function patch(oldVnode:Vnode, vnode:Vnode) {
       var i;
       var insertedVnodeQueue = [];
       //@for(i = 0; i < cbs.pre.length; ++i) cbs.pre[i]();
