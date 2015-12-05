@@ -7,6 +7,9 @@ import snabbdom.Jsx.jsx;
 using snabbdom.engine.dom.PatchDom;
 class Main {
 
+  public static function click() {
+    js.Browser.alert('click');
+  }
 
   public static function main() {
 
@@ -26,7 +29,7 @@ class Main {
       var txt = 'testo';
 
       var vnode = jsx('
-        <div id="pippa">
+        <div id="pippa" >
           <ul>
             <li>1</li>
             <li>2</li>
@@ -34,7 +37,7 @@ class Main {
             <li>4</li>
             <li>5</li>
             <li>
-              <span>${txt}</span>
+              <span onclick=${click}>${txt}</span>
             </li>
           </ul>
         </div>
@@ -62,15 +65,13 @@ class Main {
       var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
 
 
-      var max = Std.int(Math.random() * 10);
-      var list = [for (x in (0...max)) jsx("<span>${x}</span>")  ];
+      var max = Std.int(Math.random() * 1000);
+      var list = [for (x in (0...max)) jsx("<li><span>${x}</span></li>")  ];
       var vnode2 = jsx('
         <div id="pippa">
+          <span>${max}</span>
           <ul style="font-size:30px;color:$color;background-color:$bg">
-            <li>#list</li>
-            <li>
-              <span>${max}</span>
-            </li>
+            #list
           </ul>
         </div>
       ');

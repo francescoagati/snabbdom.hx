@@ -15,6 +15,10 @@ class VirtualNodeDataTools {
     public macro static function get_props_or_empty(vdata:ExprOf<VirtualNodeData>):ExprOf<DynamicObject<Dynamic>>
       return macro $vdata.props == null ? {} : $vdata.props;
 
+    public macro static function get_events_or_empty(vdata:ExprOf<VirtualNodeData>):ExprOf<DynamicObject<Dynamic>>
+      return macro $vdata.on == null ? {} : $vdata.on;
+
+
     public macro static function get_classes_or_empty(vdata:ExprOf<VirtualNodeData>):ExprOf<DynamicObject<Dynamic>>
       return macro $vdata.classes == null ? {} : $vdata.classes;
 

@@ -18,6 +18,7 @@ abstract NativeNode(js.html.Element) from js.html.Element to js.html.Element {
    public inline function get_textContent() return this.textContent;
    public inline function set_textContent(value) return this.textContent = value;
 
+   public inline function addEventListener(name:String,cb:Dynamic->Void) this.addEventListener(name,cb);
 
    public inline function appendChild(element) this.appendChild(element);
    public inline function removeAttribute(attr) this.removeAttribute(attr);

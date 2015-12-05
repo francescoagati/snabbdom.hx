@@ -72,18 +72,32 @@ class H {
 
     var structure = 'attrs:untyped {' + [ for (field in fields) if (field[0] != 'style') '${field[0]}:${field[1]}'   ].join(",") + '}';
 
+    var events = [];
 
     for (field in fields) {
       if (field[0] == 'style')  {
-
         var style = parse_style_string(field[1],Context);
-
         structure = structure + ',style:untyped ${style}';
+      }
+
+      if (field[0].indexOf('on') == 0) {
+        events.push([field[0].substr(2),field[1]]);
       }
     }
 
 
+    if (events.length > 0) {
+      var props = "{" + [for (event in events) '"${event[0]}":${event[1]}' ].join(",") + "}";
+      structure = structure + ',on:untyped ${props}';
+
+    }
+
+    trace(structure);
+
     var data = Context.parse('{' + structure + '}',Context.currentPos());
+
+
+
     var rest = exprs.slice(2);
 
 
