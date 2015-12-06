@@ -7,8 +7,16 @@ import snabbdom.Jsx.jsx;
 using snabbdom.engine.dom.PatchDom;
 class Main {
 
-  public static function click() {
-    js.Browser.alert('click');
+  public static function click(e) {
+    trace('click');
+  }
+
+  public static function over(e) {
+    trace('over');
+  }
+
+  public static function out(e) {
+    trace('out');
   }
 
   public static function main() {
@@ -37,7 +45,7 @@ class Main {
             <li>4</li>
             <li>5</li>
             <li>
-              <span onclick=${click}>${txt}</span>
+              <span  onclick=${click}>${txt}</span>
             </li>
           </ul>
         </div>
@@ -56,7 +64,7 @@ class Main {
 
 
 
-    var timer = new haxe.Timer(1000);
+    var timer = new haxe.Timer(1000000);
     timer.run = function() {
 
 
@@ -65,10 +73,10 @@ class Main {
       var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
 
 
-      var max = Std.int(Math.random() * 1000);
+      var max = 2; //Std.int(Math.random() * 2);
       var list = [for (x in (0...max)) jsx("<li><span>${x}</span></li>")  ];
       var vnode2 = jsx('
-        <div id="pippa">
+        <div id="pippa" onmouseout=$out onclick=$click onmouseover=${over}>
           <span>${max}</span>
           <ul style="font-size:30px;color:$color;background-color:$bg">
             #list
@@ -80,6 +88,7 @@ class Main {
       last_node = vnode2;
     };
 
+      timer.run();
   }
 
 }

@@ -70,7 +70,9 @@ class H {
     var fields = get_key_value(data);
 
 
-    var structure = 'attrs:untyped {' + [ for (field in fields) if (field[0] != 'style') '${field[0]}:${field[1]}'   ].join(",") + '}';
+    var structure = 'attrs:untyped {' + [
+      for (field in fields) if (field[0] != 'style' && field[0].indexOf('on') != 0) '${field[0]}:${field[1]}'   
+    ].join(",") + '}';
 
     var events = [];
 
