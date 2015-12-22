@@ -442,13 +442,10 @@ partials_Partial.__name__ = true;
 var snabbdom_Main = function() { };
 snabbdom_Main.__name__ = true;
 snabbdom_Main.click = function(e) {
-	console.log("click");
 };
 snabbdom_Main.over = function(e) {
-	console.log("over");
 };
 snabbdom_Main.out = function(e) {
-	console.log("out");
 };
 snabbdom_Main.main = function() {
 	var txt = "testo";
@@ -648,7 +645,6 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 				cur4 = on[name6];
 				old2 = oldOn[name6];
 				if(old2 == null) {
-					console.log(cur4);
 					var value4 = cur4;
 					on[name6] = value4;
 					var cb = cur4;
@@ -913,7 +909,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							cur4 = on[name6];
 							old2 = oldOn[name6];
 							if(old2 == null) {
-								console.log(cur4);
 								var value4 = cur4;
 								on[name6] = value4;
 								var cb = cur4;
@@ -1110,7 +1105,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							cur9 = on1[name13];
 							old5 = oldOn1[name13];
 							if(old5 == null) {
-								console.log(cur9);
 								var value10 = cur9;
 								on1[name13] = value10;
 								var cb1 = cur9;
@@ -1225,7 +1219,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						})(amount,elm13,rm2));
 					}
 					if((i8 = ch.data) != undefined && (i8 = i8.hook) != undefined && (i8 = i8.remove) != undefined) i8(ch,rm); else {
-						console.log("remove");
 						if(rm != null) rm();
 						parentElm.removeChild(ch.elm);
 					}
@@ -1365,7 +1358,6 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 				cur4 = on[name6];
 				old2 = oldOn[name6];
 				if(old2 == null) {
-					console.log(cur4);
 					var value3 = cur4;
 					on[name6] = value3;
 					var cb = cur4;
@@ -1546,7 +1538,6 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 								cur9 = on1[name13];
 								old5 = oldOn1[name13];
 								if(old5 == null) {
-									console.log(cur9);
 									var value9 = cur9;
 									on1[name13] = value9;
 									var cb1 = cur9;
@@ -1661,7 +1652,6 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							})(amount,elm13,rm2));
 						}
 						if((i7 = ch1.data) != undefined && (i7 = i7.hook) != undefined && (i7 = i7.remove) != undefined) i7(ch1,rm); else {
-							console.log("remove");
 							if(rm != null) rm();
 							elm.removeChild(ch1.elm);
 						}
@@ -1836,7 +1826,6 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 					cur4 = on[name6];
 					old2 = oldOn[name6];
 					if(old2 == null) {
-						console.log(cur4);
 						var value4 = cur4;
 						on[name6] = value4;
 						var cb = cur4;
