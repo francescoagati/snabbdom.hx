@@ -224,7 +224,7 @@ class PatchTraits implements partials.Partial {
     }
 
 
-     inline static function patchVnode(oldVnode:Vnode, vnode:Vnode, insertedVnodeQueue:Vnodes) {
+    static function patchVnode(oldVnode:Vnode, vnode:Vnode, insertedVnodeQueue:Vnodes) {
       var i:Dynamic, hook;
       if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = untyped hook.prepatch)) {
         i(oldVnode, vnode);
