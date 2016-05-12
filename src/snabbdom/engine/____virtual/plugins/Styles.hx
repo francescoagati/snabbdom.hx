@@ -1,6 +1,6 @@
-package snabbdom.engine.dom.plugins;
+package snabbdom.engine.virtual.plugins;
 
-import snabbdom.engine.dom.PatchDom.*;
+import snabbdom.engine.virtual.PatchDom.*;
 import snabbdom.Is.*;
 using snabbdom.VirtualNodeDataTools;
 
@@ -38,7 +38,7 @@ class Styles {
     }
   }
 
-  inline static function applyDestroyStyle(vnode:VirtualNodeDom) {
+  inline static function applyDestroyStyle(vnode) {
     var style:DynamicObject<Dynamic> = null, name, elm = vnode.elm, s:Dynamic = vnode.data.style;
     if (s == null) return;
     style = untyped s.destroy;
@@ -48,7 +48,7 @@ class Styles {
     }
   }
 
-  inline static function applyRemoveStyle(vnode:VirtualNodeDom, rm) {
+  inline static function applyRemoveStyle(vnode, rm) {
     var s:Dynamic = vnode.data.style;
     if (!s || !s.remove) {
       if (rm != null) rm() ;
@@ -73,9 +73,9 @@ class Styles {
   }
 
 inline public static function create(oldVnode:VirtualNodeDom,vnode:VirtualNodeDom) updateStyle(oldVnode,vnode);
-inline public static function update(oldVnode:VirtualNodeDom,vnode:VirtualNodeDom) updateStyle(oldVnode,vnode);
-inline public static function destroy(vnode:VirtualNodeDom) applyDestroyStyle(vnode);
-inline public static function remove(vnode:VirtualNodeDom,rm) applyRemoveStyle(vnode,rm);
+inline public static function update(oldVnode,vnode) updateStyle(oldVnode,vnode);
+inline public static function destroy(vnode) applyDestroyStyle(vnode);
+inline public static function remove(vnode,rm) applyRemoveStyle(vnode,rm);
 
 
 }

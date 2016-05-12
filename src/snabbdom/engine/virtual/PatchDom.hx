@@ -1,4 +1,4 @@
-package snabbdom.engine.dom;
+package snabbdom.engine.virtual;
 import snabbdom.engine.dom.VirtualNodesDom as Vnodes;
 import snabbdom.engine.dom.VirtualNodeDom as Vnode;
 import snabbdom.engine.dom.NativeNode;

@@ -451,7 +451,7 @@ snabbdom_Main.main = function() {
 	var txt = "testo";
 	var vnode = { sel : "div", data : { attrs : { id : "pippa"}}, children : [{ sel : "ul", data : { attrs : { }}, children : [{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "4"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : [{ sel : "span", data : { attrs : { }, on : { 'click' : snabbdom_Main.click}}, children : null, elm : null, key : null, text : txt}], elm : null, key : null, text : null}], elm : null, key : null, text : null}], elm : null, key : null, text : null};
 	var last_node = null;
-	var timer = new haxe_Timer(1000000);
+	var timer = new haxe_Timer(1000);
 	timer.run = function() {
 		var rnd = Math.random();
 		var color = (function($this) {
@@ -506,13 +506,15 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 		var hash = hashIdx > 0?hashIdx:sel.length;
 		var dot = dotIdx > 0?dotIdx:sel.length;
 		var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-		elm = vnode.elm = data != undefined && (i = data.ns) != undefined?window.document.createElementNS(i,tag):window.document.createElement(tag);
+		elm = vnode.elm = data != undefined && (i = data.ns) != undefined?(function($this) {
+			var $r;
+			var ns = i;
+			$r = window.document.createElementNS(ns,tag);
+			return $r;
+		}(this)):window.document.createElement(tag);
 		if(hash < dot) {
 			var value = sel.slice(hash + 1,dot);
 			elm.id = value;
-		}
-		if(dotIdx > 0) {
-			elm.className = sel.slice(dot+1).replace(snabbdom_engine_dom_PatchDom.rg, " ");;
 		}
 		if(Array.isArray(children)) {
 			i = 0;
@@ -662,7 +664,12 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 				if(i.insert) insertedVnodeQueue.push(vnode);
 			}
 		}
-	} else elm = vnode.elm = window.document.createTextNode(vnode.text);
+	} else elm = vnode.elm = (function($this) {
+		var $r;
+		var nd = window.document.createTextNode(vnode.text);
+		$r = nd;
+		return $r;
+	}(this));
 	return vnode.elm;
 };
 snabbdom_engine_dom_PatchDom.invokeDestroyHook = function(vnode) {
@@ -731,14 +738,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 	} else {
 		if(oldKeyToIdx == undefined) oldKeyToIdx = (function($this) {
 			var $r;
-			var children = oldCh;
 			var i;
 			var map = { };
 			var key;
 			{
 				i = oldStartIdx;
 				if(i <= oldEndIdx) do {
-					key = children[i].key;
+					key = oldCh[i].key;
 					if(key != undefined) map[key] = i;
 				} while((function($this) {
 					var $r;
@@ -762,7 +768,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					if((i1 = data.vnode) != undefined) vnode = i1;
 				}
 				var elm;
-				var children1 = vnode.children;
+				var children = vnode.children;
 				var sel = vnode.sel;
 				if(sel != undefined) {
 					var hashIdx = sel.indexOf("#",0);
@@ -770,23 +776,25 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					var hash = hashIdx > 0?hashIdx:sel.length;
 					var dot = dotIdx > 0?dotIdx:sel.length;
 					var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-					elm = vnode.elm = data != undefined && (i1 = data.ns) != undefined?window.document.createElementNS(i1,tag):window.document.createElement(tag);
+					elm = vnode.elm = data != undefined && (i1 = data.ns) != undefined?(function($this) {
+						var $r;
+						var ns = i1;
+						$r = window.document.createElementNS(ns,tag);
+						return $r;
+					}($this)):window.document.createElement(tag);
 					if(hash < dot) {
 						var value = sel.slice(hash + 1,dot);
 						elm.id = value;
 					}
-					if(dotIdx > 0) {
-						elm.className = sel.slice(dot+1).replace(snabbdom_engine_dom_PatchDom.rg, " ");;
-					}
-					if(Array.isArray(children1)) {
+					if(Array.isArray(children)) {
 						i1 = 0;
-						if(i1 < children1.length) do {
-							var new_node = snabbdom_engine_dom_PatchDom.createElm(children1[i1],insertedVnodeQueue);
+						if(i1 < children.length) do {
+							var new_node = snabbdom_engine_dom_PatchDom.createElm(children[i1],insertedVnodeQueue);
 							elm.appendChild(new_node);
 						} while((function($this) {
 							var $r;
 							++i1;
-							$r = i1 < children1.length;
+							$r = i1 < children.length;
 							return $r;
 						}($this)));
 					} else if(typeof vnode.text == "string" || typeof vnode.text == "number") {
@@ -926,7 +934,12 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							if(i1.insert) insertedVnodeQueue.push(vnode);
 						}
 					}
-				} else elm = vnode.elm = window.document.createTextNode(vnode.text);
+				} else elm = vnode.elm = (function($this) {
+					var $r;
+					var nd = window.document.createTextNode(vnode.text);
+					$r = nd;
+					return $r;
+				}($this));
 				$r = vnode.elm;
 				return $r;
 			}(this));
@@ -942,7 +955,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 	}
 	if(oldStartIdx > oldEndIdx) {
 		before = newCh[newEndIdx + 1] == undefined?null:newCh[newEndIdx + 1].elm;
-		var vnodes = newCh;
 		var startIdx = newStartIdx;
 		var i4;
 		var new_node2;
@@ -950,7 +962,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 		if(startIdx <= newEndIdx) do {
 			new_node2 = (function($this) {
 				var $r;
-				var vnode1 = vnodes[startIdx];
+				var vnode1 = newCh[startIdx];
 				var i5;
 				var data1 = vnode1.data;
 				if(data1 != undefined) {
@@ -958,7 +970,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					if((i5 = data1.vnode) != undefined) vnode1 = i5;
 				}
 				var elm6;
-				var children2 = vnode1.children;
+				var children1 = vnode1.children;
 				var sel1 = vnode1.sel;
 				if(sel1 != undefined) {
 					var hashIdx1 = sel1.indexOf("#",0);
@@ -966,23 +978,25 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					var hash1 = hashIdx1 > 0?hashIdx1:sel1.length;
 					var dot1 = dotIdx1 > 0?dotIdx1:sel1.length;
 					var tag1 = hashIdx1 != -1 || dotIdx1 != -1?sel1.slice(0,Math.min(hash1,dot1)):sel1;
-					elm6 = vnode1.elm = data1 != undefined && (i5 = data1.ns) != undefined?window.document.createElementNS(i5,tag1):window.document.createElement(tag1);
+					elm6 = vnode1.elm = data1 != undefined && (i5 = data1.ns) != undefined?(function($this) {
+						var $r;
+						var ns1 = i5;
+						$r = window.document.createElementNS(ns1,tag1);
+						return $r;
+					}($this)):window.document.createElement(tag1);
 					if(hash1 < dot1) {
 						var value6 = sel1.slice(hash1 + 1,dot1);
 						elm6.id = value6;
 					}
-					if(dotIdx1 > 0) {
-						elm.className = sel.slice(dot+1).replace(snabbdom_engine_dom_PatchDom.rg, " ");;
-					}
-					if(Array.isArray(children2)) {
+					if(Array.isArray(children1)) {
 						i5 = 0;
-						if(i5 < children2.length) do {
-							var new_node3 = snabbdom_engine_dom_PatchDom.createElm(children2[i5],insertedVnodeQueue);
+						if(i5 < children1.length) do {
+							var new_node3 = snabbdom_engine_dom_PatchDom.createElm(children1[i5],insertedVnodeQueue);
 							elm6.appendChild(new_node3);
 						} while((function($this) {
 							var $r;
 							++i5;
-							$r = i5 < children2.length;
+							$r = i5 < children1.length;
 							return $r;
 						}($this)));
 					} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") {
@@ -1122,7 +1136,12 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							if(i5.insert) insertedVnodeQueue.push(vnode1);
 						}
 					}
-				} else elm6 = vnode1.elm = window.document.createTextNode(vnode1.text);
+				} else elm6 = vnode1.elm = (function($this) {
+					var $r;
+					var nd1 = window.document.createTextNode(vnode1.text);
+					$r = nd1;
+					return $r;
+				}($this));
 				$r = vnode1.elm;
 				return $r;
 			}(this));
@@ -1134,7 +1153,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 			return $r;
 		}(this)));
 	} else if(newStartIdx > newEndIdx) {
-		var vnodes1 = oldCh;
 		var startIdx1 = oldStartIdx;
 		var y;
 		y = 0;
@@ -1142,7 +1160,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 			var i8;
 			var listeners;
 			var rm = null;
-			var ch = vnodes1[startIdx1];
+			var ch = oldCh[startIdx1];
 			if(ch != undefined) {
 				if(ch.sel != undefined) {
 					var vnode2 = ch;
@@ -1220,9 +1238,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					}
 					if((i8 = ch.data) != undefined && (i8 = i8.hook) != undefined && (i8 = i8.remove) != undefined) i8(ch,rm); else {
 						if(rm != null) rm();
-						parentElm.removeChild(ch.elm);
+						var element2 = ch.elm;
+						parentElm.removeChild(element2);
 					}
-				} else parentElm.removeChild(ch.elm);
+				} else {
+					var element3 = ch.elm;
+					parentElm.removeChild(element3);
+				}
 			}
 		} while((function($this) {
 			var $r;
@@ -1399,13 +1421,15 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						var hash = hashIdx > 0?hashIdx:sel.length;
 						var dot = dotIdx > 0?dotIdx:sel.length;
 						var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-						elm6 = vnode1.elm = data != undefined && (i4 = data.ns) != undefined?window.document.createElementNS(i4,tag):window.document.createElement(tag);
+						elm6 = vnode1.elm = data != undefined && (i4 = data.ns) != undefined?(function($this) {
+							var $r;
+							var ns = i4;
+							$r = window.document.createElementNS(ns,tag);
+							return $r;
+						}($this)):window.document.createElement(tag);
 						if(hash < dot) {
 							var value5 = sel.slice(hash + 1,dot);
 							elm6.id = value5;
-						}
-						if(dotIdx > 0) {
-							elm.className = sel.slice(dot+1).replace(snabbdom_engine_dom_PatchDom.rg, " ");;
 						}
 						if(Array.isArray(children)) {
 							i4 = 0;
@@ -1555,7 +1579,12 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 								if(i4.insert) insertedVnodeQueue.push(vnode1);
 							}
 						}
-					} else elm6 = vnode1.elm = window.document.createTextNode(vnode1.text);
+					} else elm6 = vnode1.elm = (function($this) {
+						var $r;
+						var nd = window.document.createTextNode(vnode1.text);
+						$r = nd;
+						return $r;
+					}($this));
 					$r = vnode1.elm;
 					return $r;
 				}(this));
@@ -1653,9 +1682,13 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						}
 						if((i7 = ch1.data) != undefined && (i7 = i7.hook) != undefined && (i7 = i7.remove) != undefined) i7(ch1,rm); else {
 							if(rm != null) rm();
-							elm.removeChild(ch1.elm);
+							var element1 = ch1.elm;
+							elm.removeChild(element1);
 						}
-					} else elm.removeChild(ch1.elm);
+					} else {
+						var element2 = ch1.elm;
+						elm.removeChild(element2);
+					}
 				}
 			} while((function($this) {
 				var $r;
@@ -1687,13 +1720,15 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 			var hash = hashIdx > 0?hashIdx:sel.length;
 			var dot = dotIdx > 0?dotIdx:sel.length;
 			var tag = hashIdx != -1 || dotIdx != -1?sel.slice(0,Math.min(hash,dot)):sel;
-			elm = vnode1.elm = data != undefined && (i1 = data.ns) != undefined?window.document.createElementNS(i1,tag):window.document.createElement(tag);
+			elm = vnode1.elm = data != undefined && (i1 = data.ns) != undefined?(function($this) {
+				var $r;
+				var ns = i1;
+				$r = window.document.createElementNS(ns,tag);
+				return $r;
+			}(this)):window.document.createElement(tag);
 			if(hash < dot) {
 				var value = sel.slice(hash + 1,dot);
 				elm.id = value;
-			}
-			if(dotIdx > 0) {
-				elm.className = sel.slice(dot+1).replace(snabbdom_engine_dom_PatchDom.rg, " ");;
 			}
 			if(Array.isArray(children)) {
 				i1 = 0;
@@ -1843,7 +1878,12 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 					if(i1.insert) insertedVnodeQueue.push(vnode1);
 				}
 			}
-		} else elm = vnode1.elm = window.document.createTextNode(vnode1.text);
+		} else elm = vnode1.elm = (function($this) {
+			var $r;
+			var nd = window.document.createTextNode(vnode1.text);
+			$r = nd;
+			return $r;
+		}(this));
 		vnode1.elm;
 		oldVnode.parentElement.replaceChild(vnode.elm,oldVnode);
 	} else {
@@ -1971,7 +2011,6 @@ haxe_io_FPHelper.i64tmp = (function($this) {
 }(this));
 js_Boot.__toStr = {}.toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
-snabbdom_engine_dom_PatchDom.rg = new RegExp("\\.","g");
 snabbdom_engine_dom_PatchDom.emptyNode = (function($this) {
 	var $r;
 	var data = { };

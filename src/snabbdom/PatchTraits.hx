@@ -4,7 +4,7 @@ package snabbdom;
 
 class PatchTraits implements partials.Partial {
 
-
+/*
   static var rg = untyped  __js__('new RegExp({0},"g")',"\\.");
 
    static function h(sel, b:Dynamic, c:Dynamic) {
@@ -27,7 +27,7 @@ class PatchTraits implements partials.Partial {
     return untyped vnode(sel, data, untyped children, text, undefined);
   }
 
-
+*/
 
   inline static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):Vnode {
   var key = data == null ? null : data.key;
@@ -48,16 +48,16 @@ class PatchTraits implements partials.Partial {
     return vnode1.key == vnode2.key && vnode1.sel == vnode2.sel;
   }
 
-   inline static function createKeyToOldIdx(children, beginIdx, endIdx) {
-    var i, map:Dynamic = {}, key;
+   inline static function createKeyToOldIdx(children:Vnodes, beginIdx, endIdx) {
+    var i, map:haxe.DynamicAccess<Dynamic> = {}, key;
     @for(i = beginIdx, i <= endIdx, ++i) {
       key = children[i].key;
-      if (isDef(key)) untyped map[key] = i;
+      if (isDef(key))  map[key] = i;
     }
     return map;
   }
 
-   inline static function createRmCb(childElm:Dynamic, listeners) {
+   inline static function createRmCb(childElm:NativeNode, listeners) {
     return function() {
       if (--listeners == 0) childElm.parentElement.removeChild(childElm);
     };
@@ -73,27 +73,27 @@ class PatchTraits implements partials.Partial {
     var elm, children = vnode.children, sel = vnode.sel;
     if (isDef(sel)) {
       // Parse selector
-      var hashIdx = untyped sel.indexOf('#',0);
-      var dotIdx = untyped sel.indexOf('.', hashIdx);
-      var hash = hashIdx > 0 ? hashIdx : untyped sel.length;
-      var dot = dotIdx > 0 ? dotIdx : untyped sel.length;
+      var hashIdx = sel.indexOf('#',0);
+      var dotIdx = sel.indexOf('.', hashIdx);
+      var hash = hashIdx > 0 ? hashIdx : sel.length;
+      var dot = dotIdx > 0 ? dotIdx : sel.length;
       var tag = hashIdx != -1 || dotIdx != -1 ? untyped sel.slice(0, Math.min(hash, dot)) : sel;
-      elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? NativeWrapper.createElementNS(i, tag)
-                                                          : NativeWrapper.createElement(tag);
+      elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? NativeNode.createElementNS(i, tag)
+                                                          : NativeNode.createElement(tag);
       if (hash < dot) elm.id = untyped sel.slice(hash + 1, dot);
       //if (dotIdx > 0) elm.className = untyped sel.slice(dot+1,0).replace('.', ' ');
       //var s = "\\.";
       //var rg = untyped  __js__('new RegExp({0},"g")',s);
 
-      if (dotIdx > 0)  untyped __js__('elm.className = sel.slice(dot+1).replace({0}, " ");',rg);
+      //if (dotIdx > 0)  untyped __js__('elm.className = sel.slice(dot+1).replace({0}, " ");',rg);
       if (is_array(children)) {
         @for(i = 0,i < children.length, ++i) {
           var new_node = createElm(children[i], insertedVnodeQueue);
           elm.appendChild(new_node);
         }
-      } else if (is_primitive(untyped vnode.text)) {
+      } else if (is_primitive( vnode.text)) {
 
-        elm.appendChild(NativeWrapper.createTextElement(vnode.text));
+        elm.appendChild(NativeNode.createTextElement(vnode.text));
       }
 
       Hooks.create(emptyNode,vnode);
@@ -108,7 +108,7 @@ class PatchTraits implements partials.Partial {
 
       }
     } else {
-      elm = vnode.elm = untyped NativeWrapper.createTextElement(vnode.text);
+      elm = vnode.elm =  NativeNode.createTextElement(vnode.text);
     }
     return vnode.elm;
   }
@@ -128,7 +128,7 @@ class PatchTraits implements partials.Partial {
     if (isDef(i)) {
       if (isDef(i = i.hook) && isDef(i = i.destroy)) i(vnode);
       //for (i = 0; i < cbs.destroy.length; ++i) cbs.destroy[i](vnode);
-      Hooks.destroy(untyped vnode);
+      Hooks.destroy(vnode);
       if (isDef(i = vnode.children)) {
         @for(j = 0, j < vnode.children.length, ++j) {
           invokeDestroyHook(vnode.children[j]);
@@ -138,7 +138,7 @@ class PatchTraits implements partials.Partial {
   }
 
 
-   inline static function removeVnodes(parentElm, vnodes:Vnodes, startIdx, endIdx) {
+   inline static function removeVnodes(parentElm:NativeNode, vnodes:Vnodes, startIdx, endIdx) {
     var y;
     @for(y = 0,startIdx <= endIdx, ++startIdx) {
       var i:Dynamic, listeners, rm:Dynamic = null, ch:Dynamic = vnodes[startIdx];
@@ -166,67 +166,67 @@ class PatchTraits implements partials.Partial {
 
 
 
-  inline  static  function updateChildren(parentElm, oldCh:Dynamic, newCh:Dynamic, insertedVnodeQueue:Vnodes) {
+  inline  static  function updateChildren(parentElm, oldCh:Vnodes, newCh:Vnodes, insertedVnodeQueue:Vnodes) {
       var oldStartIdx = 0, newStartIdx = 0;
       var oldEndIdx = oldCh.length - 1;
       var oldStartVnode = oldCh[0];
-      var oldEndVnode = untyped oldCh[oldEndIdx];
+      var oldEndVnode =  oldCh[oldEndIdx];
       var newEndIdx = newCh.length - 1;
       var newStartVnode = newCh[0];
-      var newEndVnode = untyped  newCh[newEndIdx];
+      var newEndVnode =   newCh[newEndIdx];
       var oldKeyToIdx = null, idxInOld, elmToMove, before;
 
       while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
         if (isUndef(oldStartVnode)) {
           oldStartVnode = oldCh[++oldStartIdx]; // Vnode has been moved left
         } else if (isUndef(oldEndVnode)) {
-          oldEndVnode = untyped oldCh[--oldEndIdx];
+          oldEndVnode =  oldCh[--oldEndIdx];
         } else if (sameVnode(oldStartVnode, newStartVnode)) {
           patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue);
-          oldStartVnode = untyped oldCh[++oldStartIdx];
-          newStartVnode = untyped newCh[++newStartIdx];
+          oldStartVnode =  oldCh[++oldStartIdx];
+          newStartVnode =  newCh[++newStartIdx];
         } else if (sameVnode(oldEndVnode, newEndVnode)) {
           patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue);
-          oldEndVnode = untyped oldCh[--oldEndIdx];
-          newEndVnode =  untyped newCh[--newEndIdx];
+          oldEndVnode =  oldCh[--oldEndIdx];
+          newEndVnode =   newCh[--newEndIdx];
         } else if (sameVnode(oldStartVnode, newEndVnode)) { // Vnode moved right
           patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue);
           parentElm.insertBefore(oldStartVnode.elm, oldEndVnode.elm.nextSibling);
           oldStartVnode = oldCh[++oldStartIdx];
-          newEndVnode = untyped newCh[--newEndIdx];
+          newEndVnode =  newCh[--newEndIdx];
         } else if (sameVnode(oldEndVnode, newStartVnode)) { // Vnode moved left
           patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue);
           parentElm.insertBefore(oldEndVnode.elm, oldStartVnode.elm);
-          oldEndVnode = untyped oldCh[--oldEndIdx];
+          oldEndVnode =  oldCh[--oldEndIdx];
           newStartVnode = newCh[++newStartIdx];
         } else {
-          if (isUndef(oldKeyToIdx)) oldKeyToIdx =  createKeyToOldIdx(oldCh, oldStartIdx, untyped oldEndIdx);
-          idxInOld =untyped  oldKeyToIdx[newStartVnode.key];
+          if (isUndef(oldKeyToIdx)) oldKeyToIdx =  createKeyToOldIdx(oldCh, oldStartIdx,  oldEndIdx);
+          idxInOld =  oldKeyToIdx[newStartVnode.key];
           if (isUndef(idxInOld)) { // New element
             var new_node = createElm(newStartVnode, insertedVnodeQueue);
-            parentElm.insertBefore(untyped new_node, oldStartVnode.elm);
+            parentElm.insertBefore( new_node, oldStartVnode.elm);
             newStartVnode = newCh[++newStartIdx];
           } else {
-            elmToMove = untyped oldCh[idxInOld];
+            elmToMove =  oldCh[idxInOld];
             patchVnode(elmToMove, newStartVnode, insertedVnodeQueue);
-            untyped oldCh[idxInOld] = null;
+             oldCh[idxInOld] = null;
             parentElm.insertBefore(elmToMove.elm, oldStartVnode.elm);
             newStartVnode = newCh[++newStartIdx];
           }
         }
       }
       if (oldStartIdx > oldEndIdx) {
-        before = isUndef(untyped newCh[newEndIdx+1]) ? null : untyped newCh[newEndIdx+1].elm;
-        addVnodes(untyped parentElm, before, newCh, newStartIdx, untyped newEndIdx, insertedVnodeQueue);
+        before = isUndef( newCh[newEndIdx+1]) ? null :  newCh[newEndIdx+1].elm;
+        addVnodes( parentElm, before, newCh, newStartIdx,  newEndIdx, insertedVnodeQueue);
       } else if (newStartIdx > newEndIdx) {
-        removeVnodes(parentElm, oldCh, oldStartIdx, untyped oldEndIdx);
+        removeVnodes(parentElm, oldCh, oldStartIdx,  oldEndIdx);
       }
     }
 
 
     static function patchVnode(oldVnode:Vnode, vnode:Vnode, insertedVnodeQueue:Vnodes) {
       var i:Dynamic, hook;
-      if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = untyped hook.prepatch)) {
+      if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i =  hook.prepatch)) {
         i(oldVnode, vnode);
       }
       if (isDef(i = oldVnode.data) && isDef(i = i.vnode)) oldVnode = i;
@@ -239,31 +239,31 @@ class PatchTraits implements partials.Partial {
         i = vnode.data.hook;
         if (isDef(i) && isDef(i = i.update)) i(oldVnode, vnode);
       }
-      if (isUndef(untyped vnode.text)) {
+      if (isUndef( vnode.text)) {
         if (isDef(oldCh) && isDef(ch)) {
           if (oldCh != ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue);
         } else if (isDef(ch)) {
-          addVnodes(elm, null, ch, 0, untyped ch.length - 1, insertedVnodeQueue);
+          addVnodes(elm, null, ch, 0,  ch.length - 1, insertedVnodeQueue);
         } else if (isDef(oldCh)) {
-          removeVnodes(elm, oldCh, 0, untyped  oldCh.length - 1);
+          removeVnodes(elm, oldCh, 0,   oldCh.length - 1);
         }
       } else if (oldVnode.text != vnode.text) {
         elm.textContent = vnode.text;
       }
-      if (isDef(hook) && isDef(i = untyped hook.postpatch)) {
+      if (isDef(hook) && isDef(i =  hook.postpatch)) {
         i(oldVnode, vnode);
       }
     }
 
-    public static function patchDom(oldVnode:Element,vnode:Vnode) {
+    public static function patchDom(oldVnode:NativeNode,vnode:Vnode) {
       var i;
       var insertedVnodeQueue = [];
       if (untyped oldVnode.parentElement != null) {
         createElm(vnode, insertedVnodeQueue);
-        untyped oldVnode.parentElement.replaceChild(vnode.elm, oldVnode);
+        oldVnode.parentElement.replaceChild(vnode.elm, oldVnode);
       } else {
         oldVnode = untyped  emptyNodeAt(untyped oldVnode);
-        patchVnode(untyped oldVnode, vnode, insertedVnodeQueue);
+          patchVnode(untyped oldVnode, vnode, insertedVnodeQueue);
       }
 
       @for(i = 0, i < insertedVnodeQueue.length,++i) {

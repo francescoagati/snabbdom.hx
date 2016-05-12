@@ -1,0 +1,7 @@
+-main snabbdom.Main
+-js builds/main.js
+-lib classic-for tink_macro thx.core partials detox hxdom
+#-dce full
+#-D analyzer
+-cp src
+#--no-inline

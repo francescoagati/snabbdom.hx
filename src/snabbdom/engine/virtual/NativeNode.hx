@@ -1,4 +1,4 @@
-package snabbdom.engine.dom;
+package snabbdom.engine.virtual;
 
 abstract NativeNode(js.html.Element) from js.html.Element to js.html.Element {
 

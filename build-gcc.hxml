@@ -1,0 +1,6 @@
+-main snabbdom.Main
+-cpp build/cpp
+-lib classic-for tink_macro thx.core partials detox
+-dce full
+-D analyzer
+-cp src
