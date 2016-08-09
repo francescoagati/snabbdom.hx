@@ -50,7 +50,7 @@ class Attributes {
     // the other option is to remove all attributes with value == undefined
     for (key in oldAttrs.keys()) {
       if (!(attrs.exists(key))) {
-        elm.removeAttribute(key);
+        next_frame(elm.removeAttribute(key));
       }
     }
   }
