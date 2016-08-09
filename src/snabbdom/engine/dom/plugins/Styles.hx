@@ -18,26 +18,42 @@ class Styles {
 
   inline static function updateStyle(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
     var cur, name, elm:Dynamic = vnode.elm;
-    if (vnode.skip_styles == null) {
 
-    var oldStyle = oldVnode.data.get_style_or_empty();
-    var style = vnode.data.get_style_or_empty();
-    var oldHasDel = oldStyle.exists('delayed' );
-    for (name in style.keys()) {
-      cur = style[name];
-      if (name == 'delayed') {
-        var delayed:DynamicObject<Dynamic> = untyped style.delayed;
-        var oldDelayed:DynamicObject<Dynamic> = untyped oldStyle.delayed;
-        for (name in delayed.keys()) {
-          cur = delayed[name];
-          if (!oldHasDel || cur != oldDelayed[name]) {
-            setNextFrame(elm.style, name, cur);
-          }
+    var apply_styles = if (vnode.data.skip_styles == false) {
+      true;
+    } else {
+      if (elm.cached_styles == null) {
+        elm.cached_styles = true;
+        true;
+      } else {
+        if (elm.cached_styles == true) {
+          false;
+        } else {
+          true;
         }
-      } else if (name != 'remove' && cur != oldStyle[name]) {
-        next_frame(untyped elm.style[name] = cur);
       }
-    }
+    };
+
+    if (apply_styles) {
+      trace(vnode);
+      var oldStyle = oldVnode.data.get_style_or_empty();
+      var style = vnode.data.get_style_or_empty();
+      var oldHasDel = oldStyle.exists('delayed' );
+      for (name in style.keys()) {
+        cur = style[name];
+        if (name == 'delayed') {
+          var delayed:DynamicObject<Dynamic> = untyped style.delayed;
+          var oldDelayed:DynamicObject<Dynamic> = untyped oldStyle.delayed;
+          for (name in delayed.keys()) {
+            cur = delayed[name];
+            if (!oldHasDel || cur != oldDelayed[name]) {
+              setNextFrame(elm.style, name, cur);
+            }
+          }
+        } else if (name != 'remove' && cur != oldStyle[name]) {
+          next_frame(untyped elm.style[name] = cur);
+        }
+      }
 
 
     }

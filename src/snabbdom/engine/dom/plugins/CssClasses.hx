@@ -12,14 +12,16 @@ class CssClasses {
         oldClass = oldVnode.data.get_classes_or_empty(),
         klass = vnode.data.get_classes_or_empty();
 
+    if (vnode.data.skip_attributes == false) {
+      for (name in klass.keys()) {
+        cur = klass[name];
+        if (cur != oldClass[name]) {
+          if (cur == 'add') next_frame(elm.classList.add(name));
+          else if (cur == 'remove') next_frame(elm.classList.remove(name));
 
-    for (name in klass.keys()) {
-      cur = klass[name];
-      if (cur != oldClass[name]) {
-        if (cur == 'add') next_frame(elm.classList.add(name));
-        else if (cur == 'remove') next_frame(elm.classList.remove(name));
-
+        }
       }
+
     }
   }
 

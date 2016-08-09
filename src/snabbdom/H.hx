@@ -61,17 +61,25 @@ class H {
   public macro static function h(exprs:Array<Expr>):ExprOf<VirtualNodeDom> {
 
 
+
     var sel = exprs[0];
     var data = exprs[1];
 
     var s = data.toString();
 
+
     var y = haxe.macro.Context.parse(s,haxe.macro.Context.currentPos());
     var fields = get_key_value(data);
 
+    var keys = [for (field in fields) field[0]];
+
 
     var structure = 'attrs:untyped {' + [
-      for (field in fields) if (field[0] != 'style' && field[0].indexOf('on') != 0) '${field[0]}:${field[1]}'   
+      for (field in fields) if (
+        field[0] != 'skip_styles' &&
+        field[0] !='skip_attributes' &&
+        field[0] != 'style' &&
+        field[0].indexOf('on') != 0) '${field[0]}:${field[1]}'
     ].join(",") + '}';
 
     var events = [];
@@ -82,10 +90,26 @@ class H {
         structure = structure + ',style:untyped ${style}';
       }
 
+      if (field[0] == 'skip_styles') {
+        var value = field[1];
+        structure = structure + ',skip_styles: ${value}';
+      }
+
+      if (field[0] == 'skip_attributes') {
+        var value = field[1];
+        structure = structure + ',skip_attributes: ${value}';
+      }
+
+
       if (field[0].indexOf('on') == 0) {
         events.push([field[0].substr(2),field[1]]);
       }
     }
+
+    if(keys.indexOf('props') == -1) structure += ',props:null';
+    if(keys.indexOf('classes') == -1) structure += ',classes:null';
+    if(keys.indexOf('style') == -1) structure += ',style:null';
+    if(keys.indexOf('hook') == -1) structure += ',hook:null';
 
 
     if (events.length > 0) {
@@ -95,14 +119,8 @@ class H {
     }
 
     trace(structure);
-
     var data = Context.parse('{' + structure + '}',Context.currentPos());
-
-
-
     var rest = exprs.slice(2);
-
-
 
     var text = null;
     text = if (rest[0].toString().indexOf('H.h') == 0) {

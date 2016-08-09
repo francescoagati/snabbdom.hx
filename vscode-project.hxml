@@ -1,5 +1,5 @@
 #automatically generated do not edit
-#@date Tue Aug 09 2016 20:06:19 GMT+0200 (ora legale Europa occ.)
+#@date Tue Aug 09 2016 22:40:55 GMT+0200 (ora legale Europa occ.)
 -main snabbdom.Main
 -js build/main.js
 #@begin-cache -lib classic-for tink_macro thx.core partials
@@ -9,7 +9,6 @@
 -dce full
 -D analyzer
 -cp c:\users\franc\documents\tmp\snabbdom.hx\src\
---no-traces
 
 
 -cp c:\users\franc\appdata\local\temp\cde946c5631a5878084d13d1abdea026826446b5

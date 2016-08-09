@@ -27,11 +27,27 @@ class Attributes {
   })();
 
    inline static function updateAttrs(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
-    var key, cur, old, elm = vnode.elm,
+    var key, cur, old, elm:Dynamic = vnode.elm,
         oldAttrs = oldVnode.data.get_attrs_or_empty(),
         attrs = vnode.data.get_attrs_or_empty();
 
-    if (vnode.skip_attributes == null) {
+
+    var apply_attributes = if (vnode.data.skip_attributes == false) {
+      true;
+    } else {
+      if (elm.cached_attributes == null) {
+        elm.cached_attributes = true;
+        true;
+      } else {
+        if (elm.cached_attributes == true) {
+          false;
+        } else {
+          true;
+        }
+      }
+    };
+
+    if (apply_attributes) {
 
       // update modified attributes, add new attributes
       for (key in attrs.keys()) {
@@ -53,10 +69,10 @@ class Attributes {
           next_frame(elm.removeAttribute(key));
         }
       }
-      
+
 
     }
-    
+
   }
 
 
