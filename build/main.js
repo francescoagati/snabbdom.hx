@@ -160,21 +160,31 @@ snabbdom_Main.main = function() {
 	var vnode_key = null;
 	var vnode_text = null;
 	var last_node = null;
-	var timer = new haxe_Timer(1000);
+	var timer = new haxe_Timer(100);
+	var init = null;
 	timer.run = function() {
 		var rnd = Math.random();
 		var color = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
 		var bg = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
-		var max = 2;
+		var max = Math.random() * 20 | 0;
+		if(max <= 3) {
+			max = 4;
+		}
+		if(init == null) {
+			init = 0;
+		} else {
+			init = 3;
+		}
 		var _g = [];
-		var _g1_min = 0;
+		var _g1_min = init;
 		var _g1_max = max;
 		while(_g1_min < _g1_max) {
 			var x = _g1_min++;
-			_g.push({ sel : "li", data : { attrs : { }}, children : [{ sel : "span", data : { attrs : { }}, children : null, elm : null, key : null, text : x}], elm : null, key : null, text : null});
+			var key = "key - " + x;
+			_g.push({ sel : "li", data : { attrs : { key : key}}, children : [{ sel : "span", data : { attrs : { }}, children : null, elm : null, key : null, text : x}], elm : null, key : null, text : null});
 		}
 		var list = _g;
-		var vnode2 = { sel : "div", data : { attrs : { id : "pippa"}, on : { 'click' : snabbdom_Main.click, 'mouseout' : snabbdom_Main.out, 'mouseover' : snabbdom_Main.over}}, children : [{ sel : "span", data : { attrs : { }}, children : null, elm : null, key : null, text : max},{ sel : "ul", data : { attrs : { }, style : { fontSize : "30px", color : color, backgroundColor : bg}}, children : list, elm : null, key : null, text : null}], elm : null, key : null, text : null};
+		var vnode2 = { sel : "div", data : { attrs : { id : "pippa", skip_style : "true"}, style : { color : "black"}, on : { 'click' : snabbdom_Main.click, 'mouseout' : snabbdom_Main.out, 'mouseover' : snabbdom_Main.over}}, children : [{ sel : "span", data : { attrs : { }}, children : null, elm : null, key : null, text : max},{ sel : "ul", data : { attrs : { }, style : { fontSize : "30px", color : "white", backgroundColor : bg}}, children : list, elm : null, key : null, text : null}], elm : null, key : null, text : null};
 		if(last_node == null) {
 			snabbdom_engine_dom_PatchDom.patchDom(window.document.getElementById("container"),vnode2);
 		} else {
@@ -333,44 +343,46 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 		var cur3;
 		var name4;
 		var elm4 = vnode.elm;
-		var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
-		var style = vnode.data.style == null?{ }:vnode.data.style;
-		var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-		var _g5 = 0;
-		var _g14 = Object.keys(style);
-		while(_g5 < _g14.length) {
-			var name5 = [_g14[_g5]];
-			++_g5;
-			cur3 = style[name5[0]];
-			if(name5[0] == "delayed") {
-				var delayed = style.delayed;
-				var oldDelayed = oldStyle.delayed;
-				var _g21 = 0;
-				var _g31 = Object.keys(delayed);
-				while(_g21 < _g31.length) {
-					var name6 = _g31[_g21];
-					++_g21;
-					cur3 = delayed[name6];
-					if(!oldHasDel || cur3 != oldDelayed[name6]) {
-						var obj = [elm4.style];
-						var fn = [(function(val,prop,obj1) {
-							return function(i6) {
-								obj1[0][prop[0]] = val[0];
-							};
-						})([cur3],[name6],obj)];
-						window.requestAnimationFrame((function(fn1) {
-							return function(i7) {
-								window.requestAnimationFrame(fn1[0]);
-							};
-						})(fn));
+		if(vnode.skip_styles == null) {
+			var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
+			var style = vnode.data.style == null?{ }:vnode.data.style;
+			var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
+			var _g5 = 0;
+			var _g14 = Object.keys(style);
+			while(_g5 < _g14.length) {
+				var name5 = [_g14[_g5]];
+				++_g5;
+				cur3 = style[name5[0]];
+				if(name5[0] == "delayed") {
+					var delayed = style.delayed;
+					var oldDelayed = oldStyle.delayed;
+					var _g21 = 0;
+					var _g31 = Object.keys(delayed);
+					while(_g21 < _g31.length) {
+						var name6 = _g31[_g21];
+						++_g21;
+						cur3 = delayed[name6];
+						if(!oldHasDel || cur3 != oldDelayed[name6]) {
+							var obj = [elm4.style];
+							var fn = [(function(val,prop,obj1) {
+								return function(i6) {
+									obj1[0][prop[0]] = val[0];
+								};
+							})([cur3],[name6],obj)];
+							window.requestAnimationFrame((function(fn1) {
+								return function(i7) {
+									window.requestAnimationFrame(fn1[0]);
+								};
+							})(fn));
+						}
 					}
+				} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
+					window.requestAnimationFrame((function(name7) {
+						return function(i8) {
+							elm4.style[name7[0]] = cur3;
+						};
+					})(name5));
 				}
-			} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
-				window.requestAnimationFrame((function(name7) {
-					return function(i8) {
-						elm4.style[name7[0]] = cur3;
-					};
-				})(name5));
 			}
 		}
 		var name8;
@@ -652,46 +664,48 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				var cur4 = [];
 				var name4;
 				var elm9 = [vnode.elm];
-				var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
-				var style = vnode.data.style == null?{ }:vnode.data.style;
-				var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-				var _g5 = 0;
-				var _g14 = Object.keys(style);
-				while(_g5 < _g14.length) {
-					var name5 = [_g14[_g5]];
-					++_g5;
-					cur4[0] = style[name5[0]];
-					if(name5[0] == "delayed") {
-						var delayed = style.delayed;
-						var oldDelayed = oldStyle.delayed;
-						var _g21 = 0;
-						var _g31 = Object.keys(delayed);
-						while(_g21 < _g31.length) {
-							var name6 = _g31[_g21];
-							++_g21;
-							cur4[0] = delayed[name6];
-							if(!oldHasDel || cur4[0] != oldDelayed[name6]) {
-								var obj = [elm9[0].style];
-								var prop = [name6];
-								var val = [cur4[0]];
-								var fn = [(function(val1,prop1,obj1) {
-									return function(i7) {
-										obj1[0][prop1[0]] = val1[0];
-									};
-								})(val,prop,obj)];
-								window.requestAnimationFrame((function(fn1) {
-									return function(i8) {
-										window.requestAnimationFrame(fn1[0]);
-									};
-								})(fn));
+				if(vnode.skip_styles == null) {
+					var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
+					var style = vnode.data.style == null?{ }:vnode.data.style;
+					var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
+					var _g5 = 0;
+					var _g14 = Object.keys(style);
+					while(_g5 < _g14.length) {
+						var name5 = [_g14[_g5]];
+						++_g5;
+						cur4[0] = style[name5[0]];
+						if(name5[0] == "delayed") {
+							var delayed = style.delayed;
+							var oldDelayed = oldStyle.delayed;
+							var _g21 = 0;
+							var _g31 = Object.keys(delayed);
+							while(_g21 < _g31.length) {
+								var name6 = _g31[_g21];
+								++_g21;
+								cur4[0] = delayed[name6];
+								if(!oldHasDel || cur4[0] != oldDelayed[name6]) {
+									var obj = [elm9[0].style];
+									var prop = [name6];
+									var val = [cur4[0]];
+									var fn = [(function(val1,prop1,obj1) {
+										return function(i7) {
+											obj1[0][prop1[0]] = val1[0];
+										};
+									})(val,prop,obj)];
+									window.requestAnimationFrame((function(fn1) {
+										return function(i8) {
+											window.requestAnimationFrame(fn1[0]);
+										};
+									})(fn));
+								}
 							}
+						} else if(name5[0] != "remove" && cur4[0] != oldStyle[name5[0]]) {
+							window.requestAnimationFrame((function(name7,elm10,cur5) {
+								return function(i9) {
+									elm10[0].style[name7[0]] = cur5[0];
+								};
+							})(name5,elm9,cur4));
 						}
-					} else if(name5[0] != "remove" && cur4[0] != oldStyle[name5[0]]) {
-						window.requestAnimationFrame((function(name7,elm10,cur5) {
-							return function(i9) {
-								elm10[0].style[name7[0]] = cur5[0];
-							};
-						})(name5,elm9,cur4));
 					}
 				}
 				var name8;
@@ -899,46 +913,48 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				var cur11 = [];
 				var name14;
 				var elm21 = [vnode1.elm];
-				var oldStyle1 = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
-				var style1 = vnode1.data.style == null?{ }:vnode1.data.style;
-				var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
-				var _g20 = 0;
-				var _g110 = Object.keys(style1);
-				while(_g20 < _g110.length) {
-					var name15 = [_g110[_g20]];
-					++_g20;
-					cur11[0] = style1[name15[0]];
-					if(name15[0] == "delayed") {
-						var delayed1 = style1.delayed;
-						var oldDelayed1 = oldStyle1.delayed;
-						var _g22 = 0;
-						var _g32 = Object.keys(delayed1);
-						while(_g22 < _g32.length) {
-							var name16 = _g32[_g22];
-							++_g22;
-							cur11[0] = delayed1[name16];
-							if(!oldHasDel1 || cur11[0] != oldDelayed1[name16]) {
-								var obj2 = [elm21[0].style];
-								var prop2 = [name16];
-								var val2 = [cur11[0]];
-								var fn2 = [(function(val3,prop3,obj3) {
-									return function(i17) {
-										obj3[0][prop3[0]] = val3[0];
-									};
-								})(val2,prop2,obj2)];
-								window.requestAnimationFrame((function(fn3) {
-									return function(i18) {
-										window.requestAnimationFrame(fn3[0]);
-									};
-								})(fn2));
+				if(vnode1.skip_styles == null) {
+					var oldStyle1 = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
+					var style1 = vnode1.data.style == null?{ }:vnode1.data.style;
+					var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
+					var _g20 = 0;
+					var _g110 = Object.keys(style1);
+					while(_g20 < _g110.length) {
+						var name15 = [_g110[_g20]];
+						++_g20;
+						cur11[0] = style1[name15[0]];
+						if(name15[0] == "delayed") {
+							var delayed1 = style1.delayed;
+							var oldDelayed1 = oldStyle1.delayed;
+							var _g22 = 0;
+							var _g32 = Object.keys(delayed1);
+							while(_g22 < _g32.length) {
+								var name16 = _g32[_g22];
+								++_g22;
+								cur11[0] = delayed1[name16];
+								if(!oldHasDel1 || cur11[0] != oldDelayed1[name16]) {
+									var obj2 = [elm21[0].style];
+									var prop2 = [name16];
+									var val2 = [cur11[0]];
+									var fn2 = [(function(val3,prop3,obj3) {
+										return function(i17) {
+											obj3[0][prop3[0]] = val3[0];
+										};
+									})(val2,prop2,obj2)];
+									window.requestAnimationFrame((function(fn3) {
+										return function(i18) {
+											window.requestAnimationFrame(fn3[0]);
+										};
+									})(fn2));
+								}
 							}
+						} else if(name15[0] != "remove" && cur11[0] != oldStyle1[name15[0]]) {
+							window.requestAnimationFrame((function(name17,elm22,cur12) {
+								return function(i19) {
+									elm22[0].style[name17[0]] = cur12[0];
+								};
+							})(name15,elm21,cur11));
 						}
-					} else if(name15[0] != "remove" && cur11[0] != oldStyle1[name15[0]]) {
-						window.requestAnimationFrame((function(name17,elm22,cur12) {
-							return function(i19) {
-								elm22[0].style[name17[0]] = cur12[0];
-							};
-						})(name15,elm21,cur11));
 					}
 				}
 				var name18;
@@ -1250,44 +1266,46 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 		var cur3;
 		var name4;
 		var elm4 = vnode.elm;
-		var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
-		var style = vnode.data.style == null?{ }:vnode.data.style;
-		var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-		var _g5 = 0;
-		var _g14 = Object.keys(style);
-		while(_g5 < _g14.length) {
-			var name5 = [_g14[_g5]];
-			++_g5;
-			cur3 = style[name5[0]];
-			if(name5[0] == "delayed") {
-				var delayed = style.delayed;
-				var oldDelayed = oldStyle.delayed;
-				var _g21 = 0;
-				var _g31 = Object.keys(delayed);
-				while(_g21 < _g31.length) {
-					var name6 = _g31[_g21];
-					++_g21;
-					cur3 = delayed[name6];
-					if(!oldHasDel || cur3 != oldDelayed[name6]) {
-						var obj = [elm4.style];
-						var fn = [(function(val,prop,obj1) {
-							return function(i6) {
-								obj1[0][prop[0]] = val[0];
-							};
-						})([cur3],[name6],obj)];
-						window.requestAnimationFrame((function(fn1) {
-							return function(i7) {
-								window.requestAnimationFrame(fn1[0]);
-							};
-						})(fn));
+		if(vnode.skip_styles == null) {
+			var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
+			var style = vnode.data.style == null?{ }:vnode.data.style;
+			var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
+			var _g5 = 0;
+			var _g14 = Object.keys(style);
+			while(_g5 < _g14.length) {
+				var name5 = [_g14[_g5]];
+				++_g5;
+				cur3 = style[name5[0]];
+				if(name5[0] == "delayed") {
+					var delayed = style.delayed;
+					var oldDelayed = oldStyle.delayed;
+					var _g21 = 0;
+					var _g31 = Object.keys(delayed);
+					while(_g21 < _g31.length) {
+						var name6 = _g31[_g21];
+						++_g21;
+						cur3 = delayed[name6];
+						if(!oldHasDel || cur3 != oldDelayed[name6]) {
+							var obj = [elm4.style];
+							var fn = [(function(val,prop,obj1) {
+								return function(i6) {
+									obj1[0][prop[0]] = val[0];
+								};
+							})([cur3],[name6],obj)];
+							window.requestAnimationFrame((function(fn1) {
+								return function(i7) {
+									window.requestAnimationFrame(fn1[0]);
+								};
+							})(fn));
+						}
 					}
+				} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
+					window.requestAnimationFrame((function(name7) {
+						return function(i8) {
+							elm4.style[name7[0]] = cur3;
+						};
+					})(name5));
 				}
-			} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
-				window.requestAnimationFrame((function(name7) {
-					return function(i8) {
-						elm4.style[name7[0]] = cur3;
-					};
-				})(name5));
 			}
 		}
 		var name8;
@@ -1482,46 +1500,48 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 					var cur9 = [];
 					var name14;
 					var elm15 = [vnode1.elm];
-					var oldStyle1 = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
-					var style1 = vnode1.data.style == null?{ }:vnode1.data.style;
-					var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
-					var _g20 = 0;
-					var _g110 = Object.keys(style1);
-					while(_g20 < _g110.length) {
-						var name15 = [_g110[_g20]];
-						++_g20;
-						cur9[0] = style1[name15[0]];
-						if(name15[0] == "delayed") {
-							var delayed1 = style1.delayed;
-							var oldDelayed1 = oldStyle1.delayed;
-							var _g22 = 0;
-							var _g32 = Object.keys(delayed1);
-							while(_g22 < _g32.length) {
-								var name16 = _g32[_g22];
-								++_g22;
-								cur9[0] = delayed1[name16];
-								if(!oldHasDel1 || cur9[0] != oldDelayed1[name16]) {
-									var obj2 = [elm15[0].style];
-									var prop1 = [name16];
-									var val1 = [cur9[0]];
-									var fn2 = [(function(val2,prop2,obj3) {
-										return function(i16) {
-											obj3[0][prop2[0]] = val2[0];
-										};
-									})(val1,prop1,obj2)];
-									window.requestAnimationFrame((function(fn3) {
-										return function(i17) {
-											window.requestAnimationFrame(fn3[0]);
-										};
-									})(fn2));
+					if(vnode1.skip_styles == null) {
+						var oldStyle1 = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
+						var style1 = vnode1.data.style == null?{ }:vnode1.data.style;
+						var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
+						var _g20 = 0;
+						var _g110 = Object.keys(style1);
+						while(_g20 < _g110.length) {
+							var name15 = [_g110[_g20]];
+							++_g20;
+							cur9[0] = style1[name15[0]];
+							if(name15[0] == "delayed") {
+								var delayed1 = style1.delayed;
+								var oldDelayed1 = oldStyle1.delayed;
+								var _g22 = 0;
+								var _g32 = Object.keys(delayed1);
+								while(_g22 < _g32.length) {
+									var name16 = _g32[_g22];
+									++_g22;
+									cur9[0] = delayed1[name16];
+									if(!oldHasDel1 || cur9[0] != oldDelayed1[name16]) {
+										var obj2 = [elm15[0].style];
+										var prop1 = [name16];
+										var val1 = [cur9[0]];
+										var fn2 = [(function(val2,prop2,obj3) {
+											return function(i16) {
+												obj3[0][prop2[0]] = val2[0];
+											};
+										})(val1,prop1,obj2)];
+										window.requestAnimationFrame((function(fn3) {
+											return function(i17) {
+												window.requestAnimationFrame(fn3[0]);
+											};
+										})(fn2));
+									}
 								}
+							} else if(name15[0] != "remove" && cur9[0] != oldStyle1[name15[0]]) {
+								window.requestAnimationFrame((function(name17,elm16,cur10) {
+									return function(i18) {
+										elm16[0].style[name17[0]] = cur10[0];
+									};
+								})(name15,elm15,cur9));
 							}
-						} else if(name15[0] != "remove" && cur9[0] != oldStyle1[name15[0]]) {
-							window.requestAnimationFrame((function(name17,elm16,cur10) {
-								return function(i18) {
-									elm16[0].style[name17[0]] = cur10[0];
-								};
-							})(name15,elm15,cur9));
 						}
 					}
 					var name18;
@@ -1859,44 +1879,46 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 			var cur3;
 			var name4;
 			var elm4 = vnode1.elm;
-			var oldStyle = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
-			var style = vnode1.data.style == null?{ }:vnode1.data.style;
-			var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-			var _g5 = 0;
-			var _g14 = Object.keys(style);
-			while(_g5 < _g14.length) {
-				var name5 = [_g14[_g5]];
-				++_g5;
-				cur3 = style[name5[0]];
-				if(name5[0] == "delayed") {
-					var delayed = style.delayed;
-					var oldDelayed = oldStyle.delayed;
-					var _g21 = 0;
-					var _g31 = Object.keys(delayed);
-					while(_g21 < _g31.length) {
-						var name6 = _g31[_g21];
-						++_g21;
-						cur3 = delayed[name6];
-						if(!oldHasDel || cur3 != oldDelayed[name6]) {
-							var obj = [elm4.style];
-							var fn = [(function(val,prop,obj1) {
-								return function(i7) {
-									obj1[0][prop[0]] = val[0];
-								};
-							})([cur3],[name6],obj)];
-							window.requestAnimationFrame((function(fn1) {
-								return function(i8) {
-									window.requestAnimationFrame(fn1[0]);
-								};
-							})(fn));
+			if(vnode1.skip_styles == null) {
+				var oldStyle = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
+				var style = vnode1.data.style == null?{ }:vnode1.data.style;
+				var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
+				var _g5 = 0;
+				var _g14 = Object.keys(style);
+				while(_g5 < _g14.length) {
+					var name5 = [_g14[_g5]];
+					++_g5;
+					cur3 = style[name5[0]];
+					if(name5[0] == "delayed") {
+						var delayed = style.delayed;
+						var oldDelayed = oldStyle.delayed;
+						var _g21 = 0;
+						var _g31 = Object.keys(delayed);
+						while(_g21 < _g31.length) {
+							var name6 = _g31[_g21];
+							++_g21;
+							cur3 = delayed[name6];
+							if(!oldHasDel || cur3 != oldDelayed[name6]) {
+								var obj = [elm4.style];
+								var fn = [(function(val,prop,obj1) {
+									return function(i7) {
+										obj1[0][prop[0]] = val[0];
+									};
+								})([cur3],[name6],obj)];
+								window.requestAnimationFrame((function(fn1) {
+									return function(i8) {
+										window.requestAnimationFrame(fn1[0]);
+									};
+								})(fn));
+							}
 						}
+					} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
+						window.requestAnimationFrame((function(name7) {
+							return function(i9) {
+								elm4.style[name7[0]] = cur3;
+							};
+						})(name5));
 					}
-				} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
-					window.requestAnimationFrame((function(name7) {
-						return function(i9) {
-							elm4.style[name7[0]] = cur3;
-						};
-					})(name5));
 				}
 			}
 			var name8;

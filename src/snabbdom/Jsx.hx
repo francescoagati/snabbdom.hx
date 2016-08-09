@@ -49,6 +49,8 @@ class Jsx {
 	{
 		var args = [];
 
+	
+
 		// parse type
 		var path = xml.nodeName.split('.');
 		var last = path[path.length - 1];
@@ -60,9 +62,13 @@ class Jsx {
 		for (attr in xml.attributes())
 		{
 			var value = xml.get(attr);
+			if (attr == 'style' && value.indexOf('{') == -1) attrs.push({field:'skip_style', expr: macro 'true'});
 			var expr = parseJsxExpr(value, pos);
 			attrs.push({field:attr, expr:expr});
 		}
+
+
+
 		if (attrs.length == 0) args.push(macro null);
 		else args.push({pos:pos, expr:EObjectDecl(attrs)});
 

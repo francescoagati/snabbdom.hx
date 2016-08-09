@@ -7,5 +7,6 @@ typedef VirtualNode<T> =  {
   ?children: VirtualNodes<T>,
   ?text: String,
   ?elm: T,
-  ?key: String
+  ?key: String,
+  ?skip_styles:Bool
 }

@@ -64,7 +64,8 @@ class Main {
 
 
 
-    var timer = new haxe.Timer(1000);
+    var timer = new haxe.Timer(100);
+    var init:Int = null;
     timer.run = function() {
 
 
@@ -72,13 +73,17 @@ class Main {
       var color = ['red','yellow','green','black','white','grey'].shuffle().first();
       var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
 
-
-      var max = 2; //Std.int(Math.random() * 2);
-      var list = [for (x in (0...max)) jsx("<li><span>${x}</span></li>")  ];
+      var max = Std.int(Math.random() * 20);
+      if (max <=3) max = 4;
+      init = if (init == null) 0; else 3;
+      var list = [for (x in (init...max)) {
+        var key = 'key - $x';
+        jsx('<li key="${key}"><span>${x}</span></li>');
+      }];
       var vnode2 = jsx('
-        <div id="pippa" onmouseout=$out onclick=$click onmouseover=${over}>
+        <div id="pippa" style="color:black" onmouseout=$out onclick=$click onmouseover=${over}>
           <span>${max}</span>
-          <ul style="font-size:30px;color:$color;background-color:$bg">
+          <ul style="font-size:30px;color:white;background-color:$bg">
             #list
           </ul>
         </div>

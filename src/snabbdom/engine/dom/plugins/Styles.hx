@@ -18,6 +18,7 @@ class Styles {
 
   inline static function updateStyle(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
     var cur, name, elm:Dynamic = vnode.elm;
+    if (vnode.skip_styles == null) {
 
     var oldStyle = oldVnode.data.get_style_or_empty();
     var style = vnode.data.get_style_or_empty();
@@ -36,6 +37,9 @@ class Styles {
       } else if (name != 'remove' && cur != oldStyle[name]) {
         next_frame(untyped elm.style[name] = cur);
       }
+    }
+
+
     }
   }
 
