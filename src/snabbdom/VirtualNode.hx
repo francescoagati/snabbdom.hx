@@ -8,5 +8,6 @@ typedef VirtualNode<T> =  {
   ?text: String,
   ?elm: T,
   ?key: String,
-  ?skip_styles:Bool
+  ?skip_styles:Bool,
+  ?skip_attributes:Bool
 }

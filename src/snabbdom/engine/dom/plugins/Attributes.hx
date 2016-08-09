@@ -31,28 +31,32 @@ class Attributes {
         oldAttrs = oldVnode.data.get_attrs_or_empty(),
         attrs = vnode.data.get_attrs_or_empty();
 
+    if (vnode.skip_attributes == null) {
 
-
-    // update modified attributes, add new attributes
-    for (key in attrs.keys()) {
-      cur = attrs[key];
-      old = oldAttrs[key];
-      if (old != cur) {
-        // TODO: add support to namespaced attributes (setAttributeNS)
-        if(!cur && booleanAttrsDict[key])
+      // update modified attributes, add new attributes
+      for (key in attrs.keys()) {
+        cur = attrs[key];
+        old = oldAttrs[key];
+        if (old != cur) {
+          // TODO: add support to namespaced attributes (setAttributeNS)
+          if(!cur && booleanAttrsDict[key])
+            next_frame(elm.removeAttribute(key));
+          else
+            next_frame(elm.setAttribute(key, cur));
+        }
+      }
+      //remove removed attributes
+      // use `in` operator since the previous `for` iteration uses it (.i.e. add even attributes with undefined value)
+      // the other option is to remove all attributes with value == undefined
+      for (key in oldAttrs.keys()) {
+        if (!(attrs.exists(key))) {
           next_frame(elm.removeAttribute(key));
-        else
-          next_frame(elm.setAttribute(key, cur));
+        }
       }
+      
+
     }
-    //remove removed attributes
-    // use `in` operator since the previous `for` iteration uses it (.i.e. add even attributes with undefined value)
-    // the other option is to remove all attributes with value == undefined
-    for (key in oldAttrs.keys()) {
-      if (!(attrs.exists(key))) {
-        next_frame(elm.removeAttribute(key));
-      }
-    }
+    
   }
 
 

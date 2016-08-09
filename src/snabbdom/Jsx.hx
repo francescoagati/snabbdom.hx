@@ -59,15 +59,19 @@ class Jsx {
 
 		// parse attributes
 		var attrs = [];
+		var skip_styles = true;
+		var skip_attributes = true;
 		for (attr in xml.attributes())
 		{
 			var value = xml.get(attr);
-			if (attr == 'style' && value.indexOf('{') == -1) attrs.push({field:'skip_style', expr: macro 'true'});
+			if (value.indexOf('{') >= 0 && skip_attributes == true) skip_attributes = false;
+			if (attr == 'style' && value.indexOf('{') == -1) skip_styles = true;
 			var expr = parseJsxExpr(value, pos);
 			attrs.push({field:attr, expr:expr});
 		}
 
-
+		if (skip_styles == true) attrs.push({field:'skip_style', expr: macro 'true'});
+		if (skip_attributes == true) attrs.push({field:'skip_attributes', expr: macro 'true'});		
 
 		if (attrs.length == 0) args.push(macro null);
 		else args.push({pos:pos, expr:EObjectDecl(attrs)});

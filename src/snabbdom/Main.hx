@@ -64,7 +64,7 @@ class Main {
 
 
 
-    var timer = new haxe.Timer(100);
+    var timer = new haxe.Timer(30);
     var init:Int = null;
     timer.run = function() {
 

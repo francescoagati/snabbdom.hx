@@ -154,13 +154,13 @@ snabbdom_Main.out = function(e) {
 snabbdom_Main.main = function() {
 	var txt = "testo";
 	var vnode_sel = "div";
-	var vnode_data = { attrs : { id : "pippa"}};
-	var vnode_children = [{ sel : "ul", data : { attrs : { }}, children : [{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "4"},{ sel : "li", data : { attrs : { }}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }}, children : [{ sel : "span", data : { attrs : { }, on : { 'click' : snabbdom_Main.click}}, children : null, elm : null, key : null, text : txt}], elm : null, key : null, text : null}], elm : null, key : null, text : null}];
+	var vnode_data = { attrs : { id : "pippa", skip_style : "true", skip_attributes : "true"}};
+	var vnode_children = [{ sel : "ul", data : { attrs : { skip_style : "true", skip_attributes : "true"}}, children : [{ sel : "li", data : { attrs : { skip_style : "true", skip_attributes : "true"}}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { skip_style : "true", skip_attributes : "true"}}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { skip_style : "true", skip_attributes : "true"}}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { skip_style : "true", skip_attributes : "true"}}, children : null, elm : null, key : null, text : "4"},{ sel : "li", data : { attrs : { skip_style : "true", skip_attributes : "true"}}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { skip_style : "true", skip_attributes : "true"}}, children : [{ sel : "span", data : { attrs : { skip_style : "true"}, on : { 'click' : snabbdom_Main.click}}, children : null, elm : null, key : null, text : txt}], elm : null, key : null, text : null}], elm : null, key : null, text : null}];
 	var vnode_elm = null;
 	var vnode_key = null;
 	var vnode_text = null;
 	var last_node = null;
-	var timer = new haxe_Timer(100);
+	var timer = new haxe_Timer(30);
 	var init = null;
 	timer.run = function() {
 		var rnd = Math.random();
@@ -181,10 +181,10 @@ snabbdom_Main.main = function() {
 		while(_g1_min < _g1_max) {
 			var x = _g1_min++;
 			var key = "key - " + x;
-			_g.push({ sel : "li", data : { attrs : { key : key}}, children : [{ sel : "span", data : { attrs : { }}, children : null, elm : null, key : null, text : x}], elm : null, key : null, text : null});
+			_g.push({ sel : "li", data : { attrs : { key : key, skip_style : "true"}}, children : [{ sel : "span", data : { attrs : { skip_style : "true", skip_attributes : "true"}}, children : null, elm : null, key : null, text : x}], elm : null, key : null, text : null});
 		}
 		var list = _g;
-		var vnode2 = { sel : "div", data : { attrs : { id : "pippa", skip_style : "true"}, style : { color : "black"}, on : { 'click' : snabbdom_Main.click, 'mouseout' : snabbdom_Main.out, 'mouseover' : snabbdom_Main.over}}, children : [{ sel : "span", data : { attrs : { }}, children : null, elm : null, key : null, text : max},{ sel : "ul", data : { attrs : { }, style : { fontSize : "30px", color : "white", backgroundColor : bg}}, children : list, elm : null, key : null, text : null}], elm : null, key : null, text : null};
+		var vnode2 = { sel : "div", data : { attrs : { id : "pippa", skip_style : "true"}, style : { color : "black"}, on : { 'click' : snabbdom_Main.click, 'mouseout' : snabbdom_Main.out, 'mouseover' : snabbdom_Main.over}}, children : [{ sel : "span", data : { attrs : { skip_style : "true", skip_attributes : "true"}}, children : null, elm : null, key : null, text : max},{ sel : "ul", data : { attrs : { skip_style : "true"}, style : { fontSize : "30px", color : "white", backgroundColor : bg}}, children : list, elm : null, key : null, text : null}], elm : null, key : null, text : null};
 		if(last_node == null) {
 			snabbdom_engine_dom_PatchDom.patchDom(window.document.getElementById("container"),vnode2);
 		} else {
@@ -260,40 +260,42 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 		var elm1 = vnode.elm;
 		var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
 		var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
-		var _g = 0;
-		var _g1 = Object.keys(attrs);
-		while(_g < _g1.length) {
-			var key1 = [_g1[_g]];
-			++_g;
-			cur = attrs[key1[0]];
-			old = oldAttrs[key1[0]];
-			if(old != cur) {
-				if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
-					window.requestAnimationFrame((function(key2) {
-						return function(i1) {
-							elm1.removeAttribute(key2[0]);
-						};
-					})(key1));
-				} else {
-					window.requestAnimationFrame((function(key3) {
-						return function(i2) {
-							elm1.setAttribute(key3[0],cur);
-						};
-					})(key1));
+		if(vnode.skip_attributes == null) {
+			var _g = 0;
+			var _g1 = Object.keys(attrs);
+			while(_g < _g1.length) {
+				var key1 = [_g1[_g]];
+				++_g;
+				cur = attrs[key1[0]];
+				old = oldAttrs[key1[0]];
+				if(old != cur) {
+					if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
+						window.requestAnimationFrame((function(key2) {
+							return function(i1) {
+								elm1.removeAttribute(key2[0]);
+							};
+						})(key1));
+					} else {
+						window.requestAnimationFrame((function(key3) {
+							return function(i2) {
+								elm1.setAttribute(key3[0],cur);
+							};
+						})(key1));
+					}
 				}
 			}
-		}
-		var _g2 = 0;
-		var _g11 = Object.keys(oldAttrs);
-		while(_g2 < _g11.length) {
-			var key4 = [_g11[_g2]];
-			++_g2;
-			if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
-				window.requestAnimationFrame((function(key5) {
-					return function(i3) {
-						elm1.removeAttribute(key5[0]);
-					};
-				})(key4));
+			var _g2 = 0;
+			var _g11 = Object.keys(oldAttrs);
+			while(_g2 < _g11.length) {
+				var key4 = [_g11[_g2]];
+				++_g2;
+				if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
+					window.requestAnimationFrame((function(key5) {
+						return function(i3) {
+							elm1.removeAttribute(key5[0]);
+						};
+					})(key4));
+				}
 			}
 		}
 		var key6;
@@ -581,40 +583,42 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				var elm1 = [vnode.elm];
 				var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
 				var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
-				var _g = 0;
-				var _g1 = Object.keys(attrs);
-				while(_g < _g1.length) {
-					var key2 = [_g1[_g]];
-					++_g;
-					cur[0] = attrs[key2[0]];
-					old = oldAttrs[key2[0]];
-					if(old != cur[0]) {
-						if(!cur[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key2[0]]) {
-							window.requestAnimationFrame((function(key3,elm2) {
-								return function(i2) {
-									elm2[0].removeAttribute(key3[0]);
-								};
-							})(key2,elm1));
-						} else {
-							window.requestAnimationFrame((function(key4,elm3,cur1) {
-								return function(i3) {
-									elm3[0].setAttribute(key4[0],cur1[0]);
-								};
-							})(key2,elm1,cur));
+				if(vnode.skip_attributes == null) {
+					var _g = 0;
+					var _g1 = Object.keys(attrs);
+					while(_g < _g1.length) {
+						var key2 = [_g1[_g]];
+						++_g;
+						cur[0] = attrs[key2[0]];
+						old = oldAttrs[key2[0]];
+						if(old != cur[0]) {
+							if(!cur[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key2[0]]) {
+								window.requestAnimationFrame((function(key3,elm2) {
+									return function(i2) {
+										elm2[0].removeAttribute(key3[0]);
+									};
+								})(key2,elm1));
+							} else {
+								window.requestAnimationFrame((function(key4,elm3,cur1) {
+									return function(i3) {
+										elm3[0].setAttribute(key4[0],cur1[0]);
+									};
+								})(key2,elm1,cur));
+							}
 						}
 					}
-				}
-				var _g2 = 0;
-				var _g11 = Object.keys(oldAttrs);
-				while(_g2 < _g11.length) {
-					var key5 = [_g11[_g2]];
-					++_g2;
-					if(!Object.prototype.hasOwnProperty.call(attrs,key5[0])) {
-						window.requestAnimationFrame((function(key6,elm4) {
-							return function(i4) {
-								elm4[0].removeAttribute(key6[0]);
-							};
-						})(key5,elm1));
+					var _g2 = 0;
+					var _g11 = Object.keys(oldAttrs);
+					while(_g2 < _g11.length) {
+						var key5 = [_g11[_g2]];
+						++_g2;
+						if(!Object.prototype.hasOwnProperty.call(attrs,key5[0])) {
+							window.requestAnimationFrame((function(key6,elm4) {
+								return function(i4) {
+									elm4[0].removeAttribute(key6[0]);
+								};
+							})(key5,elm1));
+						}
 					}
 				}
 				var key7;
@@ -830,40 +834,42 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				var elm13 = [vnode1.elm];
 				var oldAttrs1 = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
 				var attrs1 = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
-				var _g7 = 0;
-				var _g16 = Object.keys(attrs1);
-				while(_g7 < _g16.length) {
-					var key10 = [_g16[_g7]];
-					++_g7;
-					cur7[0] = attrs1[key10[0]];
-					old3 = oldAttrs1[key10[0]];
-					if(old3 != cur7[0]) {
-						if(!cur7[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key10[0]]) {
-							window.requestAnimationFrame((function(key11,elm14) {
-								return function(i12) {
-									elm14[0].removeAttribute(key11[0]);
-								};
-							})(key10,elm13));
-						} else {
-							window.requestAnimationFrame((function(key12,elm15,cur8) {
-								return function(i13) {
-									elm15[0].setAttribute(key12[0],cur8[0]);
-								};
-							})(key10,elm13,cur7));
+				if(vnode1.skip_attributes == null) {
+					var _g7 = 0;
+					var _g16 = Object.keys(attrs1);
+					while(_g7 < _g16.length) {
+						var key10 = [_g16[_g7]];
+						++_g7;
+						cur7[0] = attrs1[key10[0]];
+						old3 = oldAttrs1[key10[0]];
+						if(old3 != cur7[0]) {
+							if(!cur7[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key10[0]]) {
+								window.requestAnimationFrame((function(key11,elm14) {
+									return function(i12) {
+										elm14[0].removeAttribute(key11[0]);
+									};
+								})(key10,elm13));
+							} else {
+								window.requestAnimationFrame((function(key12,elm15,cur8) {
+									return function(i13) {
+										elm15[0].setAttribute(key12[0],cur8[0]);
+									};
+								})(key10,elm13,cur7));
+							}
 						}
 					}
-				}
-				var _g8 = 0;
-				var _g17 = Object.keys(oldAttrs1);
-				while(_g8 < _g17.length) {
-					var key13 = [_g17[_g8]];
-					++_g8;
-					if(!Object.prototype.hasOwnProperty.call(attrs1,key13[0])) {
-						window.requestAnimationFrame((function(key14,elm16) {
-							return function(i14) {
-								elm16[0].removeAttribute(key14[0]);
-							};
-						})(key13,elm13));
+					var _g8 = 0;
+					var _g17 = Object.keys(oldAttrs1);
+					while(_g8 < _g17.length) {
+						var key13 = [_g17[_g8]];
+						++_g8;
+						if(!Object.prototype.hasOwnProperty.call(attrs1,key13[0])) {
+							window.requestAnimationFrame((function(key14,elm16) {
+								return function(i14) {
+									elm16[0].removeAttribute(key14[0]);
+								};
+							})(key13,elm13));
+						}
 					}
 				}
 				var key15;
@@ -1183,40 +1189,42 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 		var elm1 = vnode.elm;
 		var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
 		var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
-		var _g = 0;
-		var _g1 = Object.keys(attrs);
-		while(_g < _g1.length) {
-			var key1 = [_g1[_g]];
-			++_g;
-			cur = attrs[key1[0]];
-			old = oldAttrs[key1[0]];
-			if(old != cur) {
-				if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
-					window.requestAnimationFrame((function(key2) {
-						return function(i1) {
-							elm1.removeAttribute(key2[0]);
-						};
-					})(key1));
-				} else {
-					window.requestAnimationFrame((function(key3) {
-						return function(i2) {
-							elm1.setAttribute(key3[0],cur);
-						};
-					})(key1));
+		if(vnode.skip_attributes == null) {
+			var _g = 0;
+			var _g1 = Object.keys(attrs);
+			while(_g < _g1.length) {
+				var key1 = [_g1[_g]];
+				++_g;
+				cur = attrs[key1[0]];
+				old = oldAttrs[key1[0]];
+				if(old != cur) {
+					if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
+						window.requestAnimationFrame((function(key2) {
+							return function(i1) {
+								elm1.removeAttribute(key2[0]);
+							};
+						})(key1));
+					} else {
+						window.requestAnimationFrame((function(key3) {
+							return function(i2) {
+								elm1.setAttribute(key3[0],cur);
+							};
+						})(key1));
+					}
 				}
 			}
-		}
-		var _g2 = 0;
-		var _g11 = Object.keys(oldAttrs);
-		while(_g2 < _g11.length) {
-			var key4 = [_g11[_g2]];
-			++_g2;
-			if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
-				window.requestAnimationFrame((function(key5) {
-					return function(i3) {
-						elm1.removeAttribute(key5[0]);
-					};
-				})(key4));
+			var _g2 = 0;
+			var _g11 = Object.keys(oldAttrs);
+			while(_g2 < _g11.length) {
+				var key4 = [_g11[_g2]];
+				++_g2;
+				if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
+					window.requestAnimationFrame((function(key5) {
+						return function(i3) {
+							elm1.removeAttribute(key5[0]);
+						};
+					})(key4));
+				}
 			}
 		}
 		var key6;
@@ -1417,40 +1425,42 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 					var elm7 = [vnode1.elm];
 					var oldAttrs1 = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
 					var attrs1 = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
-					var _g7 = 0;
-					var _g16 = Object.keys(attrs1);
-					while(_g7 < _g16.length) {
-						var key9 = [_g16[_g7]];
-						++_g7;
-						cur5[0] = attrs1[key9[0]];
-						old3 = oldAttrs1[key9[0]];
-						if(old3 != cur5[0]) {
-							if(!cur5[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key9[0]]) {
-								window.requestAnimationFrame((function(key10,elm8) {
-									return function(i11) {
-										elm8[0].removeAttribute(key10[0]);
-									};
-								})(key9,elm7));
-							} else {
-								window.requestAnimationFrame((function(key11,elm9,cur6) {
-									return function(i12) {
-										elm9[0].setAttribute(key11[0],cur6[0]);
-									};
-								})(key9,elm7,cur5));
+					if(vnode1.skip_attributes == null) {
+						var _g7 = 0;
+						var _g16 = Object.keys(attrs1);
+						while(_g7 < _g16.length) {
+							var key9 = [_g16[_g7]];
+							++_g7;
+							cur5[0] = attrs1[key9[0]];
+							old3 = oldAttrs1[key9[0]];
+							if(old3 != cur5[0]) {
+								if(!cur5[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key9[0]]) {
+									window.requestAnimationFrame((function(key10,elm8) {
+										return function(i11) {
+											elm8[0].removeAttribute(key10[0]);
+										};
+									})(key9,elm7));
+								} else {
+									window.requestAnimationFrame((function(key11,elm9,cur6) {
+										return function(i12) {
+											elm9[0].setAttribute(key11[0],cur6[0]);
+										};
+									})(key9,elm7,cur5));
+								}
 							}
 						}
-					}
-					var _g8 = 0;
-					var _g17 = Object.keys(oldAttrs1);
-					while(_g8 < _g17.length) {
-						var key12 = [_g17[_g8]];
-						++_g8;
-						if(!Object.prototype.hasOwnProperty.call(attrs1,key12[0])) {
-							window.requestAnimationFrame((function(key13,elm10) {
-								return function(i13) {
-									elm10[0].removeAttribute(key13[0]);
-								};
-							})(key12,elm7));
+						var _g8 = 0;
+						var _g17 = Object.keys(oldAttrs1);
+						while(_g8 < _g17.length) {
+							var key12 = [_g17[_g8]];
+							++_g8;
+							if(!Object.prototype.hasOwnProperty.call(attrs1,key12[0])) {
+								window.requestAnimationFrame((function(key13,elm10) {
+									return function(i13) {
+										elm10[0].removeAttribute(key13[0]);
+									};
+								})(key12,elm7));
+							}
 						}
 					}
 					var key14;
@@ -1796,40 +1806,42 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 			var elm1 = vnode1.elm;
 			var oldAttrs = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
 			var attrs = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
-			var _g = 0;
-			var _g1 = Object.keys(attrs);
-			while(_g < _g1.length) {
-				var key1 = [_g1[_g]];
-				++_g;
-				cur = attrs[key1[0]];
-				old = oldAttrs[key1[0]];
-				if(old != cur) {
-					if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
-						window.requestAnimationFrame((function(key2) {
-							return function(i2) {
-								elm1.removeAttribute(key2[0]);
-							};
-						})(key1));
-					} else {
-						window.requestAnimationFrame((function(key3) {
-							return function(i3) {
-								elm1.setAttribute(key3[0],cur);
-							};
-						})(key1));
+			if(vnode1.skip_attributes == null) {
+				var _g = 0;
+				var _g1 = Object.keys(attrs);
+				while(_g < _g1.length) {
+					var key1 = [_g1[_g]];
+					++_g;
+					cur = attrs[key1[0]];
+					old = oldAttrs[key1[0]];
+					if(old != cur) {
+						if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
+							window.requestAnimationFrame((function(key2) {
+								return function(i2) {
+									elm1.removeAttribute(key2[0]);
+								};
+							})(key1));
+						} else {
+							window.requestAnimationFrame((function(key3) {
+								return function(i3) {
+									elm1.setAttribute(key3[0],cur);
+								};
+							})(key1));
+						}
 					}
 				}
-			}
-			var _g2 = 0;
-			var _g11 = Object.keys(oldAttrs);
-			while(_g2 < _g11.length) {
-				var key4 = [_g11[_g2]];
-				++_g2;
-				if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
-					window.requestAnimationFrame((function(key5) {
-						return function(i4) {
-							elm1.removeAttribute(key5[0]);
-						};
-					})(key4));
+				var _g2 = 0;
+				var _g11 = Object.keys(oldAttrs);
+				while(_g2 < _g11.length) {
+					var key4 = [_g11[_g2]];
+					++_g2;
+					if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
+						window.requestAnimationFrame((function(key5) {
+							return function(i4) {
+								elm1.removeAttribute(key5[0]);
+							};
+						})(key4));
+					}
 				}
 			}
 			var key6;
