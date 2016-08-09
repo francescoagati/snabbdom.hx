@@ -339,10 +339,10 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 		var _g5 = 0;
 		var _g14 = Object.keys(style);
 		while(_g5 < _g14.length) {
-			var name5 = _g14[_g5];
+			var name5 = [_g14[_g5]];
 			++_g5;
-			cur3 = style[name5];
-			if(name5 == "delayed") {
+			cur3 = style[name5[0]];
+			if(name5[0] == "delayed") {
 				var delayed = style.delayed;
 				var oldDelayed = oldStyle.delayed;
 				var _g21 = 0;
@@ -365,11 +365,15 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 						})(fn));
 					}
 				}
-			} else if(name5 != "remove" && cur3 != oldStyle[name5]) {
-				elm4.style[name5] = cur3;
+			} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
+				window.requestAnimationFrame((function(name7) {
+					return function(i8) {
+						elm4.style[name7[0]] = cur3;
+					};
+				})(name5));
 			}
 		}
-		var name7;
+		var name8;
 		var cur4;
 		var old2;
 		var elm5 = vnode.elm;
@@ -379,15 +383,15 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 			var _g6 = 0;
 			var _g15 = Object.keys(on);
 			while(_g6 < _g15.length) {
-				var name8 = _g15[_g6];
+				var name9 = _g15[_g6];
 				++_g6;
-				cur4 = on[name8];
-				old2 = oldOn[name8];
+				cur4 = on[name9];
+				old2 = oldOn[name9];
 				if(old2 == null) {
-					on[name8] = cur4;
-					elm5.addEventListener(name8,cur4);
+					on[name9] = cur4;
+					elm5.addEventListener(name9,cur4);
 				} else {
-					on[name8] = cur4;
+					on[name9] = cur4;
 				}
 			}
 		}
@@ -645,19 +649,19 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						}
 					}
 				}
-				var cur4;
+				var cur4 = [];
 				var name4;
-				var elm9 = vnode.elm;
+				var elm9 = [vnode.elm];
 				var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
 				var style = vnode.data.style == null?{ }:vnode.data.style;
 				var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
 				var _g5 = 0;
 				var _g14 = Object.keys(style);
 				while(_g5 < _g14.length) {
-					var name5 = _g14[_g5];
+					var name5 = [_g14[_g5]];
 					++_g5;
-					cur4 = style[name5];
-					if(name5 == "delayed") {
+					cur4[0] = style[name5[0]];
+					if(name5[0] == "delayed") {
 						var delayed = style.delayed;
 						var oldDelayed = oldStyle.delayed;
 						var _g21 = 0;
@@ -665,14 +669,16 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						while(_g21 < _g31.length) {
 							var name6 = _g31[_g21];
 							++_g21;
-							cur4 = delayed[name6];
-							if(!oldHasDel || cur4 != oldDelayed[name6]) {
-								var obj = [elm9.style];
-								var fn = [(function(val,prop,obj1) {
+							cur4[0] = delayed[name6];
+							if(!oldHasDel || cur4[0] != oldDelayed[name6]) {
+								var obj = [elm9[0].style];
+								var prop = [name6];
+								var val = [cur4[0]];
+								var fn = [(function(val1,prop1,obj1) {
 									return function(i7) {
-										obj1[0][prop[0]] = val[0];
+										obj1[0][prop1[0]] = val1[0];
 									};
-								})([cur4],[name6],obj)];
+								})(val,prop,obj)];
 								window.requestAnimationFrame((function(fn1) {
 									return function(i8) {
 										window.requestAnimationFrame(fn1[0]);
@@ -680,29 +686,33 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 								})(fn));
 							}
 						}
-					} else if(name5 != "remove" && cur4 != oldStyle[name5]) {
-						elm9.style[name5] = cur4;
+					} else if(name5[0] != "remove" && cur4[0] != oldStyle[name5[0]]) {
+						window.requestAnimationFrame((function(name7,elm10,cur5) {
+							return function(i9) {
+								elm10[0].style[name7[0]] = cur5[0];
+							};
+						})(name5,elm9,cur4));
 					}
 				}
-				var name7;
-				var cur5;
+				var name8;
+				var cur6;
 				var old2;
-				var elm10 = vnode.elm;
+				var elm11 = vnode.elm;
 				var oldOn = oldVnode.data.on == null?{ }:oldVnode.data.on;
 				var on = vnode.data.on == null?{ }:vnode.data.on;
 				if(on != { }) {
 					var _g6 = 0;
 					var _g15 = Object.keys(on);
 					while(_g6 < _g15.length) {
-						var name8 = _g15[_g6];
+						var name9 = _g15[_g6];
 						++_g6;
-						cur5 = on[name8];
-						old2 = oldOn[name8];
+						cur6 = on[name9];
+						old2 = oldOn[name9];
 						if(old2 == null) {
-							on[name8] = cur5;
-							elm10.addEventListener(name8,cur5);
+							on[name9] = cur6;
+							elm11.addEventListener(name9,cur6);
 						} else {
-							on[name8] = cur5;
+							on[name9] = cur6;
 						}
 					}
 				}
@@ -739,31 +749,31 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 			before = newCh[newEndIdx + 1].elm;
 		}
 		var startIdx = newStartIdx;
-		var i9;
+		var i10;
 		var new_node2;
-		i9 = 0;
+		i10 = 0;
 		while(startIdx <= newEndIdx) {
 			var vnode1 = newCh[startIdx];
-			var i10;
+			var i11;
 			var data1 = vnode1.data;
 			if(data1 != undefined) {
 				var tmp3;
-				i10 = data1.hook;
-				if(i10 != undefined) {
-					i10 = i10.init;
-					tmp3 = i10 != undefined;
+				i11 = data1.hook;
+				if(i11 != undefined) {
+					i11 = i11.init;
+					tmp3 = i11 != undefined;
 				} else {
 					tmp3 = false;
 				}
 				if(tmp3) {
-					i10(vnode1);
+					i11(vnode1);
 				}
-				i10 = data1.vnode;
-				if(i10 != undefined) {
-					vnode1 = i10;
+				i11 = data1.vnode;
+				if(i11 != undefined) {
+					vnode1 = i11;
 				}
 			}
-			var elm11;
+			var elm12;
 			var children1 = vnode1.children;
 			var sel1 = vnode1.sel;
 			if(sel1 != undefined) {
@@ -775,35 +785,35 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				var tmp4;
 				var tmp5;
 				if(data1 != undefined) {
-					i10 = data1.ns;
-					tmp5 = i10 != undefined;
+					i11 = data1.ns;
+					tmp5 = i11 != undefined;
 				} else {
 					tmp5 = false;
 				}
 				if(tmp5) {
-					tmp4 = window.document.createElementNS(i10,tag1);
+					tmp4 = window.document.createElementNS(i11,tag1);
 				} else {
 					tmp4 = window.document.createElement(tag1);
 				}
-				elm11 = vnode1.elm = tmp4;
+				elm12 = vnode1.elm = tmp4;
 				if(hash1 < dot1) {
-					elm11.id = sel1.slice(hash1 + 1,dot1);
+					elm12.id = sel1.slice(hash1 + 1,dot1);
 				}
 				if(Array.isArray(children1)) {
-					i10 = 0;
-					while(i10 < children1.length) {
-						var new_node3 = snabbdom_engine_dom_PatchDom.createElm(children1[i10],insertedVnodeQueue);
-						elm11.appendChild(new_node3);
-						++i10;
+					i11 = 0;
+					while(i11 < children1.length) {
+						var new_node3 = snabbdom_engine_dom_PatchDom.createElm(children1[i11],insertedVnodeQueue);
+						elm12.appendChild(new_node3);
+						++i11;
 					}
 				} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") {
-					elm11.appendChild(window.document.createTextNode(vnode1.text));
+					elm12.appendChild(window.document.createTextNode(vnode1.text));
 				}
 				var oldVnode1 = snabbdom_engine_dom_PatchDom.emptyNode;
 				var key9;
-				var cur6 = [];
+				var cur7 = [];
 				var old3;
-				var elm12 = [vnode1.elm];
+				var elm13 = [vnode1.elm];
 				var oldAttrs1 = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
 				var attrs1 = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
 				var _g7 = 0;
@@ -811,21 +821,21 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				while(_g7 < _g16.length) {
 					var key10 = [_g16[_g7]];
 					++_g7;
-					cur6[0] = attrs1[key10[0]];
+					cur7[0] = attrs1[key10[0]];
 					old3 = oldAttrs1[key10[0]];
-					if(old3 != cur6[0]) {
-						if(!cur6[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key10[0]]) {
-							window.requestAnimationFrame((function(key11,elm13) {
-								return function(i11) {
-									elm13[0].removeAttribute(key11[0]);
-								};
-							})(key10,elm12));
-						} else {
-							window.requestAnimationFrame((function(key12,elm14,cur7) {
+					if(old3 != cur7[0]) {
+						if(!cur7[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key10[0]]) {
+							window.requestAnimationFrame((function(key11,elm14) {
 								return function(i12) {
-									elm14[0].setAttribute(key12[0],cur7[0]);
+									elm14[0].removeAttribute(key11[0]);
 								};
-							})(key10,elm12,cur6));
+							})(key10,elm13));
+						} else {
+							window.requestAnimationFrame((function(key12,elm15,cur8) {
+								return function(i13) {
+									elm15[0].setAttribute(key12[0],cur8[0]);
+								};
+							})(key10,elm13,cur7));
 						}
 					}
 				}
@@ -835,17 +845,17 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					var key13 = [_g17[_g8]];
 					++_g8;
 					if(!Object.prototype.hasOwnProperty.call(attrs1,key13[0])) {
-						window.requestAnimationFrame((function(key14,elm15) {
-							return function(i13) {
-								elm15[0].removeAttribute(key14[0]);
+						window.requestAnimationFrame((function(key14,elm16) {
+							return function(i14) {
+								elm16[0].removeAttribute(key14[0]);
 							};
-						})(key13,elm12));
+						})(key13,elm13));
 					}
 				}
 				var key15;
-				var cur8;
+				var cur9;
 				var old4;
-				var elm16 = vnode1.elm;
+				var elm17 = vnode1.elm;
 				var oldProps1 = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
 				var props1 = vnode1.data.props == null?{ }:vnode1.data.props;
 				var _g9 = 0;
@@ -853,114 +863,120 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				while(_g9 < _g18.length) {
 					var key16 = _g18[_g9];
 					++_g9;
-					cur8 = props1[key16];
+					cur9 = props1[key16];
 					old4 = oldProps1[key16];
-					if(old4 != cur8) {
-						elm16[key16] = cur8;
+					if(old4 != cur9) {
+						elm17[key16] = cur9;
 					}
 				}
-				var cur9;
-				var name9;
-				var elm17 = [vnode1.elm];
+				var cur10;
+				var name10;
+				var elm18 = [vnode1.elm];
 				var oldClass1 = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
 				var klass1 = vnode1.data.classes == null?{ }:vnode1.data.classes;
 				var _g10 = 0;
 				var _g19 = Object.keys(klass1);
 				while(_g10 < _g19.length) {
-					var name10 = [_g19[_g10]];
+					var name11 = [_g19[_g10]];
 					++_g10;
-					cur9 = klass1[name10[0]];
-					if(cur9 != oldClass1[name10[0]]) {
-						if(cur9 == "add") {
-							window.requestAnimationFrame((function(name11,elm18) {
-								return function(i14) {
-									elm18[0].classList.add(name11[0]);
-								};
-							})(name10,elm17));
-						} else if(cur9 == "remove") {
+					cur10 = klass1[name11[0]];
+					if(cur10 != oldClass1[name11[0]]) {
+						if(cur10 == "add") {
 							window.requestAnimationFrame((function(name12,elm19) {
 								return function(i15) {
-									elm19[0].classList.remove(name12[0]);
+									elm19[0].classList.add(name12[0]);
 								};
-							})(name10,elm17));
+							})(name11,elm18));
+						} else if(cur10 == "remove") {
+							window.requestAnimationFrame((function(name13,elm20) {
+								return function(i16) {
+									elm20[0].classList.remove(name13[0]);
+								};
+							})(name11,elm18));
 						}
 					}
 				}
-				var cur10;
-				var name13;
-				var elm20 = vnode1.elm;
+				var cur11 = [];
+				var name14;
+				var elm21 = [vnode1.elm];
 				var oldStyle1 = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
 				var style1 = vnode1.data.style == null?{ }:vnode1.data.style;
 				var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
 				var _g20 = 0;
 				var _g110 = Object.keys(style1);
 				while(_g20 < _g110.length) {
-					var name14 = _g110[_g20];
+					var name15 = [_g110[_g20]];
 					++_g20;
-					cur10 = style1[name14];
-					if(name14 == "delayed") {
+					cur11[0] = style1[name15[0]];
+					if(name15[0] == "delayed") {
 						var delayed1 = style1.delayed;
 						var oldDelayed1 = oldStyle1.delayed;
 						var _g22 = 0;
 						var _g32 = Object.keys(delayed1);
 						while(_g22 < _g32.length) {
-							var name15 = _g32[_g22];
+							var name16 = _g32[_g22];
 							++_g22;
-							cur10 = delayed1[name15];
-							if(!oldHasDel1 || cur10 != oldDelayed1[name15]) {
-								var obj2 = [elm20.style];
-								var fn2 = [(function(val1,prop1,obj3) {
-									return function(i16) {
-										obj3[0][prop1[0]] = val1[0];
-									};
-								})([cur10],[name15],obj2)];
-								window.requestAnimationFrame((function(fn3) {
+							cur11[0] = delayed1[name16];
+							if(!oldHasDel1 || cur11[0] != oldDelayed1[name16]) {
+								var obj2 = [elm21[0].style];
+								var prop2 = [name16];
+								var val2 = [cur11[0]];
+								var fn2 = [(function(val3,prop3,obj3) {
 									return function(i17) {
+										obj3[0][prop3[0]] = val3[0];
+									};
+								})(val2,prop2,obj2)];
+								window.requestAnimationFrame((function(fn3) {
+									return function(i18) {
 										window.requestAnimationFrame(fn3[0]);
 									};
 								})(fn2));
 							}
 						}
-					} else if(name14 != "remove" && cur10 != oldStyle1[name14]) {
-						elm20.style[name14] = cur10;
+					} else if(name15[0] != "remove" && cur11[0] != oldStyle1[name15[0]]) {
+						window.requestAnimationFrame((function(name17,elm22,cur12) {
+							return function(i19) {
+								elm22[0].style[name17[0]] = cur12[0];
+							};
+						})(name15,elm21,cur11));
 					}
 				}
-				var name16;
-				var cur11;
+				var name18;
+				var cur13;
 				var old5;
-				var elm21 = vnode1.elm;
+				var elm23 = vnode1.elm;
 				var oldOn1 = oldVnode1.data.on == null?{ }:oldVnode1.data.on;
 				var on1 = vnode1.data.on == null?{ }:vnode1.data.on;
 				if(on1 != { }) {
 					var _g23 = 0;
 					var _g111 = Object.keys(on1);
 					while(_g23 < _g111.length) {
-						var name17 = _g111[_g23];
+						var name19 = _g111[_g23];
 						++_g23;
-						cur11 = on1[name17];
-						old5 = oldOn1[name17];
+						cur13 = on1[name19];
+						old5 = oldOn1[name19];
 						if(old5 == null) {
-							on1[name17] = cur11;
-							elm21.addEventListener(name17,cur11);
+							on1[name19] = cur13;
+							elm23.addEventListener(name19,cur13);
 						} else {
-							on1[name17] = cur11;
+							on1[name19] = cur13;
 						}
 					}
 				}
 				if(vnode1.data != null) {
-					i10 = vnode1.data.hook;
-					if(i10 != undefined) {
-						if(i10.create) {
-							i10.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
+					i11 = vnode1.data.hook;
+					if(i11 != undefined) {
+						if(i11.create) {
+							i11.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
 						}
-						if(i10.insert) {
+						if(i11.insert) {
 							insertedVnodeQueue.push(vnode1);
 						}
 					}
 				}
 			} else {
 				var this3 = window.document.createTextNode(vnode1.text);
-				elm11 = vnode1.elm = this3;
+				elm12 = vnode1.elm = this3;
 			}
 			new_node2 = vnode1.elm;
 			parentElm.insertBefore(new_node2,before);
@@ -971,30 +987,30 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 		var y;
 		y = 0;
 		while(startIdx1 <= oldEndIdx) {
-			var i18;
+			var i20;
 			var listeners;
 			var rm = null;
 			var ch = oldCh[startIdx1];
 			if(ch != undefined) {
 				if(ch.sel != undefined) {
 					var vnode2 = ch;
-					var i19 = vnode2.data;
+					var i21 = vnode2.data;
 					var j;
-					if(i19 != undefined) {
+					if(i21 != undefined) {
 						var tmp6;
-						i19 = i19.hook;
-						if(i19 != undefined) {
-							i19 = i19.destroy;
-							tmp6 = i19 != undefined;
+						i21 = i21.hook;
+						if(i21 != undefined) {
+							i21 = i21.destroy;
+							tmp6 = i21 != undefined;
 						} else {
 							tmp6 = false;
 						}
 						if(tmp6) {
-							i19(vnode2);
+							i21(vnode2);
 						}
 						var style2 = null;
-						var name18;
-						var elm22 = vnode2.elm;
+						var name20;
+						var elm24 = vnode2.elm;
 						var s = vnode2.data.style;
 						if(s != null) {
 							style2 = s.destroy;
@@ -1002,14 +1018,14 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 								var _g24 = 0;
 								var _g112 = Object.keys(style2);
 								while(_g24 < _g112.length) {
-									var name19 = _g112[_g24];
+									var name21 = _g112[_g24];
 									++_g24;
-									elm22.style[name19] = style2[name19];
+									elm24.style[name21] = style2[name21];
 								}
 							}
 						}
-						i19 = vnode2.children;
-						if(i19 != undefined) {
+						i21 = vnode2.children;
+						if(i21 != undefined) {
 							j = 0;
 							while(j < vnode2.children.length) {
 								snabbdom_engine_dom_PatchDom.invokeDestroyHook(vnode2.children[j]);
@@ -1025,10 +1041,10 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							rm1[0]();
 						}
 					} else {
-						var name20;
-						var elm23 = [vnode3.elm];
+						var name22;
+						var elm25 = [vnode3.elm];
 						var idx;
-						var i20 = 0;
+						var i22 = 0;
 						var maxDur = 0;
 						var compStyle;
 						var style3 = s1.remove;
@@ -1037,50 +1053,50 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						var _g25 = 0;
 						var _g113 = Object.keys(style3);
 						while(_g25 < _g113.length) {
-							var name21 = _g113[_g25];
+							var name23 = _g113[_g25];
 							++_g25;
-							applied.push(name21);
-							elm23[0].style[name21] = style3[name21];
+							applied.push(name23);
+							elm25[0].style[name23] = style3[name23];
 						}
-						compStyle = window.getComputedStyle(elm23[0]);
+						compStyle = window.getComputedStyle(elm25[0]);
 						var props2 = compStyle["transition-property"].split(", ");
-						var i21;
-						i21 = 0;
-						while(i21 < props2.length) {
-							if(applied.indexOf(props2[i21]) != -1) {
+						var i23;
+						i23 = 0;
+						while(i23 < props2.length) {
+							if(applied.indexOf(props2[i23]) != -1) {
 								amount[0]++;
 							}
-							++i21;
+							++i23;
 						}
-						var tmp7 = (function(amount1,elm24,rm2) {
+						var tmp7 = (function(amount1,elm26,rm2) {
 							return function(ev) {
-								if(ev.target == elm24[0]) {
+								if(ev.target == elm26[0]) {
 									--amount1[0];
 								}
 								if(amount1[0] == 0) {
 									rm2[0]();
 								}
 							};
-						})(amount,elm23,rm1);
-						elm23[0].addEventListener("transitionend",tmp7);
+						})(amount,elm25,rm1);
+						elm25[0].addEventListener("transitionend",tmp7);
 					}
 					var tmp8;
 					var tmp9;
-					i18 = ch.data;
-					if(i18 != undefined) {
-						i18 = i18.hook;
-						tmp9 = i18 != undefined;
+					i20 = ch.data;
+					if(i20 != undefined) {
+						i20 = i20.hook;
+						tmp9 = i20 != undefined;
 					} else {
 						tmp9 = false;
 					}
 					if(tmp9) {
-						i18 = i18.remove;
-						tmp8 = i18 != undefined;
+						i20 = i20.remove;
+						tmp8 = i20 != undefined;
 					} else {
 						tmp8 = false;
 					}
 					if(tmp8) {
-						i18(ch,rm);
+						i20(ch,rm);
 					} else {
 						if(rm != null) {
 							rm();
@@ -1240,10 +1256,10 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 		var _g5 = 0;
 		var _g14 = Object.keys(style);
 		while(_g5 < _g14.length) {
-			var name5 = _g14[_g5];
+			var name5 = [_g14[_g5]];
 			++_g5;
-			cur3 = style[name5];
-			if(name5 == "delayed") {
+			cur3 = style[name5[0]];
+			if(name5[0] == "delayed") {
 				var delayed = style.delayed;
 				var oldDelayed = oldStyle.delayed;
 				var _g21 = 0;
@@ -1266,11 +1282,15 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						})(fn));
 					}
 				}
-			} else if(name5 != "remove" && cur3 != oldStyle[name5]) {
-				elm4.style[name5] = cur3;
+			} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
+				window.requestAnimationFrame((function(name7) {
+					return function(i8) {
+						elm4.style[name7[0]] = cur3;
+					};
+				})(name5));
 			}
 		}
-		var name7;
+		var name8;
 		var cur4;
 		var old2;
 		var elm5 = vnode.elm;
@@ -1280,15 +1300,15 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 			var _g6 = 0;
 			var _g15 = Object.keys(on);
 			while(_g6 < _g15.length) {
-				var name8 = _g15[_g6];
+				var name9 = _g15[_g6];
 				++_g6;
-				cur4 = on[name8];
-				old2 = oldOn[name8];
+				cur4 = on[name9];
+				old2 = oldOn[name9];
 				if(old2 == null) {
-					on[name8] = cur4;
-					elm5.addEventListener(name8,cur4);
+					on[name9] = cur4;
+					elm5.addEventListener(name9,cur4);
 				} else {
-					on[name8] = cur4;
+					on[name9] = cur4;
 				}
 			}
 		}
@@ -1312,28 +1332,28 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 		} else if(ch != undefined) {
 			var startIdx = 0;
 			var endIdx = ch.length - 1;
-			var i8;
+			var i9;
 			var new_node;
-			i8 = 0;
+			i9 = 0;
 			while(startIdx <= endIdx) {
 				var vnode1 = ch[startIdx];
-				var i9;
+				var i10;
 				var data = vnode1.data;
 				if(data != undefined) {
 					var tmp5;
-					i9 = data.hook;
-					if(i9 != undefined) {
-						i9 = i9.init;
-						tmp5 = i9 != undefined;
+					i10 = data.hook;
+					if(i10 != undefined) {
+						i10 = i10.init;
+						tmp5 = i10 != undefined;
 					} else {
 						tmp5 = false;
 					}
 					if(tmp5) {
-						i9(vnode1);
+						i10(vnode1);
 					}
-					i9 = data.vnode;
-					if(i9 != undefined) {
-						vnode1 = i9;
+					i10 = data.vnode;
+					if(i10 != undefined) {
+						vnode1 = i10;
 					}
 				}
 				var elm6;
@@ -1348,13 +1368,13 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 					var tmp6;
 					var tmp7;
 					if(data != undefined) {
-						i9 = data.ns;
-						tmp7 = i9 != undefined;
+						i10 = data.ns;
+						tmp7 = i10 != undefined;
 					} else {
 						tmp7 = false;
 					}
 					if(tmp7) {
-						tmp6 = window.document.createElementNS(i9,tag);
+						tmp6 = window.document.createElementNS(i10,tag);
 					} else {
 						tmp6 = window.document.createElement(tag);
 					}
@@ -1363,11 +1383,11 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						elm6.id = sel.slice(hash + 1,dot);
 					}
 					if(Array.isArray(children)) {
-						i9 = 0;
-						while(i9 < children.length) {
-							var new_node1 = snabbdom_engine_dom_PatchDom.createElm(children[i9],insertedVnodeQueue);
+						i10 = 0;
+						while(i10 < children.length) {
+							var new_node1 = snabbdom_engine_dom_PatchDom.createElm(children[i10],insertedVnodeQueue);
 							elm6.appendChild(new_node1);
-							++i9;
+							++i10;
 						}
 					} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") {
 						elm6.appendChild(window.document.createTextNode(vnode1.text));
@@ -1389,13 +1409,13 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						if(old3 != cur5[0]) {
 							if(!cur5[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key9[0]]) {
 								window.requestAnimationFrame((function(key10,elm8) {
-									return function(i10) {
+									return function(i11) {
 										elm8[0].removeAttribute(key10[0]);
 									};
 								})(key9,elm7));
 							} else {
 								window.requestAnimationFrame((function(key11,elm9,cur6) {
-									return function(i11) {
+									return function(i12) {
 										elm9[0].setAttribute(key11[0],cur6[0]);
 									};
 								})(key9,elm7,cur5));
@@ -1409,7 +1429,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						++_g8;
 						if(!Object.prototype.hasOwnProperty.call(attrs1,key12[0])) {
 							window.requestAnimationFrame((function(key13,elm10) {
-								return function(i12) {
+								return function(i13) {
 									elm10[0].removeAttribute(key13[0]);
 								};
 							})(key12,elm7));
@@ -1433,100 +1453,106 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						}
 					}
 					var cur8;
-					var name9;
+					var name10;
 					var elm12 = [vnode1.elm];
 					var oldClass1 = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
 					var klass1 = vnode1.data.classes == null?{ }:vnode1.data.classes;
 					var _g10 = 0;
 					var _g19 = Object.keys(klass1);
 					while(_g10 < _g19.length) {
-						var name10 = [_g19[_g10]];
+						var name11 = [_g19[_g10]];
 						++_g10;
-						cur8 = klass1[name10[0]];
-						if(cur8 != oldClass1[name10[0]]) {
+						cur8 = klass1[name11[0]];
+						if(cur8 != oldClass1[name11[0]]) {
 							if(cur8 == "add") {
-								window.requestAnimationFrame((function(name11,elm13) {
-									return function(i13) {
-										elm13[0].classList.add(name11[0]);
-									};
-								})(name10,elm12));
-							} else if(cur8 == "remove") {
-								window.requestAnimationFrame((function(name12,elm14) {
+								window.requestAnimationFrame((function(name12,elm13) {
 									return function(i14) {
-										elm14[0].classList.remove(name12[0]);
+										elm13[0].classList.add(name12[0]);
 									};
-								})(name10,elm12));
+								})(name11,elm12));
+							} else if(cur8 == "remove") {
+								window.requestAnimationFrame((function(name13,elm14) {
+									return function(i15) {
+										elm14[0].classList.remove(name13[0]);
+									};
+								})(name11,elm12));
 							}
 						}
 					}
-					var cur9;
-					var name13;
-					var elm15 = vnode1.elm;
+					var cur9 = [];
+					var name14;
+					var elm15 = [vnode1.elm];
 					var oldStyle1 = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
 					var style1 = vnode1.data.style == null?{ }:vnode1.data.style;
 					var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
 					var _g20 = 0;
 					var _g110 = Object.keys(style1);
 					while(_g20 < _g110.length) {
-						var name14 = _g110[_g20];
+						var name15 = [_g110[_g20]];
 						++_g20;
-						cur9 = style1[name14];
-						if(name14 == "delayed") {
+						cur9[0] = style1[name15[0]];
+						if(name15[0] == "delayed") {
 							var delayed1 = style1.delayed;
 							var oldDelayed1 = oldStyle1.delayed;
 							var _g22 = 0;
 							var _g32 = Object.keys(delayed1);
 							while(_g22 < _g32.length) {
-								var name15 = _g32[_g22];
+								var name16 = _g32[_g22];
 								++_g22;
-								cur9 = delayed1[name15];
-								if(!oldHasDel1 || cur9 != oldDelayed1[name15]) {
-									var obj2 = [elm15.style];
-									var fn2 = [(function(val1,prop1,obj3) {
-										return function(i15) {
-											obj3[0][prop1[0]] = val1[0];
-										};
-									})([cur9],[name15],obj2)];
-									window.requestAnimationFrame((function(fn3) {
+								cur9[0] = delayed1[name16];
+								if(!oldHasDel1 || cur9[0] != oldDelayed1[name16]) {
+									var obj2 = [elm15[0].style];
+									var prop1 = [name16];
+									var val1 = [cur9[0]];
+									var fn2 = [(function(val2,prop2,obj3) {
 										return function(i16) {
+											obj3[0][prop2[0]] = val2[0];
+										};
+									})(val1,prop1,obj2)];
+									window.requestAnimationFrame((function(fn3) {
+										return function(i17) {
 											window.requestAnimationFrame(fn3[0]);
 										};
 									})(fn2));
 								}
 							}
-						} else if(name14 != "remove" && cur9 != oldStyle1[name14]) {
-							elm15.style[name14] = cur9;
+						} else if(name15[0] != "remove" && cur9[0] != oldStyle1[name15[0]]) {
+							window.requestAnimationFrame((function(name17,elm16,cur10) {
+								return function(i18) {
+									elm16[0].style[name17[0]] = cur10[0];
+								};
+							})(name15,elm15,cur9));
 						}
 					}
-					var name16;
-					var cur10;
+					var name18;
+					var cur11;
 					var old5;
-					var elm16 = vnode1.elm;
+					var elm17 = vnode1.elm;
 					var oldOn1 = oldVnode1.data.on == null?{ }:oldVnode1.data.on;
 					var on1 = vnode1.data.on == null?{ }:vnode1.data.on;
 					if(on1 != { }) {
 						var _g23 = 0;
 						var _g111 = Object.keys(on1);
 						while(_g23 < _g111.length) {
-							var name17 = _g111[_g23];
+							var name19 = _g111[_g23];
 							++_g23;
-							cur10 = on1[name17];
-							old5 = oldOn1[name17];
+							cur11 = on1[name19];
+							old5 = oldOn1[name19];
 							if(old5 == null) {
-								on1[name17] = cur10;
-								elm16.addEventListener(name17,cur10);
+								on1[name19] = cur11;
+								elm17.addEventListener(name19,cur11);
 							} else {
-								on1[name17] = cur10;
+								on1[name19] = cur11;
 							}
 						}
 					}
 					if(vnode1.data != null) {
-						i9 = vnode1.data.hook;
-						if(i9 != undefined) {
-							if(i9.create) {
-								i9.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
+						i10 = vnode1.data.hook;
+						if(i10 != undefined) {
+							if(i10.create) {
+								i10.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
 							}
-							if(i9.insert) {
+							if(i10.insert) {
 								insertedVnodeQueue.push(vnode1);
 							}
 						}
@@ -1545,30 +1571,30 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 			var y;
 			y = 0;
 			while(startIdx1 <= endIdx1) {
-				var i17;
+				var i19;
 				var listeners;
 				var rm = null;
 				var ch1 = oldCh[startIdx1];
 				if(ch1 != undefined) {
 					if(ch1.sel != undefined) {
 						var vnode2 = ch1;
-						var i18 = vnode2.data;
+						var i20 = vnode2.data;
 						var j;
-						if(i18 != undefined) {
+						if(i20 != undefined) {
 							var tmp8;
-							i18 = i18.hook;
-							if(i18 != undefined) {
-								i18 = i18.destroy;
-								tmp8 = i18 != undefined;
+							i20 = i20.hook;
+							if(i20 != undefined) {
+								i20 = i20.destroy;
+								tmp8 = i20 != undefined;
 							} else {
 								tmp8 = false;
 							}
 							if(tmp8) {
-								i18(vnode2);
+								i20(vnode2);
 							}
 							var style2 = null;
-							var name18;
-							var elm17 = vnode2.elm;
+							var name20;
+							var elm18 = vnode2.elm;
 							var s = vnode2.data.style;
 							if(s != null) {
 								style2 = s.destroy;
@@ -1576,14 +1602,14 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 									var _g24 = 0;
 									var _g112 = Object.keys(style2);
 									while(_g24 < _g112.length) {
-										var name19 = _g112[_g24];
+										var name21 = _g112[_g24];
 										++_g24;
-										elm17.style[name19] = style2[name19];
+										elm18.style[name21] = style2[name21];
 									}
 								}
 							}
-							i18 = vnode2.children;
-							if(i18 != undefined) {
+							i20 = vnode2.children;
+							if(i20 != undefined) {
 								j = 0;
 								while(j < vnode2.children.length) {
 									snabbdom_engine_dom_PatchDom.invokeDestroyHook(vnode2.children[j]);
@@ -1599,10 +1625,10 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 								rm1[0]();
 							}
 						} else {
-							var name20;
-							var elm18 = [vnode3.elm];
+							var name22;
+							var elm19 = [vnode3.elm];
 							var idx;
-							var i19 = 0;
+							var i21 = 0;
 							var maxDur = 0;
 							var compStyle;
 							var style3 = s1.remove;
@@ -1611,50 +1637,50 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							var _g25 = 0;
 							var _g113 = Object.keys(style3);
 							while(_g25 < _g113.length) {
-								var name21 = _g113[_g25];
+								var name23 = _g113[_g25];
 								++_g25;
-								applied.push(name21);
-								elm18[0].style[name21] = style3[name21];
+								applied.push(name23);
+								elm19[0].style[name23] = style3[name23];
 							}
-							compStyle = window.getComputedStyle(elm18[0]);
+							compStyle = window.getComputedStyle(elm19[0]);
 							var props2 = compStyle["transition-property"].split(", ");
-							var i20;
-							i20 = 0;
-							while(i20 < props2.length) {
-								if(applied.indexOf(props2[i20]) != -1) {
+							var i22;
+							i22 = 0;
+							while(i22 < props2.length) {
+								if(applied.indexOf(props2[i22]) != -1) {
 									amount[0]++;
 								}
-								++i20;
+								++i22;
 							}
-							var tmp9 = (function(amount1,elm19,rm2) {
+							var tmp9 = (function(amount1,elm20,rm2) {
 								return function(ev) {
-									if(ev.target == elm19[0]) {
+									if(ev.target == elm20[0]) {
 										--amount1[0];
 									}
 									if(amount1[0] == 0) {
 										rm2[0]();
 									}
 								};
-							})(amount,elm18,rm1);
-							elm18[0].addEventListener("transitionend",tmp9);
+							})(amount,elm19,rm1);
+							elm19[0].addEventListener("transitionend",tmp9);
 						}
 						var tmp10;
 						var tmp11;
-						i17 = ch1.data;
-						if(i17 != undefined) {
-							i17 = i17.hook;
-							tmp11 = i17 != undefined;
+						i19 = ch1.data;
+						if(i19 != undefined) {
+							i19 = i19.hook;
+							tmp11 = i19 != undefined;
 						} else {
 							tmp11 = false;
 						}
 						if(tmp11) {
-							i17 = i17.remove;
-							tmp10 = i17 != undefined;
+							i19 = i19.remove;
+							tmp10 = i19 != undefined;
 						} else {
 							tmp10 = false;
 						}
 						if(tmp10) {
-							i17(ch1,rm);
+							i19(ch1,rm);
 						} else {
 							if(rm != null) {
 								rm();
@@ -1839,10 +1865,10 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 			var _g5 = 0;
 			var _g14 = Object.keys(style);
 			while(_g5 < _g14.length) {
-				var name5 = _g14[_g5];
+				var name5 = [_g14[_g5]];
 				++_g5;
-				cur3 = style[name5];
-				if(name5 == "delayed") {
+				cur3 = style[name5[0]];
+				if(name5[0] == "delayed") {
 					var delayed = style.delayed;
 					var oldDelayed = oldStyle.delayed;
 					var _g21 = 0;
@@ -1865,11 +1891,15 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 							})(fn));
 						}
 					}
-				} else if(name5 != "remove" && cur3 != oldStyle[name5]) {
-					elm4.style[name5] = cur3;
+				} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
+					window.requestAnimationFrame((function(name7) {
+						return function(i9) {
+							elm4.style[name7[0]] = cur3;
+						};
+					})(name5));
 				}
 			}
-			var name7;
+			var name8;
 			var cur4;
 			var old2;
 			var elm5 = vnode1.elm;
@@ -1879,15 +1909,15 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 				var _g6 = 0;
 				var _g15 = Object.keys(on);
 				while(_g6 < _g15.length) {
-					var name8 = _g15[_g6];
+					var name9 = _g15[_g6];
 					++_g6;
-					cur4 = on[name8];
-					old2 = oldOn[name8];
+					cur4 = on[name9];
+					old2 = oldOn[name9];
 					if(old2 == null) {
-						on[name8] = cur4;
-						elm5.addEventListener(name8,cur4);
+						on[name9] = cur4;
+						elm5.addEventListener(name9,cur4);
 					} else {
-						on[name8] = cur4;
+						on[name9] = cur4;
 					}
 				}
 			}

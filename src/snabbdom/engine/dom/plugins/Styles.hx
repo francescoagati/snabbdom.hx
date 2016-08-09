@@ -2,6 +2,7 @@ package snabbdom.engine.dom.plugins;
 
 import snabbdom.engine.dom.PatchDom.*;
 import snabbdom.Is.*;
+import snabbdom.engine.dom.plugins.Helpers.next_frame;
 using snabbdom.VirtualNodeDataTools;
 
 @:build(ClassicFor.build())
@@ -33,7 +34,7 @@ class Styles {
           }
         }
       } else if (name != 'remove' && cur != oldStyle[name]) {
-        untyped elm.style[name] = cur;
+        next_frame(untyped elm.style[name] = cur);
       }
     }
   }
