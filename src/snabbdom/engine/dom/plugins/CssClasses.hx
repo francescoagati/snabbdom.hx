@@ -2,6 +2,7 @@ package snabbdom.engine.dom.plugins;
 
 import snabbdom.engine.dom.PatchDom.*;
 import snabbdom.Is.*;
+import snabbdom.engine.dom.plugins.Helpers.next_frame;
 using snabbdom.VirtualNodeDataTools;
 
 class CssClasses {
@@ -15,8 +16,8 @@ class CssClasses {
     for (name in klass.keys()) {
       cur = klass[name];
       if (cur != oldClass[name]) {
-        if (cur == 'add') elm.classList.add(name);
-        else if (cur == 'remove') elm.classList.remove(name);
+        if (cur == 'add') next_frame(elm.classList.add(name));
+        else if (cur == 'remove') next_frame(elm.classList.remove(name));
 
       }
     }

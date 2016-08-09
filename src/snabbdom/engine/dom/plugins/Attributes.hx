@@ -2,6 +2,7 @@ package snabbdom.engine.dom.plugins;
 
 import snabbdom.engine.dom.PatchDom.*;
 import snabbdom.Is.*;
+import snabbdom.engine.dom.plugins.Helpers.next_frame;
 using snabbdom.VirtualNodeDataTools;
 
 @:build(ClassicFor.build())
@@ -39,9 +40,9 @@ class Attributes {
       if (old != cur) {
         // TODO: add support to namespaced attributes (setAttributeNS)
         if(!cur && booleanAttrsDict[key])
-          elm.removeAttribute(key);
+          next_frame(elm.removeAttribute(key));
         else
-          elm.setAttribute(key, cur);
+          next_frame(elm.setAttribute(key, cur));
       }
     }
     //remove removed attributes
