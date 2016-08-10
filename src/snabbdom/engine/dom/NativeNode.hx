@@ -1,4 +1,5 @@
 package snabbdom.engine.dom;
+import snabbdom.engine.dom.plugins.Helpers.*;
 
 abstract NativeNode(js.html.Element) from js.html.Element to js.html.Element {
 
@@ -35,16 +36,19 @@ abstract NativeNode(js.html.Element) from js.html.Element to js.html.Element {
    //public inline function set_parentElm(node) return this.parentElement = node;
 
    public inline function get_textContent() return this.textContent;
-   public inline function set_textContent(value) return this.textContent = value;
+   public inline function set_textContent(value) {
+     next_frame(this.textContent = value);
+     return value;
+   }
 
    public inline function addEventListener(name:String,cb:Dynamic->Void) this.addEventListener(name,cb);
 
-   public inline function appendChild(element) this.appendChild(element);
-   public inline function removeAttribute(attr) this.removeAttribute(attr);
-   public inline function setAttribute(key,value) this.setAttribute(key,value);
-   public inline function insertBefore(new_node,ref_node) this.insertBefore(new_node,ref_node);
-   public inline function removeChild(element)  this.removeChild(element);
-   public inline function replaceChild(e1,e2) this.replaceChild(e1,e2);
+   public inline function appendChild(element) next_frame(this.appendChild(element));
+   public inline function removeAttribute(attr) next_frame(this.removeAttribute(attr));
+   public inline function setAttribute(key,value) next_frame(this.setAttribute(key,value));
+   public inline function insertBefore(new_node,ref_node) next_frame(this.insertBefore(new_node,ref_node));
+   public inline function removeChild(element)  next_frame(this.removeChild(element));
+   public inline function replaceChild(e1,e2) next_frame(this.replaceChild(e1,e2));
 /*
   rc/snabbdom/PatchTraits.hx:83: characters 22-28 : Null<{ }> has no field id
   src/snabbdom/engine/dom/PatchDom.hx:14: lines 14-18 : Defined in this class

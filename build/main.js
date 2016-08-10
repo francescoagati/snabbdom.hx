@@ -251,11 +251,19 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 			i = 0;
 			while(i < children.length) {
 				var new_node = snabbdom_engine_dom_PatchDom.createElm(children[i],insertedVnodeQueue);
-				elm.appendChild(new_node);
+				window.requestAnimationFrame((function(element,this1) {
+					return function(i1) {
+						this1[0].appendChild(element[0]);
+					};
+				})([new_node],[elm]));
 				++i;
 			}
 		} else if(typeof vnode.text == "string" || typeof vnode.text == "number") {
-			elm.appendChild(window.document.createTextNode(vnode.text));
+			var this2 = elm;
+			var element1 = window.document.createTextNode(vnode.text);
+			window.requestAnimationFrame(function(i2) {
+				this2.appendChild(element1);
+			});
 		}
 		var oldVnode = snabbdom_engine_dom_PatchDom.emptyNode;
 		var key;
@@ -286,13 +294,13 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 				if(old != cur) {
 					if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
 						window.requestAnimationFrame((function(key2) {
-							return function(i1) {
+							return function(i3) {
 								elm1.removeAttribute(key2[0]);
 							};
 						})(key1));
 					} else {
 						window.requestAnimationFrame((function(key3) {
-							return function(i2) {
+							return function(i4) {
 								elm1.setAttribute(key3[0],cur);
 							};
 						})(key1));
@@ -306,7 +314,7 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 				++_g2;
 				if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
 					window.requestAnimationFrame((function(key5) {
-						return function(i3) {
+						return function(i5) {
 							elm1.removeAttribute(key5[0]);
 						};
 					})(key4));
@@ -345,13 +353,13 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 				if(cur2 != oldClass[name1[0]]) {
 					if(cur2 == "add") {
 						window.requestAnimationFrame((function(name2) {
-							return function(i4) {
+							return function(i6) {
 								elm3.classList.add(name2[0]);
 							};
 						})(name1));
 					} else if(cur2 == "remove") {
 						window.requestAnimationFrame((function(name3) {
-							return function(i5) {
+							return function(i7) {
 								elm3.classList.remove(name3[0]);
 							};
 						})(name1));
@@ -396,12 +404,12 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 						if(!oldHasDel || cur3 != oldDelayed[name6]) {
 							var obj = [elm4.style];
 							var fn = [(function(val,prop,obj1) {
-								return function(i6) {
+								return function(i8) {
 									obj1[0][prop[0]] = val[0];
 								};
 							})([cur3],[name6],obj)];
 							window.requestAnimationFrame((function(fn1) {
-								return function(i7) {
+								return function(i9) {
 									window.requestAnimationFrame(fn1[0]);
 								};
 							})(fn));
@@ -409,7 +417,7 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 					}
 				} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
 					window.requestAnimationFrame((function(name7) {
-						return function(i8) {
+						return function(i10) {
 							elm4.style[name7[0]] = cur3;
 						};
 					})(name5));
@@ -451,8 +459,8 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 			}
 		}
 	} else {
-		var this1 = window.document.createTextNode(vnode.text);
-		elm = vnode.elm = this1;
+		var this3 = window.document.createTextNode(vnode.text);
+		elm = vnode.elm = this3;
 	}
 	return vnode.elm;
 };
@@ -524,50 +532,60 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 		newEndVnode = newCh[--newEndIdx];
 	} else if(oldStartVnode.key == newEndVnode.key && oldStartVnode.sel == newEndVnode.sel) {
 		snabbdom_engine_dom_PatchDom.patchVnode(oldStartVnode,newEndVnode,insertedVnodeQueue);
-		var this1 = oldEndVnode.elm.nextSibling;
-		parentElm.insertBefore(oldStartVnode.elm,this1);
+		var this1 = [parentElm];
+		var new_node = [oldStartVnode.elm];
+		var this2 = oldEndVnode.elm.nextSibling;
+		window.requestAnimationFrame((function(ref_node,new_node1,this3) {
+			return function(i) {
+				this3[0].insertBefore(new_node1[0],ref_node[0]);
+			};
+		})([this2],new_node,this1));
 		oldStartVnode = oldCh[++oldStartIdx];
 		newEndVnode = newCh[--newEndIdx];
 	} else if(oldEndVnode.key == newStartVnode.key && oldEndVnode.sel == newStartVnode.sel) {
 		snabbdom_engine_dom_PatchDom.patchVnode(oldEndVnode,newStartVnode,insertedVnodeQueue);
-		parentElm.insertBefore(oldEndVnode.elm,oldStartVnode.elm);
+		window.requestAnimationFrame((function(ref_node1,new_node2,this4) {
+			return function(i1) {
+				this4[0].insertBefore(new_node2[0],ref_node1[0]);
+			};
+		})([oldStartVnode.elm],[oldEndVnode.elm],[parentElm]));
 		oldEndVnode = oldCh[--oldEndIdx];
 		newStartVnode = newCh[++newStartIdx];
 	} else {
 		if(oldKeyToIdx == undefined) {
-			var i;
+			var i2;
 			var map = { };
 			var key;
-			i = oldStartIdx;
-			while(i <= oldEndIdx) {
-				key = oldCh[i].key;
+			i2 = oldStartIdx;
+			while(i2 <= oldEndIdx) {
+				key = oldCh[i2].key;
 				if(key != undefined) {
-					map[key] = i;
+					map[key] = i2;
 				}
-				++i;
+				++i2;
 			}
 			oldKeyToIdx = map;
 		}
 		idxInOld = oldKeyToIdx[newStartVnode.key];
 		if(idxInOld == undefined) {
 			var vnode = newStartVnode;
-			var i1;
+			var i3;
 			var data = vnode.data;
 			if(data != undefined) {
 				var tmp;
-				i1 = data.hook;
-				if(i1 != undefined) {
-					i1 = i1.init;
-					tmp = i1 != undefined;
+				i3 = data.hook;
+				if(i3 != undefined) {
+					i3 = i3.init;
+					tmp = i3 != undefined;
 				} else {
 					tmp = false;
 				}
 				if(tmp) {
-					i1(vnode);
+					i3(vnode);
 				}
-				i1 = data.vnode;
-				if(i1 != undefined) {
-					vnode = i1;
+				i3 = data.vnode;
+				if(i3 != undefined) {
+					vnode = i3;
 				}
 			}
 			var elm;
@@ -582,13 +600,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				var tmp1;
 				var tmp2;
 				if(data != undefined) {
-					i1 = data.ns;
-					tmp2 = i1 != undefined;
+					i3 = data.ns;
+					tmp2 = i3 != undefined;
 				} else {
 					tmp2 = false;
 				}
 				if(tmp2) {
-					tmp1 = window.document.createElementNS(i1,tag);
+					tmp1 = window.document.createElementNS(i3,tag);
 				} else {
 					tmp1 = window.document.createElement(tag);
 				}
@@ -597,14 +615,24 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					elm.id = sel.slice(hash + 1,dot);
 				}
 				if(Array.isArray(children)) {
-					i1 = 0;
-					while(i1 < children.length) {
-						var new_node = snabbdom_engine_dom_PatchDom.createElm(children[i1],insertedVnodeQueue);
-						elm.appendChild(new_node);
-						++i1;
+					i3 = 0;
+					while(i3 < children.length) {
+						var new_node3 = snabbdom_engine_dom_PatchDom.createElm(children[i3],insertedVnodeQueue);
+						window.requestAnimationFrame((function(element,this5) {
+							return function(i4) {
+								this5[0].appendChild(element[0]);
+							};
+						})([new_node3],[elm]));
+						++i3;
 					}
 				} else if(typeof vnode.text == "string" || typeof vnode.text == "number") {
-					elm.appendChild(window.document.createTextNode(vnode.text));
+					var this6 = [elm];
+					var element1 = [window.document.createTextNode(vnode.text)];
+					window.requestAnimationFrame((function(element2,this7) {
+						return function(i5) {
+							this7[0].appendChild(element2[0]);
+						};
+					})(element1,this6));
 				}
 				var oldVnode = snabbdom_engine_dom_PatchDom.emptyNode;
 				var key1;
@@ -635,13 +663,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(old != cur[0]) {
 							if(!cur[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key2[0]]) {
 								window.requestAnimationFrame((function(key3,elm2) {
-									return function(i2) {
+									return function(i6) {
 										elm2[0].removeAttribute(key3[0]);
 									};
 								})(key2,elm1));
 							} else {
 								window.requestAnimationFrame((function(key4,elm3,cur1) {
-									return function(i3) {
+									return function(i7) {
 										elm3[0].setAttribute(key4[0],cur1[0]);
 									};
 								})(key2,elm1,cur));
@@ -655,7 +683,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						++_g2;
 						if(!Object.prototype.hasOwnProperty.call(attrs,key5[0])) {
 							window.requestAnimationFrame((function(key6,elm4) {
-								return function(i4) {
+								return function(i8) {
 									elm4[0].removeAttribute(key6[0]);
 								};
 							})(key5,elm1));
@@ -694,13 +722,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(cur3 != oldClass[name1[0]]) {
 							if(cur3 == "add") {
 								window.requestAnimationFrame((function(name2,elm7) {
-									return function(i5) {
+									return function(i9) {
 										elm7[0].classList.add(name2[0]);
 									};
 								})(name1,elm6));
 							} else if(cur3 == "remove") {
 								window.requestAnimationFrame((function(name3,elm8) {
-									return function(i6) {
+									return function(i10) {
 										elm8[0].classList.remove(name3[0]);
 									};
 								})(name1,elm6));
@@ -747,12 +775,12 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 									var prop = [name6];
 									var val = [cur4[0]];
 									var fn = [(function(val1,prop1,obj1) {
-										return function(i7) {
+										return function(i11) {
 											obj1[0][prop1[0]] = val1[0];
 										};
 									})(val,prop,obj)];
 									window.requestAnimationFrame((function(fn1) {
-										return function(i8) {
+										return function(i12) {
 											window.requestAnimationFrame(fn1[0]);
 										};
 									})(fn));
@@ -760,7 +788,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							}
 						} else if(name5[0] != "remove" && cur4[0] != oldStyle[name5[0]]) {
 							window.requestAnimationFrame((function(name7,elm10,cur5) {
-								return function(i9) {
+								return function(i13) {
 									elm10[0].style[name7[0]] = cur5[0];
 								};
 							})(name5,elm9,cur4));
@@ -791,28 +819,36 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					}
 				}
 				if(vnode.data != null) {
-					i1 = vnode.data.hook;
-					if(i1 != undefined) {
-						if(i1.create) {
-							i1.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode);
+					i3 = vnode.data.hook;
+					if(i3 != undefined) {
+						if(i3.create) {
+							i3.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode);
 						}
-						if(i1.insert) {
+						if(i3.insert) {
 							insertedVnodeQueue.push(vnode);
 						}
 					}
 				}
 			} else {
-				var this2 = window.document.createTextNode(vnode.text);
-				elm = vnode.elm = this2;
+				var this8 = window.document.createTextNode(vnode.text);
+				elm = vnode.elm = this8;
 			}
-			var new_node1 = vnode.elm;
-			parentElm.insertBefore(new_node1,oldStartVnode.elm);
+			var new_node4 = vnode.elm;
+			window.requestAnimationFrame((function(ref_node2,new_node5,this9) {
+				return function(i14) {
+					this9[0].insertBefore(new_node5[0],ref_node2[0]);
+				};
+			})([oldStartVnode.elm],[new_node4],[parentElm]));
 			newStartVnode = newCh[++newStartIdx];
 		} else {
 			elmToMove = oldCh[idxInOld];
 			snabbdom_engine_dom_PatchDom.patchVnode(elmToMove,newStartVnode,insertedVnodeQueue);
 			oldCh[idxInOld] = null;
-			parentElm.insertBefore(elmToMove.elm,oldStartVnode.elm);
+			window.requestAnimationFrame((function(ref_node3,new_node6,this10) {
+				return function(i15) {
+					this10[0].insertBefore(new_node6[0],ref_node3[0]);
+				};
+			})([oldStartVnode.elm],[elmToMove.elm],[parentElm]));
 			newStartVnode = newCh[++newStartIdx];
 		}
 	}
@@ -823,28 +859,28 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 			before = newCh[newEndIdx + 1].elm;
 		}
 		var startIdx = newStartIdx;
-		var i10;
-		var new_node2;
-		i10 = 0;
+		var i16;
+		var new_node7;
+		i16 = 0;
 		while(startIdx <= newEndIdx) {
 			var vnode1 = newCh[startIdx];
-			var i11;
+			var i17;
 			var data1 = vnode1.data;
 			if(data1 != undefined) {
 				var tmp3;
-				i11 = data1.hook;
-				if(i11 != undefined) {
-					i11 = i11.init;
-					tmp3 = i11 != undefined;
+				i17 = data1.hook;
+				if(i17 != undefined) {
+					i17 = i17.init;
+					tmp3 = i17 != undefined;
 				} else {
 					tmp3 = false;
 				}
 				if(tmp3) {
-					i11(vnode1);
+					i17(vnode1);
 				}
-				i11 = data1.vnode;
-				if(i11 != undefined) {
-					vnode1 = i11;
+				i17 = data1.vnode;
+				if(i17 != undefined) {
+					vnode1 = i17;
 				}
 			}
 			var elm12;
@@ -859,13 +895,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				var tmp4;
 				var tmp5;
 				if(data1 != undefined) {
-					i11 = data1.ns;
-					tmp5 = i11 != undefined;
+					i17 = data1.ns;
+					tmp5 = i17 != undefined;
 				} else {
 					tmp5 = false;
 				}
 				if(tmp5) {
-					tmp4 = window.document.createElementNS(i11,tag1);
+					tmp4 = window.document.createElementNS(i17,tag1);
 				} else {
 					tmp4 = window.document.createElement(tag1);
 				}
@@ -874,14 +910,24 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					elm12.id = sel1.slice(hash1 + 1,dot1);
 				}
 				if(Array.isArray(children1)) {
-					i11 = 0;
-					while(i11 < children1.length) {
-						var new_node3 = snabbdom_engine_dom_PatchDom.createElm(children1[i11],insertedVnodeQueue);
-						elm12.appendChild(new_node3);
-						++i11;
+					i17 = 0;
+					while(i17 < children1.length) {
+						var new_node8 = snabbdom_engine_dom_PatchDom.createElm(children1[i17],insertedVnodeQueue);
+						window.requestAnimationFrame((function(element3,this11) {
+							return function(i18) {
+								this11[0].appendChild(element3[0]);
+							};
+						})([new_node8],[elm12]));
+						++i17;
 					}
 				} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") {
-					elm12.appendChild(window.document.createTextNode(vnode1.text));
+					var this12 = [elm12];
+					var element4 = [window.document.createTextNode(vnode1.text)];
+					window.requestAnimationFrame((function(element5,this13) {
+						return function(i19) {
+							this13[0].appendChild(element5[0]);
+						};
+					})(element4,this12));
 				}
 				var oldVnode1 = snabbdom_engine_dom_PatchDom.emptyNode;
 				var key9;
@@ -912,13 +958,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(old3 != cur7[0]) {
 							if(!cur7[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key10[0]]) {
 								window.requestAnimationFrame((function(key11,elm14) {
-									return function(i12) {
+									return function(i20) {
 										elm14[0].removeAttribute(key11[0]);
 									};
 								})(key10,elm13));
 							} else {
 								window.requestAnimationFrame((function(key12,elm15,cur8) {
-									return function(i13) {
+									return function(i21) {
 										elm15[0].setAttribute(key12[0],cur8[0]);
 									};
 								})(key10,elm13,cur7));
@@ -932,7 +978,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						++_g8;
 						if(!Object.prototype.hasOwnProperty.call(attrs1,key13[0])) {
 							window.requestAnimationFrame((function(key14,elm16) {
-								return function(i14) {
+								return function(i22) {
 									elm16[0].removeAttribute(key14[0]);
 								};
 							})(key13,elm13));
@@ -971,13 +1017,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(cur10 != oldClass1[name11[0]]) {
 							if(cur10 == "add") {
 								window.requestAnimationFrame((function(name12,elm19) {
-									return function(i15) {
+									return function(i23) {
 										elm19[0].classList.add(name12[0]);
 									};
 								})(name11,elm18));
 							} else if(cur10 == "remove") {
 								window.requestAnimationFrame((function(name13,elm20) {
-									return function(i16) {
+									return function(i24) {
 										elm20[0].classList.remove(name13[0]);
 									};
 								})(name11,elm18));
@@ -1024,12 +1070,12 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 									var prop2 = [name16];
 									var val2 = [cur11[0]];
 									var fn2 = [(function(val3,prop3,obj3) {
-										return function(i17) {
+										return function(i25) {
 											obj3[0][prop3[0]] = val3[0];
 										};
 									})(val2,prop2,obj2)];
 									window.requestAnimationFrame((function(fn3) {
-										return function(i18) {
+										return function(i26) {
 											window.requestAnimationFrame(fn3[0]);
 										};
 									})(fn2));
@@ -1037,7 +1083,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							}
 						} else if(name15[0] != "remove" && cur11[0] != oldStyle1[name15[0]]) {
 							window.requestAnimationFrame((function(name17,elm22,cur12) {
-								return function(i19) {
+								return function(i27) {
 									elm22[0].style[name17[0]] = cur12[0];
 								};
 							})(name15,elm21,cur11));
@@ -1068,22 +1114,22 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					}
 				}
 				if(vnode1.data != null) {
-					i11 = vnode1.data.hook;
-					if(i11 != undefined) {
-						if(i11.create) {
-							i11.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
+					i17 = vnode1.data.hook;
+					if(i17 != undefined) {
+						if(i17.create) {
+							i17.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
 						}
-						if(i11.insert) {
+						if(i17.insert) {
 							insertedVnodeQueue.push(vnode1);
 						}
 					}
 				}
 			} else {
-				var this3 = window.document.createTextNode(vnode1.text);
-				elm12 = vnode1.elm = this3;
+				var this14 = window.document.createTextNode(vnode1.text);
+				elm12 = vnode1.elm = this14;
 			}
-			new_node2 = vnode1.elm;
-			parentElm.insertBefore(new_node2,before);
+			new_node7 = vnode1.elm;
+			parentElm.insertBefore(new_node7,before);
 			++startIdx;
 		}
 	} else if(newStartIdx > newEndIdx) {
@@ -1091,26 +1137,26 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 		var y;
 		y = 0;
 		while(startIdx1 <= oldEndIdx) {
-			var i20;
+			var i28;
 			var listeners;
 			var rm = null;
 			var ch = oldCh[startIdx1];
 			if(ch != undefined) {
 				if(ch.sel != undefined) {
 					var vnode2 = ch;
-					var i21 = vnode2.data;
+					var i29 = vnode2.data;
 					var j;
-					if(i21 != undefined) {
+					if(i29 != undefined) {
 						var tmp6;
-						i21 = i21.hook;
-						if(i21 != undefined) {
-							i21 = i21.destroy;
-							tmp6 = i21 != undefined;
+						i29 = i29.hook;
+						if(i29 != undefined) {
+							i29 = i29.destroy;
+							tmp6 = i29 != undefined;
 						} else {
 							tmp6 = false;
 						}
 						if(tmp6) {
-							i21(vnode2);
+							i29(vnode2);
 						}
 						var style2 = null;
 						var name20;
@@ -1128,8 +1174,8 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 								}
 							}
 						}
-						i21 = vnode2.children;
-						if(i21 != undefined) {
+						i29 = vnode2.children;
+						if(i29 != undefined) {
 							j = 0;
 							while(j < vnode2.children.length) {
 								snabbdom_engine_dom_PatchDom.invokeDestroyHook(vnode2.children[j]);
@@ -1148,7 +1194,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						var name22;
 						var elm25 = [vnode3.elm];
 						var idx;
-						var i22 = 0;
+						var i30 = 0;
 						var maxDur = 0;
 						var compStyle;
 						var style3 = s1.remove;
@@ -1164,13 +1210,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						}
 						compStyle = window.getComputedStyle(elm25[0]);
 						var props2 = compStyle["transition-property"].split(", ");
-						var i23;
-						i23 = 0;
-						while(i23 < props2.length) {
-							if(applied.indexOf(props2[i23]) != -1) {
+						var i31;
+						i31 = 0;
+						while(i31 < props2.length) {
+							if(applied.indexOf(props2[i31]) != -1) {
 								amount[0]++;
 							}
-							++i23;
+							++i31;
 						}
 						var tmp7 = (function(amount1,elm26,rm2) {
 							return function(ev) {
@@ -1186,30 +1232,42 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					}
 					var tmp8;
 					var tmp9;
-					i20 = ch.data;
-					if(i20 != undefined) {
-						i20 = i20.hook;
-						tmp9 = i20 != undefined;
+					i28 = ch.data;
+					if(i28 != undefined) {
+						i28 = i28.hook;
+						tmp9 = i28 != undefined;
 					} else {
 						tmp9 = false;
 					}
 					if(tmp9) {
-						i20 = i20.remove;
-						tmp8 = i20 != undefined;
+						i28 = i28.remove;
+						tmp8 = i28 != undefined;
 					} else {
 						tmp8 = false;
 					}
 					if(tmp8) {
-						i20(ch,rm);
+						i28(ch,rm);
 					} else {
 						console.log("remove");
 						if(rm != null) {
 							rm();
 						}
-						parentElm.removeChild(ch.elm);
+						var this15 = [parentElm];
+						var element6 = [ch.elm];
+						window.requestAnimationFrame((function(element7,this16) {
+							return function(i32) {
+								this16[0].removeChild(element7[0]);
+							};
+						})(element6,this15));
 					}
 				} else {
-					parentElm.removeChild(ch.elm);
+					var this17 = [parentElm];
+					var element8 = [ch.elm];
+					window.requestAnimationFrame((function(element9,this18) {
+						return function(i33) {
+							this18[0].removeChild(element9[0]);
+						};
+					})(element8,this17));
 				}
 			}
 			++startIdx1;
@@ -1521,11 +1579,21 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						i10 = 0;
 						while(i10 < children.length) {
 							var new_node1 = snabbdom_engine_dom_PatchDom.createElm(children[i10],insertedVnodeQueue);
-							elm6.appendChild(new_node1);
+							window.requestAnimationFrame((function(element,this1) {
+								return function(i11) {
+									this1[0].appendChild(element[0]);
+								};
+							})([new_node1],[elm6]));
 							++i10;
 						}
 					} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") {
-						elm6.appendChild(window.document.createTextNode(vnode1.text));
+						var this2 = [elm6];
+						var element1 = [window.document.createTextNode(vnode1.text)];
+						window.requestAnimationFrame((function(element2,this3) {
+							return function(i12) {
+								this3[0].appendChild(element2[0]);
+							};
+						})(element1,this2));
 					}
 					var oldVnode1 = snabbdom_engine_dom_PatchDom.emptyNode;
 					var key8;
@@ -1556,13 +1624,13 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							if(old3 != cur5[0]) {
 								if(!cur5[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key9[0]]) {
 									window.requestAnimationFrame((function(key10,elm8) {
-										return function(i11) {
+										return function(i13) {
 											elm8[0].removeAttribute(key10[0]);
 										};
 									})(key9,elm7));
 								} else {
 									window.requestAnimationFrame((function(key11,elm9,cur6) {
-										return function(i12) {
+										return function(i14) {
 											elm9[0].setAttribute(key11[0],cur6[0]);
 										};
 									})(key9,elm7,cur5));
@@ -1576,7 +1644,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							++_g8;
 							if(!Object.prototype.hasOwnProperty.call(attrs1,key12[0])) {
 								window.requestAnimationFrame((function(key13,elm10) {
-									return function(i13) {
+									return function(i15) {
 										elm10[0].removeAttribute(key13[0]);
 									};
 								})(key12,elm7));
@@ -1615,13 +1683,13 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							if(cur8 != oldClass1[name11[0]]) {
 								if(cur8 == "add") {
 									window.requestAnimationFrame((function(name12,elm13) {
-										return function(i14) {
+										return function(i16) {
 											elm13[0].classList.add(name12[0]);
 										};
 									})(name11,elm12));
 								} else if(cur8 == "remove") {
 									window.requestAnimationFrame((function(name13,elm14) {
-										return function(i15) {
+										return function(i17) {
 											elm14[0].classList.remove(name13[0]);
 										};
 									})(name11,elm12));
@@ -1668,12 +1736,12 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 										var prop1 = [name16];
 										var val1 = [cur9[0]];
 										var fn2 = [(function(val2,prop2,obj3) {
-											return function(i16) {
+											return function(i18) {
 												obj3[0][prop2[0]] = val2[0];
 											};
 										})(val1,prop1,obj2)];
 										window.requestAnimationFrame((function(fn3) {
-											return function(i17) {
+											return function(i19) {
 												window.requestAnimationFrame(fn3[0]);
 											};
 										})(fn2));
@@ -1681,7 +1749,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 								}
 							} else if(name15[0] != "remove" && cur9[0] != oldStyle1[name15[0]]) {
 								window.requestAnimationFrame((function(name17,elm16,cur10) {
-									return function(i18) {
+									return function(i20) {
 										elm16[0].style[name17[0]] = cur10[0];
 									};
 								})(name15,elm15,cur9));
@@ -1723,8 +1791,8 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						}
 					}
 				} else {
-					var this1 = window.document.createTextNode(vnode1.text);
-					elm6 = vnode1.elm = this1;
+					var this4 = window.document.createTextNode(vnode1.text);
+					elm6 = vnode1.elm = this4;
 				}
 				new_node = vnode1.elm;
 				elm.insertBefore(new_node,null);
@@ -1736,26 +1804,26 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 			var y;
 			y = 0;
 			while(startIdx1 <= endIdx1) {
-				var i19;
+				var i21;
 				var listeners;
 				var rm = null;
 				var ch1 = oldCh[startIdx1];
 				if(ch1 != undefined) {
 					if(ch1.sel != undefined) {
 						var vnode2 = ch1;
-						var i20 = vnode2.data;
+						var i22 = vnode2.data;
 						var j;
-						if(i20 != undefined) {
+						if(i22 != undefined) {
 							var tmp8;
-							i20 = i20.hook;
-							if(i20 != undefined) {
-								i20 = i20.destroy;
-								tmp8 = i20 != undefined;
+							i22 = i22.hook;
+							if(i22 != undefined) {
+								i22 = i22.destroy;
+								tmp8 = i22 != undefined;
 							} else {
 								tmp8 = false;
 							}
 							if(tmp8) {
-								i20(vnode2);
+								i22(vnode2);
 							}
 							var style2 = null;
 							var name20;
@@ -1773,8 +1841,8 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 									}
 								}
 							}
-							i20 = vnode2.children;
-							if(i20 != undefined) {
+							i22 = vnode2.children;
+							if(i22 != undefined) {
 								j = 0;
 								while(j < vnode2.children.length) {
 									snabbdom_engine_dom_PatchDom.invokeDestroyHook(vnode2.children[j]);
@@ -1793,7 +1861,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							var name22;
 							var elm19 = [vnode3.elm];
 							var idx;
-							var i21 = 0;
+							var i23 = 0;
 							var maxDur = 0;
 							var compStyle;
 							var style3 = s1.remove;
@@ -1809,13 +1877,13 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							}
 							compStyle = window.getComputedStyle(elm19[0]);
 							var props2 = compStyle["transition-property"].split(", ");
-							var i22;
-							i22 = 0;
-							while(i22 < props2.length) {
-								if(applied.indexOf(props2[i22]) != -1) {
+							var i24;
+							i24 = 0;
+							while(i24 < props2.length) {
+								if(applied.indexOf(props2[i24]) != -1) {
 									amount[0]++;
 								}
-								++i22;
+								++i24;
 							}
 							var tmp9 = (function(amount1,elm20,rm2) {
 								return function(ev) {
@@ -1831,37 +1899,53 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						}
 						var tmp10;
 						var tmp11;
-						i19 = ch1.data;
-						if(i19 != undefined) {
-							i19 = i19.hook;
-							tmp11 = i19 != undefined;
+						i21 = ch1.data;
+						if(i21 != undefined) {
+							i21 = i21.hook;
+							tmp11 = i21 != undefined;
 						} else {
 							tmp11 = false;
 						}
 						if(tmp11) {
-							i19 = i19.remove;
-							tmp10 = i19 != undefined;
+							i21 = i21.remove;
+							tmp10 = i21 != undefined;
 						} else {
 							tmp10 = false;
 						}
 						if(tmp10) {
-							i19(ch1,rm);
+							i21(ch1,rm);
 						} else {
 							console.log("remove");
 							if(rm != null) {
 								rm();
 							}
-							elm.removeChild(ch1.elm);
+							var this5 = [elm];
+							var element3 = [ch1.elm];
+							window.requestAnimationFrame((function(element4,this6) {
+								return function(i25) {
+									this6[0].removeChild(element4[0]);
+								};
+							})(element3,this5));
 						}
 					} else {
-						elm.removeChild(ch1.elm);
+						var this7 = [elm];
+						var element5 = [ch1.elm];
+						window.requestAnimationFrame((function(element6,this8) {
+							return function(i26) {
+								this8[0].removeChild(element6[0]);
+							};
+						})(element5,this7));
 					}
 				}
 				++startIdx1;
 			}
 		}
 	} else if(oldVnode.text != vnode.text) {
-		elm.textContent = vnode.text;
+		var this9 = elm;
+		var value = vnode.text;
+		window.requestAnimationFrame(function(i27) {
+			this9.textContent = value;
+		});
 	}
 	var tmp12;
 	if(hook != undefined) {
@@ -1929,11 +2013,19 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 				i1 = 0;
 				while(i1 < children.length) {
 					var new_node = snabbdom_engine_dom_PatchDom.createElm(children[i1],insertedVnodeQueue);
-					elm.appendChild(new_node);
+					window.requestAnimationFrame((function(element,this2) {
+						return function(i2) {
+							this2[0].appendChild(element[0]);
+						};
+					})([new_node],[elm]));
 					++i1;
 				}
 			} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") {
-				elm.appendChild(window.document.createTextNode(vnode1.text));
+				var this3 = elm;
+				var element1 = window.document.createTextNode(vnode1.text);
+				window.requestAnimationFrame(function(i3) {
+					this3.appendChild(element1);
+				});
 			}
 			var oldVnode1 = snabbdom_engine_dom_PatchDom.emptyNode;
 			var key;
@@ -1964,13 +2056,13 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 					if(old != cur) {
 						if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
 							window.requestAnimationFrame((function(key2) {
-								return function(i2) {
+								return function(i4) {
 									elm1.removeAttribute(key2[0]);
 								};
 							})(key1));
 						} else {
 							window.requestAnimationFrame((function(key3) {
-								return function(i3) {
+								return function(i5) {
 									elm1.setAttribute(key3[0],cur);
 								};
 							})(key1));
@@ -1984,7 +2076,7 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 					++_g2;
 					if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
 						window.requestAnimationFrame((function(key5) {
-							return function(i4) {
+							return function(i6) {
 								elm1.removeAttribute(key5[0]);
 							};
 						})(key4));
@@ -2023,13 +2115,13 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 					if(cur2 != oldClass[name1[0]]) {
 						if(cur2 == "add") {
 							window.requestAnimationFrame((function(name2) {
-								return function(i5) {
+								return function(i7) {
 									elm3.classList.add(name2[0]);
 								};
 							})(name1));
 						} else if(cur2 == "remove") {
 							window.requestAnimationFrame((function(name3) {
-								return function(i6) {
+								return function(i8) {
 									elm3.classList.remove(name3[0]);
 								};
 							})(name1));
@@ -2074,12 +2166,12 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 							if(!oldHasDel || cur3 != oldDelayed[name6]) {
 								var obj = [elm4.style];
 								var fn = [(function(val,prop,obj1) {
-									return function(i7) {
+									return function(i9) {
 										obj1[0][prop[0]] = val[0];
 									};
 								})([cur3],[name6],obj)];
 								window.requestAnimationFrame((function(fn1) {
-									return function(i8) {
+									return function(i10) {
 										window.requestAnimationFrame(fn1[0]);
 									};
 								})(fn));
@@ -2087,7 +2179,7 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 						}
 					} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
 						window.requestAnimationFrame((function(name7) {
-							return function(i9) {
+							return function(i11) {
 								elm4.style[name7[0]] = cur3;
 							};
 						})(name5));
@@ -2129,11 +2221,16 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 				}
 			}
 		} else {
-			var this2 = window.document.createTextNode(vnode1.text);
-			elm = vnode1.elm = this2;
+			var this4 = window.document.createTextNode(vnode1.text);
+			elm = vnode1.elm = this4;
 		}
-		var this3 = oldVnode.parentElement;
-		this3.replaceChild(vnode.elm,oldVnode);
+		var this5 = oldVnode.parentElement;
+		var this6 = this5;
+		var e1 = vnode.elm;
+		var e2 = oldVnode;
+		window.requestAnimationFrame(function(i12) {
+			this6.replaceChild(e1,e2);
+		});
 	} else {
 		var data1 = { };
 		var key8 = data1 == null?null:data1.key;
