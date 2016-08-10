@@ -68,12 +68,11 @@ class Main {
     var init:Int = null;
     timer.run = function() {
 
-
       var rnd = Math.random();
       var color = ['red','yellow','green','black','white','grey'].shuffle().first();
       var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
 
-      var max = 20; //Std.int(Math.random() * 20);
+      var max = Std.int(Math.random() * 20);
       if (max <=3) max = 4;
       init = if (init == null) 0; else 3;
       var list = [for (x in (init...max)) {
@@ -90,7 +89,7 @@ class Main {
         </div>
       ');
 
-      
+
       if (last_node == null) js.Browser.document.getElementById('container').patchDom(vnode2);   else  last_node.patch(untyped vnode2);
       last_node = vnode2;
     };

@@ -2,25 +2,39 @@ package snabbdom.engine.dom;
 
 import snabbdom.engine.dom.PatchDom.*;
 import snabbdom.Is.*;
-using snabbdom.VirtualNodeDataTools;
-
 import snabbdom.engine.dom.plugins.*;
+import snabbdom.PatchHelper.*;
+using snabbdom.VirtualNodeDataTools;
 
 class Hooks {
    inline public static function create(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
-    Attributes.create(oldVnode, vnode);
-    Props.create(oldVnode,vnode);
-    CssClasses.create(oldVnode,vnode);
-    Styles.create(oldVnode,vnode);
-    Events.create(oldVnode,vnode);
+     cps({
+       Attributes.create(oldVnode, vnode);
+       @await wait(0);
+       Props.create(oldVnode,vnode);
+       @await wait(0);
+       CssClasses.create(oldVnode,vnode);
+       @await wait(0);
+       Styles.create(oldVnode,vnode);
+       @await wait(0);
+       Events.create(oldVnode,vnode);
+       @await wait(0);
+     });
   }
 
    inline public static function update(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
-    Attributes.update(oldVnode, vnode);
-    Props.update(oldVnode,vnode);
-    CssClasses.update(oldVnode,vnode);
-    Styles.update(oldVnode,vnode);
-    Events.update(oldVnode,vnode);
+    cps({
+      Attributes.update(oldVnode, vnode);
+      @await wait(0);
+      Props.update(oldVnode,vnode);
+      @await wait(0);
+      CssClasses.update(oldVnode,vnode);
+      @await wait(0);
+      Styles.update(oldVnode,vnode);
+      @await wait(0);
+      Events.update(oldVnode,vnode);
+      @await wait(0);
+    });
   }
 
 
@@ -31,7 +45,11 @@ class Hooks {
 
 
   inline public static function remove(vnode,rm) {
-    Styles.remove(vnode,rm);
+    cps({
+      Styles.remove(vnode,rm);
+      @await wait(0);
+    });
+
   }
 
 }

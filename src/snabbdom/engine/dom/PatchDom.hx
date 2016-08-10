@@ -84,14 +84,14 @@ class PatchDom {
       var elm, children = vnode.children, sel = vnode.sel;
       if (isDef(sel)) {
         // Parse selector
-        var hashIdx = sel.indexOf('#',0);
-        var dotIdx = sel.indexOf('.', hashIdx);
-        var hash = hashIdx > 0 ? hashIdx : sel.length;
-        var dot = dotIdx > 0 ? dotIdx : sel.length;
-        var tag = hashIdx != -1 || dotIdx != -1 ? untyped sel.slice(0, Math.min(hash, dot)) : sel;
+        //var hashIdx = sel.indexOf('#',0);
+        //var dotIdx = sel.indexOf('.', hashIdx);
+        //var hash = hashIdx > 0 ? hashIdx : sel.length;
+        //var dot = dotIdx > 0 ? dotIdx : sel.length;
+        var tag = sel;
         elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? NativeNode.createElementNS(i, tag)
                                                             : NativeNode.createElement(tag);
-        if (hash < dot) elm.id = untyped sel.slice(hash + 1, dot);
+        //if (hash < dot) elm.id = untyped sel.slice(hash + 1, dot);
         //if (dotIdx > 0) elm.className = untyped sel.slice(dot+1,0).replace('.', ' ');
         //var s = "\\.";
         //var rg = untyped  __js__('new RegExp({0},"g")',s);
@@ -119,7 +119,7 @@ class PatchDom {
 
         }
       } else {
-        elm = vnode.elm =  NativeNode.createTextElement(vnode.text);
+        vnode.elm =  NativeNode.createTextElement(vnode.text);
       }
       return vnode.elm;
     }
@@ -177,9 +177,7 @@ class PatchDom {
 
 
 
-    inline  static  function updateChildren(parentElm, oldCh:Vnodes, newCh:Vnodes, insertedVnodeQueue:Vnodes) {
-
-
+    static  function updateChildren(parentElm, oldCh:Vnodes, newCh:Vnodes, insertedVnodeQueue:Vnodes) {
 
           var oldStartIdx = 0;
           var newStartIdx = 0;
@@ -291,9 +289,13 @@ class PatchDom {
             patchVnode(untyped oldVnode, vnode, insertedVnodeQueue);
         }
 
-        @for(i = 0, i < insertedVnodeQueue.length,++i) {
-          insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
-        }
+        cps({
+          @await wait(0);
+          @for(i = 0, i < insertedVnodeQueue.length,++i) {
+            insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
+          }
+
+        });
         //for (i = 0; i < cbs.post.length; ++i) cbs.post[i]();
         return vnode;
 
@@ -301,13 +303,18 @@ class PatchDom {
 
 
       public static function patch(oldVnode:Vnode, vnode:Vnode) {
-        var i;
+        var i = 0;
         var insertedVnodeQueue = [];
         //@for(i = 0; i < cbs.pre.length; ++i) cbs.pre[i]();
         patchVnode(oldVnode, vnode, insertedVnodeQueue);
-        @for(i = 0, i < insertedVnodeQueue.length,++i) {
-          insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
-        }
+
+        cps({
+          @await wait(0);
+          @for(i = 0, i < insertedVnodeQueue.length,++i) {
+            insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
+          }
+
+        });
         //for (i = 0; i < cbs.post.length; ++i) cbs.post[i]();
         return vnode;
       };
