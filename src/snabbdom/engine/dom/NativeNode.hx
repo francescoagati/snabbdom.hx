@@ -48,7 +48,7 @@ abstract NativeNode(js.html.Element) from js.html.Element to js.html.Element {
    public inline function setAttribute(key,value) next_frame(this.setAttribute(key,value));
    public inline function insertBefore(new_node,ref_node) next_frame(this.insertBefore(new_node,ref_node));
    public inline function removeChild(element)  next_frame(this.removeChild(element));
-   public inline function replaceChild(e1,e2) next_frame(this.replaceChild(e1,e2));
+   public inline function replaceChild(e1,e2)   next_frame(this.replaceChild(e1,e2));
 /*
   rc/snabbdom/PatchTraits.hx:83: characters 22-28 : Null<{ }> has no field id
   src/snabbdom/engine/dom/PatchDom.hx:14: lines 14-18 : Defined in this class

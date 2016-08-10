@@ -141,8 +141,6 @@ js_Boot.__string_rec = function(o,s) {
 		return String(o);
 	}
 };
-var partials_Partial = function() { };
-partials_Partial.__name__ = true;
 var snabbdom_Main = function() { };
 snabbdom_Main.__name__ = true;
 snabbdom_Main.click = function(e) {
@@ -200,7 +198,6 @@ snabbdom_Main.main = function() {
 };
 var snabbdom_engine_dom_PatchDom = function() { };
 snabbdom_engine_dom_PatchDom.__name__ = true;
-snabbdom_engine_dom_PatchDom.__interfaces__ = [partials_Partial];
 snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 	var i;
 	var data = vnode.data;
@@ -515,9 +512,9 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 	var newStartVnode = newCh[0];
 	var newEndVnode = newCh[newEndIdx];
 	var oldKeyToIdx = null;
-	var idxInOld;
-	var elmToMove;
-	var before;
+	var idxInOld = null;
+	var elmToMove = null;
+	var before = null;
 	while(oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) if(oldStartVnode == undefined) {
 		oldStartVnode = oldCh[++oldStartIdx];
 	} else if(oldEndVnode == undefined) {

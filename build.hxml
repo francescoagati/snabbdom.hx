@@ -1,6 +1,6 @@
 -main snabbdom.Main
 -js build/main.js
--lib classic-for tink_macro thx.core partials
+-lib classic-for tink_macro thx.core partials continuation
 -dce full
 -D analyzer
 -cp src

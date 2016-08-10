@@ -90,6 +90,7 @@ class Main {
         </div>
       ');
 
+      
       if (last_node == null) js.Browser.document.getElementById('container').patchDom(vnode2);   else  last_node.patch(untyped vnode2);
       last_node = vnode2;
     };
