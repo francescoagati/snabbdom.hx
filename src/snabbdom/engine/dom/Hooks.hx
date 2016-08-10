@@ -9,6 +9,7 @@ using snabbdom.VirtualNodeDataTools;
 class Hooks {
    inline public static function create(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
      cps({
+       @await wait(0);
        Attributes.create(oldVnode, vnode);
        @await wait(0);
        Props.create(oldVnode,vnode);
@@ -24,6 +25,7 @@ class Hooks {
 
    inline public static function update(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
     cps({
+      @await wait(0);
       Attributes.update(oldVnode, vnode);
       @await wait(0);
       Props.update(oldVnode,vnode);
@@ -46,8 +48,9 @@ class Hooks {
 
   inline public static function remove(vnode,rm) {
     cps({
-      Styles.remove(vnode,rm);
       @await wait(0);
+      Styles.remove(vnode,rm);
+
     });
 
   }

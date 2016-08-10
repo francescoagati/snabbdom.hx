@@ -7,9 +7,12 @@ class PatchHelper {
       var uuid = thx.Uuid.create().replace('-','_');
       var dt = Std.string(Date.now().getTime()).replace(".","").replace("+","");
       var fn_name = 'tmp_${uuid}_${dt}';
-      return macro com.dongxiguo.continuation.Continuation.cpsFunction(function $fn_name() {
-        $expr;
-      });
+      return macro {
+        var fn = com.dongxiguo.continuation.Continuation.cpsFunction(function $fn_name() {
+          $expr;
+        });
+        fn(thx.Functions.noop);
+      };
     }
 
     #if !macro

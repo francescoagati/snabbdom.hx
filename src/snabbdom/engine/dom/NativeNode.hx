@@ -19,7 +19,6 @@ class DomPool {
 
   static inline function check_nodes(nodes:Array<js.html.Element>,node_name:String) {
     if (nodes.length == 0) nodes.push(js.Browser.document.createElement(node_name));
-    trace(nodes.length);
     return nodes.shift();
   }
 

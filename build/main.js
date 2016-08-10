@@ -161,13 +161,13 @@ snabbdom_Main.main = function() {
 	var vnode_key = null;
 	var vnode_text = null;
 	var last_node = null;
-	var timer = new haxe_Timer(50);
+	var timer = new haxe_Timer(500);
 	var init = null;
 	timer.run = function() {
 		var rnd = Math.random();
 		var color = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
 		var bg = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
-		var max = 200;
+		var max = Math.random() * 200 | 0;
 		if(max <= 3) {
 			max = 4;
 		}
@@ -242,7 +242,6 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 				if(nodes.length == 0) {
 					nodes.push(window.document.createElement("div"));
 				}
-				console.log(nodes.length);
 				tmp1 = nodes.shift();
 				break;
 			case "li":
@@ -250,7 +249,6 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 				if(nodes1.length == 0) {
 					nodes1.push(window.document.createElement("li"));
 				}
-				console.log(nodes1.length);
 				tmp1 = nodes1.shift();
 				break;
 			case "span":
@@ -258,7 +256,6 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 				if(nodes2.length == 0) {
 					nodes2.push(window.document.createElement("span"));
 				}
-				console.log(nodes2.length);
 				tmp1 = nodes2.shift();
 				break;
 			default:
@@ -285,117 +282,16 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 			});
 		}
 		var oldVnode = snabbdom_engine_dom_PatchDom.emptyNode;
-		var key;
 		var cur;
-		var old;
-		var elm1 = vnode.elm;
-		var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
-		var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
-		var apply_attributes;
-		if(vnode.data.skip_attributes == false) {
-			apply_attributes = true;
-		} else if(elm1.cached_attributes == null) {
-			elm1.cached_attributes = true;
-			apply_attributes = true;
-		} else if(elm1.cached_attributes == true) {
-			apply_attributes = false;
-		} else {
-			apply_attributes = true;
-		}
-		if(apply_attributes) {
-			var _g = 0;
-			var _g1 = Object.keys(attrs);
-			while(_g < _g1.length) {
-				var key1 = [_g1[_g]];
-				++_g;
-				cur = attrs[key1[0]];
-				old = oldAttrs[key1[0]];
-				if(old != cur) {
-					if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
-						window.requestAnimationFrame((function(key2) {
-							return function(i3) {
-								elm1.removeAttribute(key2[0]);
-							};
-						})(key1));
-					} else {
-						window.requestAnimationFrame((function(key3) {
-							return function(i4) {
-								elm1.setAttribute(key3[0],cur);
-							};
-						})(key1));
-					}
-				}
-			}
-			var _g2 = 0;
-			var _g11 = Object.keys(oldAttrs);
-			while(_g2 < _g11.length) {
-				var key4 = [_g11[_g2]];
-				++_g2;
-				if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
-					window.requestAnimationFrame((function(key5) {
-						return function(i5) {
-							elm1.removeAttribute(key5[0]);
-						};
-					})(key4));
-				}
-			}
-		}
-		var key6;
-		var cur1;
-		var old1;
-		var elm2 = vnode.elm;
-		var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
-		var props = vnode.data.props == null?{ }:vnode.data.props;
-		var _g3 = 0;
-		var _g12 = Object.keys(props);
-		while(_g3 < _g12.length) {
-			var key7 = _g12[_g3];
-			++_g3;
-			cur1 = props[key7];
-			old1 = oldProps[key7];
-			if(old1 != cur1) {
-				elm2[key7] = cur1;
-			}
-		}
-		var cur2;
 		var name;
-		var elm3 = vnode.elm;
-		var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
-		var klass = vnode.data.classes == null?{ }:vnode.data.classes;
-		if(vnode.data.skip_attributes == false) {
-			var _g4 = 0;
-			var _g13 = Object.keys(klass);
-			while(_g4 < _g13.length) {
-				var name1 = [_g13[_g4]];
-				++_g4;
-				cur2 = klass[name1[0]];
-				if(cur2 != oldClass[name1[0]]) {
-					if(cur2 == "add") {
-						window.requestAnimationFrame((function(name2) {
-							return function(i6) {
-								elm3.classList.add(name2[0]);
-							};
-						})(name1));
-					} else if(cur2 == "remove") {
-						window.requestAnimationFrame((function(name3) {
-							return function(i7) {
-								elm3.classList.remove(name3[0]);
-							};
-						})(name1));
-					}
-				}
-			}
-		}
-		var cur3;
-		var name4;
-		var elm4 = vnode.elm;
+		var elm1 = vnode.elm;
 		var apply_styles;
 		if(vnode.data.skip_styles == false) {
 			apply_styles = true;
-		} else if(elm4.cached_styles == null) {
-			elm4.cached_styles = true;
+		} else if(elm1.cached_styles == null) {
+			elm1.cached_styles = true;
 			apply_styles = true;
-		} else if(elm4.cached_styles == true) {
+		} else if(elm1.cached_styles == true) {
 			apply_styles = false;
 		} else {
 			apply_styles = true;
@@ -404,41 +300,142 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 			var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
 			var style = vnode.data.style == null?{ }:vnode.data.style;
 			var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-			var _g5 = 0;
-			var _g14 = Object.keys(style);
-			while(_g5 < _g14.length) {
-				var name5 = [_g14[_g5]];
-				++_g5;
-				cur3 = style[name5[0]];
-				if(name5[0] == "delayed") {
+			var _g = 0;
+			var _g1 = Object.keys(style);
+			while(_g < _g1.length) {
+				var name1 = [_g1[_g]];
+				++_g;
+				cur = style[name1[0]];
+				if(name1[0] == "delayed") {
 					var delayed = style.delayed;
 					var oldDelayed = oldStyle.delayed;
-					var _g21 = 0;
-					var _g31 = Object.keys(delayed);
-					while(_g21 < _g31.length) {
-						var name6 = _g31[_g21];
-						++_g21;
-						cur3 = delayed[name6];
-						if(!oldHasDel || cur3 != oldDelayed[name6]) {
-							var obj = [elm4.style];
+					var _g2 = 0;
+					var _g3 = Object.keys(delayed);
+					while(_g2 < _g3.length) {
+						var name2 = _g3[_g2];
+						++_g2;
+						cur = delayed[name2];
+						if(!oldHasDel || cur != oldDelayed[name2]) {
+							var obj = [elm1.style];
 							var fn = [(function(val,prop,obj1) {
-								return function(i8) {
+								return function(i3) {
 									obj1[0][prop[0]] = val[0];
 								};
-							})([cur3],[name6],obj)];
+							})([cur],[name2],obj)];
 							window.requestAnimationFrame((function(fn1) {
-								return function(i9) {
+								return function(i4) {
 									window.requestAnimationFrame(fn1[0]);
 								};
 							})(fn));
 						}
 					}
-				} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
-					window.requestAnimationFrame((function(name7) {
-						return function(i10) {
-							elm4.style[name7[0]] = cur3;
+				} else if(name1[0] != "remove" && cur != oldStyle[name1[0]]) {
+					window.requestAnimationFrame((function(name3) {
+						return function(i5) {
+							elm1.style[name3[0]] = cur;
 						};
-					})(name5));
+					})(name1));
+				}
+			}
+		}
+		var key;
+		var cur1;
+		var old;
+		var elm2 = vnode.elm;
+		var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
+		var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
+		var apply_attributes;
+		if(vnode.data.skip_attributes == false) {
+			apply_attributes = true;
+		} else if(elm2.cached_attributes == null) {
+			elm2.cached_attributes = true;
+			apply_attributes = true;
+		} else if(elm2.cached_attributes == true) {
+			apply_attributes = false;
+		} else {
+			apply_attributes = true;
+		}
+		if(apply_attributes) {
+			var _g4 = 0;
+			var _g11 = Object.keys(attrs);
+			while(_g4 < _g11.length) {
+				var key1 = [_g11[_g4]];
+				++_g4;
+				cur1 = attrs[key1[0]];
+				old = oldAttrs[key1[0]];
+				if(old != cur1) {
+					if(!cur1 && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
+						window.requestAnimationFrame((function(key2) {
+							return function(i6) {
+								elm2.removeAttribute(key2[0]);
+							};
+						})(key1));
+					} else {
+						window.requestAnimationFrame((function(key3) {
+							return function(i7) {
+								elm2.setAttribute(key3[0],cur1);
+							};
+						})(key1));
+					}
+				}
+			}
+			var _g5 = 0;
+			var _g12 = Object.keys(oldAttrs);
+			while(_g5 < _g12.length) {
+				var key4 = [_g12[_g5]];
+				++_g5;
+				if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
+					window.requestAnimationFrame((function(key5) {
+						return function(i8) {
+							elm2.removeAttribute(key5[0]);
+						};
+					})(key4));
+				}
+			}
+		}
+		var key6;
+		var cur2;
+		var old1;
+		var elm3 = vnode.elm;
+		var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
+		var props = vnode.data.props == null?{ }:vnode.data.props;
+		var _g6 = 0;
+		var _g13 = Object.keys(props);
+		while(_g6 < _g13.length) {
+			var key7 = _g13[_g6];
+			++_g6;
+			cur2 = props[key7];
+			old1 = oldProps[key7];
+			if(old1 != cur2) {
+				elm3[key7] = cur2;
+			}
+		}
+		var cur3;
+		var name4;
+		var elm4 = vnode.elm;
+		var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
+		var klass = vnode.data.classes == null?{ }:vnode.data.classes;
+		if(vnode.data.skip_attributes == false) {
+			var _g7 = 0;
+			var _g14 = Object.keys(klass);
+			while(_g7 < _g14.length) {
+				var name5 = [_g14[_g7]];
+				++_g7;
+				cur3 = klass[name5[0]];
+				if(cur3 != oldClass[name5[0]]) {
+					if(cur3 == "add") {
+						window.requestAnimationFrame((function(name6) {
+							return function(i9) {
+								elm4.classList.add(name6[0]);
+							};
+						})(name5));
+					} else if(cur3 == "remove") {
+						window.requestAnimationFrame((function(name7) {
+							return function(i10) {
+								elm4.classList.remove(name7[0]);
+							};
+						})(name5));
+					}
 				}
 			}
 		}
@@ -449,11 +446,11 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 		var oldOn = oldVnode.data.on == null?{ }:oldVnode.data.on;
 		var on = vnode.data.on == null?{ }:vnode.data.on;
 		if(on != { }) {
-			var _g6 = 0;
+			var _g8 = 0;
 			var _g15 = Object.keys(on);
-			while(_g6 < _g15.length) {
-				var name9 = _g15[_g6];
-				++_g6;
+			while(_g8 < _g15.length) {
+				var name9 = _g15[_g8];
+				++_g8;
 				cur4 = on[name9];
 				old2 = oldOn[name9];
 				if(old2 == null) {
@@ -628,7 +625,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(nodes.length == 0) {
 							nodes.push(window.document.createElement("div"));
 						}
-						console.log(nodes.length);
 						tmp1 = nodes.shift();
 						break;
 					case "li":
@@ -636,7 +632,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(nodes1.length == 0) {
 							nodes1.push(window.document.createElement("li"));
 						}
-						console.log(nodes1.length);
 						tmp1 = nodes1.shift();
 						break;
 					case "span":
@@ -644,7 +639,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(nodes2.length == 0) {
 							nodes2.push(window.document.createElement("span"));
 						}
-						console.log(nodes2.length);
 						tmp1 = nodes2.shift();
 						break;
 					default:
@@ -673,117 +667,16 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					})(element1,this6));
 				}
 				var oldVnode = snabbdom_engine_dom_PatchDom.emptyNode;
-				var key1;
 				var cur = [];
-				var old;
-				var elm1 = [vnode.elm];
-				var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
-				var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
-				var apply_attributes;
-				if(vnode.data.skip_attributes == false) {
-					apply_attributes = true;
-				} else if(elm1[0].cached_attributes == null) {
-					elm1[0].cached_attributes = true;
-					apply_attributes = true;
-				} else if(elm1[0].cached_attributes == true) {
-					apply_attributes = false;
-				} else {
-					apply_attributes = true;
-				}
-				if(apply_attributes) {
-					var _g = 0;
-					var _g1 = Object.keys(attrs);
-					while(_g < _g1.length) {
-						var key2 = [_g1[_g]];
-						++_g;
-						cur[0] = attrs[key2[0]];
-						old = oldAttrs[key2[0]];
-						if(old != cur[0]) {
-							if(!cur[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key2[0]]) {
-								window.requestAnimationFrame((function(key3,elm2) {
-									return function(i6) {
-										elm2[0].removeAttribute(key3[0]);
-									};
-								})(key2,elm1));
-							} else {
-								window.requestAnimationFrame((function(key4,elm3,cur1) {
-									return function(i7) {
-										elm3[0].setAttribute(key4[0],cur1[0]);
-									};
-								})(key2,elm1,cur));
-							}
-						}
-					}
-					var _g2 = 0;
-					var _g11 = Object.keys(oldAttrs);
-					while(_g2 < _g11.length) {
-						var key5 = [_g11[_g2]];
-						++_g2;
-						if(!Object.prototype.hasOwnProperty.call(attrs,key5[0])) {
-							window.requestAnimationFrame((function(key6,elm4) {
-								return function(i8) {
-									elm4[0].removeAttribute(key6[0]);
-								};
-							})(key5,elm1));
-						}
-					}
-				}
-				var key7;
-				var cur2;
-				var old1;
-				var elm5 = vnode.elm;
-				var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
-				var props = vnode.data.props == null?{ }:vnode.data.props;
-				var _g3 = 0;
-				var _g12 = Object.keys(props);
-				while(_g3 < _g12.length) {
-					var key8 = _g12[_g3];
-					++_g3;
-					cur2 = props[key8];
-					old1 = oldProps[key8];
-					if(old1 != cur2) {
-						elm5[key8] = cur2;
-					}
-				}
-				var cur3;
 				var name;
-				var elm6 = [vnode.elm];
-				var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
-				var klass = vnode.data.classes == null?{ }:vnode.data.classes;
-				if(vnode.data.skip_attributes == false) {
-					var _g4 = 0;
-					var _g13 = Object.keys(klass);
-					while(_g4 < _g13.length) {
-						var name1 = [_g13[_g4]];
-						++_g4;
-						cur3 = klass[name1[0]];
-						if(cur3 != oldClass[name1[0]]) {
-							if(cur3 == "add") {
-								window.requestAnimationFrame((function(name2,elm7) {
-									return function(i9) {
-										elm7[0].classList.add(name2[0]);
-									};
-								})(name1,elm6));
-							} else if(cur3 == "remove") {
-								window.requestAnimationFrame((function(name3,elm8) {
-									return function(i10) {
-										elm8[0].classList.remove(name3[0]);
-									};
-								})(name1,elm6));
-							}
-						}
-					}
-				}
-				var cur4 = [];
-				var name4;
-				var elm9 = [vnode.elm];
+				var elm1 = [vnode.elm];
 				var apply_styles;
 				if(vnode.data.skip_styles == false) {
 					apply_styles = true;
-				} else if(elm9[0].cached_styles == null) {
-					elm9[0].cached_styles = true;
+				} else if(elm1[0].cached_styles == null) {
+					elm1[0].cached_styles = true;
 					apply_styles = true;
-				} else if(elm9[0].cached_styles == true) {
+				} else if(elm1[0].cached_styles == true) {
 					apply_styles = false;
 				} else {
 					apply_styles = true;
@@ -792,43 +685,144 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
 					var style = vnode.data.style == null?{ }:vnode.data.style;
 					var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-					var _g5 = 0;
-					var _g14 = Object.keys(style);
-					while(_g5 < _g14.length) {
-						var name5 = [_g14[_g5]];
-						++_g5;
-						cur4[0] = style[name5[0]];
-						if(name5[0] == "delayed") {
+					var _g = 0;
+					var _g1 = Object.keys(style);
+					while(_g < _g1.length) {
+						var name1 = [_g1[_g]];
+						++_g;
+						cur[0] = style[name1[0]];
+						if(name1[0] == "delayed") {
 							var delayed = style.delayed;
 							var oldDelayed = oldStyle.delayed;
-							var _g21 = 0;
-							var _g31 = Object.keys(delayed);
-							while(_g21 < _g31.length) {
-								var name6 = _g31[_g21];
-								++_g21;
-								cur4[0] = delayed[name6];
-								if(!oldHasDel || cur4[0] != oldDelayed[name6]) {
-									var obj = [elm9[0].style];
-									var prop = [name6];
-									var val = [cur4[0]];
+							var _g2 = 0;
+							var _g3 = Object.keys(delayed);
+							while(_g2 < _g3.length) {
+								var name2 = _g3[_g2];
+								++_g2;
+								cur[0] = delayed[name2];
+								if(!oldHasDel || cur[0] != oldDelayed[name2]) {
+									var obj = [elm1[0].style];
+									var prop = [name2];
+									var val = [cur[0]];
 									var fn = [(function(val1,prop1,obj1) {
-										return function(i11) {
+										return function(i6) {
 											obj1[0][prop1[0]] = val1[0];
 										};
 									})(val,prop,obj)];
 									window.requestAnimationFrame((function(fn1) {
-										return function(i12) {
+										return function(i7) {
 											window.requestAnimationFrame(fn1[0]);
 										};
 									})(fn));
 								}
 							}
-						} else if(name5[0] != "remove" && cur4[0] != oldStyle[name5[0]]) {
-							window.requestAnimationFrame((function(name7,elm10,cur5) {
-								return function(i13) {
-									elm10[0].style[name7[0]] = cur5[0];
+						} else if(name1[0] != "remove" && cur[0] != oldStyle[name1[0]]) {
+							window.requestAnimationFrame((function(name3,elm2,cur1) {
+								return function(i8) {
+									elm2[0].style[name3[0]] = cur1[0];
 								};
-							})(name5,elm9,cur4));
+							})(name1,elm1,cur));
+						}
+					}
+				}
+				var key1;
+				var cur2 = [];
+				var old;
+				var elm3 = [vnode.elm];
+				var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
+				var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
+				var apply_attributes;
+				if(vnode.data.skip_attributes == false) {
+					apply_attributes = true;
+				} else if(elm3[0].cached_attributes == null) {
+					elm3[0].cached_attributes = true;
+					apply_attributes = true;
+				} else if(elm3[0].cached_attributes == true) {
+					apply_attributes = false;
+				} else {
+					apply_attributes = true;
+				}
+				if(apply_attributes) {
+					var _g4 = 0;
+					var _g11 = Object.keys(attrs);
+					while(_g4 < _g11.length) {
+						var key2 = [_g11[_g4]];
+						++_g4;
+						cur2[0] = attrs[key2[0]];
+						old = oldAttrs[key2[0]];
+						if(old != cur2[0]) {
+							if(!cur2[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key2[0]]) {
+								window.requestAnimationFrame((function(key3,elm4) {
+									return function(i9) {
+										elm4[0].removeAttribute(key3[0]);
+									};
+								})(key2,elm3));
+							} else {
+								window.requestAnimationFrame((function(key4,elm5,cur3) {
+									return function(i10) {
+										elm5[0].setAttribute(key4[0],cur3[0]);
+									};
+								})(key2,elm3,cur2));
+							}
+						}
+					}
+					var _g5 = 0;
+					var _g12 = Object.keys(oldAttrs);
+					while(_g5 < _g12.length) {
+						var key5 = [_g12[_g5]];
+						++_g5;
+						if(!Object.prototype.hasOwnProperty.call(attrs,key5[0])) {
+							window.requestAnimationFrame((function(key6,elm6) {
+								return function(i11) {
+									elm6[0].removeAttribute(key6[0]);
+								};
+							})(key5,elm3));
+						}
+					}
+				}
+				var key7;
+				var cur4;
+				var old1;
+				var elm7 = vnode.elm;
+				var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
+				var props = vnode.data.props == null?{ }:vnode.data.props;
+				var _g6 = 0;
+				var _g13 = Object.keys(props);
+				while(_g6 < _g13.length) {
+					var key8 = _g13[_g6];
+					++_g6;
+					cur4 = props[key8];
+					old1 = oldProps[key8];
+					if(old1 != cur4) {
+						elm7[key8] = cur4;
+					}
+				}
+				var cur5;
+				var name4;
+				var elm8 = [vnode.elm];
+				var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
+				var klass = vnode.data.classes == null?{ }:vnode.data.classes;
+				if(vnode.data.skip_attributes == false) {
+					var _g7 = 0;
+					var _g14 = Object.keys(klass);
+					while(_g7 < _g14.length) {
+						var name5 = [_g14[_g7]];
+						++_g7;
+						cur5 = klass[name5[0]];
+						if(cur5 != oldClass[name5[0]]) {
+							if(cur5 == "add") {
+								window.requestAnimationFrame((function(name6,elm9) {
+									return function(i12) {
+										elm9[0].classList.add(name6[0]);
+									};
+								})(name5,elm8));
+							} else if(cur5 == "remove") {
+								window.requestAnimationFrame((function(name7,elm10) {
+									return function(i13) {
+										elm10[0].classList.remove(name7[0]);
+									};
+								})(name5,elm8));
+							}
 						}
 					}
 				}
@@ -839,11 +833,11 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				var oldOn = oldVnode.data.on == null?{ }:oldVnode.data.on;
 				var on = vnode.data.on == null?{ }:vnode.data.on;
 				if(on != { }) {
-					var _g6 = 0;
+					var _g8 = 0;
 					var _g15 = Object.keys(on);
-					while(_g6 < _g15.length) {
-						var name9 = _g15[_g6];
-						++_g6;
+					while(_g8 < _g15.length) {
+						var name9 = _g15[_g8];
+						++_g8;
 						cur6 = on[name9];
 						old2 = oldOn[name9];
 						if(old2 == null) {
@@ -942,7 +936,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(nodes3.length == 0) {
 							nodes3.push(window.document.createElement("div"));
 						}
-						console.log(nodes3.length);
 						tmp4 = nodes3.shift();
 						break;
 					case "li":
@@ -950,7 +943,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(nodes4.length == 0) {
 							nodes4.push(window.document.createElement("li"));
 						}
-						console.log(nodes4.length);
 						tmp4 = nodes4.shift();
 						break;
 					case "span":
@@ -958,7 +950,6 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						if(nodes5.length == 0) {
 							nodes5.push(window.document.createElement("span"));
 						}
-						console.log(nodes5.length);
 						tmp4 = nodes5.shift();
 						break;
 					default:
@@ -987,117 +978,16 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					})(element4,this12));
 				}
 				var oldVnode1 = snabbdom_engine_dom_PatchDom.emptyNode;
-				var key9;
 				var cur7 = [];
-				var old3;
-				var elm13 = [vnode1.elm];
-				var oldAttrs1 = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
-				var attrs1 = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
-				var apply_attributes1;
-				if(vnode1.data.skip_attributes == false) {
-					apply_attributes1 = true;
-				} else if(elm13[0].cached_attributes == null) {
-					elm13[0].cached_attributes = true;
-					apply_attributes1 = true;
-				} else if(elm13[0].cached_attributes == true) {
-					apply_attributes1 = false;
-				} else {
-					apply_attributes1 = true;
-				}
-				if(apply_attributes1) {
-					var _g7 = 0;
-					var _g16 = Object.keys(attrs1);
-					while(_g7 < _g16.length) {
-						var key10 = [_g16[_g7]];
-						++_g7;
-						cur7[0] = attrs1[key10[0]];
-						old3 = oldAttrs1[key10[0]];
-						if(old3 != cur7[0]) {
-							if(!cur7[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key10[0]]) {
-								window.requestAnimationFrame((function(key11,elm14) {
-									return function(i20) {
-										elm14[0].removeAttribute(key11[0]);
-									};
-								})(key10,elm13));
-							} else {
-								window.requestAnimationFrame((function(key12,elm15,cur8) {
-									return function(i21) {
-										elm15[0].setAttribute(key12[0],cur8[0]);
-									};
-								})(key10,elm13,cur7));
-							}
-						}
-					}
-					var _g8 = 0;
-					var _g17 = Object.keys(oldAttrs1);
-					while(_g8 < _g17.length) {
-						var key13 = [_g17[_g8]];
-						++_g8;
-						if(!Object.prototype.hasOwnProperty.call(attrs1,key13[0])) {
-							window.requestAnimationFrame((function(key14,elm16) {
-								return function(i22) {
-									elm16[0].removeAttribute(key14[0]);
-								};
-							})(key13,elm13));
-						}
-					}
-				}
-				var key15;
-				var cur9;
-				var old4;
-				var elm17 = vnode1.elm;
-				var oldProps1 = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
-				var props1 = vnode1.data.props == null?{ }:vnode1.data.props;
-				var _g9 = 0;
-				var _g18 = Object.keys(props1);
-				while(_g9 < _g18.length) {
-					var key16 = _g18[_g9];
-					++_g9;
-					cur9 = props1[key16];
-					old4 = oldProps1[key16];
-					if(old4 != cur9) {
-						elm17[key16] = cur9;
-					}
-				}
-				var cur10;
 				var name10;
-				var elm18 = [vnode1.elm];
-				var oldClass1 = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
-				var klass1 = vnode1.data.classes == null?{ }:vnode1.data.classes;
-				if(vnode1.data.skip_attributes == false) {
-					var _g10 = 0;
-					var _g19 = Object.keys(klass1);
-					while(_g10 < _g19.length) {
-						var name11 = [_g19[_g10]];
-						++_g10;
-						cur10 = klass1[name11[0]];
-						if(cur10 != oldClass1[name11[0]]) {
-							if(cur10 == "add") {
-								window.requestAnimationFrame((function(name12,elm19) {
-									return function(i23) {
-										elm19[0].classList.add(name12[0]);
-									};
-								})(name11,elm18));
-							} else if(cur10 == "remove") {
-								window.requestAnimationFrame((function(name13,elm20) {
-									return function(i24) {
-										elm20[0].classList.remove(name13[0]);
-									};
-								})(name11,elm18));
-							}
-						}
-					}
-				}
-				var cur11 = [];
-				var name14;
-				var elm21 = [vnode1.elm];
+				var elm13 = [vnode1.elm];
 				var apply_styles1;
 				if(vnode1.data.skip_styles == false) {
 					apply_styles1 = true;
-				} else if(elm21[0].cached_styles == null) {
-					elm21[0].cached_styles = true;
+				} else if(elm13[0].cached_styles == null) {
+					elm13[0].cached_styles = true;
 					apply_styles1 = true;
-				} else if(elm21[0].cached_styles == true) {
+				} else if(elm13[0].cached_styles == true) {
 					apply_styles1 = false;
 				} else {
 					apply_styles1 = true;
@@ -1106,43 +996,144 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					var oldStyle1 = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
 					var style1 = vnode1.data.style == null?{ }:vnode1.data.style;
 					var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
-					var _g20 = 0;
-					var _g110 = Object.keys(style1);
-					while(_g20 < _g110.length) {
-						var name15 = [_g110[_g20]];
-						++_g20;
-						cur11[0] = style1[name15[0]];
-						if(name15[0] == "delayed") {
+					var _g9 = 0;
+					var _g16 = Object.keys(style1);
+					while(_g9 < _g16.length) {
+						var name11 = [_g16[_g9]];
+						++_g9;
+						cur7[0] = style1[name11[0]];
+						if(name11[0] == "delayed") {
 							var delayed1 = style1.delayed;
 							var oldDelayed1 = oldStyle1.delayed;
-							var _g22 = 0;
-							var _g32 = Object.keys(delayed1);
-							while(_g22 < _g32.length) {
-								var name16 = _g32[_g22];
-								++_g22;
-								cur11[0] = delayed1[name16];
-								if(!oldHasDel1 || cur11[0] != oldDelayed1[name16]) {
-									var obj2 = [elm21[0].style];
-									var prop2 = [name16];
-									var val2 = [cur11[0]];
+							var _g21 = 0;
+							var _g31 = Object.keys(delayed1);
+							while(_g21 < _g31.length) {
+								var name12 = _g31[_g21];
+								++_g21;
+								cur7[0] = delayed1[name12];
+								if(!oldHasDel1 || cur7[0] != oldDelayed1[name12]) {
+									var obj2 = [elm13[0].style];
+									var prop2 = [name12];
+									var val2 = [cur7[0]];
 									var fn2 = [(function(val3,prop3,obj3) {
-										return function(i25) {
+										return function(i20) {
 											obj3[0][prop3[0]] = val3[0];
 										};
 									})(val2,prop2,obj2)];
 									window.requestAnimationFrame((function(fn3) {
-										return function(i26) {
+										return function(i21) {
 											window.requestAnimationFrame(fn3[0]);
 										};
 									})(fn2));
 								}
 							}
-						} else if(name15[0] != "remove" && cur11[0] != oldStyle1[name15[0]]) {
-							window.requestAnimationFrame((function(name17,elm22,cur12) {
-								return function(i27) {
-									elm22[0].style[name17[0]] = cur12[0];
+						} else if(name11[0] != "remove" && cur7[0] != oldStyle1[name11[0]]) {
+							window.requestAnimationFrame((function(name13,elm14,cur8) {
+								return function(i22) {
+									elm14[0].style[name13[0]] = cur8[0];
 								};
-							})(name15,elm21,cur11));
+							})(name11,elm13,cur7));
+						}
+					}
+				}
+				var key9;
+				var cur9 = [];
+				var old3;
+				var elm15 = [vnode1.elm];
+				var oldAttrs1 = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
+				var attrs1 = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
+				var apply_attributes1;
+				if(vnode1.data.skip_attributes == false) {
+					apply_attributes1 = true;
+				} else if(elm15[0].cached_attributes == null) {
+					elm15[0].cached_attributes = true;
+					apply_attributes1 = true;
+				} else if(elm15[0].cached_attributes == true) {
+					apply_attributes1 = false;
+				} else {
+					apply_attributes1 = true;
+				}
+				if(apply_attributes1) {
+					var _g10 = 0;
+					var _g17 = Object.keys(attrs1);
+					while(_g10 < _g17.length) {
+						var key10 = [_g17[_g10]];
+						++_g10;
+						cur9[0] = attrs1[key10[0]];
+						old3 = oldAttrs1[key10[0]];
+						if(old3 != cur9[0]) {
+							if(!cur9[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key10[0]]) {
+								window.requestAnimationFrame((function(key11,elm16) {
+									return function(i23) {
+										elm16[0].removeAttribute(key11[0]);
+									};
+								})(key10,elm15));
+							} else {
+								window.requestAnimationFrame((function(key12,elm17,cur10) {
+									return function(i24) {
+										elm17[0].setAttribute(key12[0],cur10[0]);
+									};
+								})(key10,elm15,cur9));
+							}
+						}
+					}
+					var _g18 = 0;
+					var _g19 = Object.keys(oldAttrs1);
+					while(_g18 < _g19.length) {
+						var key13 = [_g19[_g18]];
+						++_g18;
+						if(!Object.prototype.hasOwnProperty.call(attrs1,key13[0])) {
+							window.requestAnimationFrame((function(key14,elm18) {
+								return function(i25) {
+									elm18[0].removeAttribute(key14[0]);
+								};
+							})(key13,elm15));
+						}
+					}
+				}
+				var key15;
+				var cur11;
+				var old4;
+				var elm19 = vnode1.elm;
+				var oldProps1 = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
+				var props1 = vnode1.data.props == null?{ }:vnode1.data.props;
+				var _g20 = 0;
+				var _g110 = Object.keys(props1);
+				while(_g20 < _g110.length) {
+					var key16 = _g110[_g20];
+					++_g20;
+					cur11 = props1[key16];
+					old4 = oldProps1[key16];
+					if(old4 != cur11) {
+						elm19[key16] = cur11;
+					}
+				}
+				var cur12;
+				var name14;
+				var elm20 = [vnode1.elm];
+				var oldClass1 = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
+				var klass1 = vnode1.data.classes == null?{ }:vnode1.data.classes;
+				if(vnode1.data.skip_attributes == false) {
+					var _g22 = 0;
+					var _g111 = Object.keys(klass1);
+					while(_g22 < _g111.length) {
+						var name15 = [_g111[_g22]];
+						++_g22;
+						cur12 = klass1[name15[0]];
+						if(cur12 != oldClass1[name15[0]]) {
+							if(cur12 == "add") {
+								window.requestAnimationFrame((function(name16,elm21) {
+									return function(i26) {
+										elm21[0].classList.add(name16[0]);
+									};
+								})(name15,elm20));
+							} else if(cur12 == "remove") {
+								window.requestAnimationFrame((function(name17,elm22) {
+									return function(i27) {
+										elm22[0].classList.remove(name17[0]);
+									};
+								})(name15,elm20));
+							}
 						}
 					}
 				}
@@ -1154,9 +1145,9 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				var on1 = vnode1.data.on == null?{ }:vnode1.data.on;
 				if(on1 != { }) {
 					var _g23 = 0;
-					var _g111 = Object.keys(on1);
-					while(_g23 < _g111.length) {
-						var name19 = _g111[_g23];
+					var _g112 = Object.keys(on1);
+					while(_g23 < _g112.length) {
+						var name19 = _g112[_g23];
 						++_g23;
 						cur13 = on1[name19];
 						old5 = oldOn1[name19];
@@ -1222,9 +1213,9 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							style2 = s.destroy;
 							if(style2 != null) {
 								var _g24 = 0;
-								var _g112 = Object.keys(style2);
-								while(_g24 < _g112.length) {
-									var name21 = _g112[_g24];
+								var _g113 = Object.keys(style2);
+								while(_g24 < _g113.length) {
+									var name21 = _g113[_g24];
 									++_g24;
 									elm24.style[name21] = style2[name21];
 								}
@@ -1257,9 +1248,9 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						var amount = [0];
 						var applied = [];
 						var _g25 = 0;
-						var _g113 = Object.keys(style3);
-						while(_g25 < _g113.length) {
-							var name23 = _g113[_g25];
+						var _g114 = Object.keys(style3);
+						while(_g25 < _g114.length) {
+							var name23 = _g114[_g25];
 							++_g25;
 							applied.push(name23);
 							elm25[0].style[name23] = style3[name23];
@@ -1315,7 +1306,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							return function(i32) {
 								this16[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_3A8CDBF8_CE12_4669_998D_C77270ABEF8A_1470836709e012 = (function() {
+								var tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e012 = (function() {
 									return function(__return) {
 										var cb = (function() {
 											return function() {
@@ -1346,6 +1337,8 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 										})(),0);
 									};
 								})();
+								var fn4 = tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e012;
+								fn4(thx_Functions.noop);
 							};
 						})(element6,this15));
 					}
@@ -1357,7 +1350,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						return function(i33) {
 							this18[0].removeChild(element10[0]);
 							var element11 = element10[0];
-							var tmp_3A8CDBF8_CE12_4669_998D_C77270ABEF8A_1470836709e0121 = (function() {
+							var tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e0121 = (function() {
 								return function(__return1) {
 									var cb1 = (function() {
 										return function() {
@@ -1388,6 +1381,8 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 									})(),0);
 								};
 							})();
+							var fn5 = tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e0121;
+							fn5(thx_Functions.noop);
 						};
 					})(element9,this17));
 				}
@@ -1446,186 +1441,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 		return;
 	}
 	if(vnode.data != undefined) {
-		var key;
-		var cur;
-		var old;
-		var elm1 = vnode.elm;
-		var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
-		var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
-		var apply_attributes;
-		if(vnode.data.skip_attributes == false) {
-			apply_attributes = true;
-		} else if(elm1.cached_attributes == null) {
-			elm1.cached_attributes = true;
-			apply_attributes = true;
-		} else if(elm1.cached_attributes == true) {
-			apply_attributes = false;
-		} else {
-			apply_attributes = true;
-		}
-		if(apply_attributes) {
-			var _g = 0;
-			var _g1 = Object.keys(attrs);
-			while(_g < _g1.length) {
-				var key1 = [_g1[_g]];
-				++_g;
-				cur = attrs[key1[0]];
-				old = oldAttrs[key1[0]];
-				if(old != cur) {
-					if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
-						window.requestAnimationFrame((function(key2) {
-							return function(i1) {
-								elm1.removeAttribute(key2[0]);
-							};
-						})(key1));
-					} else {
-						window.requestAnimationFrame((function(key3) {
-							return function(i2) {
-								elm1.setAttribute(key3[0],cur);
-							};
-						})(key1));
-					}
-				}
-			}
-			var _g2 = 0;
-			var _g11 = Object.keys(oldAttrs);
-			while(_g2 < _g11.length) {
-				var key4 = [_g11[_g2]];
-				++_g2;
-				if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
-					window.requestAnimationFrame((function(key5) {
-						return function(i3) {
-							elm1.removeAttribute(key5[0]);
-						};
-					})(key4));
-				}
-			}
-		}
-		var key6;
-		var cur1;
-		var old1;
-		var elm2 = vnode.elm;
-		var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
-		var props = vnode.data.props == null?{ }:vnode.data.props;
-		var _g3 = 0;
-		var _g12 = Object.keys(props);
-		while(_g3 < _g12.length) {
-			var key7 = _g12[_g3];
-			++_g3;
-			cur1 = props[key7];
-			old1 = oldProps[key7];
-			if(old1 != cur1) {
-				elm2[key7] = cur1;
-			}
-		}
-		var cur2;
-		var name;
-		var elm3 = vnode.elm;
-		var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
-		var klass = vnode.data.classes == null?{ }:vnode.data.classes;
-		if(vnode.data.skip_attributes == false) {
-			var _g4 = 0;
-			var _g13 = Object.keys(klass);
-			while(_g4 < _g13.length) {
-				var name1 = [_g13[_g4]];
-				++_g4;
-				cur2 = klass[name1[0]];
-				if(cur2 != oldClass[name1[0]]) {
-					if(cur2 == "add") {
-						window.requestAnimationFrame((function(name2) {
-							return function(i4) {
-								elm3.classList.add(name2[0]);
-							};
-						})(name1));
-					} else if(cur2 == "remove") {
-						window.requestAnimationFrame((function(name3) {
-							return function(i5) {
-								elm3.classList.remove(name3[0]);
-							};
-						})(name1));
-					}
-				}
-			}
-		}
-		var cur3;
-		var name4;
-		var elm4 = vnode.elm;
-		var apply_styles;
-		if(vnode.data.skip_styles == false) {
-			apply_styles = true;
-		} else if(elm4.cached_styles == null) {
-			elm4.cached_styles = true;
-			apply_styles = true;
-		} else if(elm4.cached_styles == true) {
-			apply_styles = false;
-		} else {
-			apply_styles = true;
-		}
-		if(apply_styles) {
-			var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
-			var style = vnode.data.style == null?{ }:vnode.data.style;
-			var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-			var _g5 = 0;
-			var _g14 = Object.keys(style);
-			while(_g5 < _g14.length) {
-				var name5 = [_g14[_g5]];
-				++_g5;
-				cur3 = style[name5[0]];
-				if(name5[0] == "delayed") {
-					var delayed = style.delayed;
-					var oldDelayed = oldStyle.delayed;
-					var _g21 = 0;
-					var _g31 = Object.keys(delayed);
-					while(_g21 < _g31.length) {
-						var name6 = _g31[_g21];
-						++_g21;
-						cur3 = delayed[name6];
-						if(!oldHasDel || cur3 != oldDelayed[name6]) {
-							var obj = [elm4.style];
-							var fn = [(function(val,prop,obj1) {
-								return function(i6) {
-									obj1[0][prop[0]] = val[0];
-								};
-							})([cur3],[name6],obj)];
-							window.requestAnimationFrame((function(fn1) {
-								return function(i7) {
-									window.requestAnimationFrame(fn1[0]);
-								};
-							})(fn));
-						}
-					}
-				} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
-					window.requestAnimationFrame((function(name7) {
-						return function(i8) {
-							elm4.style[name7[0]] = cur3;
-						};
-					})(name5));
-				}
-			}
-		}
-		var name8;
-		var cur4;
-		var old2;
-		var elm5 = vnode.elm;
-		var oldOn = oldVnode.data.on == null?{ }:oldVnode.data.on;
-		var on = vnode.data.on == null?{ }:vnode.data.on;
-		if(on != { }) {
-			var _g6 = 0;
-			var _g15 = Object.keys(on);
-			while(_g6 < _g15.length) {
-				var name9 = _g15[_g6];
-				++_g6;
-				cur4 = on[name9];
-				old2 = oldOn[name9];
-				if(old2 == null) {
-					console.log(cur4);
-					on[name9] = cur4;
-					elm5.addEventListener(name9,cur4);
-				} else {
-					on[name9] = cur4;
-				}
-			}
-		}
+		snabbdom_engine_dom_plugins_Hooks.update(oldVnode,vnode);
 		i = vnode.data.hook;
 		var tmp4;
 		if(i != undefined) {
@@ -1646,31 +1462,31 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 		} else if(ch != undefined) {
 			var startIdx = 0;
 			var endIdx = ch.length - 1;
-			var i9;
+			var i1;
 			var new_node;
-			i9 = 0;
+			i1 = 0;
 			while(startIdx <= endIdx) {
 				var vnode1 = ch[startIdx];
-				var i10;
+				var i2;
 				var data = vnode1.data;
 				if(data != undefined) {
 					var tmp5;
-					i10 = data.hook;
-					if(i10 != undefined) {
-						i10 = i10.init;
-						tmp5 = i10 != undefined;
+					i2 = data.hook;
+					if(i2 != undefined) {
+						i2 = i2.init;
+						tmp5 = i2 != undefined;
 					} else {
 						tmp5 = false;
 					}
 					if(tmp5) {
-						i10(vnode1);
+						i2(vnode1);
 					}
-					i10 = data.vnode;
-					if(i10 != undefined) {
-						vnode1 = i10;
+					i2 = data.vnode;
+					if(i2 != undefined) {
+						vnode1 = i2;
 					}
 				}
-				var elm6;
+				var elm1;
 				var children = vnode1.children;
 				var sel = vnode1.sel;
 				if(sel != undefined) {
@@ -1678,13 +1494,13 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 					var tmp6;
 					var tmp7;
 					if(data != undefined) {
-						i10 = data.ns;
-						tmp7 = i10 != undefined;
+						i2 = data.ns;
+						tmp7 = i2 != undefined;
 					} else {
 						tmp7 = false;
 					}
 					if(tmp7) {
-						tmp6 = window.document.createElementNS(i10,tag);
+						tmp6 = window.document.createElementNS(i2,tag);
 					} else {
 						switch(tag) {
 						case "div":
@@ -1692,7 +1508,6 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							if(nodes.length == 0) {
 								nodes.push(window.document.createElement("div"));
 							}
-							console.log(nodes.length);
 							tmp6 = nodes.shift();
 							break;
 						case "li":
@@ -1700,7 +1515,6 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							if(nodes1.length == 0) {
 								nodes1.push(window.document.createElement("li"));
 							}
-							console.log(nodes1.length);
 							tmp6 = nodes1.shift();
 							break;
 						case "span":
@@ -1708,224 +1522,223 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							if(nodes2.length == 0) {
 								nodes2.push(window.document.createElement("span"));
 							}
-							console.log(nodes2.length);
 							tmp6 = nodes2.shift();
 							break;
 						default:
 							tmp6 = window.document.createElement(tag);
 						}
 					}
-					elm6 = vnode1.elm = tmp6;
+					elm1 = vnode1.elm = tmp6;
 					if(Array.isArray(children)) {
-						i10 = 0;
-						while(i10 < children.length) {
-							var new_node1 = snabbdom_engine_dom_PatchDom.createElm(children[i10],insertedVnodeQueue);
+						i2 = 0;
+						while(i2 < children.length) {
+							var new_node1 = snabbdom_engine_dom_PatchDom.createElm(children[i2],insertedVnodeQueue);
 							window.requestAnimationFrame((function(element,this1) {
-								return function(i11) {
+								return function(i3) {
 									this1[0].appendChild(element[0]);
 								};
-							})([new_node1],[elm6]));
-							++i10;
+							})([new_node1],[elm1]));
+							++i2;
 						}
 					} else if(typeof vnode1.text == "string" || typeof vnode1.text == "number") {
-						var this2 = [elm6];
+						var this2 = [elm1];
 						var element1 = [window.document.createTextNode(vnode1.text)];
 						window.requestAnimationFrame((function(element2,this3) {
-							return function(i12) {
+							return function(i4) {
 								this3[0].appendChild(element2[0]);
 							};
 						})(element1,this2));
 					}
 					var oldVnode1 = snabbdom_engine_dom_PatchDom.emptyNode;
-					var key8;
-					var cur5 = [];
-					var old3;
-					var elm7 = [vnode1.elm];
-					var oldAttrs1 = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
-					var attrs1 = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
-					var apply_attributes1;
-					if(vnode1.data.skip_attributes == false) {
-						apply_attributes1 = true;
-					} else if(elm7[0].cached_attributes == null) {
-						elm7[0].cached_attributes = true;
-						apply_attributes1 = true;
-					} else if(elm7[0].cached_attributes == true) {
-						apply_attributes1 = false;
-					} else {
-						apply_attributes1 = true;
-					}
-					if(apply_attributes1) {
-						var _g7 = 0;
-						var _g16 = Object.keys(attrs1);
-						while(_g7 < _g16.length) {
-							var key9 = [_g16[_g7]];
-							++_g7;
-							cur5[0] = attrs1[key9[0]];
-							old3 = oldAttrs1[key9[0]];
-							if(old3 != cur5[0]) {
-								if(!cur5[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key9[0]]) {
-									window.requestAnimationFrame((function(key10,elm8) {
-										return function(i13) {
-											elm8[0].removeAttribute(key10[0]);
-										};
-									})(key9,elm7));
-								} else {
-									window.requestAnimationFrame((function(key11,elm9,cur6) {
-										return function(i14) {
-											elm9[0].setAttribute(key11[0],cur6[0]);
-										};
-									})(key9,elm7,cur5));
-								}
-							}
-						}
-						var _g8 = 0;
-						var _g17 = Object.keys(oldAttrs1);
-						while(_g8 < _g17.length) {
-							var key12 = [_g17[_g8]];
-							++_g8;
-							if(!Object.prototype.hasOwnProperty.call(attrs1,key12[0])) {
-								window.requestAnimationFrame((function(key13,elm10) {
-									return function(i15) {
-										elm10[0].removeAttribute(key13[0]);
-									};
-								})(key12,elm7));
-							}
-						}
-					}
-					var key14;
-					var cur7;
-					var old4;
-					var elm11 = vnode1.elm;
-					var oldProps1 = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
-					var props1 = vnode1.data.props == null?{ }:vnode1.data.props;
-					var _g9 = 0;
-					var _g18 = Object.keys(props1);
-					while(_g9 < _g18.length) {
-						var key15 = _g18[_g9];
-						++_g9;
-						cur7 = props1[key15];
-						old4 = oldProps1[key15];
-						if(old4 != cur7) {
-							elm11[key15] = cur7;
-						}
-					}
-					var cur8;
-					var name10;
-					var elm12 = [vnode1.elm];
-					var oldClass1 = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
-					var klass1 = vnode1.data.classes == null?{ }:vnode1.data.classes;
-					if(vnode1.data.skip_attributes == false) {
-						var _g10 = 0;
-						var _g19 = Object.keys(klass1);
-						while(_g10 < _g19.length) {
-							var name11 = [_g19[_g10]];
-							++_g10;
-							cur8 = klass1[name11[0]];
-							if(cur8 != oldClass1[name11[0]]) {
-								if(cur8 == "add") {
-									window.requestAnimationFrame((function(name12,elm13) {
-										return function(i16) {
-											elm13[0].classList.add(name12[0]);
-										};
-									})(name11,elm12));
-								} else if(cur8 == "remove") {
-									window.requestAnimationFrame((function(name13,elm14) {
-										return function(i17) {
-											elm14[0].classList.remove(name13[0]);
-										};
-									})(name11,elm12));
-								}
-							}
-						}
-					}
-					var cur9 = [];
-					var name14;
-					var elm15 = [vnode1.elm];
-					var apply_styles1;
+					var cur = [];
+					var name;
+					var elm2 = [vnode1.elm];
+					var apply_styles;
 					if(vnode1.data.skip_styles == false) {
-						apply_styles1 = true;
-					} else if(elm15[0].cached_styles == null) {
-						elm15[0].cached_styles = true;
-						apply_styles1 = true;
-					} else if(elm15[0].cached_styles == true) {
-						apply_styles1 = false;
+						apply_styles = true;
+					} else if(elm2[0].cached_styles == null) {
+						elm2[0].cached_styles = true;
+						apply_styles = true;
+					} else if(elm2[0].cached_styles == true) {
+						apply_styles = false;
 					} else {
-						apply_styles1 = true;
+						apply_styles = true;
 					}
-					if(apply_styles1) {
-						var oldStyle1 = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
-						var style1 = vnode1.data.style == null?{ }:vnode1.data.style;
-						var oldHasDel1 = Object.prototype.hasOwnProperty.call(oldStyle1,"delayed");
-						var _g20 = 0;
-						var _g110 = Object.keys(style1);
-						while(_g20 < _g110.length) {
-							var name15 = [_g110[_g20]];
-							++_g20;
-							cur9[0] = style1[name15[0]];
-							if(name15[0] == "delayed") {
-								var delayed1 = style1.delayed;
-								var oldDelayed1 = oldStyle1.delayed;
-								var _g22 = 0;
-								var _g32 = Object.keys(delayed1);
-								while(_g22 < _g32.length) {
-									var name16 = _g32[_g22];
-									++_g22;
-									cur9[0] = delayed1[name16];
-									if(!oldHasDel1 || cur9[0] != oldDelayed1[name16]) {
-										var obj2 = [elm15[0].style];
-										var prop1 = [name16];
-										var val1 = [cur9[0]];
-										var fn2 = [(function(val2,prop2,obj3) {
-											return function(i18) {
-												obj3[0][prop2[0]] = val2[0];
+					if(apply_styles) {
+						var oldStyle = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
+						var style = vnode1.data.style == null?{ }:vnode1.data.style;
+						var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
+						var _g = 0;
+						var _g1 = Object.keys(style);
+						while(_g < _g1.length) {
+							var name1 = [_g1[_g]];
+							++_g;
+							cur[0] = style[name1[0]];
+							if(name1[0] == "delayed") {
+								var delayed = style.delayed;
+								var oldDelayed = oldStyle.delayed;
+								var _g2 = 0;
+								var _g3 = Object.keys(delayed);
+								while(_g2 < _g3.length) {
+									var name2 = _g3[_g2];
+									++_g2;
+									cur[0] = delayed[name2];
+									if(!oldHasDel || cur[0] != oldDelayed[name2]) {
+										var obj = [elm2[0].style];
+										var prop = [name2];
+										var val = [cur[0]];
+										var fn = [(function(val1,prop1,obj1) {
+											return function(i5) {
+												obj1[0][prop1[0]] = val1[0];
 											};
-										})(val1,prop1,obj2)];
-										window.requestAnimationFrame((function(fn3) {
-											return function(i19) {
-												window.requestAnimationFrame(fn3[0]);
+										})(val,prop,obj)];
+										window.requestAnimationFrame((function(fn1) {
+											return function(i6) {
+												window.requestAnimationFrame(fn1[0]);
 											};
-										})(fn2));
+										})(fn));
 									}
 								}
-							} else if(name15[0] != "remove" && cur9[0] != oldStyle1[name15[0]]) {
-								window.requestAnimationFrame((function(name17,elm16,cur10) {
-									return function(i20) {
-										elm16[0].style[name17[0]] = cur10[0];
+							} else if(name1[0] != "remove" && cur[0] != oldStyle[name1[0]]) {
+								window.requestAnimationFrame((function(name3,elm3,cur1) {
+									return function(i7) {
+										elm3[0].style[name3[0]] = cur1[0];
 									};
-								})(name15,elm15,cur9));
+								})(name1,elm2,cur));
 							}
 						}
 					}
-					var name18;
-					var cur11;
-					var old5;
-					var elm17 = vnode1.elm;
-					var oldOn1 = oldVnode1.data.on == null?{ }:oldVnode1.data.on;
-					var on1 = vnode1.data.on == null?{ }:vnode1.data.on;
-					if(on1 != { }) {
-						var _g23 = 0;
-						var _g111 = Object.keys(on1);
-						while(_g23 < _g111.length) {
-							var name19 = _g111[_g23];
-							++_g23;
-							cur11 = on1[name19];
-							old5 = oldOn1[name19];
-							if(old5 == null) {
-								console.log(cur11);
-								on1[name19] = cur11;
-								elm17.addEventListener(name19,cur11);
+					var key;
+					var cur2 = [];
+					var old;
+					var elm4 = [vnode1.elm];
+					var oldAttrs = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
+					var attrs = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
+					var apply_attributes;
+					if(vnode1.data.skip_attributes == false) {
+						apply_attributes = true;
+					} else if(elm4[0].cached_attributes == null) {
+						elm4[0].cached_attributes = true;
+						apply_attributes = true;
+					} else if(elm4[0].cached_attributes == true) {
+						apply_attributes = false;
+					} else {
+						apply_attributes = true;
+					}
+					if(apply_attributes) {
+						var _g4 = 0;
+						var _g11 = Object.keys(attrs);
+						while(_g4 < _g11.length) {
+							var key1 = [_g11[_g4]];
+							++_g4;
+							cur2[0] = attrs[key1[0]];
+							old = oldAttrs[key1[0]];
+							if(old != cur2[0]) {
+								if(!cur2[0] && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
+									window.requestAnimationFrame((function(key2,elm5) {
+										return function(i8) {
+											elm5[0].removeAttribute(key2[0]);
+										};
+									})(key1,elm4));
+								} else {
+									window.requestAnimationFrame((function(key3,elm6,cur3) {
+										return function(i9) {
+											elm6[0].setAttribute(key3[0],cur3[0]);
+										};
+									})(key1,elm4,cur2));
+								}
+							}
+						}
+						var _g5 = 0;
+						var _g12 = Object.keys(oldAttrs);
+						while(_g5 < _g12.length) {
+							var key4 = [_g12[_g5]];
+							++_g5;
+							if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
+								window.requestAnimationFrame((function(key5,elm7) {
+									return function(i10) {
+										elm7[0].removeAttribute(key5[0]);
+									};
+								})(key4,elm4));
+							}
+						}
+					}
+					var key6;
+					var cur4;
+					var old1;
+					var elm8 = vnode1.elm;
+					var oldProps = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
+					var props = vnode1.data.props == null?{ }:vnode1.data.props;
+					var _g6 = 0;
+					var _g13 = Object.keys(props);
+					while(_g6 < _g13.length) {
+						var key7 = _g13[_g6];
+						++_g6;
+						cur4 = props[key7];
+						old1 = oldProps[key7];
+						if(old1 != cur4) {
+							elm8[key7] = cur4;
+						}
+					}
+					var cur5;
+					var name4;
+					var elm9 = [vnode1.elm];
+					var oldClass = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
+					var klass = vnode1.data.classes == null?{ }:vnode1.data.classes;
+					if(vnode1.data.skip_attributes == false) {
+						var _g7 = 0;
+						var _g14 = Object.keys(klass);
+						while(_g7 < _g14.length) {
+							var name5 = [_g14[_g7]];
+							++_g7;
+							cur5 = klass[name5[0]];
+							if(cur5 != oldClass[name5[0]]) {
+								if(cur5 == "add") {
+									window.requestAnimationFrame((function(name6,elm10) {
+										return function(i11) {
+											elm10[0].classList.add(name6[0]);
+										};
+									})(name5,elm9));
+								} else if(cur5 == "remove") {
+									window.requestAnimationFrame((function(name7,elm11) {
+										return function(i12) {
+											elm11[0].classList.remove(name7[0]);
+										};
+									})(name5,elm9));
+								}
+							}
+						}
+					}
+					var name8;
+					var cur6;
+					var old2;
+					var elm12 = vnode1.elm;
+					var oldOn = oldVnode1.data.on == null?{ }:oldVnode1.data.on;
+					var on = vnode1.data.on == null?{ }:vnode1.data.on;
+					if(on != { }) {
+						var _g8 = 0;
+						var _g15 = Object.keys(on);
+						while(_g8 < _g15.length) {
+							var name9 = _g15[_g8];
+							++_g8;
+							cur6 = on[name9];
+							old2 = oldOn[name9];
+							if(old2 == null) {
+								console.log(cur6);
+								on[name9] = cur6;
+								elm12.addEventListener(name9,cur6);
 							} else {
-								on1[name19] = cur11;
+								on[name9] = cur6;
 							}
 						}
 					}
 					if(vnode1.data != null) {
-						i10 = vnode1.data.hook;
-						if(i10 != undefined) {
-							if(i10.create) {
-								i10.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
+						i2 = vnode1.data.hook;
+						if(i2 != undefined) {
+							if(i2.create) {
+								i2.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
 							}
-							if(i10.insert) {
+							if(i2.insert) {
 								insertedVnodeQueue.push(vnode1);
 							}
 						}
@@ -1944,45 +1757,45 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 			var y;
 			y = 0;
 			while(startIdx1 <= endIdx1) {
-				var i21;
+				var i13;
 				var listeners;
 				var rm = null;
 				var ch1 = oldCh[startIdx1];
 				if(ch1 != undefined) {
 					if(ch1.sel != undefined) {
 						var vnode2 = ch1;
-						var i22 = vnode2.data;
+						var i14 = vnode2.data;
 						var j;
-						if(i22 != undefined) {
+						if(i14 != undefined) {
 							var tmp8;
-							i22 = i22.hook;
-							if(i22 != undefined) {
-								i22 = i22.destroy;
-								tmp8 = i22 != undefined;
+							i14 = i14.hook;
+							if(i14 != undefined) {
+								i14 = i14.destroy;
+								tmp8 = i14 != undefined;
 							} else {
 								tmp8 = false;
 							}
 							if(tmp8) {
-								i22(vnode2);
+								i14(vnode2);
 							}
-							var style2 = null;
-							var name20;
-							var elm18 = vnode2.elm;
+							var style1 = null;
+							var name10;
+							var elm13 = vnode2.elm;
 							var s = vnode2.data.style;
 							if(s != null) {
-								style2 = s.destroy;
-								if(style2 != null) {
-									var _g24 = 0;
-									var _g112 = Object.keys(style2);
-									while(_g24 < _g112.length) {
-										var name21 = _g112[_g24];
-										++_g24;
-										elm18.style[name21] = style2[name21];
+								style1 = s.destroy;
+								if(style1 != null) {
+									var _g9 = 0;
+									var _g16 = Object.keys(style1);
+									while(_g9 < _g16.length) {
+										var name11 = _g16[_g9];
+										++_g9;
+										elm13.style[name11] = style1[name11];
 									}
 								}
 							}
-							i22 = vnode2.children;
-							if(i22 != undefined) {
+							i14 = vnode2.children;
+							if(i14 != undefined) {
 								j = 0;
 								while(j < vnode2.children.length) {
 									snabbdom_engine_dom_PatchDom.invokeDestroyHook(vnode2.children[j]);
@@ -1998,62 +1811,62 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 								rm1[0]();
 							}
 						} else {
-							var name22;
-							var elm19 = [vnode3.elm];
+							var name12;
+							var elm14 = [vnode3.elm];
 							var idx;
-							var i23 = 0;
+							var i15 = 0;
 							var maxDur = 0;
 							var compStyle;
-							var style3 = s1.remove;
+							var style2 = s1.remove;
 							var amount = [0];
 							var applied = [];
-							var _g25 = 0;
-							var _g113 = Object.keys(style3);
-							while(_g25 < _g113.length) {
-								var name23 = _g113[_g25];
-								++_g25;
-								applied.push(name23);
-								elm19[0].style[name23] = style3[name23];
+							var _g10 = 0;
+							var _g17 = Object.keys(style2);
+							while(_g10 < _g17.length) {
+								var name13 = _g17[_g10];
+								++_g10;
+								applied.push(name13);
+								elm14[0].style[name13] = style2[name13];
 							}
-							compStyle = window.getComputedStyle(elm19[0]);
-							var props2 = compStyle["transition-property"].split(", ");
-							var i24;
-							i24 = 0;
-							while(i24 < props2.length) {
-								if(applied.indexOf(props2[i24]) != -1) {
+							compStyle = window.getComputedStyle(elm14[0]);
+							var props1 = compStyle["transition-property"].split(", ");
+							var i16;
+							i16 = 0;
+							while(i16 < props1.length) {
+								if(applied.indexOf(props1[i16]) != -1) {
 									amount[0]++;
 								}
-								++i24;
+								++i16;
 							}
-							var tmp9 = (function(amount1,elm20,rm2) {
+							var tmp9 = (function(amount1,elm15,rm2) {
 								return function(ev) {
-									if(ev.target == elm20[0]) {
+									if(ev.target == elm15[0]) {
 										--amount1[0];
 									}
 									if(amount1[0] == 0) {
 										rm2[0]();
 									}
 								};
-							})(amount,elm19,rm1);
-							elm19[0].addEventListener("transitionend",tmp9);
+							})(amount,elm14,rm1);
+							elm14[0].addEventListener("transitionend",tmp9);
 						}
 						var tmp10;
 						var tmp11;
-						i21 = ch1.data;
-						if(i21 != undefined) {
-							i21 = i21.hook;
-							tmp11 = i21 != undefined;
+						i13 = ch1.data;
+						if(i13 != undefined) {
+							i13 = i13.hook;
+							tmp11 = i13 != undefined;
 						} else {
 							tmp11 = false;
 						}
 						if(tmp11) {
-							i21 = i21.remove;
-							tmp10 = i21 != undefined;
+							i13 = i13.remove;
+							tmp10 = i13 != undefined;
 						} else {
 							tmp10 = false;
 						}
 						if(tmp10) {
-							i21(ch1,rm);
+							i13(ch1,rm);
 						} else {
 							console.log("remove");
 							if(rm != null) {
@@ -2063,16 +1876,16 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							var element3 = [ch1.elm];
 							console.log("remove-child");
 							window.requestAnimationFrame((function(element4,this6) {
-								return function(i25) {
+								return function(i17) {
 									this6[0].removeChild(element4[0]);
 									var element5 = element4[0];
-									var tmp_3A8CDBF8_CE12_4669_998D_C77270ABEF8A_1470836709e012 = (function() {
+									var tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e012 = (function() {
 										return function(__return) {
 											var cb = (function() {
 												return function() {
 													element5.textContent = "";
-													var _g26 = element5.nodeName;
-													switch(_g26) {
+													var _g18 = element5.nodeName;
+													switch(_g18) {
 													case "DIV":
 														snabbdom_engine_dom_DomPool.nodes_div.unshift(element5);
 														__return();
@@ -2097,6 +1910,8 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 											})(),0);
 										};
 									})();
+									var fn2 = tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e012;
+									fn2(thx_Functions.noop);
 								};
 							})(element3,this5));
 						}
@@ -2105,16 +1920,16 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						var element6 = [ch1.elm];
 						console.log("remove-child");
 						window.requestAnimationFrame((function(element7,this8) {
-							return function(i26) {
+							return function(i18) {
 								this8[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_3A8CDBF8_CE12_4669_998D_C77270ABEF8A_1470836709e0121 = (function() {
+								var tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e0121 = (function() {
 									return function(__return1) {
 										var cb1 = (function() {
 											return function() {
 												element8.textContent = "";
-												var _g27 = element8.nodeName;
-												switch(_g27) {
+												var _g19 = element8.nodeName;
+												switch(_g19) {
 												case "DIV":
 													snabbdom_engine_dom_DomPool.nodes_div.unshift(element8);
 													__return1();
@@ -2139,6 +1954,8 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 										})(),0);
 									};
 								})();
+								var fn3 = tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e0121;
+								fn3(thx_Functions.noop);
 							};
 						})(element6,this7));
 					}
@@ -2149,7 +1966,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 	} else if(oldVnode.text != vnode.text) {
 		var this9 = elm;
 		var value = vnode.text;
-		window.requestAnimationFrame(function(i27) {
+		window.requestAnimationFrame(function(i19) {
 			this9.textContent = value;
 		});
 	}
@@ -2211,7 +2028,6 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 					if(nodes.length == 0) {
 						nodes.push(window.document.createElement("div"));
 					}
-					console.log(nodes.length);
 					tmp1 = nodes.shift();
 					break;
 				case "li":
@@ -2219,7 +2035,6 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 					if(nodes1.length == 0) {
 						nodes1.push(window.document.createElement("li"));
 					}
-					console.log(nodes1.length);
 					tmp1 = nodes1.shift();
 					break;
 				case "span":
@@ -2227,7 +2042,6 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 					if(nodes2.length == 0) {
 						nodes2.push(window.document.createElement("span"));
 					}
-					console.log(nodes2.length);
 					tmp1 = nodes2.shift();
 					break;
 				default:
@@ -2254,117 +2068,16 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 				});
 			}
 			var oldVnode1 = snabbdom_engine_dom_PatchDom.emptyNode;
-			var key;
 			var cur;
-			var old;
-			var elm1 = vnode1.elm;
-			var oldAttrs = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
-			var attrs = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
-			var apply_attributes;
-			if(vnode1.data.skip_attributes == false) {
-				apply_attributes = true;
-			} else if(elm1.cached_attributes == null) {
-				elm1.cached_attributes = true;
-				apply_attributes = true;
-			} else if(elm1.cached_attributes == true) {
-				apply_attributes = false;
-			} else {
-				apply_attributes = true;
-			}
-			if(apply_attributes) {
-				var _g = 0;
-				var _g1 = Object.keys(attrs);
-				while(_g < _g1.length) {
-					var key1 = [_g1[_g]];
-					++_g;
-					cur = attrs[key1[0]];
-					old = oldAttrs[key1[0]];
-					if(old != cur) {
-						if(!cur && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
-							window.requestAnimationFrame((function(key2) {
-								return function(i4) {
-									elm1.removeAttribute(key2[0]);
-								};
-							})(key1));
-						} else {
-							window.requestAnimationFrame((function(key3) {
-								return function(i5) {
-									elm1.setAttribute(key3[0],cur);
-								};
-							})(key1));
-						}
-					}
-				}
-				var _g2 = 0;
-				var _g11 = Object.keys(oldAttrs);
-				while(_g2 < _g11.length) {
-					var key4 = [_g11[_g2]];
-					++_g2;
-					if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
-						window.requestAnimationFrame((function(key5) {
-							return function(i6) {
-								elm1.removeAttribute(key5[0]);
-							};
-						})(key4));
-					}
-				}
-			}
-			var key6;
-			var cur1;
-			var old1;
-			var elm2 = vnode1.elm;
-			var oldProps = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
-			var props = vnode1.data.props == null?{ }:vnode1.data.props;
-			var _g3 = 0;
-			var _g12 = Object.keys(props);
-			while(_g3 < _g12.length) {
-				var key7 = _g12[_g3];
-				++_g3;
-				cur1 = props[key7];
-				old1 = oldProps[key7];
-				if(old1 != cur1) {
-					elm2[key7] = cur1;
-				}
-			}
-			var cur2;
 			var name;
-			var elm3 = vnode1.elm;
-			var oldClass = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
-			var klass = vnode1.data.classes == null?{ }:vnode1.data.classes;
-			if(vnode1.data.skip_attributes == false) {
-				var _g4 = 0;
-				var _g13 = Object.keys(klass);
-				while(_g4 < _g13.length) {
-					var name1 = [_g13[_g4]];
-					++_g4;
-					cur2 = klass[name1[0]];
-					if(cur2 != oldClass[name1[0]]) {
-						if(cur2 == "add") {
-							window.requestAnimationFrame((function(name2) {
-								return function(i7) {
-									elm3.classList.add(name2[0]);
-								};
-							})(name1));
-						} else if(cur2 == "remove") {
-							window.requestAnimationFrame((function(name3) {
-								return function(i8) {
-									elm3.classList.remove(name3[0]);
-								};
-							})(name1));
-						}
-					}
-				}
-			}
-			var cur3;
-			var name4;
-			var elm4 = vnode1.elm;
+			var elm1 = vnode1.elm;
 			var apply_styles;
 			if(vnode1.data.skip_styles == false) {
 				apply_styles = true;
-			} else if(elm4.cached_styles == null) {
-				elm4.cached_styles = true;
+			} else if(elm1.cached_styles == null) {
+				elm1.cached_styles = true;
 				apply_styles = true;
-			} else if(elm4.cached_styles == true) {
+			} else if(elm1.cached_styles == true) {
 				apply_styles = false;
 			} else {
 				apply_styles = true;
@@ -2373,41 +2086,142 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 				var oldStyle = oldVnode1.data.style == null?{ }:oldVnode1.data.style;
 				var style = vnode1.data.style == null?{ }:vnode1.data.style;
 				var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-				var _g5 = 0;
-				var _g14 = Object.keys(style);
-				while(_g5 < _g14.length) {
-					var name5 = [_g14[_g5]];
-					++_g5;
-					cur3 = style[name5[0]];
-					if(name5[0] == "delayed") {
+				var _g = 0;
+				var _g1 = Object.keys(style);
+				while(_g < _g1.length) {
+					var name1 = [_g1[_g]];
+					++_g;
+					cur = style[name1[0]];
+					if(name1[0] == "delayed") {
 						var delayed = style.delayed;
 						var oldDelayed = oldStyle.delayed;
-						var _g21 = 0;
-						var _g31 = Object.keys(delayed);
-						while(_g21 < _g31.length) {
-							var name6 = _g31[_g21];
-							++_g21;
-							cur3 = delayed[name6];
-							if(!oldHasDel || cur3 != oldDelayed[name6]) {
-								var obj = [elm4.style];
+						var _g2 = 0;
+						var _g3 = Object.keys(delayed);
+						while(_g2 < _g3.length) {
+							var name2 = _g3[_g2];
+							++_g2;
+							cur = delayed[name2];
+							if(!oldHasDel || cur != oldDelayed[name2]) {
+								var obj = [elm1.style];
 								var fn = [(function(val,prop,obj1) {
-									return function(i9) {
+									return function(i4) {
 										obj1[0][prop[0]] = val[0];
 									};
-								})([cur3],[name6],obj)];
+								})([cur],[name2],obj)];
 								window.requestAnimationFrame((function(fn1) {
-									return function(i10) {
+									return function(i5) {
 										window.requestAnimationFrame(fn1[0]);
 									};
 								})(fn));
 							}
 						}
-					} else if(name5[0] != "remove" && cur3 != oldStyle[name5[0]]) {
-						window.requestAnimationFrame((function(name7) {
-							return function(i11) {
-								elm4.style[name7[0]] = cur3;
+					} else if(name1[0] != "remove" && cur != oldStyle[name1[0]]) {
+						window.requestAnimationFrame((function(name3) {
+							return function(i6) {
+								elm1.style[name3[0]] = cur;
 							};
-						})(name5));
+						})(name1));
+					}
+				}
+			}
+			var key;
+			var cur1;
+			var old;
+			var elm2 = vnode1.elm;
+			var oldAttrs = oldVnode1.data.attrs == null?{ }:oldVnode1.data.attrs;
+			var attrs = vnode1.data.attrs == null?{ }:vnode1.data.attrs;
+			var apply_attributes;
+			if(vnode1.data.skip_attributes == false) {
+				apply_attributes = true;
+			} else if(elm2.cached_attributes == null) {
+				elm2.cached_attributes = true;
+				apply_attributes = true;
+			} else if(elm2.cached_attributes == true) {
+				apply_attributes = false;
+			} else {
+				apply_attributes = true;
+			}
+			if(apply_attributes) {
+				var _g4 = 0;
+				var _g11 = Object.keys(attrs);
+				while(_g4 < _g11.length) {
+					var key1 = [_g11[_g4]];
+					++_g4;
+					cur1 = attrs[key1[0]];
+					old = oldAttrs[key1[0]];
+					if(old != cur1) {
+						if(!cur1 && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key1[0]]) {
+							window.requestAnimationFrame((function(key2) {
+								return function(i7) {
+									elm2.removeAttribute(key2[0]);
+								};
+							})(key1));
+						} else {
+							window.requestAnimationFrame((function(key3) {
+								return function(i8) {
+									elm2.setAttribute(key3[0],cur1);
+								};
+							})(key1));
+						}
+					}
+				}
+				var _g5 = 0;
+				var _g12 = Object.keys(oldAttrs);
+				while(_g5 < _g12.length) {
+					var key4 = [_g12[_g5]];
+					++_g5;
+					if(!Object.prototype.hasOwnProperty.call(attrs,key4[0])) {
+						window.requestAnimationFrame((function(key5) {
+							return function(i9) {
+								elm2.removeAttribute(key5[0]);
+							};
+						})(key4));
+					}
+				}
+			}
+			var key6;
+			var cur2;
+			var old1;
+			var elm3 = vnode1.elm;
+			var oldProps = oldVnode1.data.props == null?{ }:oldVnode1.data.props;
+			var props = vnode1.data.props == null?{ }:vnode1.data.props;
+			var _g6 = 0;
+			var _g13 = Object.keys(props);
+			while(_g6 < _g13.length) {
+				var key7 = _g13[_g6];
+				++_g6;
+				cur2 = props[key7];
+				old1 = oldProps[key7];
+				if(old1 != cur2) {
+					elm3[key7] = cur2;
+				}
+			}
+			var cur3;
+			var name4;
+			var elm4 = vnode1.elm;
+			var oldClass = oldVnode1.data.classes == null?{ }:oldVnode1.data.classes;
+			var klass = vnode1.data.classes == null?{ }:vnode1.data.classes;
+			if(vnode1.data.skip_attributes == false) {
+				var _g7 = 0;
+				var _g14 = Object.keys(klass);
+				while(_g7 < _g14.length) {
+					var name5 = [_g14[_g7]];
+					++_g7;
+					cur3 = klass[name5[0]];
+					if(cur3 != oldClass[name5[0]]) {
+						if(cur3 == "add") {
+							window.requestAnimationFrame((function(name6) {
+								return function(i10) {
+									elm4.classList.add(name6[0]);
+								};
+							})(name5));
+						} else if(cur3 == "remove") {
+							window.requestAnimationFrame((function(name7) {
+								return function(i11) {
+									elm4.classList.remove(name7[0]);
+								};
+							})(name5));
+						}
 					}
 				}
 			}
@@ -2418,11 +2232,11 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 			var oldOn = oldVnode1.data.on == null?{ }:oldVnode1.data.on;
 			var on = vnode1.data.on == null?{ }:vnode1.data.on;
 			if(on != { }) {
-				var _g6 = 0;
+				var _g8 = 0;
 				var _g15 = Object.keys(on);
-				while(_g6 < _g15.length) {
-					var name9 = _g15[_g6];
-					++_g6;
+				while(_g8 < _g15.length) {
+					var name9 = _g15[_g8];
+					++_g8;
 					cur4 = on[name9];
 					old2 = oldOn[name9];
 					if(old2 == null) {
@@ -2462,7 +2276,7 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 		oldVnode = { sel : oldVnode.tagName, data : data1, children : [], text : null, elm : oldVnode, key : key8};
 		snabbdom_engine_dom_PatchDom.patchVnode(oldVnode,vnode,insertedVnodeQueue);
 	}
-	var tmp_15BFBF69_200A_424F_B244_B0505127EE54_147083671e012 = function(__return) {
+	var tmp_80B67BCE_545A_4BD4_8D00_CD10A858F969_1470848512e012 = function(__return) {
 		var cb = function() {
 			i = 0;
 			var __doCount = 0;
@@ -2490,15 +2304,249 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 			cb();
 		},0);
 	};
+	var fn2 = tmp_80B67BCE_545A_4BD4_8D00_CD10A858F969_1470848512e012;
+	fn2(thx_Functions.noop);
 	return vnode;
 };
 snabbdom_engine_dom_PatchDom.patch = function(oldVnode,vnode) {
 	var i = 0;
-	snabbdom_engine_dom_PatchDom.patchVnode(oldVnode,vnode,[]);
+	var insertedVnodeQueue = [];
+	snabbdom_engine_dom_PatchDom.patchVnode(oldVnode,vnode,insertedVnodeQueue);
+	(function(__return) {
+		var cb = function() {
+			i = 0;
+			var __doCount = 0;
+			var __continue_2 = null;
+			__continue_2 = function() {
+				if(i < insertedVnodeQueue.length) {
+					if(__doCount++ == 0) {
+						while(true) {
+							insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
+							++i;
+							__continue_2();
+							if(!(--__doCount != 0)) {
+								break;
+							}
+						}
+					}
+				} else {
+					__return();
+				}
+			};
+			__continue_2();
+		};
+		window.setTimeout(function() {
+			cb();
+		},0);
+	})(thx_Functions.noop);
 	return vnode;
 };
 var snabbdom_engine_dom_plugins_Attributes = function() { };
 snabbdom_engine_dom_plugins_Attributes.__name__ = true;
+var snabbdom_engine_dom_plugins_Hooks = function() { };
+snabbdom_engine_dom_plugins_Hooks.__name__ = true;
+snabbdom_engine_dom_plugins_Hooks.update = function(p_oldVnode,p_vnode) {
+	var oldVnode = p_oldVnode;
+	var vnode = p_vnode;
+	(function(__return) {
+		var cur;
+		var elm = vnode.elm;
+		var apply_styles;
+		if(vnode.data.skip_styles == false) {
+			apply_styles = true;
+		} else if(elm.cached_styles == null) {
+			elm.cached_styles = true;
+			apply_styles = true;
+		} else if(elm.cached_styles == true) {
+			apply_styles = false;
+		} else {
+			apply_styles = true;
+		}
+		if(apply_styles) {
+			var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
+			var style = vnode.data.style == null?{ }:vnode.data.style;
+			var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
+			var _g = 0;
+			var _g1 = Object.keys(style);
+			while(_g < _g1.length) {
+				var name = [_g1[_g]];
+				++_g;
+				cur = style[name[0]];
+				if(name[0] == "delayed") {
+					var delayed = style.delayed;
+					var oldDelayed = oldStyle.delayed;
+					var _g2 = 0;
+					var _g3 = Object.keys(delayed);
+					while(_g2 < _g3.length) {
+						var name1 = _g3[_g2];
+						++_g2;
+						cur = delayed[name1];
+						if(!oldHasDel || cur != oldDelayed[name1]) {
+							var obj = [elm.style];
+							var fn = [(function(val,prop,obj1) {
+								return function(i) {
+									obj1[0][prop[0]] = val[0];
+								};
+							})([cur],[name1],obj)];
+							window.requestAnimationFrame((function(fn1) {
+								return function(i1) {
+									window.requestAnimationFrame(fn1[0]);
+								};
+							})(fn));
+						}
+					}
+				} else if(name[0] != "remove" && cur != oldStyle[name[0]]) {
+					window.requestAnimationFrame((function(name2) {
+						return function(i2) {
+							elm.style[name2[0]] = cur;
+						};
+					})(name));
+				}
+			}
+		}
+		var cb = function() {
+			var cur1;
+			var old;
+			var elm1 = vnode.elm;
+			var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
+			var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
+			var apply_attributes;
+			if(vnode.data.skip_attributes == false) {
+				apply_attributes = true;
+			} else if(elm1.cached_attributes == null) {
+				elm1.cached_attributes = true;
+				apply_attributes = true;
+			} else if(elm1.cached_attributes == true) {
+				apply_attributes = false;
+			} else {
+				apply_attributes = true;
+			}
+			if(apply_attributes) {
+				var _g4 = 0;
+				var _g11 = Object.keys(attrs);
+				while(_g4 < _g11.length) {
+					var key = [_g11[_g4]];
+					++_g4;
+					cur1 = attrs[key[0]];
+					old = oldAttrs[key[0]];
+					if(old != cur1) {
+						if(!cur1 && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key[0]]) {
+							window.requestAnimationFrame((function(key1) {
+								return function(i3) {
+									elm1.removeAttribute(key1[0]);
+								};
+							})(key));
+						} else {
+							window.requestAnimationFrame((function(key2) {
+								return function(i4) {
+									elm1.setAttribute(key2[0],cur1);
+								};
+							})(key));
+						}
+					}
+				}
+				var _g5 = 0;
+				var _g12 = Object.keys(oldAttrs);
+				while(_g5 < _g12.length) {
+					var key3 = [_g12[_g5]];
+					++_g5;
+					if(!Object.prototype.hasOwnProperty.call(attrs,key3[0])) {
+						window.requestAnimationFrame((function(key4) {
+							return function(i5) {
+								elm1.removeAttribute(key4[0]);
+							};
+						})(key3));
+					}
+				}
+			}
+			var cb1 = function() {
+				var cur2;
+				var old1;
+				var elm2 = vnode.elm;
+				var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
+				var props = vnode.data.props == null?{ }:vnode.data.props;
+				var _g6 = 0;
+				var _g13 = Object.keys(props);
+				while(_g6 < _g13.length) {
+					var key5 = _g13[_g6];
+					++_g6;
+					cur2 = props[key5];
+					old1 = oldProps[key5];
+					if(old1 != cur2) {
+						elm2[key5] = cur2;
+					}
+				}
+				var cb2 = function() {
+					var cur3;
+					var elm3 = vnode.elm;
+					var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
+					var klass = vnode.data.classes == null?{ }:vnode.data.classes;
+					if(vnode.data.skip_attributes == false) {
+						var _g7 = 0;
+						var _g14 = Object.keys(klass);
+						while(_g7 < _g14.length) {
+							var name3 = [_g14[_g7]];
+							++_g7;
+							cur3 = klass[name3[0]];
+							if(cur3 != oldClass[name3[0]]) {
+								if(cur3 == "add") {
+									window.requestAnimationFrame((function(name4) {
+										return function(i6) {
+											elm3.classList.add(name4[0]);
+										};
+									})(name3));
+								} else if(cur3 == "remove") {
+									window.requestAnimationFrame((function(name5) {
+										return function(i7) {
+											elm3.classList.remove(name5[0]);
+										};
+									})(name3));
+								}
+							}
+						}
+					}
+					var cb3 = function() {
+						var cur4;
+						var old2;
+						var elm4 = vnode.elm;
+						var oldOn = oldVnode.data.on == null?{ }:oldVnode.data.on;
+						var on = vnode.data.on == null?{ }:vnode.data.on;
+						if(on != { }) {
+							var _g8 = 0;
+							var _g15 = Object.keys(on);
+							while(_g8 < _g15.length) {
+								var name6 = _g15[_g8];
+								++_g8;
+								cur4 = on[name6];
+								old2 = oldOn[name6];
+								if(old2 == null) {
+									console.log(cur4);
+									on[name6] = cur4;
+									elm4.addEventListener(name6,cur4);
+								} else {
+									on[name6] = cur4;
+								}
+							}
+						}
+						__return();
+					};
+					window.setTimeout(function() {
+						cb3();
+					},0);
+				};
+				window.setTimeout(function() {
+					cb2();
+				},0);
+			};
+			window.setTimeout(function() {
+				cb1();
+			},0);
+		};
+		window.setTimeout(function() {
+			cb();
+		},0);
+	})(thx_Functions.noop);
+};
 var thx_Arrays = function() { };
 thx_Arrays.__name__ = true;
 thx_Arrays.shuffle = function(a) {
@@ -2515,6 +2563,10 @@ thx_Arrays.shuffle = function(a) {
 var thx_Either = { __ename__ : true, __constructs__ : ["Left","Right"] };
 thx_Either.Left = function(value) { var $x = ["Left",0,value]; $x.__enum__ = thx_Either; return $x; };
 thx_Either.Right = function(value) { var $x = ["Right",1,value]; $x.__enum__ = thx_Either; return $x; };
+var thx_Functions = function() { };
+thx_Functions.__name__ = true;
+thx_Functions.noop = function() {
+};
 var thx_Ints = function() { };
 thx_Ints.__name__ = true;
 thx_Ints.range = function(start,stop,step) {
