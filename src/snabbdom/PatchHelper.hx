@@ -2,6 +2,7 @@ package snabbdom;
 using StringTools;
 
 class PatchHelper {
+
     public static macro function cps(expr:haxe.macro.Expr) {
       var uuid = thx.Uuid.create().replace('-','_');
       var dt = Std.string(Date.now().getTime()).replace(".","").replace("+","");
@@ -11,9 +12,11 @@ class PatchHelper {
       });
     }
 
+    #if !macro
     public static inline function wait(ms:Int,cb:Void->Void) {
-      untyped window.setTimeout(function() {
+      js.Browser.window.setTimeout(function() {
         cb();
       },ms);
     }
+    #end
 }

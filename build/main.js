@@ -161,13 +161,13 @@ snabbdom_Main.main = function() {
 	var vnode_key = null;
 	var vnode_text = null;
 	var last_node = null;
-	var timer = new haxe_Timer(150);
+	var timer = new haxe_Timer(50);
 	var init = null;
 	timer.run = function() {
 		var rnd = Math.random();
 		var color = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
 		var bg = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
-		var max = Math.random() * 20 | 0;
+		var max = 200;
 		if(max <= 3) {
 			max = 4;
 		}
@@ -1315,7 +1315,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							return function(i32) {
 								this16[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_AEA5C997_780F_46D5_9531_31888C1288DC_1470834281e012 = (function() {
+								var tmp_3A8CDBF8_CE12_4669_998D_C77270ABEF8A_1470836709e012 = (function() {
 									return function(__return) {
 										var cb = (function() {
 											return function() {
@@ -1357,7 +1357,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						return function(i33) {
 							this18[0].removeChild(element10[0]);
 							var element11 = element10[0];
-							var tmp_AEA5C997_780F_46D5_9531_31888C1288DC_1470834281e0121 = (function() {
+							var tmp_3A8CDBF8_CE12_4669_998D_C77270ABEF8A_1470836709e0121 = (function() {
 								return function(__return1) {
 									var cb1 = (function() {
 										return function() {
@@ -2066,7 +2066,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 								return function(i25) {
 									this6[0].removeChild(element4[0]);
 									var element5 = element4[0];
-									var tmp_AEA5C997_780F_46D5_9531_31888C1288DC_1470834281e012 = (function() {
+									var tmp_3A8CDBF8_CE12_4669_998D_C77270ABEF8A_1470836709e012 = (function() {
 										return function(__return) {
 											var cb = (function() {
 												return function() {
@@ -2108,7 +2108,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							return function(i26) {
 								this8[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_AEA5C997_780F_46D5_9531_31888C1288DC_1470834281e0121 = (function() {
+								var tmp_3A8CDBF8_CE12_4669_998D_C77270ABEF8A_1470836709e0121 = (function() {
 									return function(__return1) {
 										var cb1 = (function() {
 											return function() {
@@ -2462,7 +2462,7 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 		oldVnode = { sel : oldVnode.tagName, data : data1, children : [], text : null, elm : oldVnode, key : key8};
 		snabbdom_engine_dom_PatchDom.patchVnode(oldVnode,vnode,insertedVnodeQueue);
 	}
-	var tmp_9A93A872_0351_4FD5_9332_F14963B800E9_1470834282e012 = function(__return) {
+	var tmp_15BFBF69_200A_424F_B244_B0505127EE54_147083671e012 = function(__return) {
 		var cb = function() {
 			i = 0;
 			var __doCount = 0;

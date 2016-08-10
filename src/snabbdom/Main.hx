@@ -64,7 +64,7 @@ class Main {
 
 
 
-    var timer = new haxe.Timer(150);
+    var timer = new haxe.Timer(50);
     var init:Int = null;
     timer.run = function() {
 
@@ -72,7 +72,7 @@ class Main {
       var color = ['red','yellow','green','black','white','grey'].shuffle().first();
       var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
 
-      var max = Std.int(Math.random() * 20);
+      var max = 200;
       if (max <=3) max = 4;
       init = if (init == null) 0; else 3;
       var list = [for (x in (init...max)) {
