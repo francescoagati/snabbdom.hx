@@ -103,7 +103,6 @@ class PatchDom {
             elm.appendChild(new_node);
           }
         } else if (is_primitive( vnode.text)) {
-
           elm.appendChild(NativeNode.createTextElement(vnode.text));
         }
 

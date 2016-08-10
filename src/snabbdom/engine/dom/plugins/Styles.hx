@@ -35,7 +35,6 @@ class Styles {
     };
 
     if (apply_styles) {
-      trace(vnode);
       var oldStyle = oldVnode.data.get_style_or_empty();
       var style = vnode.data.get_style_or_empty();
       var oldHasDel = oldStyle.exists('delayed' );

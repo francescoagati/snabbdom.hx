@@ -1,10 +1,63 @@
 package snabbdom.engine.dom;
 import snabbdom.engine.dom.plugins.Helpers.*;
+import snabbdom.PatchHelper.*;
+
+class DomPool {
+
+  static var nodes_div = (function() {
+    return [ for (i in (0...20)) js.Browser.document.createElement('div') ];
+  })();
+
+  static var nodes_li = (function() {
+    return [ for (i in (0...20)) js.Browser.document.createElement('li') ];
+  })();
+
+  static var nodes_span = (function() {
+    return [ for (i in (0...20)) js.Browser.document.createElement('span') ];
+  })();
+
+
+  static inline function check_nodes(nodes:Array<js.html.Element>,node_name:String) {
+    if (nodes.length == 0) nodes.push(js.Browser.document.createElement(node_name));
+    trace(nodes.length);
+    return nodes.shift();
+  }
+
+  public static inline function get_div() return check_nodes(nodes_div,'div');
+  public static inline function get_li() return check_nodes(nodes_li,'li');
+  public static inline function get_span() return check_nodes(nodes_span,'span');
+
+  public static inline function dispose(element:js.html.Element) {
+
+      cps({
+        @await wait(0);
+        element.textContent = "";
+        switch(element.nodeName) {
+          case 'LI':nodes_li.unshift(element);
+          case 'DIV':nodes_div.unshift(element);
+          case 'SPAN':nodes_span.unshift(element);
+          case _:null;
+        }
+
+      });
+
+
+  }
+
+
+}
 
 abstract NativeNode(js.html.Element) from js.html.Element to js.html.Element {
 
   public static inline function createElement(tag) {
-    return js.Browser.document.createElement(tag);
+    //return js.Browser.document.createElement(tag);
+    return switch(tag) {
+      case 'div':DomPool.get_div();
+      case 'li':DomPool.get_li();
+      case 'span':DomPool.get_span();
+      case _:js.Browser.document.createElement(tag);
+    }
+    //return js.Browser.document.createElement(tag);
   }
 
   public static inline function createTextElement(text) {
@@ -47,7 +100,13 @@ abstract NativeNode(js.html.Element) from js.html.Element to js.html.Element {
    public inline function removeAttribute(attr) next_frame(this.removeAttribute(attr));
    public inline function setAttribute(key,value) next_frame(this.setAttribute(key,value));
    public inline function insertBefore(new_node,ref_node) next_frame(this.insertBefore(new_node,ref_node));
-   public inline function removeChild(element)  next_frame(this.removeChild(element));
+   public inline function removeChild(element)  {
+     trace('remove-child');
+     next_frame({
+       this.removeChild(element);
+       DomPool.dispose(untyped element);
+     });
+   }
    public inline function replaceChild(e1,e2)   next_frame(this.replaceChild(e1,e2));
 /*
   rc/snabbdom/PatchTraits.hx:83: characters 22-28 : Null<{ }> has no field id
