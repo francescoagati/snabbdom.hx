@@ -156,9 +156,8 @@ snabbdom_Main.main = function() {
 	var txt = "testo";
 	var vnode_sel = "div";
 	var vnode_data = { attrs : { id : "pippa"}, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null};
-	var vnode_children = [{ sel : "ul", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : [{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, key : null, text : "1"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, key : null, text : "2"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, key : null, text : "3"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, key : null, text : "4"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, key : null, text : "5"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : [{ sel : "span", data : { attrs : { }, skip_styles : true, skip_attributes : false, props : null, classes : null, style : null, hook : null, on : { 'click' : snabbdom_Main.click}}, children : null, elm : null, key : null, text : txt}], elm : null, key : null, text : null}], elm : null, key : null, text : null}];
+	var vnode_children = [{ sel : "ul", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : [{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "1"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "2"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "3"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "4"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "5"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : [{ sel : "span", data : { attrs : { }, skip_styles : true, skip_attributes : false, props : null, classes : null, style : null, hook : null, on : { 'click' : snabbdom_Main.click}}, children : null, elm : null, text : txt}], elm : null, text : null}], elm : null, text : null}];
 	var vnode_elm = null;
-	var vnode_key = null;
 	var vnode_text = null;
 	var last_node = null;
 	var timer = new haxe_Timer(500);
@@ -167,7 +166,7 @@ snabbdom_Main.main = function() {
 		var rnd = Math.random();
 		var color = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
 		var bg = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
-		var max = Math.random() * 200 | 0;
+		var max = 50;
 		if(max <= 3) {
 			max = 4;
 		}
@@ -183,16 +182,17 @@ snabbdom_Main.main = function() {
 			var x = _g1_min++;
 			var key = "key - " + x;
 			var random = Math.random() * 5000;
-			_g.push({ sel : "li", data : { attrs : { key : key}, style : { border : "10px solid green"}, skip_styles : true, skip_attributes : false, props : null, classes : null, hook : null}, children : [{ sel : "span", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, key : null, text : random}], elm : null, key : null, text : null});
+			_g.push({ sel : "li", data : { attrs : { key : key}, style : { border : "10px solid green"}, key : key, skip_styles : true, skip_attributes : false, props : null, classes : null, hook : null}, children : [{ sel : "span", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : random}], elm : null, text : null});
 		}
 		var list = _g;
-		var vnode2 = { sel : "div", data : { attrs : { id : "pippa"}, style : { color : "black"}, skip_styles : true, skip_attributes : false, props : null, classes : null, hook : null, on : { 'click' : snabbdom_Main.click, 'mouseout' : snabbdom_Main.out, 'mouseover' : snabbdom_Main.over}}, children : [{ sel : "span", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, key : null, text : max},{ sel : "ul", data : { attrs : { }, style : { fontSize : "30px", color : "white", backgroundColor : bg}, skip_styles : false, skip_attributes : false, props : null, classes : null, hook : null}, children : list, elm : null, key : null, text : null}], elm : null, key : null, text : null};
+		var vnode2 = { sel : "div", data : { attrs : { id : "pippa", lippa : 2}, style : { color : "black"}, skip_styles : true, skip_attributes : false, props : null, classes : null, hook : null, on : { 'click' : snabbdom_Main.click, 'mouseout' : snabbdom_Main.out, 'mouseover' : snabbdom_Main.over}}, children : [{ sel : "span", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : max},{ sel : "ul", data : { attrs : { }, style : { fontSize : "30px", color : "white", backgroundColor : bg}, skip_styles : false, skip_attributes : false, props : null, classes : null, hook : null}, children : list, elm : null, text : null}], elm : null, text : null};
 		if(last_node == null) {
 			snabbdom_engine_dom_PatchDom.patchDom(window.document.getElementById("container"),vnode2);
 		} else {
 			snabbdom_engine_dom_PatchDom.patch(last_node,vnode2);
 		}
 		last_node = vnode2;
+		window.cippa = last_node;
 	};
 	timer.run();
 };
@@ -537,15 +537,15 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 		oldStartVnode = oldCh[++oldStartIdx];
 	} else if(oldEndVnode == undefined) {
 		oldEndVnode = oldCh[--oldEndIdx];
-	} else if(oldStartVnode.key == newStartVnode.key && oldStartVnode.sel == newStartVnode.sel) {
+	} else if(oldStartVnode.data.key == newStartVnode.data.key && oldStartVnode.sel == newStartVnode.sel) {
 		snabbdom_engine_dom_PatchDom.patchVnode(oldStartVnode,newStartVnode,insertedVnodeQueue);
 		oldStartVnode = oldCh[++oldStartIdx];
 		newStartVnode = newCh[++newStartIdx];
-	} else if(oldEndVnode.key == newEndVnode.key && oldEndVnode.sel == newEndVnode.sel) {
+	} else if(oldEndVnode.data.key == newEndVnode.data.key && oldEndVnode.sel == newEndVnode.sel) {
 		snabbdom_engine_dom_PatchDom.patchVnode(oldEndVnode,newEndVnode,insertedVnodeQueue);
 		oldEndVnode = oldCh[--oldEndIdx];
 		newEndVnode = newCh[--newEndIdx];
-	} else if(oldStartVnode.key == newEndVnode.key && oldStartVnode.sel == newEndVnode.sel) {
+	} else if(oldStartVnode.data.key == newEndVnode.data.key && oldStartVnode.sel == newEndVnode.sel) {
 		snabbdom_engine_dom_PatchDom.patchVnode(oldStartVnode,newEndVnode,insertedVnodeQueue);
 		var this1 = [parentElm];
 		var new_node = [oldStartVnode.elm];
@@ -557,7 +557,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 		})([this2],new_node,this1));
 		oldStartVnode = oldCh[++oldStartIdx];
 		newEndVnode = newCh[--newEndIdx];
-	} else if(oldEndVnode.key == newStartVnode.key && oldEndVnode.sel == newStartVnode.sel) {
+	} else if(oldEndVnode.data.key == newStartVnode.data.key && oldEndVnode.sel == newStartVnode.sel) {
 		snabbdom_engine_dom_PatchDom.patchVnode(oldEndVnode,newStartVnode,insertedVnodeQueue);
 		window.requestAnimationFrame((function(ref_node1,new_node2,this4) {
 			return function(i1) {
@@ -573,7 +573,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 			var key;
 			i2 = oldStartIdx;
 			while(i2 <= oldEndIdx) {
-				key = oldCh[i2].key;
+				key = oldCh[i2].data.key;
 				if(key != undefined) {
 					map[key] = i2;
 				}
@@ -1306,7 +1306,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							return function(i32) {
 								this16[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e012 = (function() {
+								var tmp_FD00A65B_7BCA_458D_9704_0DA93C682623_1470865306e012 = (function() {
 									return function(__return) {
 										var cb = (function() {
 											return function() {
@@ -1337,7 +1337,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 										})(),0);
 									};
 								})();
-								var fn4 = tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e012;
+								var fn4 = tmp_FD00A65B_7BCA_458D_9704_0DA93C682623_1470865306e012;
 								fn4(thx_Functions.noop);
 							};
 						})(element6,this15));
@@ -1350,7 +1350,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						return function(i33) {
 							this18[0].removeChild(element10[0]);
 							var element11 = element10[0];
-							var tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e0121 = (function() {
+							var tmp_FD00A65B_7BCA_458D_9704_0DA93C682623_1470865306e0121 = (function() {
 								return function(__return1) {
 									var cb1 = (function() {
 										return function() {
@@ -1381,7 +1381,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 									})(),0);
 								};
 							})();
-							var fn5 = tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e0121;
+							var fn5 = tmp_FD00A65B_7BCA_458D_9704_0DA93C682623_1470865306e0121;
 							fn5(thx_Functions.noop);
 						};
 					})(element9,this17));
@@ -1879,7 +1879,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 								return function(i17) {
 									this6[0].removeChild(element4[0]);
 									var element5 = element4[0];
-									var tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e012 = (function() {
+									var tmp_FD00A65B_7BCA_458D_9704_0DA93C682623_1470865306e012 = (function() {
 										return function(__return) {
 											var cb = (function() {
 												return function() {
@@ -1910,7 +1910,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 											})(),0);
 										};
 									})();
-									var fn2 = tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e012;
+									var fn2 = tmp_FD00A65B_7BCA_458D_9704_0DA93C682623_1470865306e012;
 									fn2(thx_Functions.noop);
 								};
 							})(element3,this5));
@@ -1923,7 +1923,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							return function(i18) {
 								this8[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e0121 = (function() {
+								var tmp_FD00A65B_7BCA_458D_9704_0DA93C682623_1470865306e0121 = (function() {
 									return function(__return1) {
 										var cb1 = (function() {
 											return function() {
@@ -1954,7 +1954,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 										})(),0);
 									};
 								})();
-								var fn3 = tmp_79182A75_4C24_47E3_A9BD_983E9A86E921_1470848512e0121;
+								var fn3 = tmp_FD00A65B_7BCA_458D_9704_0DA93C682623_1470865306e0121;
 								fn3(thx_Functions.noop);
 							};
 						})(element6,this7));
@@ -2273,10 +2273,10 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 	} else {
 		var data1 = { };
 		var key8 = data1 == null?null:data1.key;
-		oldVnode = { sel : oldVnode.tagName, data : data1, children : [], text : null, elm : oldVnode, key : key8};
+		oldVnode = { sel : oldVnode.tagName, data : data1, children : [], text : null, elm : oldVnode};
 		snabbdom_engine_dom_PatchDom.patchVnode(oldVnode,vnode,insertedVnodeQueue);
 	}
-	var tmp_80B67BCE_545A_4BD4_8D00_CD10A858F969_1470848512e012 = function(__return) {
+	var tmp_11F4ADBF_550B_49BF_9D63_DD6F5D22E818_1470865306e012 = function(__return) {
 		var cb = function() {
 			i = 0;
 			var __doCount = 0;
@@ -2304,7 +2304,7 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 			cb();
 		},0);
 	};
-	var fn2 = tmp_80B67BCE_545A_4BD4_8D00_CD10A858F969_1470848512e012;
+	var fn2 = tmp_11F4ADBF_550B_49BF_9D63_DD6F5D22E818_1470865306e012;
 	fn2(thx_Functions.noop);
 	return vnode;
 };
@@ -2649,7 +2649,7 @@ snabbdom_engine_dom_DomPool.nodes_span = (function($this) {
 snabbdom_engine_dom_PatchDom.emptyNode = (function($this) {
 	var $r;
 	var data = { };
-	$r = { sel : "", data : data, children : [], text : null, elm : null, key : data == null?null:data.key};
+	$r = { sel : "", data : data, children : [], text : null, elm : null};
 	return $r;
 }(this));
 snabbdom_engine_dom_plugins_Attributes.booleanAttrs = ["allowfullscreen","async","autofocus","autoplay","checked","compact","controls","declare","default","defaultchecked","defaultmuted","defaultselected","defer","disabled","draggable","enabled","formnovalidate","hidden","indeterminate","inert","ismap","itemscope","loop","multiple","muted","nohref","noresize","noshade","novalidate","nowrap","open","pauseonexit","readonly","required","reversed","scoped","seamless","selected","sortable","spellcheck","translate","truespeed","typemustmatch","visible"];

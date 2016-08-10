@@ -43,7 +43,7 @@ class PatchDom {
     inline static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):Vnode {
     var key = data == null ? null : data.key;
     return {sel: sel, data: data, children: children,
-            text: text, elm: elm, key: key};
+            text: text, elm: elm};
     }
 
 
@@ -56,13 +56,13 @@ class PatchDom {
 
 
      inline static function sameVnode(vnode1:Vnode, vnode2:Vnode) {
-      return vnode1.key == vnode2.key && vnode1.sel == vnode2.sel;
+      return vnode1.data.key == vnode2.data.key && vnode1.sel == vnode2.sel;
     }
 
      inline static function createKeyToOldIdx(children:Vnodes, beginIdx, endIdx) {
       var i, map:haxe.DynamicAccess<Dynamic> = {}, key;
       @for(i = beginIdx, i <= endIdx, ++i) {
-        key = children[i].key;
+        key = children[i].data.key;
         if (isDef(key))  map[key] = i;
       }
       return map;

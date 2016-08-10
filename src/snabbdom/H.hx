@@ -61,7 +61,6 @@ class H {
   public macro static function h(exprs:Array<Expr>):ExprOf<VirtualNodeDom> {
 
 
-
     var sel = exprs[0];
     var data = exprs[1];
 
@@ -83,12 +82,20 @@ class H {
     ].join(",") + '}';
 
     var events = [];
+    var key:String = null;
 
     for (field in fields) {
+      trace(fields);
       if (field[0] == 'style')  {
         var style = parse_style_string(field[1],Context);
         structure = structure + ',style:untyped ${style}';
       }
+
+      if (field[0] == 'key') {
+        var value = field[1];
+        structure = structure + ',key: ${value}';
+      }
+
 
       if (field[0] == 'skip_styles') {
         var value = field[1];
@@ -118,7 +125,7 @@ class H {
 
     }
 
-    trace(structure);
+
     var data = Context.parse('{' + structure + '}',Context.currentPos());
     var rest = exprs.slice(2);
 
@@ -132,11 +139,11 @@ class H {
     var rt_expr = null;
     rt_expr =  if (text == null) {
       macro {
-        {sel:$sel,data:$data,children:untyped $a{rest},elm:null,key:null,text:null};
+        {sel:$sel,data:$data,children:untyped $a{rest},elm:null,text:null};
       }
     }  else {
       macro {
-        {sel:$sel,data:$data,children:null,elm:null,key:null,text:$e{text}};
+        {sel:$sel,data:$data,children:null,elm:null,text:$e{text}};
       }
     };
 
@@ -144,7 +151,7 @@ class H {
       rest[0] = Context.parse(rest[0].toString().replace("#","").replace('\"',""),Context.currentPos());
       var element = rest[0];
       rt_expr =  macro {
-          {sel:$sel,data:$data,children:untyped $e{element},elm:null,key:null,text:null};
+          {sel:$sel,data:$data,children:untyped $e{element},elm:null,text:null};
         }
     }
 

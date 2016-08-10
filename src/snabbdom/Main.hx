@@ -72,7 +72,7 @@ class Main {
       var color = ['red','yellow','green','black','white','grey'].shuffle().first();
       var bg = ['red','yellow','green','black','white','grey'].shuffle().first();
 
-      var max = Std.int((Math.random() * 200));
+      var max = 50; //Std.int((Math.random() * 200));
       if (max <=3) max = 4;
       init = if (init == null) 0; else 3;
       var list = [for (x in (init...max)) {
@@ -81,7 +81,7 @@ class Main {
         jsx('<li key="${key}" style="border:10px solid green"><span >${random}</span></li>');
       }];
       var vnode2 = jsx('
-        <div id="pippa" style="color:black" onmouseout=$out onclick=$click onmouseover=${over}>
+        <div lippa="${1+1}" id="pippa" style="color:black" onmouseout=$out onclick=$click onmouseover=${over}>
           <span>${max}</span>
           <ul style="font-size:30px;color:white;background-color:$bg">
             #list
@@ -92,6 +92,8 @@ class Main {
 
       if (last_node == null) js.Browser.document.getElementById('container').patchDom(vnode2);   else  last_node.patch(untyped vnode2);
       last_node = vnode2;
+      untyped window.cippa = last_node;
+
     };
 
       timer.run();

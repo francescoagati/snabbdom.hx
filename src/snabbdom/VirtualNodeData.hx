@@ -8,5 +8,6 @@ typedef VirtualNodeData = {
   on:DynamicObject<Dynamic>,
   hook:Dynamic,
   skip_styles:Bool,
-  skip_attributes:Bool
+  skip_attributes:Bool,
+  ?key:String
 }

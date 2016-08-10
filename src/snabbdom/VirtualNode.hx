@@ -6,6 +6,5 @@ typedef VirtualNode<T> =  {
   data: VirtualNodeData,
   children: VirtualNodes<T>,
   text: String,
-  elm: T,
-  key: String
+  elm: T
 }
