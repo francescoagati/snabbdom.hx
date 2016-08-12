@@ -9,36 +9,12 @@ import snabbdom.engine.dom.plugins.Hooks;
 using snabbdom.VirtualNodeDataTools;
 
 
-@:build(ClassicFor.build())
+
 //@:partials(snabbdom.PatchTraits)
-//@:build(com.dongxiguo.continuation.Continuation.cpsByMeta(":async"))
+@:build(com.dongxiguo.continuation.Continuation.cpsByMeta(":async"))
+@:build(ClassicFor.build())
 class PatchDom {
 
-
-  /*
-    static var rg = untyped  __js__('new RegExp({0},"g")',"\\.");
-
-     static function h(sel, b:Dynamic, c:Dynamic) {
-      var data = {}, children:Vnodes= null, text = null, i;
-      var arguments:Array<Dynamic> = untyped __js__('arguments');
-      if (arguments.length == 3) {
-        data = b;
-        if (is_array(c)) { children = c; }
-        else if (is_primitive(c)) { text = c; }
-      } else if (arguments.length == 2) {
-        if (is_array(b)) { children = b; }
-        else if (is_primitive(b)) { text = b; }
-        else { data = b; }
-      }
-      if (is_array(children)) {
-        @for(i = 0, i < children.length, ++i) {
-          if (is_primitive(children[i])) children[i] = untyped vnode(null, null, null, children[i]);
-        }
-      }
-      return untyped vnode(sel, data, untyped children, text, undefined);
-    }
-
-  */
 
     inline static function vnode(sel:Dynamic, data:Dynamic, children, ?text, ?elm:Dynamic):Vnode {
     var key = data == null ? null : data.key;
@@ -47,13 +23,11 @@ class PatchDom {
     }
 
 
-
     inline static function emptyNodeAt(elm) {
       return vnode(elm.tagName, {}, [], null, elm);
     }
 
     static var emptyNode = vnode('', {}, [], null, null);
-
 
      inline static function sameVnode(vnode1:Vnode, vnode2:Vnode) {
       return vnode1.data.key == vnode2.data.key && vnode1.sel == vnode2.sel;
@@ -83,20 +57,9 @@ class PatchDom {
       }
       var elm, children = vnode.children, sel = vnode.sel;
       if (isDef(sel)) {
-        // Parse selector
-        //var hashIdx = sel.indexOf('#',0);
-        //var dotIdx = sel.indexOf('.', hashIdx);
-        //var hash = hashIdx > 0 ? hashIdx : sel.length;
-        //var dot = dotIdx > 0 ? dotIdx : sel.length;
         var tag = sel;
         elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? NativeNode.createElementNS(i, tag)
                                                             : NativeNode.createElement(tag);
-        //if (hash < dot) elm.id = untyped sel.slice(hash + 1, dot);
-        //if (dotIdx > 0) elm.className = untyped sel.slice(dot+1,0).replace('.', ' ');
-        //var s = "\\.";
-        //var rg = untyped  __js__('new RegExp({0},"g")',s);
-
-        //if (dotIdx > 0)  untyped __js__('elm.className = sel.slice(dot+1).replace({0}, " ");',rg);
         if (is_array(children)) {
           @for(i = 0,i < children.length, ++i) {
             var new_node = createElm(children[i], insertedVnodeQueue);
@@ -107,7 +70,6 @@ class PatchDom {
         }
 
         Hooks.create(emptyNode,vnode);
-        //for (i = 0, i < cbs.create.length, ++i) cbs.create[i](emptyNode, vnode);
 
         if (vnode.data != null) {
           i = vnode.data.hook; // Reuse variable
@@ -155,9 +117,6 @@ class PatchDom {
         if (isDef(ch)) {
           if (isDef(ch.sel)) {
             invokeDestroyHook(ch);
-            //listeners = cbs.remove.length + 1;
-            //rm = createRmCb(ch.elm, listeners);
-            //@for(i = 0, i < cbs.remove.length, ++i) cbs.remove[i](ch, rm);
             Hooks.remove(ch,rm);
 
             if (isDef(i = ch.data) && isDef(i = i.hook) && isDef(i = i.remove)) {
@@ -278,8 +237,8 @@ class PatchDom {
 
       public static function patchDom(oldVnode:NativeNode,vnode:Vnode) {
 
-        var i;
-        var insertedVnodeQueue = [];
+        var i = 0;
+        var insertedVnodeQueue:Vnodes = [];
         if (untyped oldVnode.parentElement != null) {
           createElm(vnode, insertedVnodeQueue);
           oldVnode.parentElement.replaceChild(vnode.elm, oldVnode);
@@ -291,11 +250,10 @@ class PatchDom {
         cps({
           @await wait(0);
           @for(i = 0, i < insertedVnodeQueue.length,++i) {
-            insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
+            untyped insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
           }
-
         });
-        //for (i = 0; i < cbs.post.length; ++i) cbs.post[i]();
+
         return vnode;
 
       }
@@ -303,21 +261,18 @@ class PatchDom {
 
       public static function patch(oldVnode:Vnode, vnode:Vnode) {
         var i = 0;
-        var insertedVnodeQueue = [];
-        //@for(i = 0; i < cbs.pre.length; ++i) cbs.pre[i]();
+        var insertedVnodeQueue:Vnodes = [];
+
         patchVnode(oldVnode, vnode, insertedVnodeQueue);
 
         cps({
           @await wait(0);
           @for(i = 0, i < insertedVnodeQueue.length,++i) {
-            insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
+            untyped insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
           }
-
         });
-        //for (i = 0; i < cbs.post.length; ++i) cbs.post[i]();
+
         return vnode;
       };
-
-
 
 }

@@ -9,5 +9,5 @@ typedef VirtualNodeData = {
   hook:Dynamic,
   skip_styles:Bool,
   skip_attributes:Bool,
-  ?key:String
+  ?key:Null<String>
 }

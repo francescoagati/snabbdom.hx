@@ -1,10 +1,12 @@
 package snabbdom;
 
-using thx.Arrays;
-using snabbdom.Jsx;
 import snabbdom.engine.dom.PatchDom.*;
 import snabbdom.Jsx.jsx;
+import snabbdom.PatchHelper.*;
 using snabbdom.engine.dom.PatchDom;
+using thx.Arrays;
+using snabbdom.Jsx;
+
 class Main {
 
   public static function click(e) {
@@ -61,12 +63,14 @@ class Main {
 
 
     var last_node:snabbdom.engine.dom.VirtualNodeDom = null;
+    var last_node2:snabbdom.engine.dom.VirtualNodeDom = null;
 
-
-
-    var timer = new haxe.Timer(500);
     var init:Int = null;
+    var timer = new haxe.Timer(100);
+
     timer.run = function() {
+
+
 
       var rnd = Math.random();
       var color = ['red','yellow','green','black','white','grey'].shuffle().first();
@@ -78,7 +82,7 @@ class Main {
       var list = [for (x in (init...max)) {
         var key = 'key - $x';
         var random = Math.random() * 5000;
-        jsx('<li key="${key}" style="border:10px solid green"><span >${random}</span></li>');
+        jsx('<li key="${key}" style="border:10px solid green"><span style="color:white">${random}</span></li>');
       }];
       var vnode2 = jsx('
         <div lippa="${1+1}" id="pippa" style="color:black" onmouseout=$out onclick=$click onmouseover=${over}>
@@ -90,13 +94,15 @@ class Main {
       ');
 
 
-      if (last_node == null) js.Browser.document.getElementById('container').patchDom(vnode2);   else  last_node.patch(untyped vnode2);
-      last_node = vnode2;
-      untyped window.cippa = last_node;
+      if (last_node == null)
+        js.Browser.document.getElementById('container').patchDom(untyped vnode2);
+      else
+        last_node.patch(untyped vnode2);
+
+      untyped last_node = vnode2;
 
     };
 
-      timer.run();
   }
 
 }

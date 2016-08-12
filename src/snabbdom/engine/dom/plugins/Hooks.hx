@@ -10,18 +10,18 @@ using snabbdom.VirtualNodeDataTools;
 
 
 class Hooks {
-   inline public static function create(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
-    //cps({
+  public static function create(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
+    cps({
     Styles.create(oldVnode,vnode);
-    //@await wait(0);
+    @await wait(0);
     Attributes.create(oldVnode, vnode);
-    //@await wait(0);
+    @await wait(0);
     Props.create(oldVnode,vnode);
-    //@await wait(0);
+    @await wait(0);
     CssClasses.create(oldVnode,vnode);
-    //@await wait(0);
+    @await wait(0);
     Events.create(oldVnode,vnode);
-    //});
+    });
   }
 
   public static function update(p_oldVnode:VirtualNodeDom, p_vnode:VirtualNodeDom) {
@@ -44,19 +44,19 @@ class Hooks {
 
 
 
-  inline public static function destroy(vnode) {
-    //cps({
-    //  @await wait(0);
+   public static function destroy(vnode) {
+    cps({
+      @await wait(0);
       Styles.destroy(vnode);
-    //});
+    });
   }
 
 
-  inline public static function remove(vnode,rm) {
-    //cps({
-    //  @await wait(0);
+   public static function remove(vnode,rm) {
+    cps({
+      @await wait(0);
       Styles.remove(vnode,rm);
-    //});
+    });
   }
 
 }
