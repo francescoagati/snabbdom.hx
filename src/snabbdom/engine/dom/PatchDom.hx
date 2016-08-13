@@ -52,10 +52,10 @@ class PatchDom {
 
      inline static function createElm(vnode:Vnode, insertedVnodeQueue:Vnodes) {
       var i:Dynamic, data:Dynamic = vnode.data;
-      if (isDef(data)) {
+      //if (isDef(data)) {
         if (isDef(i = data.hook) && isDef(i = i.init)) i(vnode);
         if (isDef(i = data.vnode)) vnode = i;
-      }
+      //}
       var elm, children = vnode.children, sel = vnode.sel;
       if (isDef(sel)) {
         var tag = sel;
@@ -72,14 +72,14 @@ class PatchDom {
 
         Hooks.create(emptyNode,vnode);
 
-        if (vnode.data != null) {
+        //if (vnode.data != null) {
           i = vnode.data.hook; // Reuse variable
           if (isDef(i)) {
             if (i.create) i.create(emptyNode, vnode);
             if (i.insert) insertedVnodeQueue.push(vnode);
           }
 
-        }
+        //}
       } else {
         vnode.elm =  NativeNode.createTextElement(vnode.text);
       }
@@ -204,7 +204,8 @@ class PatchDom {
 
       static function patchVnode(oldVnode:Vnode, vnode:Vnode, insertedVnodeQueue:Vnodes) {
 
-        var i:Dynamic, hook;
+        var i:Dynamic = vnode.data;
+        var hook = i.hook;
 
         if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i =  hook.prepatch)) {
           i(oldVnode, vnode);
@@ -213,12 +214,12 @@ class PatchDom {
         if (isDef(i = vnode.data) && isDef(i = i.vnode)) vnode = i;
         var elm = vnode.elm = oldVnode.elm, oldCh = oldVnode.children, ch = vnode.children;
         if (oldVnode == vnode) return;
-        if (isDef(vnode.data)) {
+        //if (isDef(vnode.data)) {
           Hooks.update(oldVnode,vnode);
           //@for(i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode);
           i = vnode.data.hook;
           if (isDef(i) && isDef(i = i.update)) i(oldVnode, vnode);
-        }
+        //}
         if (isUndef( vnode.text)) {
           if (isDef(oldCh) && isDef(ch)) {
             if (oldCh != ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue);

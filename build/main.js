@@ -144,13 +144,10 @@ js_Boot.__string_rec = function(o,s) {
 var snabbdom_Main = function() { };
 snabbdom_Main.__name__ = true;
 snabbdom_Main.click = function(e) {
-	console.log("click");
 };
 snabbdom_Main.over = function(e) {
-	console.log("over");
 };
 snabbdom_Main.out = function(e) {
-	console.log("out");
 };
 snabbdom_Main.main = function() {
 	var txt = "testo";
@@ -165,7 +162,7 @@ snabbdom_Main.main = function() {
 	cache = cache | 2;
 	cache = cache | 4;
 	var init = null;
-	var timer = new haxe_Timer(1000);
+	var timer = new haxe_Timer(50);
 	timer.run = function() {
 		var rnd = Math.random();
 		var color = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
@@ -205,22 +202,20 @@ snabbdom_engine_dom_PatchDom.__name__ = true;
 snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 	var i;
 	var data = vnode.data;
-	if(data != undefined) {
-		var tmp;
-		i = data.hook;
-		if(i != undefined) {
-			i = i.init;
-			tmp = i != undefined;
-		} else {
-			tmp = false;
-		}
-		if(tmp) {
-			i(vnode);
-		}
-		i = data.vnode;
-		if(i != undefined) {
-			vnode = i;
-		}
+	var tmp;
+	i = data.hook;
+	if(i != undefined) {
+		i = i.init;
+		tmp = i != undefined;
+	} else {
+		tmp = false;
+	}
+	if(tmp) {
+		i(vnode);
+	}
+	i = data.vnode;
+	if(i != undefined) {
+		vnode = i;
 	}
 	var elm;
 	var children = vnode.children;
@@ -284,15 +279,13 @@ snabbdom_engine_dom_PatchDom.createElm = function(vnode,insertedVnodeQueue) {
 			});
 		}
 		snabbdom_engine_dom_plugins_Hooks.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode);
-		if(vnode.data != null) {
-			i = vnode.data.hook;
-			if(i != undefined) {
-				if(i.create) {
-					i.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode);
-				}
-				if(i.insert) {
-					insertedVnodeQueue.push(vnode);
-				}
+		i = vnode.data.hook;
+		if(i != undefined) {
+			if(i.create) {
+				i.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode);
+			}
+			if(i.insert) {
+				insertedVnodeQueue.push(vnode);
 			}
 		}
 	} else {
@@ -393,22 +386,20 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 			var vnode = newStartVnode;
 			var i3;
 			var data = vnode.data;
-			if(data != undefined) {
-				var tmp;
-				i3 = data.hook;
-				if(i3 != undefined) {
-					i3 = i3.init;
-					tmp = i3 != undefined;
-				} else {
-					tmp = false;
-				}
-				if(tmp) {
-					i3(vnode);
-				}
-				i3 = data.vnode;
-				if(i3 != undefined) {
-					vnode = i3;
-				}
+			var tmp;
+			i3 = data.hook;
+			if(i3 != undefined) {
+				i3 = i3.init;
+				tmp = i3 != undefined;
+			} else {
+				tmp = false;
+			}
+			if(tmp) {
+				i3(vnode);
+			}
+			i3 = data.vnode;
+			if(i3 != undefined) {
+				vnode = i3;
 			}
 			var elm;
 			var children = vnode.children;
@@ -474,15 +465,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					})(element1,this6));
 				}
 				snabbdom_engine_dom_plugins_Hooks.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode);
-				if(vnode.data != null) {
-					i3 = vnode.data.hook;
-					if(i3 != undefined) {
-						if(i3.create) {
-							i3.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode);
-						}
-						if(i3.insert) {
-							insertedVnodeQueue.push(vnode);
-						}
+				i3 = vnode.data.hook;
+				if(i3 != undefined) {
+					if(i3.create) {
+						i3.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode);
+					}
+					if(i3.insert) {
+						insertedVnodeQueue.push(vnode);
 					}
 				}
 			} else {
@@ -522,22 +511,20 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 			var vnode1 = newCh[startIdx];
 			var i9;
 			var data1 = vnode1.data;
-			if(data1 != undefined) {
-				var tmp3;
-				i9 = data1.hook;
-				if(i9 != undefined) {
-					i9 = i9.init;
-					tmp3 = i9 != undefined;
-				} else {
-					tmp3 = false;
-				}
-				if(tmp3) {
-					i9(vnode1);
-				}
-				i9 = data1.vnode;
-				if(i9 != undefined) {
-					vnode1 = i9;
-				}
+			var tmp3;
+			i9 = data1.hook;
+			if(i9 != undefined) {
+				i9 = i9.init;
+				tmp3 = i9 != undefined;
+			} else {
+				tmp3 = false;
+			}
+			if(tmp3) {
+				i9(vnode1);
+			}
+			i9 = data1.vnode;
+			if(i9 != undefined) {
+				vnode1 = i9;
 			}
 			var elm1;
 			var children1 = vnode1.children;
@@ -603,15 +590,13 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					})(element4,this12));
 				}
 				snabbdom_engine_dom_plugins_Hooks.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
-				if(vnode1.data != null) {
-					i9 = vnode1.data.hook;
-					if(i9 != undefined) {
-						if(i9.create) {
-							i9.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
-						}
-						if(i9.insert) {
-							insertedVnodeQueue.push(vnode1);
-						}
+				i9 = vnode1.data.hook;
+				if(i9 != undefined) {
+					if(i9.create) {
+						i9.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
+					}
+					if(i9.insert) {
+						insertedVnodeQueue.push(vnode1);
 					}
 				}
 			} else {
@@ -677,18 +662,16 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 					if(tmp7) {
 						i12(ch,rm);
 					} else {
-						console.log("remove");
 						if(rm != null) {
 							rm();
 						}
 						var this15 = [parentElm];
 						var element6 = [ch.elm];
-						console.log("remove-child");
 						window.requestAnimationFrame((function(element7,this16) {
 							return function(i14) {
 								this16[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e012 = (function() {
+								var tmp_B19CB061_6756_486A_A7D3_E260F55624ED_1471089631e012 = (function() {
 									return function(__return) {
 										var cb = (function() {
 											return function() {
@@ -720,7 +703,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 										})(),0);
 									};
 								})();
-								var fn = tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e012;
+								var fn = tmp_B19CB061_6756_486A_A7D3_E260F55624ED_1471089631e012;
 								fn(thx_Functions.noop);
 							};
 						})(element6,this15));
@@ -728,12 +711,11 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 				} else {
 					var this17 = [parentElm];
 					var element9 = [ch.elm];
-					console.log("remove-child");
 					window.requestAnimationFrame((function(element10,this18) {
 						return function(i15) {
 							this18[0].removeChild(element10[0]);
 							var element11 = element10[0];
-							var tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e0121 = (function() {
+							var tmp_B19CB061_6756_486A_A7D3_E260F55624ED_1471089631e0121 = (function() {
 								return function(__return1) {
 									var cb1 = (function() {
 										return function() {
@@ -765,7 +747,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 									})(),0);
 								};
 							})();
-							var fn1 = tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e0121;
+							var fn1 = tmp_B19CB061_6756_486A_A7D3_E260F55624ED_1471089631e0121;
 							fn1(thx_Functions.noop);
 						};
 					})(element9,this17));
@@ -776,8 +758,8 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 	}
 };
 snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQueue) {
-	var i;
-	var hook;
+	var i = vnode.data;
+	var hook = i.hook;
 	var tmp;
 	var tmp1;
 	i = vnode.data;
@@ -824,19 +806,17 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 	if(oldVnode == vnode) {
 		return;
 	}
-	if(vnode.data != undefined) {
-		snabbdom_engine_dom_plugins_Hooks.update(oldVnode,vnode);
-		i = vnode.data.hook;
-		var tmp4;
-		if(i != undefined) {
-			i = i.update;
-			tmp4 = i != undefined;
-		} else {
-			tmp4 = false;
-		}
-		if(tmp4) {
-			i(oldVnode,vnode);
-		}
+	snabbdom_engine_dom_plugins_Hooks.update(oldVnode,vnode);
+	i = vnode.data.hook;
+	var tmp4;
+	if(i != undefined) {
+		i = i.update;
+		tmp4 = i != undefined;
+	} else {
+		tmp4 = false;
+	}
+	if(tmp4) {
+		i(oldVnode,vnode);
 	}
 	if(vnode.text == undefined) {
 		if(oldCh != undefined && ch != undefined) {
@@ -853,22 +833,20 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 				var vnode1 = ch[startIdx];
 				var i2;
 				var data = vnode1.data;
-				if(data != undefined) {
-					var tmp5;
-					i2 = data.hook;
-					if(i2 != undefined) {
-						i2 = i2.init;
-						tmp5 = i2 != undefined;
-					} else {
-						tmp5 = false;
-					}
-					if(tmp5) {
-						i2(vnode1);
-					}
-					i2 = data.vnode;
-					if(i2 != undefined) {
-						vnode1 = i2;
-					}
+				var tmp5;
+				i2 = data.hook;
+				if(i2 != undefined) {
+					i2 = i2.init;
+					tmp5 = i2 != undefined;
+				} else {
+					tmp5 = false;
+				}
+				if(tmp5) {
+					i2(vnode1);
+				}
+				i2 = data.vnode;
+				if(i2 != undefined) {
+					vnode1 = i2;
 				}
 				var elm1;
 				var children = vnode1.children;
@@ -934,15 +912,13 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						})(element1,this2));
 					}
 					snabbdom_engine_dom_plugins_Hooks.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
-					if(vnode1.data != null) {
-						i2 = vnode1.data.hook;
-						if(i2 != undefined) {
-							if(i2.create) {
-								i2.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
-							}
-							if(i2.insert) {
-								insertedVnodeQueue.push(vnode1);
-							}
+					i2 = vnode1.data.hook;
+					if(i2 != undefined) {
+						if(i2.create) {
+							i2.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
+						}
+						if(i2.insert) {
+							insertedVnodeQueue.push(vnode1);
 						}
 					}
 				} else {
@@ -1009,18 +985,16 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 						if(tmp9) {
 							i5(ch1,rm);
 						} else {
-							console.log("remove");
 							if(rm != null) {
 								rm();
 							}
 							var this5 = [elm];
 							var element3 = [ch1.elm];
-							console.log("remove-child");
 							window.requestAnimationFrame((function(element4,this6) {
 								return function(i7) {
 									this6[0].removeChild(element4[0]);
 									var element5 = element4[0];
-									var tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e012 = (function() {
+									var tmp_B19CB061_6756_486A_A7D3_E260F55624ED_1471089631e012 = (function() {
 										return function(__return) {
 											var cb = (function() {
 												return function() {
@@ -1052,7 +1026,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 											})(),0);
 										};
 									})();
-									var fn = tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e012;
+									var fn = tmp_B19CB061_6756_486A_A7D3_E260F55624ED_1471089631e012;
 									fn(thx_Functions.noop);
 								};
 							})(element3,this5));
@@ -1060,12 +1034,11 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 					} else {
 						var this7 = [elm];
 						var element6 = [ch1.elm];
-						console.log("remove-child");
 						window.requestAnimationFrame((function(element7,this8) {
 							return function(i8) {
 								this8[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e0121 = (function() {
+								var tmp_B19CB061_6756_486A_A7D3_E260F55624ED_1471089631e0121 = (function() {
 									return function(__return1) {
 										var cb1 = (function() {
 											return function() {
@@ -1097,7 +1070,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 										})(),0);
 									};
 								})();
-								var fn1 = tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e0121;
+								var fn1 = tmp_B19CB061_6756_486A_A7D3_E260F55624ED_1471089631e0121;
 								fn1(thx_Functions.noop);
 							};
 						})(element6,this7));
@@ -1132,22 +1105,20 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 		var vnode1 = vnode;
 		var i1;
 		var data = vnode1.data;
-		if(data != undefined) {
-			var tmp;
-			i1 = data.hook;
-			if(i1 != undefined) {
-				i1 = i1.init;
-				tmp = i1 != undefined;
-			} else {
-				tmp = false;
-			}
-			if(tmp) {
-				i1(vnode1);
-			}
-			i1 = data.vnode;
-			if(i1 != undefined) {
-				vnode1 = i1;
-			}
+		var tmp;
+		i1 = data.hook;
+		if(i1 != undefined) {
+			i1 = i1.init;
+			tmp = i1 != undefined;
+		} else {
+			tmp = false;
+		}
+		if(tmp) {
+			i1(vnode1);
+		}
+		i1 = data.vnode;
+		if(i1 != undefined) {
+			vnode1 = i1;
 		}
 		var elm;
 		var children = vnode1.children;
@@ -1211,15 +1182,13 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 				});
 			}
 			snabbdom_engine_dom_plugins_Hooks.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
-			if(vnode1.data != null) {
-				i1 = vnode1.data.hook;
-				if(i1 != undefined) {
-					if(i1.create) {
-						i1.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
-					}
-					if(i1.insert) {
-						insertedVnodeQueue.push(vnode1);
-					}
+			i1 = vnode1.data.hook;
+			if(i1 != undefined) {
+				if(i1.create) {
+					i1.create(snabbdom_engine_dom_PatchDom.emptyNode,vnode1);
+				}
+				if(i1.insert) {
+					insertedVnodeQueue.push(vnode1);
 				}
 			}
 		} else {
@@ -1239,7 +1208,7 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 		oldVnode = { sel : oldVnode.tagName, data : data1, children : [], text : null, elm : oldVnode};
 		snabbdom_engine_dom_PatchDom.patchVnode(oldVnode,vnode,insertedVnodeQueue);
 	}
-	var tmp_DF987B1D_3D0D_49B9_9249_A730787B70FD_1471088796e012 = function(__return) {
+	var tmp_EB173B55_C202_4C93_9A14_3AB3EC9F9BEB_1471089631e012 = function(__return) {
 		var cb = function() {
 			i = 0;
 			var __doCount = 0;
@@ -1267,7 +1236,7 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 			cb();
 		},0);
 	};
-	var fn = tmp_DF987B1D_3D0D_49B9_9249_A730787B70FD_1471088796e012;
+	var fn = tmp_EB173B55_C202_4C93_9A14_3AB3EC9F9BEB_1471089631e012;
 	fn(thx_Functions.noop);
 	return vnode;
 };
@@ -1275,7 +1244,7 @@ snabbdom_engine_dom_PatchDom.patch = function(oldVnode,vnode) {
 	var i = 0;
 	var insertedVnodeQueue = [];
 	snabbdom_engine_dom_PatchDom.patchVnode(oldVnode,vnode,insertedVnodeQueue);
-	var tmp_C31B22EB_5698_4990_B67A_7EF3E9E83D42_1471088796e012 = function(__return) {
+	var tmp_F40E0F60_119E_4689_AEC1_EAB8736743C9_1471089631e012 = function(__return) {
 		var cb = function() {
 			i = 0;
 			var __doCount = 0;
@@ -1303,7 +1272,7 @@ snabbdom_engine_dom_PatchDom.patch = function(oldVnode,vnode) {
 			cb();
 		},0);
 	};
-	var fn = tmp_C31B22EB_5698_4990_B67A_7EF3E9E83D42_1471088796e012;
+	var fn = tmp_F40E0F60_119E_4689_AEC1_EAB8736743C9_1471089631e012;
 	fn(thx_Functions.noop);
 	return vnode;
 };
@@ -1500,7 +1469,6 @@ snabbdom_engine_dom_plugins_Hooks.create = function(oldVnode,vnode) {
 										cur4 = on[name6];
 										old2 = oldOn[name6];
 										if(old2 == null) {
-											console.log(cur4);
 											on[name6] = cur4;
 											elm5.addEventListener(name6,cur4);
 										} else {
@@ -1723,7 +1691,6 @@ snabbdom_engine_dom_plugins_Hooks.update = function(oldVnode,vnode) {
 										cur4 = on[name6];
 										old2 = oldOn[name6];
 										if(old2 == null) {
-											console.log(cur4);
 											on[name6] = cur4;
 											elm5.addEventListener(name6,cur4);
 										} else {
@@ -1753,7 +1720,6 @@ snabbdom_engine_dom_plugins_Hooks.update = function(oldVnode,vnode) {
 				cb();
 			},0);
 		} else {
-			console.log(elm);
 			__return();
 		}
 	})(thx_Functions.noop);
