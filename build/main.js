@@ -155,14 +155,17 @@ snabbdom_Main.out = function(e) {
 snabbdom_Main.main = function() {
 	var txt = "testo";
 	var vnode_sel = "div";
-	var vnode_data = { attrs : { id : "pippa"}, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null};
-	var vnode_children = [{ sel : "ul", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : [{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "1"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "2"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "3"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "4"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "5"},{ sel : "li", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : [{ sel : "span", data : { attrs : { }, skip_styles : true, skip_attributes : false, props : null, classes : null, style : null, hook : null, on : { 'click' : snabbdom_Main.click}}, children : null, elm : null, text : txt}], elm : null, text : null}], elm : null, text : null}];
+	var vnode_data = { attrs : { id : "pippa", ___cache : "2", ___cache_sting : "cacheAll"}, ___cache : 2, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null};
+	var vnode_children = [{ sel : "ul", data : { attrs : { ___cache : "2", ___cache_sting : "cacheAll"}, ___cache : 2, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : [{ sel : "li", data : { attrs : { ___cache : "2", ___cache_sting : "cacheAll"}, ___cache : 2, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "1"},{ sel : "li", data : { attrs : { ___cache : "2", ___cache_sting : "cacheAll"}, ___cache : 2, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "2"},{ sel : "li", data : { attrs : { ___cache : "2", ___cache_sting : "cacheAll"}, ___cache : 2, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "3"},{ sel : "li", data : { attrs : { ___cache : "2", ___cache_sting : "cacheAll"}, ___cache : 2, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "4"},{ sel : "li", data : { attrs : { ___cache : "2", ___cache_sting : "cacheAll"}, ___cache : 2, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : "5"},{ sel : "li", data : { attrs : { ___cache : "2", ___cache_sting : "cacheAll"}, ___cache : 2, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : [{ sel : "span", data : { attrs : { ___cache : "0", ___cache_sting : ""}, ___cache : 0, skip_styles : true, skip_attributes : false, props : null, classes : null, style : null, hook : null, on : { 'click' : snabbdom_Main.click}}, children : null, elm : null, text : txt}], elm : null, text : null}], elm : null, text : null}];
 	var vnode_elm = null;
 	var vnode_text = null;
 	var last_node = null;
 	var last_node2 = null;
+	var cache = 0;
+	cache = cache | 2;
+	cache = cache | 4;
 	var init = null;
-	var timer = new haxe_Timer(100);
+	var timer = new haxe_Timer(1000);
 	timer.run = function() {
 		var rnd = Math.random();
 		var color = thx_Arrays.shuffle(["red","yellow","green","black","white","grey"])[0];
@@ -183,10 +186,10 @@ snabbdom_Main.main = function() {
 			var x = _g1_min++;
 			var key = "key - " + x;
 			var random = Math.random() * 5000;
-			_g.push({ sel : "li", data : { attrs : { key : key}, style : { border : "10px solid green"}, key : key, skip_styles : true, skip_attributes : false, props : null, classes : null, hook : null}, children : [{ sel : "span", data : { attrs : { }, style : { color : "white"}, skip_styles : true, skip_attributes : true, props : null, classes : null, hook : null}, children : null, elm : null, text : random}], elm : null, text : null});
+			_g.push({ sel : "li", data : { attrs : { ___cache : "4", cippalippa : "ciaone", ___cache_sting : "cacheStyle", key : key}, ___cache : 4, style : { border : "10px solid green"}, key : key, skip_styles : true, skip_attributes : false, props : null, classes : null, hook : null}, children : [{ sel : "span", data : { attrs : { ___cache : "6", ___cache_sting : "cacheStyle cacheAll"}, ___cache : 6, style : { color : "white"}, skip_styles : true, skip_attributes : true, props : null, classes : null, hook : null}, children : null, elm : null, text : random}], elm : null, text : null});
 		}
 		var list = _g;
-		var vnode2 = { sel : "div", data : { attrs : { id : "pippa", lippa : 2}, style : { color : "black"}, skip_styles : true, skip_attributes : false, props : null, classes : null, hook : null, on : { 'click' : snabbdom_Main.click, 'mouseout' : snabbdom_Main.out, 'mouseover' : snabbdom_Main.over}}, children : [{ sel : "span", data : { attrs : { }, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : max},{ sel : "ul", data : { attrs : { }, style : { fontSize : "30px", color : "white", backgroundColor : bg}, skip_styles : false, skip_attributes : false, props : null, classes : null, hook : null}, children : list, elm : null, text : null}], elm : null, text : null};
+		var vnode2 = { sel : "div", data : { attrs : { id : "pippa", ___cache : "4", ___cache_sting : "cacheStyle"}, ___cache : 4, style : { color : "black"}, skip_styles : true, skip_attributes : false, props : null, classes : null, hook : null, on : { 'click' : snabbdom_Main.click, 'mouseout' : snabbdom_Main.out, 'mouseover' : snabbdom_Main.over}}, children : [{ sel : "span", data : { attrs : { ___cache : "2", ___cache_sting : "cacheAll"}, ___cache : 2, skip_styles : true, skip_attributes : true, props : null, classes : null, style : null, hook : null}, children : null, elm : null, text : max},{ sel : "ul", data : { attrs : { ___cache : "0", ___cache_sting : ""}, ___cache : 0, style : { fontSize : "30px", color : "white", backgroundColor : bg}, skip_styles : false, skip_attributes : false, props : null, classes : null, hook : null}, children : list, elm : null, text : null}], elm : null, text : null};
 		if(last_node == null) {
 			snabbdom_engine_dom_PatchDom.patchDom(window.document.getElementById("container"),vnode2);
 		} else {
@@ -685,11 +688,12 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 							return function(i14) {
 								this16[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_C8A10DD8_FF2B_4845_9362_BAAA0C6CD36D_1471030392e012 = (function() {
+								var tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e012 = (function() {
 									return function(__return) {
 										var cb = (function() {
 											return function() {
 												element8.textContent = "";
+												element8.___cache = null;
 												var _g = element8.nodeName;
 												switch(_g) {
 												case "DIV":
@@ -716,7 +720,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 										})(),0);
 									};
 								})();
-								var fn = tmp_C8A10DD8_FF2B_4845_9362_BAAA0C6CD36D_1471030392e012;
+								var fn = tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e012;
 								fn(thx_Functions.noop);
 							};
 						})(element6,this15));
@@ -729,11 +733,12 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 						return function(i15) {
 							this18[0].removeChild(element10[0]);
 							var element11 = element10[0];
-							var tmp_C8A10DD8_FF2B_4845_9362_BAAA0C6CD36D_1471030392e0121 = (function() {
+							var tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e0121 = (function() {
 								return function(__return1) {
 									var cb1 = (function() {
 										return function() {
 											element11.textContent = "";
+											element11.___cache = null;
 											var _g1 = element11.nodeName;
 											switch(_g1) {
 											case "DIV":
@@ -760,7 +765,7 @@ snabbdom_engine_dom_PatchDom.updateChildren = function(parentElm,oldCh,newCh,ins
 									})(),0);
 								};
 							})();
-							var fn1 = tmp_C8A10DD8_FF2B_4845_9362_BAAA0C6CD36D_1471030392e0121;
+							var fn1 = tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e0121;
 							fn1(thx_Functions.noop);
 						};
 					})(element9,this17));
@@ -1015,11 +1020,12 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 								return function(i7) {
 									this6[0].removeChild(element4[0]);
 									var element5 = element4[0];
-									var tmp_C8A10DD8_FF2B_4845_9362_BAAA0C6CD36D_1471030392e012 = (function() {
+									var tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e012 = (function() {
 										return function(__return) {
 											var cb = (function() {
 												return function() {
 													element5.textContent = "";
+													element5.___cache = null;
 													var _g = element5.nodeName;
 													switch(_g) {
 													case "DIV":
@@ -1046,7 +1052,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 											})(),0);
 										};
 									})();
-									var fn = tmp_C8A10DD8_FF2B_4845_9362_BAAA0C6CD36D_1471030392e012;
+									var fn = tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e012;
 									fn(thx_Functions.noop);
 								};
 							})(element3,this5));
@@ -1059,11 +1065,12 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 							return function(i8) {
 								this8[0].removeChild(element7[0]);
 								var element8 = element7[0];
-								var tmp_C8A10DD8_FF2B_4845_9362_BAAA0C6CD36D_1471030392e0121 = (function() {
+								var tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e0121 = (function() {
 									return function(__return1) {
 										var cb1 = (function() {
 											return function() {
 												element8.textContent = "";
+												element8.___cache = null;
 												var _g1 = element8.nodeName;
 												switch(_g1) {
 												case "DIV":
@@ -1090,7 +1097,7 @@ snabbdom_engine_dom_PatchDom.patchVnode = function(oldVnode,vnode,insertedVnodeQ
 										})(),0);
 									};
 								})();
-								var fn1 = tmp_C8A10DD8_FF2B_4845_9362_BAAA0C6CD36D_1471030392e0121;
+								var fn1 = tmp_471EB32D_7F78_4029_869A_A558224BD03A_1471088795e0121;
 								fn1(thx_Functions.noop);
 							};
 						})(element6,this7));
@@ -1232,7 +1239,7 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 		oldVnode = { sel : oldVnode.tagName, data : data1, children : [], text : null, elm : oldVnode};
 		snabbdom_engine_dom_PatchDom.patchVnode(oldVnode,vnode,insertedVnodeQueue);
 	}
-	var tmp_9FE9A4A2_670C_476E_8805_ACA720C7EF47_1471030392e012 = function(__return) {
+	var tmp_DF987B1D_3D0D_49B9_9249_A730787B70FD_1471088796e012 = function(__return) {
 		var cb = function() {
 			i = 0;
 			var __doCount = 0;
@@ -1260,7 +1267,7 @@ snabbdom_engine_dom_PatchDom.patchDom = function(oldVnode,vnode) {
 			cb();
 		},0);
 	};
-	var fn = tmp_9FE9A4A2_670C_476E_8805_ACA720C7EF47_1471030392e012;
+	var fn = tmp_DF987B1D_3D0D_49B9_9249_A730787B70FD_1471088796e012;
 	fn(thx_Functions.noop);
 	return vnode;
 };
@@ -1268,7 +1275,7 @@ snabbdom_engine_dom_PatchDom.patch = function(oldVnode,vnode) {
 	var i = 0;
 	var insertedVnodeQueue = [];
 	snabbdom_engine_dom_PatchDom.patchVnode(oldVnode,vnode,insertedVnodeQueue);
-	var tmp_8D384E6B_5693_499F_800E_3F8839839AAD_1471030392e012 = function(__return) {
+	var tmp_C31B22EB_5698_4990_B67A_7EF3E9E83D42_1471088796e012 = function(__return) {
 		var cb = function() {
 			i = 0;
 			var __doCount = 0;
@@ -1296,7 +1303,7 @@ snabbdom_engine_dom_PatchDom.patch = function(oldVnode,vnode) {
 			cb();
 		},0);
 	};
-	var fn = tmp_8D384E6B_5693_499F_800E_3F8839839AAD_1471030392e012;
+	var fn = tmp_C31B22EB_5698_4990_B67A_7EF3E9E83D42_1471088796e012;
 	fn(thx_Functions.noop);
 	return vnode;
 };
@@ -1305,405 +1312,450 @@ snabbdom_engine_dom_plugins_Attributes.__name__ = true;
 var snabbdom_engine_dom_plugins_Hooks = function() { };
 snabbdom_engine_dom_plugins_Hooks.__name__ = true;
 snabbdom_engine_dom_plugins_Hooks.create = function(oldVnode,vnode) {
+	var elm = vnode.elm;
+	var apply_hooks;
+	var this1 = vnode.data.___cache;
+	var mask = 2;
+	if((this1 & mask) == mask == false) {
+		apply_hooks = true;
+	} else if(elm.___cache == null) {
+		elm.___cache = true;
+		apply_hooks = true;
+	} else if(elm.___cache == true) {
+		apply_hooks = false;
+	} else {
+		apply_hooks = true;
+	}
 	(function(__return) {
-		var cur;
-		var elm = vnode.elm;
-		var apply_styles;
-		if(vnode.data.skip_styles == false) {
-			apply_styles = true;
-		} else if(elm.cached_styles == null) {
-			elm.cached_styles = true;
-			apply_styles = true;
-		} else if(elm.cached_styles == true) {
-			apply_styles = false;
-		} else {
-			apply_styles = true;
-		}
-		if(apply_styles) {
-			var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
-			var style = vnode.data.style == null?{ }:vnode.data.style;
-			var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-			var _g = 0;
-			var _g1 = Object.keys(style);
-			while(_g < _g1.length) {
-				var name = [_g1[_g]];
-				++_g;
-				cur = style[name[0]];
-				if(name[0] == "delayed") {
-					var delayed = style.delayed;
-					var oldDelayed = oldStyle.delayed;
-					var _g2 = 0;
-					var _g3 = Object.keys(delayed);
-					while(_g2 < _g3.length) {
-						var name1 = _g3[_g2];
-						++_g2;
-						cur = delayed[name1];
-						if(!oldHasDel || cur != oldDelayed[name1]) {
-							var obj = [elm.style];
-							var fn = [(function(val,prop,obj1) {
-								return function(i) {
-									obj1[0][prop[0]] = val[0];
-								};
-							})([cur],[name1],obj)];
-							window.requestAnimationFrame((function(fn1) {
-								return function(i1) {
-									window.requestAnimationFrame(fn1[0]);
-								};
-							})(fn));
-						}
-					}
-				} else if(name[0] != "remove" && cur != oldStyle[name[0]]) {
-					window.requestAnimationFrame((function(name2) {
-						return function(i2) {
-							elm.style[name2[0]] = cur;
-						};
-					})(name));
+		if(apply_hooks) {
+			var cb = function() {
+				var cur;
+				var elm1 = vnode.elm;
+				var apply_styles;
+				if(vnode.data.skip_styles == false) {
+					apply_styles = true;
+				} else if(elm1.cached_styles == null) {
+					elm1.cached_styles = true;
+					apply_styles = true;
+				} else if(elm1.cached_styles == true) {
+					apply_styles = false;
+				} else {
+					apply_styles = true;
 				}
-			}
-		}
-		var cb = function() {
-			var cur1;
-			var old;
-			var elm1 = vnode.elm;
-			var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
-			var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
-			var apply_attributes;
-			if(vnode.data.skip_attributes == false) {
-				apply_attributes = true;
-			} else if(elm1.cached_attributes == null) {
-				elm1.cached_attributes = true;
-				apply_attributes = true;
-			} else if(elm1.cached_attributes == true) {
-				apply_attributes = false;
-			} else {
-				apply_attributes = true;
-			}
-			if(apply_attributes) {
-				var _g4 = 0;
-				var _g11 = Object.keys(attrs);
-				while(_g4 < _g11.length) {
-					var key = [_g11[_g4]];
-					++_g4;
-					cur1 = attrs[key[0]];
-					old = oldAttrs[key[0]];
-					if(old != cur1) {
-						if(!cur1 && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key[0]]) {
-							window.requestAnimationFrame((function(key1) {
-								return function(i3) {
-									elm1.removeAttribute(key1[0]);
+				if(apply_styles) {
+					var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
+					var style = vnode.data.style == null?{ }:vnode.data.style;
+					var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
+					var _g = 0;
+					var _g1 = Object.keys(style);
+					while(_g < _g1.length) {
+						var name = [_g1[_g]];
+						++_g;
+						cur = style[name[0]];
+						if(name[0] == "delayed") {
+							var delayed = style.delayed;
+							var oldDelayed = oldStyle.delayed;
+							var _g2 = 0;
+							var _g3 = Object.keys(delayed);
+							while(_g2 < _g3.length) {
+								var name1 = _g3[_g2];
+								++_g2;
+								cur = delayed[name1];
+								if(!oldHasDel || cur != oldDelayed[name1]) {
+									var obj = [elm1.style];
+									var fn = [(function(val,prop,obj1) {
+										return function(i) {
+											obj1[0][prop[0]] = val[0];
+										};
+									})([cur],[name1],obj)];
+									window.requestAnimationFrame((function(fn1) {
+										return function(i1) {
+											window.requestAnimationFrame(fn1[0]);
+										};
+									})(fn));
+								}
+							}
+						} else if(name[0] != "remove" && cur != oldStyle[name[0]]) {
+							window.requestAnimationFrame((function(name2) {
+								return function(i2) {
+									elm1.style[name2[0]] = cur;
 								};
-							})(key));
-						} else {
-							window.requestAnimationFrame((function(key2) {
-								return function(i4) {
-									elm1.setAttribute(key2[0],cur1);
-								};
-							})(key));
+							})(name));
 						}
 					}
 				}
-				var _g5 = 0;
-				var _g12 = Object.keys(oldAttrs);
-				while(_g5 < _g12.length) {
-					var key3 = [_g12[_g5]];
-					++_g5;
-					if(!Object.prototype.hasOwnProperty.call(attrs,key3[0])) {
-						window.requestAnimationFrame((function(key4) {
-							return function(i5) {
-								elm1.removeAttribute(key4[0]);
-							};
-						})(key3));
-					}
-				}
-			}
-			var cb1 = function() {
-				var cur2;
-				var old1;
-				var elm2 = vnode.elm;
-				var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
-				var props = vnode.data.props == null?{ }:vnode.data.props;
-				var _g6 = 0;
-				var _g13 = Object.keys(props);
-				while(_g6 < _g13.length) {
-					var key5 = _g13[_g6];
-					++_g6;
-					cur2 = props[key5];
-					old1 = oldProps[key5];
-					if(old1 != cur2) {
-						elm2[key5] = cur2;
-					}
-				}
-				var cb2 = function() {
-					var cur3;
-					var elm3 = vnode.elm;
-					var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
-					var klass = vnode.data.classes == null?{ }:vnode.data.classes;
+				var cb1 = function() {
+					var cur1;
+					var old;
+					var elm2 = vnode.elm;
+					var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
+					var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
+					var apply_attributes;
 					if(vnode.data.skip_attributes == false) {
-						var _g7 = 0;
-						var _g14 = Object.keys(klass);
-						while(_g7 < _g14.length) {
-							var name3 = [_g14[_g7]];
-							++_g7;
-							cur3 = klass[name3[0]];
-							if(cur3 != oldClass[name3[0]]) {
-								if(cur3 == "add") {
-									window.requestAnimationFrame((function(name4) {
-										return function(i6) {
-											elm3.classList.add(name4[0]);
+						apply_attributes = true;
+					} else if(elm2.cached_attributes == null) {
+						elm2.cached_attributes = true;
+						apply_attributes = true;
+					} else if(elm2.cached_attributes == true) {
+						apply_attributes = false;
+					} else {
+						apply_attributes = true;
+					}
+					if(apply_attributes) {
+						var _g4 = 0;
+						var _g11 = Object.keys(attrs);
+						while(_g4 < _g11.length) {
+							var key = _g11[_g4];
+							++_g4;
+							cur1 = attrs[key];
+							old = oldAttrs[key];
+							if(old != cur1) {
+								if(!cur1 && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key]) {
+									window.requestAnimationFrame((function(_key) {
+										return function(i3) {
+											elm2.removeAttribute(_key[0]);
 										};
-									})(name3));
-								} else if(cur3 == "remove") {
-									window.requestAnimationFrame((function(name5) {
-										return function(i7) {
-											elm3.classList.remove(name5[0]);
+									})([key]));
+								} else {
+									window.requestAnimationFrame((function(_cur,_key1) {
+										return function(i4) {
+											elm2.setAttribute(_key1[0],_cur[0]);
 										};
-									})(name3));
+									})([cur1],[key]));
 								}
+							}
+						}
+						var _g5 = 0;
+						var _g12 = Object.keys(oldAttrs);
+						while(_g5 < _g12.length) {
+							var key1 = [_g12[_g5]];
+							++_g5;
+							if(!Object.prototype.hasOwnProperty.call(attrs,key1[0])) {
+								window.requestAnimationFrame((function(key2) {
+									return function(i5) {
+										elm2.removeAttribute(key2[0]);
+									};
+								})(key1));
 							}
 						}
 					}
-					var cb3 = function() {
-						var cur4;
-						var old2;
-						var elm4 = vnode.elm;
-						var oldOn = oldVnode.data.on == null?{ }:oldVnode.data.on;
-						var on = vnode.data.on == null?{ }:vnode.data.on;
-						if(on != { }) {
-							var _g8 = 0;
-							var _g15 = Object.keys(on);
-							while(_g8 < _g15.length) {
-								var name6 = _g15[_g8];
-								++_g8;
-								cur4 = on[name6];
-								old2 = oldOn[name6];
-								if(old2 == null) {
-									console.log(cur4);
-									on[name6] = cur4;
-									elm4.addEventListener(name6,cur4);
-								} else {
-									on[name6] = cur4;
-								}
+					var cb2 = function() {
+						var cur2;
+						var old1;
+						var elm3 = vnode.elm;
+						var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
+						var props = vnode.data.props == null?{ }:vnode.data.props;
+						var _g6 = 0;
+						var _g13 = Object.keys(props);
+						while(_g6 < _g13.length) {
+							var key3 = _g13[_g6];
+							++_g6;
+							cur2 = props[key3];
+							old1 = oldProps[key3];
+							if(old1 != cur2) {
+								elm3[key3] = cur2;
 							}
 						}
-						__return();
+						var cb3 = function() {
+							var cur3;
+							var elm4 = vnode.elm;
+							var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
+							var klass = vnode.data.classes == null?{ }:vnode.data.classes;
+							if(vnode.data.skip_attributes == false) {
+								var _g7 = 0;
+								var _g14 = Object.keys(klass);
+								while(_g7 < _g14.length) {
+									var name3 = [_g14[_g7]];
+									++_g7;
+									cur3 = klass[name3[0]];
+									if(cur3 != oldClass[name3[0]]) {
+										if(cur3 == "add") {
+											window.requestAnimationFrame((function(name4) {
+												return function(i6) {
+													elm4.classList.add(name4[0]);
+												};
+											})(name3));
+										} else if(cur3 == "remove") {
+											window.requestAnimationFrame((function(name5) {
+												return function(i7) {
+													elm4.classList.remove(name5[0]);
+												};
+											})(name3));
+										}
+									}
+								}
+							}
+							var cb4 = function() {
+								var cur4;
+								var old2;
+								var elm5 = vnode.elm;
+								var oldOn = oldVnode.data.on == null?{ }:oldVnode.data.on;
+								var on = vnode.data.on == null?{ }:vnode.data.on;
+								if(on != { }) {
+									var _g8 = 0;
+									var _g15 = Object.keys(on);
+									while(_g8 < _g15.length) {
+										var name6 = _g15[_g8];
+										++_g8;
+										cur4 = on[name6];
+										old2 = oldOn[name6];
+										if(old2 == null) {
+											console.log(cur4);
+											on[name6] = cur4;
+											elm5.addEventListener(name6,cur4);
+										} else {
+											on[name6] = cur4;
+										}
+									}
+								}
+								__return();
+							};
+							window.setTimeout(function() {
+								cb4();
+							},0);
+						};
+						window.setTimeout(function() {
+							cb3();
+						},0);
 					};
 					window.setTimeout(function() {
-						cb3();
+						cb2();
 					},0);
 				};
 				window.setTimeout(function() {
-					cb2();
+					cb1();
 				},0);
 			};
 			window.setTimeout(function() {
-				cb1();
+				cb();
 			},0);
-		};
-		window.setTimeout(function() {
-			cb();
-		},0);
+		} else {
+			__return();
+		}
 	})(thx_Functions.noop);
 };
-snabbdom_engine_dom_plugins_Hooks.update = function(p_oldVnode,p_vnode) {
-	var oldVnode = p_oldVnode;
-	var vnode = p_vnode;
+snabbdom_engine_dom_plugins_Hooks.update = function(oldVnode,vnode) {
+	var elm = vnode.elm;
+	var apply_hooks;
+	var this1 = vnode.data.___cache;
+	var mask = 2;
+	if((this1 & mask) == mask == false) {
+		apply_hooks = true;
+	} else if(elm.___cache == null) {
+		elm.___cache = true;
+		apply_hooks = true;
+	} else if(elm.___cache == true) {
+		apply_hooks = false;
+	} else {
+		apply_hooks = true;
+	}
 	(function(__return) {
-		var cur;
-		var elm = vnode.elm;
-		var apply_styles;
-		if(vnode.data.skip_styles == false) {
-			apply_styles = true;
-		} else if(elm.cached_styles == null) {
-			elm.cached_styles = true;
-			apply_styles = true;
-		} else if(elm.cached_styles == true) {
-			apply_styles = false;
-		} else {
-			apply_styles = true;
-		}
-		if(apply_styles) {
-			var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
-			var style = vnode.data.style == null?{ }:vnode.data.style;
-			var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
-			var _g = 0;
-			var _g1 = Object.keys(style);
-			while(_g < _g1.length) {
-				var name = [_g1[_g]];
-				++_g;
-				cur = style[name[0]];
-				if(name[0] == "delayed") {
-					var delayed = style.delayed;
-					var oldDelayed = oldStyle.delayed;
-					var _g2 = 0;
-					var _g3 = Object.keys(delayed);
-					while(_g2 < _g3.length) {
-						var name1 = _g3[_g2];
-						++_g2;
-						cur = delayed[name1];
-						if(!oldHasDel || cur != oldDelayed[name1]) {
-							var obj = [elm.style];
-							var fn = [(function(val,prop,obj1) {
-								return function(i) {
-									obj1[0][prop[0]] = val[0];
-								};
-							})([cur],[name1],obj)];
-							window.requestAnimationFrame((function(fn1) {
-								return function(i1) {
-									window.requestAnimationFrame(fn1[0]);
-								};
-							})(fn));
-						}
-					}
-				} else if(name[0] != "remove" && cur != oldStyle[name[0]]) {
-					window.requestAnimationFrame((function(name2) {
-						return function(i2) {
-							elm.style[name2[0]] = cur;
-						};
-					})(name));
+		if(apply_hooks) {
+			var cb = function() {
+				var cur;
+				var elm1 = vnode.elm;
+				var apply_styles;
+				if(vnode.data.skip_styles == false) {
+					apply_styles = true;
+				} else if(elm1.cached_styles == null) {
+					elm1.cached_styles = true;
+					apply_styles = true;
+				} else if(elm1.cached_styles == true) {
+					apply_styles = false;
+				} else {
+					apply_styles = true;
 				}
-			}
-		}
-		var cb = function() {
-			var cur1;
-			var old;
-			var elm1 = vnode.elm;
-			var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
-			var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
-			var apply_attributes;
-			if(vnode.data.skip_attributes == false) {
-				apply_attributes = true;
-			} else if(elm1.cached_attributes == null) {
-				elm1.cached_attributes = true;
-				apply_attributes = true;
-			} else if(elm1.cached_attributes == true) {
-				apply_attributes = false;
-			} else {
-				apply_attributes = true;
-			}
-			if(apply_attributes) {
-				var _g4 = 0;
-				var _g11 = Object.keys(attrs);
-				while(_g4 < _g11.length) {
-					var key = [_g11[_g4]];
-					++_g4;
-					cur1 = attrs[key[0]];
-					old = oldAttrs[key[0]];
-					if(old != cur1) {
-						if(!cur1 && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key[0]]) {
-							window.requestAnimationFrame((function(key1) {
-								return function(i3) {
-									elm1.removeAttribute(key1[0]);
+				if(apply_styles) {
+					var oldStyle = oldVnode.data.style == null?{ }:oldVnode.data.style;
+					var style = vnode.data.style == null?{ }:vnode.data.style;
+					var oldHasDel = Object.prototype.hasOwnProperty.call(oldStyle,"delayed");
+					var _g = 0;
+					var _g1 = Object.keys(style);
+					while(_g < _g1.length) {
+						var name = [_g1[_g]];
+						++_g;
+						cur = style[name[0]];
+						if(name[0] == "delayed") {
+							var delayed = style.delayed;
+							var oldDelayed = oldStyle.delayed;
+							var _g2 = 0;
+							var _g3 = Object.keys(delayed);
+							while(_g2 < _g3.length) {
+								var name1 = _g3[_g2];
+								++_g2;
+								cur = delayed[name1];
+								if(!oldHasDel || cur != oldDelayed[name1]) {
+									var obj = [elm1.style];
+									var fn = [(function(val,prop,obj1) {
+										return function(i) {
+											obj1[0][prop[0]] = val[0];
+										};
+									})([cur],[name1],obj)];
+									window.requestAnimationFrame((function(fn1) {
+										return function(i1) {
+											window.requestAnimationFrame(fn1[0]);
+										};
+									})(fn));
+								}
+							}
+						} else if(name[0] != "remove" && cur != oldStyle[name[0]]) {
+							window.requestAnimationFrame((function(name2) {
+								return function(i2) {
+									elm1.style[name2[0]] = cur;
 								};
-							})(key));
-						} else {
-							window.requestAnimationFrame((function(key2) {
-								return function(i4) {
-									elm1.setAttribute(key2[0],cur1);
-								};
-							})(key));
+							})(name));
 						}
 					}
 				}
-				var _g5 = 0;
-				var _g12 = Object.keys(oldAttrs);
-				while(_g5 < _g12.length) {
-					var key3 = [_g12[_g5]];
-					++_g5;
-					if(!Object.prototype.hasOwnProperty.call(attrs,key3[0])) {
-						window.requestAnimationFrame((function(key4) {
-							return function(i5) {
-								elm1.removeAttribute(key4[0]);
-							};
-						})(key3));
-					}
-				}
-			}
-			var cb1 = function() {
-				var cur2;
-				var old1;
-				var elm2 = vnode.elm;
-				var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
-				var props = vnode.data.props == null?{ }:vnode.data.props;
-				var _g6 = 0;
-				var _g13 = Object.keys(props);
-				while(_g6 < _g13.length) {
-					var key5 = _g13[_g6];
-					++_g6;
-					cur2 = props[key5];
-					old1 = oldProps[key5];
-					if(old1 != cur2) {
-						elm2[key5] = cur2;
-					}
-				}
-				var cb2 = function() {
-					var cur3;
-					var elm3 = vnode.elm;
-					var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
-					var klass = vnode.data.classes == null?{ }:vnode.data.classes;
+				var cb1 = function() {
+					var cur1;
+					var old;
+					var elm2 = vnode.elm;
+					var oldAttrs = oldVnode.data.attrs == null?{ }:oldVnode.data.attrs;
+					var attrs = vnode.data.attrs == null?{ }:vnode.data.attrs;
+					var apply_attributes;
 					if(vnode.data.skip_attributes == false) {
-						var _g7 = 0;
-						var _g14 = Object.keys(klass);
-						while(_g7 < _g14.length) {
-							var name3 = [_g14[_g7]];
-							++_g7;
-							cur3 = klass[name3[0]];
-							if(cur3 != oldClass[name3[0]]) {
-								if(cur3 == "add") {
-									window.requestAnimationFrame((function(name4) {
-										return function(i6) {
-											elm3.classList.add(name4[0]);
+						apply_attributes = true;
+					} else if(elm2.cached_attributes == null) {
+						elm2.cached_attributes = true;
+						apply_attributes = true;
+					} else if(elm2.cached_attributes == true) {
+						apply_attributes = false;
+					} else {
+						apply_attributes = true;
+					}
+					if(apply_attributes) {
+						var _g4 = 0;
+						var _g11 = Object.keys(attrs);
+						while(_g4 < _g11.length) {
+							var key = _g11[_g4];
+							++_g4;
+							cur1 = attrs[key];
+							old = oldAttrs[key];
+							if(old != cur1) {
+								if(!cur1 && snabbdom_engine_dom_plugins_Attributes.booleanAttrsDict[key]) {
+									window.requestAnimationFrame((function(_key) {
+										return function(i3) {
+											elm2.removeAttribute(_key[0]);
 										};
-									})(name3));
-								} else if(cur3 == "remove") {
-									window.requestAnimationFrame((function(name5) {
-										return function(i7) {
-											elm3.classList.remove(name5[0]);
+									})([key]));
+								} else {
+									window.requestAnimationFrame((function(_cur,_key1) {
+										return function(i4) {
+											elm2.setAttribute(_key1[0],_cur[0]);
 										};
-									})(name3));
+									})([cur1],[key]));
 								}
+							}
+						}
+						var _g5 = 0;
+						var _g12 = Object.keys(oldAttrs);
+						while(_g5 < _g12.length) {
+							var key1 = [_g12[_g5]];
+							++_g5;
+							if(!Object.prototype.hasOwnProperty.call(attrs,key1[0])) {
+								window.requestAnimationFrame((function(key2) {
+									return function(i5) {
+										elm2.removeAttribute(key2[0]);
+									};
+								})(key1));
 							}
 						}
 					}
-					var cb3 = function() {
-						var cur4;
-						var old2;
-						var elm4 = vnode.elm;
-						var oldOn = oldVnode.data.on == null?{ }:oldVnode.data.on;
-						var on = vnode.data.on == null?{ }:vnode.data.on;
-						if(on != { }) {
-							var _g8 = 0;
-							var _g15 = Object.keys(on);
-							while(_g8 < _g15.length) {
-								var name6 = _g15[_g8];
-								++_g8;
-								cur4 = on[name6];
-								old2 = oldOn[name6];
-								if(old2 == null) {
-									console.log(cur4);
-									on[name6] = cur4;
-									elm4.addEventListener(name6,cur4);
-								} else {
-									on[name6] = cur4;
-								}
+					var cb2 = function() {
+						var cur2;
+						var old1;
+						var elm3 = vnode.elm;
+						var oldProps = oldVnode.data.props == null?{ }:oldVnode.data.props;
+						var props = vnode.data.props == null?{ }:vnode.data.props;
+						var _g6 = 0;
+						var _g13 = Object.keys(props);
+						while(_g6 < _g13.length) {
+							var key3 = _g13[_g6];
+							++_g6;
+							cur2 = props[key3];
+							old1 = oldProps[key3];
+							if(old1 != cur2) {
+								elm3[key3] = cur2;
 							}
 						}
-						__return();
+						var cb3 = function() {
+							var cur3;
+							var elm4 = vnode.elm;
+							var oldClass = oldVnode.data.classes == null?{ }:oldVnode.data.classes;
+							var klass = vnode.data.classes == null?{ }:vnode.data.classes;
+							if(vnode.data.skip_attributes == false) {
+								var _g7 = 0;
+								var _g14 = Object.keys(klass);
+								while(_g7 < _g14.length) {
+									var name3 = [_g14[_g7]];
+									++_g7;
+									cur3 = klass[name3[0]];
+									if(cur3 != oldClass[name3[0]]) {
+										if(cur3 == "add") {
+											window.requestAnimationFrame((function(name4) {
+												return function(i6) {
+													elm4.classList.add(name4[0]);
+												};
+											})(name3));
+										} else if(cur3 == "remove") {
+											window.requestAnimationFrame((function(name5) {
+												return function(i7) {
+													elm4.classList.remove(name5[0]);
+												};
+											})(name3));
+										}
+									}
+								}
+							}
+							var cb4 = function() {
+								var cur4;
+								var old2;
+								var elm5 = vnode.elm;
+								var oldOn = oldVnode.data.on == null?{ }:oldVnode.data.on;
+								var on = vnode.data.on == null?{ }:vnode.data.on;
+								if(on != { }) {
+									var _g8 = 0;
+									var _g15 = Object.keys(on);
+									while(_g8 < _g15.length) {
+										var name6 = _g15[_g8];
+										++_g8;
+										cur4 = on[name6];
+										old2 = oldOn[name6];
+										if(old2 == null) {
+											console.log(cur4);
+											on[name6] = cur4;
+											elm5.addEventListener(name6,cur4);
+										} else {
+											on[name6] = cur4;
+										}
+									}
+								}
+								__return();
+							};
+							window.setTimeout(function() {
+								cb4();
+							},0);
+						};
+						window.setTimeout(function() {
+							cb3();
+						},0);
 					};
 					window.setTimeout(function() {
-						cb3();
+						cb2();
 					},0);
 				};
 				window.setTimeout(function() {
-					cb2();
+					cb1();
 				},0);
 			};
 			window.setTimeout(function() {
-				cb1();
+				cb();
 			},0);
-		};
-		window.setTimeout(function() {
-			cb();
-		},0);
+		} else {
+			console.log(elm);
+			__return();
+		}
 	})(thx_Functions.noop);
 };
 snabbdom_engine_dom_plugins_Hooks.destroy = function(vnode) {

@@ -85,7 +85,7 @@ class H {
     var key:String = null;
 
     for (field in fields) {
-      trace(fields);
+      //trace(fields);
       if (field[0] == 'style')  {
         var style = parse_style_string(field[1],Context);
         structure = structure + ',style:untyped ${style}';
@@ -94,6 +94,12 @@ class H {
       if (field[0] == 'key') {
         var value = field[1];
         structure = structure + ',key: ${value}';
+      }
+
+
+      if (field[0] == '___cache') {
+        var value= field[1].replace('"',"");
+        structure = structure + ',___cache: ${value}';
       }
 
 

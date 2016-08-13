@@ -65,8 +65,13 @@ class Main {
     var last_node:snabbdom.engine.dom.VirtualNodeDom = null;
     var last_node2:snabbdom.engine.dom.VirtualNodeDom = null;
 
+    var cache:snabbdom.engine.dom.CacheDom = 0;
+    cache = cache.add(cacheAll);
+    cache = cache.add(cacheStyle);
+
+
     var init:Int = null;
-    var timer = new haxe.Timer(100);
+    var timer = new haxe.Timer(1000);
 
     timer.run = function() {
 
@@ -82,10 +87,10 @@ class Main {
       var list = [for (x in (init...max)) {
         var key = 'key - $x';
         var random = Math.random() * 5000;
-        jsx('<li key="${key}" style="border:10px solid green"><span style="color:white">${random}</span></li>');
+        jsx('<li cippalippa="ciaone" key="${key}" style="border:10px solid green"><span style="color:white">${random}</span></li>');
       }];
       var vnode2 = jsx('
-        <div lippa="${1+1}" id="pippa" style="color:black" onmouseout=$out onclick=$click onmouseover=${over}>
+        <div id="pippa" style="color:black" onmouseout=$out onclick=$click onmouseover=${over}>
           <span>${max}</span>
           <ul style="font-size:30px;color:white;background-color:$bg">
             #list

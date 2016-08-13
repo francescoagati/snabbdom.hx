@@ -55,10 +55,15 @@ class Attributes {
         old = oldAttrs[key];
         if (old != cur) {
           // TODO: add support to namespaced attributes (setAttributeNS)
-          if(!cur && booleanAttrsDict[key])
-            next_frame(elm.removeAttribute(key));
-          else
-            next_frame(elm.setAttribute(key, cur));
+
+          if(!cur && booleanAttrsDict[key]) {
+            var _key = key;
+            next_frame(elm.removeAttribute(_key));
+          } else {
+            var _key = key,_cur = cur;
+            next_frame(elm.setAttribute(_key, _cur));
+          }
+
         }
       }
       //remove removed attributes

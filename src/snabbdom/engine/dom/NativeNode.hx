@@ -31,6 +31,7 @@ class DomPool {
       cps({
         @await wait(0);
         element.textContent = "";
+        untyped element.___cache = null;
         switch(element.nodeName) {
           case 'LI':nodes_li.unshift(element);
           case 'DIV':nodes_div.unshift(element);

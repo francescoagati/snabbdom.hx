@@ -11,34 +11,72 @@ using snabbdom.VirtualNodeDataTools;
 
 class Hooks {
   public static function create(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
+
+    var elm:Dynamic = vnode.elm;
+    var apply_hooks = if (vnode.data.___cache.contains(cacheAll) == false) {
+      true;
+    } else {
+      if (elm.___cache == null) {
+        elm.___cache = true;
+        true;
+      } else {
+        if (elm.___cache == true) {
+          false;
+        } else {
+          true;
+        }
+      }
+    };
+
     cps({
-    Styles.create(oldVnode,vnode);
-    @await wait(0);
-    Attributes.create(oldVnode, vnode);
-    @await wait(0);
-    Props.create(oldVnode,vnode);
-    @await wait(0);
-    CssClasses.create(oldVnode,vnode);
-    @await wait(0);
-    Events.create(oldVnode,vnode);
+      if (apply_hooks) {
+        @await wait(0);
+        Styles.create(oldVnode,vnode);
+        @await wait(0);
+        Attributes.create(oldVnode, vnode);
+        @await wait(0);
+        Props.create(oldVnode,vnode);
+        @await wait(0);
+        CssClasses.create(oldVnode,vnode);
+        @await wait(0);
+        Events.create(oldVnode,vnode);
+      }
     });
   }
 
-  public static function update(p_oldVnode:VirtualNodeDom, p_vnode:VirtualNodeDom) {
+  public static function update(oldVnode:VirtualNodeDom, vnode:VirtualNodeDom) {
 
-    var oldVnode = p_oldVnode;
-    var vnode = p_vnode;
+    var elm:Dynamic = vnode.elm;
+    var apply_hooks = if (vnode.data.___cache.contains(cacheAll) == false) {
+      true;
+    } else {
+      if (elm.___cache == null) {
+        elm.___cache = true;
+        true;
+      } else {
+        if (elm.___cache == true) {
+          false;
+        } else {
+          true;
+        }
+      }
+    };
 
     cps({
-    Styles.update(oldVnode,vnode);
-    @await wait(0);
-    Attributes.update(oldVnode, vnode);
-    @await wait(0);
-    Props.update(oldVnode,vnode);
-    @await wait(0);
-    CssClasses.update(oldVnode,vnode);
-    @await wait(0);
-    Events.update(oldVnode,vnode);
+      if (apply_hooks) {
+        @await wait(0);
+        Styles.update(oldVnode,vnode);
+        @await wait(0);
+        Attributes.update(oldVnode, vnode);
+        @await wait(0);
+        Props.update(oldVnode,vnode);
+        @await wait(0);
+        CssClasses.update(oldVnode,vnode);
+        @await wait(0);
+        Events.update(oldVnode,vnode);
+      } else {
+        trace(elm);
+      }
     });
   }
 

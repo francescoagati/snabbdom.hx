@@ -9,5 +9,6 @@ typedef VirtualNodeData = {
   hook:Dynamic,
   skip_styles:Bool,
   skip_attributes:Bool,
-  ?key:Null<String>
+  key:Null<String>,
+  ___cache:snabbdom.engine.dom.CacheDom
 }

@@ -6,6 +6,7 @@ import snabbdom.engine.dom.PatchDom.*;
 import snabbdom.Is.*;
 import snabbdom.PatchHelper.*;
 import snabbdom.engine.dom.plugins.Hooks;
+import snabbdom.engine.dom.CacheDom;
 using snabbdom.VirtualNodeDataTools;
 
 
